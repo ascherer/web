@@ -16,6 +16,7 @@
   \def\Blue{\pdfliteral{0 0 1 rg 0 0 1 RG}}
 \fi\fi
 \newif\ifacro \ifpdf\acrotrue\fi \ifpdftex\acrotrue\fi
+\ifx\undefined\XeTeXlinebreakpenalty\else\acrotrue\fi
 
 \parskip 0pt % no stretch between paragraphs
 \parindent 1em % for paragraphs and for the first line of Pascal text
