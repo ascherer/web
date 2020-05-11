@@ -3,16 +3,16 @@
 % XeTeX adjustments maintained by Khaled Hosny <khaledhosny@eglug.org>.
 % macro integration à la CWEB by Andreas Scherer <andreas_github@freenet.de>.
 \ifx\renewenvironment\undefined\else\endinput\fi % LaTeX will use other macros
-\xdef\fmtversion{\fmtversion+WEBMAC4.1} % identifies current set of macros
+\xdef\fmtversion{\fmtversion+WEBMAC4.5}
 \newif\ifpdf
-\ifx\pdf+\pdftrue\fi % plain TeX + xdvipdfmx '\let\pdf+'
+\ifx\pdf+\pdftrue\fi
 % Uncomment the following line if you want PDF goodies to be the default
 %\ifx\pdf-\else\pdftrue\fi
 \def\pdflinkcolor{0 0 1} % the RGB values for hyperlink color
 \newif\ifpdftex
 \ifx\pdfoutput\undefined \pdftexfalse \else\ifnum\pdfoutput=0 \pdftexfalse
 \else \pdftextrue \pdfoutput=1 \pdfcompresslevel=9 \input pdfcolor
-  \def\Black{\pdfliteral{0 g 0 G}} % use rgb colors for direct PDF output too
+  \def\Black{\pdfliteral{0 g 0 G}}  % use rgb colors for direct PDF output too
   \def\Blue{\pdfliteral{0 0 1 rg 0 0 1 RG}}
 \fi\fi
 \newif\ifacro \ifpdf\acrotrue\fi \ifpdftex\acrotrue\fi
@@ -21,17 +21,20 @@
 \parskip 0pt % no stretch between paragraphs
 \parindent 1em % for paragraphs and for the first line of Pascal text
 
-\font\eightrm=cmr8 \let\sc=\eightrm % NOT a caps-and-small-caps font!
+\font\eightrm=cmr8
+\let\sc=\eightrm % for smallish caps (NOT a caps-and-small-caps font)
 \let\mainfont=\tenrm
 \font\titlefont=cmr7 scaled\magstep4 % title on the contents page
 \font\ttitlefont=cmtt10 scaled\magstep2 % typewriter type in title
 \font\tentex=cmtex10 % TeX extended character set (used in strings)
-\fontdimen7\tentex=0pt % no extra space after punctuation
+\fontdimen7\tentex=0pt % no double space after sentences
 
-\def\\#1{\hbox{\it#1\/\kern.05em}} % italic type for identifiers
-\def\|#1{\hbox{$#1$}} % one-letter identifiers look a bit better this way
-\def\&#1{\hbox{\bf#1\/}} % boldface type for reserved words
-\def\.#1{\hbox{\tentex % typewriter type for strings
+\def\\#1{\leavevmode\hbox{\it#1\/\kern.05em}} % italic type for identifiers
+\def\|#1{\leavevmode\hbox{$#1$}} % one-letter identifiers look better this way
+\def\&#1{\leavevmode\hbox{\bf
+  \def\_{\kern.04em\vbox{\hrule width.3em height .6pt}\kern.08em}%
+  #1\/\kern.05em}} % boldface type for reserved words
+\def\.#1{\leavevmode\hbox{\tentex % typewriter type for strings
   \let\\=\BS % backslash in a string
   \let\'=\RQ % right quote in a string
   \let\`=\LQ % left quote in a string
@@ -116,7 +119,7 @@
   \fi
   \next
 }
-\def\makenote{\addtokens{\toksB}%
+\def\makenote{\addtokens\toksB
     {\noexpand\pdflink{\the\toksC}{\romannumeral\the\toksC}}\toksC={}\global\countC=0}
 \def\maketoksdone{\edef\st{\global\noexpand\toksA={\the\toksB}}\st}
 \def\pdfURL#1#2{\ifpdftex\pdfannotlink height\ht\strutbox depth\dp\strutbox
@@ -229,16 +232,18 @@
 \fi % End of pdf macros
 
 \def\lapstar{\rlap{*}}
-\def\stsec{\Q\noindent{\let\*=\lapstar\bf\modstar.\quad}%
+\def\stsec{\rightskip=0pt % get out of Pascal mode (cf. \P)
+  \sfcode`;=1500 \pretolerance 200 \hyphenpenalty 50 \exhyphenpenalty 50
+  \noindent{\let\*=\lapstar\bf\modstar.\quad}%
   \ifpdftex\smash{\raise\baselineskip\hbox to0pt{%
-     \let\*=\empty\pdfdest num \modstar fith}}
+     \let\*=\empty\pdfdest num \modstar fith}}%
   \else\ifpdf\smash{\raise\baselineskip\hbox to0pt{%
      \let\*=\empty\special{%
        pdf: dest (\romannumeral\modstar) [ @thispage /FitH @ypos ]}}}\fi\fi}
 \let\startsection=\stsec
-\def\defin#1{\global\advance\ind by 2 \1\&{#1 }} % begin `define' or `format'
-\def\A{\note{See also section}} % crossref for doubly defined section name
-\def\As{\note{See also sections}} % crossref for multiply defined section name
+\def\defin#1{\global\advance\ind by 2 \1\&{#1 } } % begin `define' or `format'
+\def\A{\note{See also section}} % xref for doubly defined section name
+\def\As{\note{See also sections}} % xref for multiply defined section name
 \def\B{\mathopen{\.{@\{}}} % begin controlled comment
 \def\C#1{\ifmmode\gdef\XX{\null$\null}\else\gdef\XX{}\fi %$% Pascal comments
   \XX\hfil\penalty-1\hfilneg\quad$\{\,$#1$\,\}$\XX}
@@ -269,13 +274,11 @@
   \pretolerance 10000
   \hyphenpenalty 10000 \exhyphenpenalty 10000
   \global\ind=2 \1\ \unskip}
-\def\Q{\rightskip=0pt % get out of Pascal mode
-  \sfcode`;=1500 \pretolerance 200 \hyphenpenalty 50 \exhyphenpenalty 50 }
 \let\R=\lnot % logical not
 \let\S=\equiv % equivalence sign
 \def\T{\mathclose{\.{@\}}}} % terminate controlled comment
-\def\U{\note{This code is used in section}} % crossref for use of a section
-\def\Us{\note{This code is used in sections}} % crossref for uses of a section
+\def\U{\note{This code is used in section}} % xref for use of a section
+\def\Us{\note{This code is used in sections}} % xref for uses of a section
 \let\V=\lor % logical or
 \let\W=\land % logical and
 \def\X#1:#2\X{\ifmmode\gdef\XX{\null$\null}\else\gdef\XX{}\fi %$% section name
@@ -297,25 +300,29 @@
   \tensy x\mainfont\topmark} % top line on left-hand pages
 \def\rheader{\tensy x\mainfont\topmark\eightrm\qquad\title\hfill\rhead
   \qquad\mainfont\the\pageno} % top line on right-hand pages
-\def\page{\box255 }
+\let\page=\pagebody \raggedbottom
+% \def\page{\box255 }\normalbottom % faster, but loses plain TeX footnotes
 \def\normaloutput#1#2#3{\ifodd\pageno\hoffset=\pageshift\fi
-  \shipout\vbox{
-    \vbox to\fullpageheight{
-      \iftitle\global\titlefalse
-      \else\hbox to\pagewidth{\vbox to10pt{}\ifodd\pageno #3\else#2\fi}\fi
-      \vfill#1}} % parameter #1 is the page itself
+ \shipout\vbox{
+  \vbox to\fullpageheight{
+  \iftitle\global\titlefalse
+  \else\hbox to\pagewidth{\vbox to10pt{}\ifodd\pageno #3\else#2\fi}\fi
+  \vfill#1}} % parameter #1 is the page itself
   \global\advance\pageno by1}
 
 \def\rhead{\.{WEB} OUTPUT} % this running head is reset by starred sections
 \def\title{} % an optional title can be set by the user
-\def\topofcontents{\centerline{\titlefont\title}
+\def\topofcontents{\centerline{\titlefont\title}\vskip.7in
   \vfill} % this material will start the table of contents page
-\def\botofcontents{\vfill} % this material will end the table of contents page
+\def\botofcontents{\vfill
+  \centerline{\covernote}} % this material will end the table of contents page
+\def\covernote{}
 \def\contentspagenumber{0} % default page number for table of contents
 \newdimen\pagewidth \pagewidth=6.5in % the width of each page
 \newdimen\pageheight \pageheight=8.7in % the height of each page
 \newdimen\fullpageheight \fullpageheight=9in % page height including headlines
-\newdimen\pageshift \pageshift=0in % shift righthand pages wrt lefthand ones
+\newdimen\pageshift \pageshift=\hoffset
+   % shift righthand pages wrt lefthand ones
 \def\magnify#1{\mag=#1\pagewidth=6.5truein\pageheight=8.7truein
   \fullpageheight=9truein\setpage}
 \def\setpage{\hsize\pagewidth\vsize\pageheight} % use after changing page size
@@ -334,6 +341,7 @@
 \newbox\sbox % saved box preceding the index
 \newbox\lbox % lefthand column in the index
 \def\inx{\par\vskip6pt plus 1fil % we are beginning the index
+  \def\page{\box255 } \normalbottom
   \write\cont{} % ensure that the contents file isn't empty
   \closeout\cont % the contents information has been fully gathered
   \output{\ifpagesaved\normaloutput{\box\sbox}\lheader\rheader\fi
@@ -363,20 +371,20 @@
   \parfillskip 0pt plus 1fil
   \def\rhead{NAMES OF THE SECTIONS}
   \message{Section names:}
-  \output{\normaloutput\page\lheader\rheader}
+  \output={\normaloutput\page\lheader\rheader}
   \setpage
-  \def\note##1##2.{\hfil\penalty-1\hfilneg\quad{\eightrm##1~%
-     \ifacro{\pdfnote##2.}\else{##2}\fi.}}
+  \def\note##1##2.{\quad{\eightrm##1~\ifacro{\pdfnote##2.}\else{##2}\fi.}}
   \linepenalty=10 % try to conserve lines
   \def\U{\note{Used in section}} % crossref for use of a section
   \def\Us{\note{Used in sections}} % crossref for uses of a section
   \def\:{\par\hangindent 2em}\let\*=*\let\.=\ttentry}
 \def\con{\par\vfill\eject % finish the section names
+% \ifodd\pageno\else\titletrue\null\vfill\eject\fi % for duplex printers
   \rightskip 0pt \hyphenpenalty 50 \tolerance 200
-  \setpage
-  \output{\normaloutput\page\lheader\rheader}
+  \setpage \output={\normaloutput\page\lheader\rheader}
   \titletrue % prepare to output the table of contents
-  \pageno=\contentspagenumber \def\rhead{TABLE OF CONTENTS}
+  \pageno=\contentspagenumber
+  \def\rhead{TABLE OF CONTENTS}
   \message{Table of contents:}
   \topofcontents
   \line{\hfil Section\hbox to3em{\hss Page}}
