@@ -9,6 +9,7 @@
 % Uncomment the following line if you want PDF goodies to be the default
 %\ifx\pdf-\else\pdftrue\fi
 \def\pdflinkcolor{0 0 1} % the RGB values for hyperlink color
+\ifx\undefined\XeTeXlinebreakpenalty\else\pdftrue\fi % XeTeX produces PDF output
 \newif\ifpdftex
 \ifx\pdfoutput\undefined \pdftexfalse \else\ifnum\pdfoutput=0 \pdftexfalse
 \else \pdftextrue \pdfoutput=1 \pdfcompresslevel=9 \input pdfcolor
@@ -16,7 +17,6 @@
   \def\Blue{\pdfliteral{0 0 1 rg 0 0 1 RG}}
 \fi\fi
 \newif\ifacro \ifpdf\acrotrue\fi \ifpdftex\acrotrue\fi
-\ifx\undefined\XeTeXlinebreakpenalty\else\acrotrue\fi
 
 \parskip 0pt % no stretch between paragraphs
 \parindent 1em % for paragraphs and for the first line of Pascal text
@@ -75,6 +75,7 @@
   \hangindent\ind em\noindent\kern\ind em\copy\bakk\ignorespaces\fi}
 \def\7{\Y\6} % forced break and a little extra space
 
+\newskip\intersecskip \intersecskip=12pt minus 3pt % space between sections
 \let\yskip=\smallskip
 \def\to{\mathrel{.\,.}} % double dot, used only in math mode
 \def\note#1#2.{\Y\noindent{\hangindent2em%
@@ -234,12 +235,12 @@
 \def\lapstar{\rlap{*}}
 \def\stsec{\rightskip=0pt % get out of Pascal mode (cf. \P)
   \sfcode`;=1500 \pretolerance 200 \hyphenpenalty 50 \exhyphenpenalty 50
-  \noindent{\let\*=\lapstar\bf\modstar.\quad}%
+  \noindent{\let\*=\lapstar\bf\secstar.\quad}%
   \ifpdftex\smash{\raise\baselineskip\hbox to0pt{%
-     \let\*=\empty\pdfdest num \modstar fith}}%
+     \let\*=\empty\pdfdest num \secstar fith}}%
   \else\ifpdf\smash{\raise\baselineskip\hbox to0pt{%
      \let\*=\empty\special{%
-       pdf: dest (\romannumeral\modstar) [ @thispage /FitH @ypos ]}}}\fi\fi}
+       pdf: dest (\romannumeral\secstar) [ @thispage /FitH @ypos ]}}}\fi\fi}
 \let\startsection=\stsec
 \def\defin#1{\global\advance\ind by 2 \1\&{#1 } } % begin `define' or `format'
 \def\A{\note{See also section}} % xref for doubly defined section name
@@ -259,15 +260,16 @@
 \let\K=\gets % left arrow
 \let\L=\le % less than or equal sign
 \outer\def\M#1.{\MN#1.\ifon\vfil\penalty-100\vfilneg % beginning of section
-  \vskip12ptminus3pt\startsection\ignorespaces}
+  \vskip\intersecskip\startsection\ignorespaces}
 \outer\def\N#1.#2.{\MN#1.\vfil\eject % beginning of starred section
   \def\rhead{\uppercase{\ignorespaces#2}} % define running headline
-  \message{*\modno} % progress report
-  \edef\next{\write\cont{\Z{#2}{\modno}{\the\pageno}}}\next % to contents file
+  \message{*\secno} % progress report
+  \edef\next{\write\cont{\Z{#2}{\secno}{\the\pageno}}}\next % to contents file
   \ifon\startsection{\bf\ignorespaces#2.\quad}\ignorespaces}
 \def\MN#1.{\par % common code for \M, \N
-  {\xdef\modstar{#1}\let\*=\empty\xdef\modno{#1}}
-  \ifx\modno\modstar \onmaybe \else\ontrue \fi \mark{\modno}}
+  {\xdef\secstar{#1}\let\*=\empty\xdef\secno{#1}}% remove \* from section name
+  \ifx\secno\secstar \onmaybe \else\ontrue \fi
+  \mark{\secno}}
 \def\O#1{\hbox{\rm\char'23\kern-.2em\it#1\/\kern.05em}} % octal constant
 \def\P{\rightskip=0pt plus 100pt minus 10pt % go into Pascal mode
   \sfcode`;=3000
@@ -332,6 +334,7 @@
 \newwrite\cont
 \output{\setbox0=\page % the first page is garbage
   \openout\cont=\contentsfile
+       \write\cont{\catcode `\noexpand\@=11\relax}   % \makeatletter
   \global\output{\normaloutput\page\lheader\rheader}}
 \setpage
 \vbox to \vsize{} % the first \topmark won't be null
@@ -343,6 +346,7 @@
 \def\inx{\par\vskip6pt plus 1fil % we are beginning the index
   \def\page{\box255 } \normalbottom
   \write\cont{} % ensure that the contents file isn't empty
+       \write\cont{\catcode `\noexpand\@=12\relax}   % \makeatother
   \closeout\cont % the contents information has been fully gathered
   \output{\ifpagesaved\normaloutput{\box\sbox}\lheader\rheader\fi
     \global\setbox\sbox=\page \global\pagesavedtrue}
