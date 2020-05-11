@@ -1,7 +1,7 @@
 % standard macros for WEB listings (in addition to PLAIN.TEX)
-% pdfTeX adjustments maintained by Han The Thanh <hanthethanh@gmx.net>.
-% XeTeX adjustments maintained by Khaled Hosny <khaledhosny@eglug.org>.
-% macro integration à la CWEB by Andreas Scherer <andreas_github@freenet.de>.
+% pdfTeX adjustments provided by Han The Thanh <thanh@pdftex.org>.
+% XeTeX adjustments provided by Khaled Hosny <khaledhosny@eglug.org>.
+% macro integration à la CWEB by Andreas Scherer <andreas_tex@freenet.de>.
 \ifx\renewenvironment\undefined\else\endinput\fi % LaTeX will use other macros
 \xdef\fmtversion{\fmtversion+WEBMAC4.5}
 \newif\ifpdf
@@ -12,7 +12,7 @@
 \ifx\undefined\XeTeXlinebreakpenalty\else\pdftrue\fi % XeTeX produces PDF output
 \newif\ifpdftex
 \ifx\pdfoutput\undefined \pdftexfalse \else\ifnum\pdfoutput=0 \pdftexfalse
-\else \pdftextrue \pdfoutput=1 \pdfcompresslevel=9 \input pdfcolor
+\else \pdftextrue \pdfoutput=1
   \def\Black{\pdfliteral{0 g 0 G}}  % use rgb colors for direct PDF output too
   \def\Blue{\pdfliteral{0 0 1 rg 0 0 1 RG}}
 \fi\fi
@@ -237,7 +237,7 @@
   \sfcode`;=1500 \pretolerance 200 \hyphenpenalty 50 \exhyphenpenalty 50
   \noindent{\let\*=\lapstar\bf\secstar.\quad}%
   \ifpdftex\smash{\raise\baselineskip\hbox to0pt{%
-     \let\*=\empty\pdfdest num \secstar fith}}%
+     \let\*=\empty\pdfdest num \secstar fith}}% bad space in versions < 4.5
   \else\ifpdf\smash{\raise\baselineskip\hbox to0pt{%
      \let\*=\empty\special{%
        pdf: dest (\romannumeral\secstar) [ @thispage /FitH @ypos ]}}}\fi\fi}
@@ -261,10 +261,16 @@
 \let\L=\le % less than or equal sign
 \outer\def\M#1.{\MN#1.\ifon\vfil\penalty-100\vfilneg % beginning of section
   \vskip\intersecskip\startsection\ignorespaces}
-\outer\def\N#1.#2.{\MN#1.\vfil\eject % beginning of starred section
-  \def\rhead{\uppercase{\ignorespaces#2}} % define running headline
+\outer\def\N#1.#2.{% beginning of starred section
+  \ifacro{\toksF={}\makeoutlinetoks#2\outlinedone\outlinedone}\fi
+  \def\rhead{\uppercase{\ignorespaces#2}}\MN#1.\vfil\eject
   \message{*\secno} % progress report
   \edef\next{\write\cont{\Z{#2}{\secno}{\the\pageno}}}\next % to contents file
+  \ifpdftex\expandafter\xdef\csname curr#1\endcsname{\secno}
+    \ifnum#1>0\countB=#1 \advance\countB by-1
+      \advancenumber{chunk\the\countB.\expnumber{curr\the\countB}}\fi\fi
+  \ifpdf\special{pdf: outline #1 << /Title (\the\toksE) /Dest
+    [ @thispage /FitH @ypos ] >>}\fi
   \ifon\startsection{\bf\ignorespaces#2.\quad}\ignorespaces}
 \def\MN#1.{\par % common code for \M, \N
   {\xdef\secstar{#1}\let\*=\empty\xdef\secno{#1}}% remove \* from section name
@@ -313,9 +319,11 @@
   \global\advance\pageno by1}
 
 \def\rhead{\.{WEB} OUTPUT} % this running head is reset by starred sections
-\def\title{} % an optional title can be set by the user
+\def\title{\expandafter\uppercase\expandafter{\jobname}}
 \def\topofcontents{\centerline{\titlefont\title}\vskip.7in
   \vfill} % this material will start the table of contents page
+\def\startpdf{\ifpdftex\pdfcatalog{/PageMode /UseOutlines}\else
+    \ifpdf{\special{pdf: docview << /PageMode /UseOutlines >>}}\fi\fi}
 \def\botofcontents{\vfill
   \centerline{\covernote}} % this material will end the table of contents page
 \def\covernote{}
@@ -372,6 +380,7 @@
 \def\fin{\par\vfill\eject % this is done when we are ending the index
   \ifpagesaved\null\vfill\eject\fi % output a null index column
   \if L\lr\else\null\vfill\eject\fi % finish the current page
+  \ifpdftex \makebookmarks \fi % added in Version 4.5
   \parfillskip 0pt plus 1fil
   \def\rhead{NAMES OF THE SECTIONS}
   \message{Section names:}
@@ -381,7 +390,29 @@
   \linepenalty=10 % try to conserve lines
   \def\U{\note{Used in section}} % crossref for use of a section
   \def\Us{\note{Used in sections}} % crossref for uses of a section
-  \def\:{\par\hangindent 2em}\let\*=*\let\.=\ttentry}
+  \def\:{\par\hangindent 2em}\let\*=*\let\.=\ttentry
+  \ifacro \def\outsecname{Names of the sections} \let\Xpdf\X
+  \ifpdftex \pdfdest name {NOS} fith
+    \pdfoutline goto name {NOS} count -\secno {\outsecname}
+    \def\X##1:##2\X{\Xpdf##1:##2\X \firstsecno##1.%
+      {\toksF={}\makeoutlinetoks##2\outlinedone\outlinedone}%
+      \pdfoutline goto num \the\toksA \expandafter{\the\toksE}}
+  \else\ifpdf
+    \special{pdf: outline -1 << /Title (\outsecname)
+      /Dest [ @thispage /FitH @ypos ] >>}
+    \def\X##1:##2\X{\Xpdf##1:##2\X \firstsecno##1.%
+      {\toksF={}\makeoutlinetoks##2\outlinedone\outlinedone}%
+      \special{pdf: outline 0 << /Title (\the\toksE)
+        /A << /S /GoTo /D (\romannumeral\the\toksA) >> >>}}
+  \fi\fi\fi}
+\def\makebookmarks{\let\Z=\writebookmarkline \readcontents\relax}
+\def\expnumber#1{\expandafter\ifx\csname#1\endcsname\relax 0%
+  \else \csname#1\endcsname \fi} % Petr Olsak's macros from texinfo.tex
+\def\advancenumber#1{\countA=\expnumber{#1}\relax \advance\countA by1
+  \expandafter\xdef\csname#1\endcsname{\the\countA}}
+\def\writebookmarkline#1#2#3{{%
+  \let\(=\let \let\)=\let \let\[=\let \let\]=\let \let\/=\let
+  \pdfoutline goto num #2{#1}}}
 \def\con{\par\vfill\eject % finish the section names
 % \ifodd\pageno\else\titletrue\null\vfill\eject\fi % for duplex printers
   \rightskip 0pt \hyphenpenalty 50 \tolerance 200
@@ -390,17 +421,11 @@
   \pageno=\contentspagenumber
   \def\rhead{TABLE OF CONTENTS}
   \message{Table of contents:}
-  \topofcontents
+  \topofcontents \startpdf
   \line{\hfil Section\hbox to3em{\hss Page}}
   \def\Z##1##2##3{\line{\ignorespaces##1
       \rm\leaders\hbox to .5em{.\hfil}\hfil
       \ \ifacro\pdflink{##2}{\romannumeral##2}\else##2\fi
       \hbox to3em{\hss##3}}}
   \readcontents\relax % read the contents info
-  \botofcontents\makeoutlines\end} % print the contents page(s) and terminate
-\ifpdftex\def\makeoutlines{%
-  \def\?##1]{}\def\Z##1##2##3{\pdfoutline goto num ##2{##1}}
-  \input CONTENTS\relax}
-  \pdfcatalog{/PageMode /UseOutlines}
-\else\let\makeoutlines=\relax \fi
-\endinput
+  \botofcontents \end} % print the contents page(s) and terminate
