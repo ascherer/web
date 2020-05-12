@@ -9,7 +9,7 @@ urmother of all things 'literate programming'.
 |                 | `tex "\let\pdf+"`, `xdvipdfmx` | with clickable links, with outlines               |
 |                 | pdfTeX                         | with clickable links, with outlines               |
 |                 | XeTeX                          | with clickable links, with outlines               |
-| `pdfwebmac.tex` | plain TeX                      | **Undefined comtrol sequence `\pdfoutput`**       |
+| `pdfwebmac.tex` | plain TeX                      | **Undefined control sequence `\pdfoutput`**       |
 |                 | pdfTeX                         | with clickable links, with outlines               |
 |                 | XeTeX                          | **Undefined control sequence `\pdfoutput`**       |
 | `xewebmac.tex`  | plain TeX                      | **Undefined control sequence `\ifdefined`**       |
