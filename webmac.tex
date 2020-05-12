@@ -237,7 +237,7 @@
   \sfcode`;=1500 \pretolerance 200 \hyphenpenalty 50 \exhyphenpenalty 50
   \noindent{\let\*=\lapstar\bf\secstar.\quad}%
   \ifpdftex\smash{\raise\baselineskip\hbox to0pt{%
-     \let\*=\empty\pdfdest num \secstar fith}}% bad space in versions < 4.5
+     \let\*=\empty\pdfdest num \secstar fith}}%
   \else\ifpdf\smash{\raise\baselineskip\hbox to0pt{%
      \let\*=\empty\special{%
        pdf: dest (\romannumeral\secstar) [ @thispage /FitH @ypos ]}}}\fi\fi}
@@ -265,13 +265,11 @@
   \ifacro{\toksF={}\makeoutlinetoks#2\outlinedone\outlinedone}\fi
   \def\rhead{\uppercase{\ignorespaces#2}}\MN#1.\vfil\eject
   \message{*\secno} % progress report
-  \edef\next{\write\cont{\Z{#2}{\secno}{\the\pageno}}}\next % to contents file
-  \ifpdftex\expandafter\xdef\csname curr#1\endcsname{\secno}
-    \ifnum#1>0\countB=#1 \advance\countB by-1
-      \advancenumber{chunk\the\countB.\expnumber{curr\the\countB}}\fi\fi
-  \ifpdf\special{pdf: outline #1 << /Title (\the\toksE) /Dest
+  \edef\next{\write\cont{\Z{#2}{\secno}% write to contents file
+   {\noexpand\the\pageno}}}\next % \Z{title}{sec}{page}
+  \ifpdf\special{pdf: outline 0 << /Title (\the\toksE) /Dest
     [ @thispage /FitH @ypos ] >>}\fi
-  \ifon\startsection{\bf\ignorespaces#2.\quad}\ignorespaces}
+  \ifon\startsection{\bf#2.\quad}\ignorespaces}
 \def\MN#1.{\par % common code for \M, \N
   {\xdef\secstar{#1}\let\*=\empty\xdef\secno{#1}}% remove \* from section name
   \ifx\secno\secstar \onmaybe \else\ontrue \fi
@@ -280,7 +278,8 @@
 \def\P{\rightskip=0pt plus 100pt minus 10pt % go into Pascal mode
   \sfcode`;=3000
   \pretolerance 10000
-  \hyphenpenalty 10000 \exhyphenpenalty 10000
+  \hyphenpenalty 1000 % so strings can be broken (discretionary \ is inserted)
+  \exhyphenpenalty 10000
   \global\ind=2 \1\ \unskip}
 \let\R=\lnot % logical not
 \let\S=\equiv % equivalence sign
@@ -304,10 +303,10 @@
 
 \def\onmaybe{\let\ifon=\maybe} \let\maybe=\iftrue
 \newif\ifon \newif\iftitle \newif\ifpagesaved
-\def\lheader{\mainfont\the\pageno\eightrm\qquad\rhead\hfill\title\qquad
-  \tensy x\mainfont\topmark} % top line on left-hand pages
-\def\rheader{\tensy x\mainfont\topmark\eightrm\qquad\title\hfill\rhead
-  \qquad\mainfont\the\pageno} % top line on right-hand pages
+\def\lheader{\mainfont\the\pageno\eightrm\qquad\rhead
+  \hfill\title\qquad\tensy x\mainfont\topmark} % top line on left-hand pages
+\def\rheader{\tensy x\mainfont\topmark\eightrm\qquad\title\hfill
+  \rhead\qquad\mainfont\the\pageno} % top line on right-hand pages
 \let\page=\pagebody \raggedbottom
 % \def\page{\box255 }\normalbottom % faster, but loses plain TeX footnotes
 \def\normaloutput#1#2#3{\ifodd\pageno\hoffset=\pageshift\fi
@@ -423,9 +422,10 @@
   \message{Table of contents:}
   \topofcontents \startpdf
   \line{\hfil Section\hbox to3em{\hss Page}}
-  \def\Z##1##2##3{\line{\ignorespaces##1
-      \rm\leaders\hbox to .5em{.\hfil}\hfil
-      \ \ifacro\pdflink{##2}{\romannumeral##2}\else##2\fi
-      \hbox to3em{\hss##3}}}
+  \let\Z=\contentsline
   \readcontents\relax % read the contents info
   \botofcontents \end} % print the contents page(s) and terminate
+\def\contentsline#1#2#3{%
+    \line{\ignorespaces#1
+      \rm\leaders\hbox to .5em{.\hfil}\hfil
+      \ \ifacro\pdflink{#2}{\romannumeral#2}\else#2\fi\hbox to3em{\hss#3}}}
