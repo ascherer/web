@@ -335,8 +335,8 @@
 \def\magnify#1{\mag=#1\pagewidth=6.5truein\pageheight=8.7truein
   \fullpageheight=9truein\setpage}
 \def\setpage{\hsize\pagewidth\vsize\pageheight} % use after changing page size
-\def\contentsfile{CONTENTS} % file that gets table of contents info
-\def\readcontents{\input CONTENTS}
+\def\contentsfile{\jobname.toc} % file that gets table of contents info
+\def\readcontents{\input \jobname.toc}
 
 \newwrite\cont
 \output{\setbox0=\page % the first page is garbage
