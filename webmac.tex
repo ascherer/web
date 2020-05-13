@@ -235,12 +235,12 @@
 \def\lapstar{\rlap{*}}
 \def\stsec{\rightskip=0pt % get out of Pascal mode (cf. \P)
   \sfcode`;=1500 \pretolerance 200 \hyphenpenalty 50 \exhyphenpenalty 50
-  \noindent{\let\*=\lapstar\bf\secstar.\quad}%
+  \noindent{\let\*=\lapstar\bf\modstar.\quad}%
   \ifpdftex\smash{\raise\baselineskip\hbox to0pt{%
-     \let\*=\empty\pdfdest num \secstar fith}}%
+     \let\*=\empty\pdfdest num \modstar fith}}%
   \else\ifpdf\smash{\raise\baselineskip\hbox to0pt{%
      \let\*=\empty\special{%
-       pdf: dest (\romannumeral\secstar) [ @thispage /FitH @ypos ]}}}\fi\fi}
+       pdf: dest (\romannumeral\modstar) [ @thispage /FitH @ypos ]}}}\fi\fi}
 \let\startsection=\stsec
 \def\defin#1{\global\advance\ind by 2 \1\&{#1 } } % begin `define' or `format'
 \def\A{\note{See also section}} % xref for doubly defined section name
@@ -264,16 +264,16 @@
 \outer\def\N#1.#2.{% beginning of starred section
   \ifacro{\toksF={}\makeoutlinetoks#2\outlinedone\outlinedone}\fi
   \def\rhead{\uppercase{\ignorespaces#2}}\MN#1.\vfil\eject
-  \message{*\secno} % progress report
-  \edef\next{\write\cont{\Z{#2}{\secno}% write to contents file
+  \message{*\modno} % progress report
+  \edef\next{\write\cont{\Z{#2}{\modno}% write to contents file
    {\noexpand\the\pageno}}}\next % \Z{title}{sec}{page}
   \ifpdf\special{pdf: outline 0 << /Title (\the\toksE) /Dest
     [ @thispage /FitH @ypos ] >>}\fi
   \ifon\startsection{\bf#2.\quad}\ignorespaces}
 \def\MN#1.{\par % common code for \M, \N
-  {\xdef\secstar{#1}\let\*=\empty\xdef\secno{#1}}% remove \* from section name
-  \ifx\secno\secstar \onmaybe \else\ontrue \fi
-  \mark{\secno}}
+  {\xdef\modstar{#1}\let\*=\empty\xdef\modno{#1}}% remove \* from section name
+  \ifx\modno\modstar \onmaybe \else\ontrue \fi
+  \mark{\modno}}
 \def\O#1{\hbox{\rm\char'23\kern-.2em\it#1\/\kern.05em}} % octal constant
 \def\P{\rightskip=0pt plus 100pt minus 10pt % go into Pascal mode
   \sfcode`;=3000
@@ -392,7 +392,7 @@
   \def\:{\par\hangindent 2em}\let\*=*\let\.=\ttentry
   \ifacro \def\outsecname{Names of the sections} \let\Xpdf\X
   \ifpdftex \pdfdest name {NOS} fith
-    \pdfoutline goto name {NOS} count -\secno {\outsecname}
+    \pdfoutline goto name {NOS} count -\modno {\outsecname}
     \def\X##1:##2\X{\Xpdf##1:##2\X \firstsecno##1.%
       {\toksF={}\makeoutlinetoks##2\outlinedone\outlinedone}%
       \pdfoutline goto num \the\toksA \expandafter{\the\toksE}}
