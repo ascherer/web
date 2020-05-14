@@ -166,9 +166,9 @@
    \else  % we don't have a control sequence, it's an ordinary char
     \ifx/\nxt \addF{\string\/}% quote chars special to PDF with backslash
     \else\ifx(\nxt \addF{\string\(}\else\ifx)\nxt \addF{\string\)}%
-    \else\ifx[\nxt \addF{\string\[}\else\ifx]\nxt \addF{\string\]}%
+    %\else\ifx[\nxt \addF{\string\[}\else\ifx]\nxt \addF{\string\]}%
     \else\expandafter\makeolproctokchar\meaning\nxt
-   \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
+   \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi%\fi\fi
   \next
 }
 \def\makeolproctokchar#1 #2 #3{\addF{#3}}
