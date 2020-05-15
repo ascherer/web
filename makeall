@@ -36,10 +36,8 @@ for f in $KNUTHWARE/*.web
 do
 	echo $f
 	if $CHANGES
-	then
-		weave $f $KNUTHWARE/$(basename $f .web).ch
-	else
-		weave $f
+	then weave $f $KNUTHWARE/$(basename $f .web).ch
+	else weave $f
 	fi
 	f=$(basename $f .web)
 	case $f in
