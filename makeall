@@ -1,9 +1,10 @@
 #!/bin/sh
 # without '-e', because some WEB codes are buggy
 
-SHRTOPTS=nt:
-LONGOPTS=new,tex:
+SHRTOPTS=cnt:
+LONGOPTS=changes,new,tex:
 
+CHANGES=false
 TEX=tex
 
 getopt -T >/dev/null
@@ -20,7 +21,8 @@ else echo "Failed to parse options." >&2; exit 1; fi
 while true
 do
 	case "$1" in
-		-n | --new ) export TEXINPUTS="/opt/github/web//:" ; shift ;;
+		-c | --changes ) CHANGES=true; shift ;;
+		-n | --new ) export TEXINPUTS="/opt/github/web//:"; shift ;;
 		-t | --tex ) TEX="$2"; shift 2 ;;
 		-- ) shift; break ;;
 		* ) break ;;
@@ -33,7 +35,12 @@ KNUTHWARE=$(dirname $KNUTHWHERE)
 for f in $KNUTHWARE/*.web
 do
 	echo $f
-	weave $f
+	if $CHANGES
+	then
+		weave $f $KNUTHWARE/$(basename $f .web).ch
+	else
+		weave $f
+	fi
 	f=$(basename $f .web)
 	case $f in
 		# purge conflict between bibtex.web and webmac.tex
