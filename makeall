@@ -1,0 +1,44 @@
+#!/bin/sh
+# without '-e', because some WEB codes are buggy
+
+SHRTOPTS=nt:
+LONGOPTS=new,tex:
+
+TEX=tex
+
+getopt -T >/dev/null
+
+if [ $? -eq 4 ] # Check for Linux-getopt with extensions
+then OPTS=$(getopt -n downloadable-programs -o $SHRTOPTS -l $LONGOPTS -- "$@")
+else OPTS=$(getopt $SHRTOPTS $*)
+fi
+
+if [ $? -eq 0 ] # Check return code from getopt
+then eval set -- "$OPTS"
+else echo "Failed to parse options." >&2; exit 1; fi
+
+while true
+do
+	case "$1" in
+		-n | --new ) export TEXINPUTS="/opt/github/web//:" ; shift ;;
+		-t | --tex ) TEX="$2"; shift 2 ;;
+		-- ) shift; break ;;
+		* ) break ;;
+	esac
+done
+
+KNUTHWHERE=$(locate /bibtex.web)
+KNUTHWARE=$(dirname $KNUTHWHERE)
+
+for f in $KNUTHWARE/*.web
+do
+	echo $f
+	weave $f
+	f=$(basename $f .web)
+	case $f in
+		# purge conflict between bibtex.web and webmac.tex
+		# 'E' no longer free to be active character
+		"bibtex") sed -i -e "70,77d" $f.tex ;;
+	esac
+	$TEX $f
+done
