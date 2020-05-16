@@ -1,10 +1,11 @@
 #!/bin/sh
 # without '-e', because some WEB codes are buggy
 
-SHRTOPTS=cnt:
-LONGOPTS=changes,new,tex:
+SHRTOPTS=cnpt:
+LONGOPTS=changes,new,pdftocfront,tex:
 
 CHANGES=false
+PDFTOCFRONT=false
 TEX=tex
 
 getopt -T >/dev/null
@@ -23,6 +24,7 @@ do
 	case "$1" in
 		-c | --changes ) CHANGES=true; shift ;;
 		-n | --new ) export TEXINPUTS="/opt/github/web//:"; shift ;;
+		-p | --pdftocfront ) PDFTOCFRONT=true; shift ;;
 		-t | --tex ) TEX="$2"; shift 2 ;;
 		-- ) shift; break ;;
 		* ) break ;;
@@ -45,5 +47,12 @@ do
 		# 'E' no longer free to be active character
 		"bibtex") sed -i -e "70,77d" $f.tex ;;
 	esac
+	if $PDFTOCFRONT
+	then
+		TEXINPUTS="/opt/github/cwebbin//:$TEXINPUTS"
+		sed -i -e "1 s/\(webmac\)/\1 \\\\input pdfwebtocfront/" $f.tex
+	fi
+	echo $TEXINPUTS
 	$TEX $f
+	#exit
 done
