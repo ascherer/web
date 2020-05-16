@@ -23,7 +23,7 @@ while true
 do
 	case "$1" in
 		-c | --changes ) CHANGES=true; shift ;;
-		-n | --new ) export TEXINPUTS="/opt/github/web//:"; shift ;;
+		-n | --new ) export TEXINPUTS=".:/opt/github/web//:"; shift ;;
 		-p | --pdftocfront ) PDFTOCFRONT=true; shift ;;
 		-t | --tex ) TEX="$2"; shift 2 ;;
 		-- ) shift; break ;;
@@ -49,10 +49,9 @@ do
 	esac
 	if $PDFTOCFRONT
 	then
-		TEXINPUTS="/opt/github/cwebbin//:$TEXINPUTS"
-		sed -i -e "1 s/\(webmac\)/\1 \\\\input pdfwebtocfront/" $f.tex
+		export TEXINPUTS=".:/opt/github/cwebbin//:"$TEXINPUTS
+		sed -i -e "1 s/\(webmac\)/\1\n\\\\input pdfwebtocfront/" $f.tex
 	fi
-	echo $TEXINPUTS
 	$TEX $f
 	#exit
 done
