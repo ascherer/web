@@ -46,6 +46,14 @@ do
 		# purge conflict between bibtex.web and webmac.tex
 		# 'E' no longer free to be active character
 		"bibtex") sed -i -e "70,77d" $f.tex ;;
+		# amend '\N' redefinition for PDF outlines; rerun weave
+		"mf"|"tex")
+			if $CHANGES
+			then tie -m $f.web $KNUTHWARE/$f.web \
+					/opt/github/web/texmf-pdf.ch
+				weave $f $KNUTHWARE/$f.ch
+			else weave $KNUTHWARE/$f /opt/github/web/texmf-pdf.ch
+			fi ;;
 	esac
 	if $PDFTOCFRONT
 	then
