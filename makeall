@@ -48,17 +48,24 @@ do
 		# purge conflict between bibtex.web and webmac.tex
 		# 'E' no longer free to be active character
 		"bibtex") sed -i -e "70,77d" $f.tex ;;
-		# amend '\N' redefinition for PDF outlines; rerun weave
+		# amend '\N' redefinition for PDF outlines
 		"mf"|"tex")
 			if $NEW
 			then
-				if $CHANGES
-				then tie -m $f.web $KNUTHWARE/$f.web \
-						/opt/github/web/texmf-pdf.ch
-					weave $f $KNUTHWARE/$f.ch
-				else weave $KNUTHWARE/$f \
-					/opt/github/web/texmf-pdf.ch
-				fi
+				cat > texmf-pdf.patch << FI
+  \ifacro{\toksF={}\makeoutlinetoks{[#2] #3}\outlinedone\outlinedone}\fi
+FI
+				sed -i -e "/\\\\outer\\\\def\\\\N.*/ {
+					r texmf-pdf.patch
+					}" $f.tex
+				cat > texmf-pdf.patch << FI
+  \ifpdf\special{pdf: outline 0 << /Title (\the\toksE) /Dest
+    [ @thispage /FitH @ypos ] >>}\fi
+FI
+				sed -i -e "/  \\\\edef\\\\next.*/ {
+					r texmf-pdf.patch
+					}" $f.tex
+				rm texmf-pdf.patch
 			fi ;;
 	esac
 	if $PDFTOCFRONT
