@@ -5,6 +5,7 @@ SHRTOPTS=cnpt:
 LONGOPTS=changes,new,pdftocfront,tex:
 
 CHANGES=false
+NEW=false
 PDFTOCFRONT=false
 TEX=tex
 
@@ -23,7 +24,8 @@ while true
 do
 	case "$1" in
 		-c | --changes ) CHANGES=true; shift ;;
-		-n | --new ) export TEXINPUTS=".:/opt/github/web//:"; shift ;;
+		-n | --new ) NEW=true; export TEXINPUTS=".:/opt/github/web//:"
+			shift ;;
 		-p | --pdftocfront ) PDFTOCFRONT=true; shift ;;
 		-t | --tex ) TEX="$2"; shift 2 ;;
 		-- ) shift; break ;;
@@ -48,11 +50,15 @@ do
 		"bibtex") sed -i -e "70,77d" $f.tex ;;
 		# amend '\N' redefinition for PDF outlines; rerun weave
 		"mf"|"tex")
-			if $CHANGES
-			then tie -m $f.web $KNUTHWARE/$f.web \
+			if $NEW
+			then
+				if $CHANGES
+				then tie -m $f.web $KNUTHWARE/$f.web \
+						/opt/github/web/texmf-pdf.ch
+					weave $f $KNUTHWARE/$f.ch
+				else weave $KNUTHWARE/$f \
 					/opt/github/web/texmf-pdf.ch
-				weave $f $KNUTHWARE/$f.ch
-			else weave $KNUTHWARE/$f /opt/github/web/texmf-pdf.ch
+				fi
 			fi ;;
 	esac
 	if $PDFTOCFRONT
