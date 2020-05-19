@@ -248,8 +248,8 @@
   \hfill\title\qquad\tensy x\mainfont\topmark} % top line on left-hand pages
 \def\rheader{\tensy x\mainfont\topmark\eightrm\qquad\title\hfill
   \rhead\qquad\mainfont\the\pageno} % top line on right-hand pages
-\let\page=\pagebody \raggedbottom
-% \def\page{\box255 }\normalbottom % faster, but loses plain TeX footnotes
+%\let\page=\pagebody \raggedbottom % cweb 3.2 uses this instead of next line
+\def\page{\box255 }\normalbottom % faster, but loses plain TeX footnotes
 \def\normaloutput#1#2#3{\ifodd\pageno\hoffset=\pageshift\fi
  \shipout\vbox{
   \vbox to\fullpageheight{
