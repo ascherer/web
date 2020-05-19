@@ -345,7 +345,8 @@
       \special{pdf: outline 0 << /Title (\the\toksE)
         /A << /S /GoTo /D (\romannumeral\the\toksA) >> >>}}
   \fi\fi\fi}
-\def\makebookmarks{\let\Z=\writebookmarkline \readcontents\relax}
+\def\makebookmarks{\def\?##1]{[##1]}%
+  \let\Z=\writebookmarkline \readcontents\relax}
 \def\expnumber#1{\expandafter\ifx\csname#1\endcsname\relax 0%
   \else \csname#1\endcsname \fi} % Petr Olsak's macros from texinfo.tex
 \def\advancenumber#1{\countA=\expnumber{#1}\relax \advance\countA by1
