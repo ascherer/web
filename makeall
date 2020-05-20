@@ -86,6 +86,7 @@ FI
 	then
 		export TEXINPUTS=".:/opt/github/cwebbin//:"$TEXINPUTS
 		sed -i -e "1 s/\(webmac\)/\1\n\\\\input pdfwebtocfront/" $f.tex
+		$TEX $f.tex # run TeX twice
 	fi
 	$TEX $f
 done
