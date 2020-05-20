@@ -1,8 +1,7 @@
-#!/bin/sh
-# without '-e', because some WEB codes are buggy
+#!/bin/sh -e
 
-SHRTOPTS=cnpt:
 LONGOPTS=changes,new,pdftocfront,tex:
+SHRTOPTS=cnpt:
 
 CHANGES=false
 NEW=false
@@ -18,7 +17,8 @@ fi
 
 if [ $? -eq 0 ] # Check return code from getopt
 then eval set -- "$OPTS"
-else echo "Failed to parse options." >&2; exit 1; fi
+else echo "Failed to parse options." >&2; exit 1
+fi
 
 while true
 do
@@ -44,11 +44,13 @@ do
 	else weave $f
 	fi
 	f=$(basename $f .web)
+	sed -i -e "s/\\\\def\\\\{F}/\\\\titlefalse/" $f
 	case $f in
 		# purge conflict between bibtex.web and webmac.tex
 		# 'E' no longer free to be active character
 		"bibtex") sed -i -e "70,77d" $f.tex ;;
 		# amend '\N' redefinition for PDF outlines
+		# in mf.tex and tex.tex
 		"mf"|"tex")
 			if $NEW
 			then
