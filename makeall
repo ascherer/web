@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/sh
 
 LONGOPTS=changes,new,pdftocfront,tex:
 SHRTOPTS=cnpt:
@@ -44,7 +44,9 @@ do
 	else weave $f
 	fi
 	f=$(basename $f .web)
-	sed -i -e "s/\\\\def\\\\{F}/\\\\titlefalse/" $f
+	# replace former convention to indicate "not a title page"
+	# to include page headers for table-of-contents
+	sed -i -e "s/\\\\def\\\\titlepage{F}/\\\\titlefalse/" $f.tex
 	case $f in
 		# purge conflict between bibtex.web and webmac.tex
 		# 'E' no longer free to be active character
@@ -76,5 +78,4 @@ FI
 		sed -i -e "1 s/\(webmac\)/\1\n\\\\input pdfwebtocfront/" $f.tex
 	fi
 	$TEX $f
-	#exit
 done
