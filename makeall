@@ -59,6 +59,8 @@ do
 		"pktogf"|"pktype" ) sed -i -e \
 			"s/contentspagenumber{0}/contentspagenumber{1}/" \
 			$f.tex ;;
+		# make room for new material in weave.web
+		"tangle" ) sed -i -e "s/number{123}/number{125}/" $f.tex ;;
 		# amend '\N' redefinition for PDF outlines
 		# in mf.tex and tex.tex
 		"mf"|"tex")
