@@ -50,7 +50,15 @@ do
 	case $f in
 		# purge conflict between bibtex.web and webmac.tex
 		# 'E' no longer free to be active character
-		"bibtex") sed -i -e "70,77d" $f.tex ;;
+		# fix table-of-contents page for bibtex, patgen, pkt*
+		"bibtex") sed -i -e "s/titlefalse/titletrue/" \
+			-e "70,77d" $f.tex ;;
+		"patgen" ) sed -i -e \
+			"s/\\\\line/\\\\titlefalse\\\\def\\\\rheader/" \
+			$f.tex ;;
+		"pktogf"|"pktype" ) sed -i -e \
+			"s/contentspagenumber{0}/contentspagenumber{1}/" \
+			$f.tex ;;
 		# amend '\N' redefinition for PDF outlines
 		# in mf.tex and tex.tex
 		"mf"|"tex")
