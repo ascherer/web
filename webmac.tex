@@ -202,9 +202,9 @@
 \let\L=\le % less than or equal sign
 \outer\def\M#1.{\MN#1.\ifon\vfil\penalty-100\vfilneg % beginning of section
   \vskip\intersecskip\startsection\ignorespaces}
-\outer\def\N#1.#2.{% beginning of starred section
+\outer\def\N#1.#2.{\MN#1.\vfil\eject % beginning of starred section
   \ifacro{\toksF={}\makeoutlinetoks#2\outlinedone\outlinedone}\fi
-  \def\rhead{\uppercase{\ignorespaces#2}}\MN#1.\vfil\eject
+  \def\rhead{\uppercase{\ignorespaces#2}} % define running headline
   \message{*\modno} % progress report
   \edef\next{\write\cont{\Z{#2}{\modno}% write to contents file
    {\noexpand\the\pageno}}}\next % \Z{title}{sec}{page}
@@ -251,11 +251,11 @@
 %\let\page=\pagebody \raggedbottom % cweb 3.2 uses this instead of next line
 \def\page{\box255 }\normalbottom % faster, but loses plain TeX footnotes
 \def\normaloutput#1#2#3{\ifodd\pageno\hoffset=\pageshift\fi
- \shipout\vbox{
-  \vbox to\fullpageheight{
-  \iftitle\global\titlefalse
-  \else\hbox to\pagewidth{\vbox to10pt{}\ifodd\pageno #3\else#2\fi}\fi
-  \vfill#1}} % parameter #1 is the page itself
+  \shipout\vbox{
+    \vbox to\fullpageheight{
+      \iftitle\global\titlefalse
+      \else\hbox to\pagewidth{\vbox to10pt{}\ifodd\pageno #3\else#2\fi}\fi
+      \vfill#1}} % parameter #1 is the page itself
   \global\advance\pageno by1}
 
 \def\rhead{\.{WEB} OUTPUT} % this running head is reset by starred sections
