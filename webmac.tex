@@ -136,6 +136,7 @@
 \def\sanitizecommand#1#2{\addtokens\usersanitizer
        {\noexpand\dosanitizecommand\noexpand#1{#2}}}
 \def\dosanitizecommand#1#2{\ifx\nxt#1\addF{#2}\fi}
+\sanitizecommand\to{..} % a trivial example
 
 \catcode`\[=1 \catcode`\]=2 \catcode`\{=12 \catcode`\}=12
   \def\lbchar[{]  \def\rbchar[}]
