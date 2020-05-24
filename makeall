@@ -44,6 +44,11 @@ do
 	else weave $f
 	fi
 	f=$(basename $f .web)
+	# use extended macros for TeX Live PDF documentation
+	if $NEW
+	then
+		sed -i -e "1 s/\\\\input webmac/\\\\input tlwebmac/" $f.tex
+	fi
 	# replace former convention to indicate "not a title page"
 	# to include page headers for table-of-contents
 	sed -i -e "s/\\\\def\\\\titlepage{F}/\\\\titlefalse/" $f.tex
