@@ -130,3 +130,17 @@ FI
 
 	$TEX $f
 done
+
+if $PDFTOCFRONT
+then
+	pax vftovp.pdf vptovf.pdf -wzf etc.tar.gz -s ,^,etc/,
+	pax mf.pdf -wzf mf.tar.gz -s ,^,mf/,
+	pax gftodvi.pdf gftopk.pdf gftype.pdf mft.pdf -wzf mfware.tar.gz -s ,^,mfware/,
+	pax tex.pdf -wzf tex.tar.gz -s ,^,tex/,
+	pax dvitype.pdf pltotf.pdf pooltype.pdf tftopl.pdf -wzf texware.tar.gz -s ,^,texware/,
+	pax tangle.pdf weave.pdf -wzf web.tar.gz -s ,^,web/,
+	pax bibtex.pdf -wzf bibtex.tar.gz -s ,^,bibtex/,
+	pax dvicopy.pdf patgen.pdf pktogf.pdf pktype.pdf -wzf other.tar.gz -s ,^,other/,
+	pax pdftex.pdf -wzf pdftex.tar.gz -s ,^,pdftex/,
+	pax xetex.pdf -wzf xetex.tar.gz -s ,^,xetex/,
+fi
