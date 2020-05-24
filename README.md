@@ -5,7 +5,7 @@ urmother of all things 'literate programming'.
 
 | TeX macros      | TeX engine                     | Notes about resulting PDF                         |
 | --------------- | ------------------------------ | ------------------------------------------------- |
-| `webmac.tex`    | plain TeX                      | without clickable links, without outlines         |
+| `tlwebmac.tex`  | plain TeX                      | without clickable links, without outlines         |
 |                 | `tex "\let\pdf+"`, `xdvipdfmx` | with clickable links, with outlines               |
 |                 | pdfTeX                         | with clickable links, with outlines               |
 |                 | XeTeX                          | with clickable links, with outlines               |
