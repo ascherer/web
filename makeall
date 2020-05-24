@@ -38,36 +38,36 @@ KNUTHWARE=$(dirname $KNUTHWHERE)
 
 for f in $KNUTHWARE/*.web
 do
-	echo $f
 	if $CHANGES
 	then weave $f $KNUTHWARE/$(basename $f .web).ch
 	else weave $f
 	fi
 	f=$(basename $f .web)
+
 	# use extended macros for TeX Live PDF documentation
 	if $NEW
 	then
 		sed -i -e "1 s/\\\\input webmac/\\\\input tlwebmac/" $f.tex
 	fi
+
 	# replace former convention to indicate "not a title page"
 	# to include page headers for table-of-contents
 	sed -i -e "s/\\\\def\\\\titlepage{F}/\\\\titlefalse/" $f.tex
+
+	# special treatment for individual WEB programs
 	case $f in
 		# purge conflict between bibtex.web and webmac.tex
 		# 'E' no longer free to be active character
-		# fix table-of-contents page for bibtex, patgen, pkt*
+		# fix table-of-contents page for bibtex
 		"bibtex") sed -i -e "s/titlefalse/titletrue/" \
 			-e "70,77d" $f.tex ;;
-		"patgen" ) sed -i -e \
-			"s/\\\\line/\\\\titlefalse\\\\def\\\\rheader/" \
-			$f.tex ;;
-		"pktogf"|"pktype" ) sed -i -e \
-			"s/contentspagenumber{0}/contentspagenumber{1}/" \
-			$f.tex ;;
+
 		# make room for new material in weave.web
 		"tangle" ) sed -i -e "s/number{123}/number{125}/" $f.tex ;;
-		# amend '\N' redefinition for PDF outlines
-		# in mf.tex and tex.tex
+
+		# amend '\N' redefinition for PDF outlines in mf.tex and
+		# tex.tex (also pdftex.web and xetex.web); depends on the
+		# extended 'tlwebmac.tex' macros
 		"mf"|"tex")
 			if $NEW
 			then
@@ -87,11 +87,14 @@ FI
 				rm texmf-pdf.patch
 			fi ;;
 	esac
+
 	if $PDFTOCFRONT
 	then
+		# shift table-of-contents pages to the front in PDF
 		export TEXINPUTS=".:/opt/github/cwebbin//:"$TEXINPUTS
 		sed -i -e "1 s/\(webmac\)/\1\n\\\\input pdfwebtocfront/" $f.tex
 		$TEX $f.tex # run TeX twice
 	fi
+
 	$TEX $f
 done
