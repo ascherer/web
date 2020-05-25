@@ -27,3 +27,5 @@ created by `weave`.  From there, all depends on the “TeX engine” you use:
 `tex "\let\pdf+\input…"`, `pdftex`, and `xetex` create PDF output with
 clickable links and bookmarks (depending on your PDF viewer).
 
+The `pwebmac` package is free software and may be used and distributed
+according to the MIT License as shipped with the original distribution.
