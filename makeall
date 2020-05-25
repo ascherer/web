@@ -62,7 +62,7 @@ do
 	# use extended macros for TeX Live PDF documentation
 	if $NEW
 	then
-		sed -i -e "1 s/\\\\input webmac/\\\\input tlwebmac/" $f.tex
+		sed -i -e "1 s/\\\\input webmac/\\\\input pwebmac/" $f.tex
 	fi
 
 	# replace former convention to indicate "not a title page"
@@ -82,19 +82,9 @@ do
 
 		# amend '\N' redefinition for PDF outlines in mf.tex and
 		# tex.tex (also pdftex.web and xetex.web); depends on the
-		# extended 'tlwebmac.tex' macros
+		# extended 'pwebmac.tex' macros
 		"mf"|"tex"|"pdftex"|"xetex" )
-			if test "pdftex" = $f
-			then
-				# pdfTeX has a looong table-of-contents
-				cat > pdftex.patch << FI
-  \advance\vsize by 4\baselineskip
-  \ifacro\advance\pdfpageheight by 4\baselineskip\fi
-FI
-				sed -i -e "/\\\\def\\\\topofcontents.*/ {
-					r pdftex.patch
-					}"  $f.tex
-			elif test "xetex" = $f
+			if [ "xetex" = $f ]
 			then
 				# purge obsolete macros from XeTeX
 				sed -i -e "/\\\\input xewebmac/d" $f.tex
@@ -103,6 +93,17 @@ FI
 			fi
 			if $NEW
 			then
+				if [ "pdftex" = $f ]
+				then
+					# pdfTeX has a looong table-of-contents
+					cat > pdftex.patch << FI
+  \advance\vsize by 4\baselineskip
+  \ifacro\advance\pdfpageheight by 4\baselineskip\fi
+FI
+					sed -i -e "/\\\\def\\\\topofcontents.*/ {
+						r pdftex.patch
+						}"  $f.tex
+				fi
 				cat > texmf-pdf.patch << FI
   \ifacro{\toksF={}\makeoutlinetoks{[#2] #3}\outlinedone\outlinedone}\fi
 FI
@@ -133,14 +134,18 @@ done
 
 if $PDFTOCFRONT
 then
-	pax vftovp.pdf vptovf.pdf -wzf etc.tar.gz -s ,^,etc/,
-	pax mf.pdf -wzf mf.tar.gz -s ,^,mf/,
-	pax gftodvi.pdf gftopk.pdf gftype.pdf mft.pdf -wzf mfware.tar.gz -s ,^,mfware/,
-	pax tex.pdf -wzf tex.tar.gz -s ,^,tex/,
-	pax dvitype.pdf pltotf.pdf pooltype.pdf tftopl.pdf -wzf texware.tar.gz -s ,^,texware/,
-	pax tangle.pdf weave.pdf -wzf web.tar.gz -s ,^,web/,
-	pax bibtex.pdf -wzf bibtex.tar.gz -s ,^,bibtex/,
-	pax dvicopy.pdf patgen.pdf pktogf.pdf pktype.pdf -wzf other.tar.gz -s ,^,other/,
-	pax pdftex.pdf -wzf pdftex.tar.gz -s ,^,pdftex/,
-	pax xetex.pdf -wzf xetex.tar.gz -s ,^,xetex/,
+	# create tarballs for publication
+	pax vftovp.pdf vptovf.pdf -wvzf etc.tar.gz -s ,^,etc/,
+	pax mf.pdf -wvzf mf.tar.gz -s ,^,mf/,
+	pax gftodvi.pdf gftopk.pdf gftype.pdf mft.pdf \
+		-wvzf mfware.tar.gz -s ,^,mfware/,
+	pax tex.pdf -wvzf tex.tar.gz -s ,^,tex/,
+	pax dvitype.pdf pltotf.pdf pooltype.pdf tftopl.pdf \
+		-wvzf texware.tar.gz -s ,^,texware/,
+	pax tangle.pdf weave.pdf -wvzf web.tar.gz -s ,^,web/,
+	pax bibtex.pdf -wvzf bibtex.tar.gz -s ,^,bibtex/,
+	pax dvicopy.pdf patgen.pdf pktogf.pdf pktype.pdf \
+		-wvzf other.tar.gz -s ,^,other/,
+	pax pdftex.pdf -wvzf pdftex.tar.gz -s ,^,pdftex/,
+	pax xetex.pdf -wvzf xetex.tar.gz -s ,^,xetex/,
 fi
