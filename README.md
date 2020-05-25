@@ -1,23 +1,29 @@
-# software archæology
+# pwebmac – Consolidated WEB macros for DVI and PDF output
 
-this 'project' serves as a playground for [web](https://ctan.org/pkg/web), the
-urmother of all things 'literate programming'.
+The original [WEB](https://ctan.org/pkg/web) system by Donald Knuth has the
+macros `webmac.tex` that produce DVI output only; for historic reasons, it
+will never be modified (apart from catastrophic errors).
+Hàn Thế Thành has modified these macros in his `pdfwebmac.tex` for PDF output
+(only) with [pdfTeX](https://ctan.org/pkg/pdftex).
+Jonathan Kew's [XeTeX](https://ctan.org/pkg/xetex) has similar macros
+`xewebmac.tex` by Khaled Hosny that _modify_ `webmac.tex` for PDF output;
+these macros can only be used with a specific “TeX engine” each.
 
-the main goal is to integrate canonical `webmac.tex` with the extended PDF
-macros `pdfwebmac.tex` and `xewebmac.tex`, along the lines of `cwebmac.tex`.
-the result is called `pwebmac.tex` and will probably be used to format the
-next (and final?) versions of all main WEB programs for publication in
-TeX Live 2021.
+The present `pwebmac` package integrates these three WEB macro files similar
+to `cwebmac.tex` in Silvio Levy's and Don Knuth's
+[CWEB](https://ctan.org/pkg/cweb) system, so `pwebmac.tex` can be used with
+“plain TeX,” “pdfTeX,” and “XeTeX” alike.
 
-| TeX macros      | TeX engine                     | Notes about resulting PDF                         |
-| --------------- | ------------------------------ | ------------------------------------------------- |
-| `pwebmac.tex`  | plain TeX                      | without clickable links, without outlines         |
-|                 | `tex "\let\pdf+"`, `xdvipdfmx` | with clickable links, with outlines               |
-|                 | pdfTeX                         | with clickable links, with outlines               |
-|                 | XeTeX                          | with clickable links, with outlines               |
-| `pdfwebmac.tex` | plain TeX                      | **Undefined control sequence `\pdfoutput`**       |
-|                 | pdfTeX                         | with clickable links, with outlines               |
-|                 | XeTeX                          | **Undefined control sequence `\pdfoutput`**       |
-| `xewebmac.tex`  | plain TeX                      | **Undefined control sequence `\ifdefined`**       |
-|                 | pdfTeX                         | **without** clickable links, **without** outlines<br/>**Non-PDF special ignored** |
-|                 | XeTeX                          | with clickable links, with outlines               |
+Its initial application is the production of PDF files for all major WEB
+programs for “TeX and friends” as distributed in
+[TeX Live](https://www.tug.org/texlive).  For this purpose, the shell script
+`makeall` was whipped together; it provides various commandline options and
+works around several “quirks” in the WEB sources.
+
+WEB programmers who want to use `pwebmac.tex` instead of the default
+`webmac.tex` in their programs have to change the first line in the TeX file
+created by `weave`.  From there, all depends on the “TeX engine” you use:
+“plain TeX” by default creates DVI output, “plain TeX” with the invocation
+`tex "\let\pdf+\input…"`, `pdftex`, and `xetex` create PDF output with
+clickable links and bookmarks (depending on your PDF viewer).
+
