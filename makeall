@@ -24,8 +24,7 @@ while true
 do
 	case "$1" in
 		-c | --changes ) CHANGES=true; shift ;;
-		-n | --new ) NEW=true; export TEXINPUTS=".:/opt/github/web//:"
-			shift ;;
+		-n | --new ) NEW=true; shift ;;
 		-p | --pdftocfront ) PDFTOCFRONT=true; shift ;;
 		-t | --tex ) TEX="$2"; shift 2 ;;
 		-- ) shift; break ;;
@@ -74,7 +73,7 @@ do
 		# purge conflict between bibtex.web and webmac.tex
 		# 'E' no longer free to be active character
 		# fix table-of-contents page for bibtex
-		"bibtex") sed -i -e "s/titlefalse/titletrue/" \
+		"bibtex" ) sed -i -e "s/titlefalse/titletrue/" \
 			-e "70,77d" $f.tex ;;
 
 		# make room for new material in weave.web
@@ -124,6 +123,7 @@ FI
 	if $PDFTOCFRONT
 	then
 		# shift table-of-contents pages to the front in PDF
+		# TODO: purge the TEXINPUTS line when macros are 'official'
 		export TEXINPUTS=".:/opt/github/cwebbin//:"$TEXINPUTS
 		sed -i -e "1 s/\(webmac\)/\1\n\\\\input pdfwebtocfront/" $f.tex
 		$TEX $f.tex # run TeX twice
