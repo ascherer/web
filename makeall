@@ -42,14 +42,14 @@ for f in \
 do
 	if $CHANGES
 	then
-		c=$(basename $f .web).ch
+		c=$(basename $f .web)
 		case $c in
-			"pdftex.ch"|"xetex.ch" )
+			"pdftex"|"xetex" )
 				c=$KNUTHWARE/$c
 				c=$(echo $c | sed -e 's?\(texk/\)?Work/\1?') ;;
 			* ) c=$KNUTHWARE/$c ;;
 		esac
-		weave $f $c
+		weave $f $c.ch
 		sed -i -e "s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse/" \
 			$(basename $f .web).tex
 	else
