@@ -1,12 +1,16 @@
 #!/bin/sh
+# Test driver for 'pwebmac.tex' in combination with various TeX engines.
+# Production tool for all major WEB programs in TeX Live (invoked as
+# './makeall --new --pdftocfront --tex={pdftex,xetex}').
+# Public domain.  Originally written by Andreas Scherer, 2020.
 
 LONGOPTS=changes,new,pdftocfront,tex:
 SHRTOPTS=cnpt:
 
-CHANGES=false
-NEW=false
-PDFTOCFRONT=false
-TEX=tex
+CHANGES=false # apply main changefile to WEB source
+NEW=false # '\input pwebmac' instead of '\input webmac'
+PDFTOCFRONT=false # push table-of-contents to front of PDF output
+TEX=tex # or 'pdftex' or 'xetex'
 
 getopt -T >/dev/null
 
@@ -103,6 +107,7 @@ FI
 						r pdftex.patch
 						}"  $f.tex
 				fi
+				# active links in PDF outlines/bookmarks
 				cat > texmf-pdf.patch << FI
   \ifacro{\toksF={}\makeoutlinetoks{[#2] #3}\outlinedone\outlinedone}\fi
 FI
@@ -149,3 +154,5 @@ then
 	pax pdftex.pdf -wvzf pdftex.tar.gz -s ,^,pdftex/,
 	pax xetex.pdf -wvzf xetex.tar.gz -s ,^,xetex/,
 fi
+
+exit 0
