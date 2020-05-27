@@ -128,8 +128,6 @@ FI
 	if $PDFTOCFRONT
 	then
 		# shift table-of-contents pages to the front in PDF
-		# TODO: purge the TEXINPUTS line when macros are 'official'
-		export TEXINPUTS=".:/opt/github/cwebbin//:"$TEXINPUTS
 		sed -i -e "1 s/\(webmac\)/\1\n\\\\input pdfwebtocfront/" $f.tex
 		$TEX $f.tex # run TeX twice
 	fi
