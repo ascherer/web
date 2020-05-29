@@ -215,7 +215,7 @@
 \def\MN#1.{\par % common code for \M, \N
   {\xdef\modstar{#1}\let\*=\empty\xdef\modno{#1}}% remove \* from section name
   \ifx\modno\modstar \onmaybe \else\ontrue \fi
-  \mark{\modno}}
+  \mark{{{\tensy x}\modno}}}
 \def\O#1{\hbox{\rm\char'23\kern-.2em\it#1\/\kern.05em}} % octal constant
 \def\P{\rightskip=0pt plus 100pt minus 10pt % go into Pascal mode
   \sfcode`;=3000
@@ -246,8 +246,8 @@
 \def\onmaybe{\let\ifon=\maybe} \let\maybe=\iftrue
 \newif\ifon \newif\iftitle \newif\ifpagesaved
 \def\lheader{\mainfont\the\pageno\eightrm\qquad\rhead
-  \hfill\title\qquad\tensy x\mainfont\topmark} % top line on left-hand pages
-\def\rheader{\tensy x\mainfont\topmark\eightrm\qquad\title\hfill
+  \hfill\title\qquad\mainfont\topmark} % top line on left-hand pages
+\def\rheader{\mainfont\topmark\eightrm\qquad\title\hfill
   \rhead\qquad\mainfont\the\pageno} % top line on right-hand pages
 %\let\page=\pagebody \raggedbottom % cweb 3.2 uses this instead of next line
 \def\page{\box255 }\normalbottom % faster, but loses plain TeX footnotes
