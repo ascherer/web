@@ -215,7 +215,8 @@
 \def\MN#1.{\par % common code for \M, \N
   {\xdef\modstar{#1}\let\*=\empty\xdef\modno{#1}}% remove \* from section name
   \ifx\modno\modstar \onmaybe \else\ontrue \fi
-  \mark{{{\tensy x}\modno}}}
+  \mark{{{\tensy x}\modno}{\rhead}}}
+% each \mark is {section reference or null}{group title}
 \def\O#1{\hbox{\rm\char'23\kern-.2em\it#1\/\kern.05em}} % octal constant
 \def\P{\rightskip=0pt plus 100pt minus 10pt % go into Pascal mode
   \sfcode`;=3000
@@ -249,7 +250,9 @@
   \hfill\title\qquad\mainfont\topsecno} % top line on left-hand pages
 \def\rheader{\mainfont\topsecno\eightrm\qquad\title\hfill
   \rhead\qquad\mainfont\the\pageno} % top line on right-hand pages
-\def\topsecno{\topmark}
+\def\topsecno{\expandafter\takeone\topmark}
+\def\takeone#1#2{#1}
+\def\taketwo#1#2{#2}
 \def\nullsec{\eightrm\kern-2em} % the \kern-2em cancels \qquad in headers
 
 %\let\page=\pagebody \raggedbottom % cweb 3.2 uses this instead of next line
@@ -263,7 +266,7 @@
   \global\advance\pageno by1}
 
 \def\rhead{\.{WEB} OUTPUT} % this running head is reset by starred sections
-\mark{\noexpand\nullsec}
+\mark{\noexpand\nullsec{\rhead}}
 \def\title{\expandafter\uppercase\expandafter{\jobname}}
 \def\topofcontents{\centerline{\titlefont\title}\vskip.7in
   \vfill} % this material will start the table of contents page
