@@ -246,9 +246,12 @@
 \def\onmaybe{\let\ifon=\maybe} \let\maybe=\iftrue
 \newif\ifon \newif\iftitle \newif\ifpagesaved
 \def\lheader{\mainfont\the\pageno\eightrm\qquad\rhead
-  \hfill\title\qquad\mainfont\topmark} % top line on left-hand pages
-\def\rheader{\mainfont\topmark\eightrm\qquad\title\hfill
+  \hfill\title\qquad\mainfont\topsecno} % top line on left-hand pages
+\def\rheader{\mainfont\topsecno\eightrm\qquad\title\hfill
   \rhead\qquad\mainfont\the\pageno} % top line on right-hand pages
+\def\topsecno{\topmark}
+\def\nullsec{\eightrm\kern-2em} % the \kern-2em cancels \qquad in headers
+
 %\let\page=\pagebody \raggedbottom % cweb 3.2 uses this instead of next line
 \def\page{\box255 }\normalbottom % faster, but loses plain TeX footnotes
 \def\normaloutput#1#2#3{\ifodd\pageno\hoffset=\pageshift\fi
@@ -260,6 +263,7 @@
   \global\advance\pageno by1}
 
 \def\rhead{\.{WEB} OUTPUT} % this running head is reset by starred sections
+\mark{\noexpand\nullsec}
 \def\title{\expandafter\uppercase\expandafter{\jobname}}
 \def\topofcontents{\centerline{\titlefont\title}\vskip.7in
   \vfill} % this material will start the table of contents page
@@ -324,6 +328,7 @@
   \ifpdftex \makebookmarks \fi % added in Version 4.5
   \parfillskip 0pt plus 1fil
   \def\rhead{NAMES OF THE SECTIONS}
+  \let\topsecno=\nullsec
   \message{Section names:}
   \output={\normaloutput\page\lheader\rheader}
   \setpage
