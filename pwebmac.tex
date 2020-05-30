@@ -285,7 +285,7 @@
   \fullpageheight=9truein\setpage}
 \def\setpage{\hsize\pagewidth\vsize\pageheight} % use after changing page size
 \def\contentsfile{CONTENTS} % file that gets table of contents info
-\def\readcontents{\input CONTENTS}
+\def\readcontents{\input \contentsfile}
 
 \newwrite\cont
 \output{\setbox0=\page % the first page is garbage
