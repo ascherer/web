@@ -56,7 +56,7 @@ do
 			* ) c=$KNUTHWARE/$c ;;
 		esac
 		weave $f $c.ch
-		sed -i -e "s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse/" \
+		sed -i -e "s/\(\\\\let\\\\maybe=\)\\\\iffalse/\1\\\\iftrue/" \
 			$(basename $f .web).tex
 	else
 		weave $f
