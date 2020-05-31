@@ -90,6 +90,7 @@ do
 
 	# replace former convention to indicate "not a title page"
 	# to include page headers for table-of-contents
+	# FIX: most of the WEB codes will be corrected.
 	sed -i -e "s/\\\\def\\\\titlepage{F}/\\\\titlefalse/" $f.tex
 
 	# special treatment for individual WEB programs
@@ -97,10 +98,12 @@ do
 		# purge conflict between bibtex.web and webmac.tex
 		# 'E' no longer free to be active character
 		# fix table-of-contents page for bibtex
+		# FIX: don't wait for Oren Patashnik.
 		"bibtex" ) sed -i -e "s/titlefalse/titletrue/" \
 			-e "70,77d" $f.tex ;;
 
 		# make room for new material in weave.web
+		# FIX: should be fixed upstream.
 		"tangle" ) sed -i -e "s/number{123}/number{125}/" $f.tex ;;
 
 		# amend '\N' redefinition for PDF outlines in mf.tex and
@@ -145,6 +148,7 @@ FI
 			fi ;;
 
 		# 'cwebmac.tex' needs a little push for 'xetex'
+		# FIX: should be fixed upstream.
 		"ctie"|"tie" )
 			sed -i -e "1 s/\(\\\\input cwebmac\)/\\\\let\\\\pdf+\n\1/" \
 				$f.tex ;;
