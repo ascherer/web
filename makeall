@@ -41,28 +41,46 @@ done
 KNUTHWHERE=$(locate /bibtex.web)
 KNUTHWARE=$(dirname $KNUTHWHERE)
 
+# WEB and CWEB programs we want to get formatted; 'xetex.web' must be last,
+# because it switches the TEX engine!
 for f in \
 	$KNUTHWARE/*.web \
+	$KNUTHWARE/ctiedir/ctie.w \
+	$KNUTHWARE/tiedir/tie.w \
 	$KNUTHWARE/pdftexdir/pdftex.web \
 	$KNUTHWARE/xetexdir/xetex.web
 do
 	if $CHANGES
 	then
-		c=$(basename $f .web)
+		c=$(basename $f .web) ;;
+
 		case $c in
 			"pdftex"|"xetex" )
 				c=$KNUTHWARE/$c
 				c=$(echo $c | sed -e 's?\(texk/\)?Work/\1?') ;;
+			"ctie") c=$KNUTHWARE/ctiedir/ctie-k ;;
+			"tie" ) c=$KNUTHWARE/tiedir/tie-w2c ;;
 			* ) c=$KNUTHWARE/$c ;;
 		esac
-		weave $f $c.ch
+
+		case $f in
+			*.web ) weave $f $c.ch ;;
+			*.w ) cweave -f $f $c.ch ;;
+		esac
+
 		sed -i -e "s/\(\\\\let\\\\maybe=\)\\\\iffalse/\1\\\\iftrue/" \
 			$(basename $f .web).tex
 	else
-		weave $f
+		case $f in
+			*.web ) weave $f ;;
+			*.w ) cweave -f $f ;;
+		esac
 	fi
 
-	f=$(basename $f .web)
+	case $f in
+		*.web ) f=$(basename $f .web) ;;
+		*.w ) f=$(basename $f .w) ;;
+	esac
 
 	# use extended macros for TeX Live PDF documentation
 	if $NEW
@@ -125,12 +143,18 @@ FI
 					}" $f.tex
 				rm texmf-pdf.patch
 			fi ;;
+
+		# 'cwebmac.tex' needs a little push for 'xetex'
+		"ctie"|"tie" )
+			sed -i -e "1 s/\(\\\\input cwebmac\)/\\\\let\\\\pdf+\n\1/" \
+				$f.tex ;;
 	esac
 
 	if $PDFTOCFRONT
 	then
 		# shift table-of-contents pages to the front in PDF
 		sed -i -e "1 s/\(webmac\)/\1\n\\\\input pdfwebtocfront/" $f.tex
+		sed -i -e "2 s/\(cwebmac\)/\1\n\\\\input pdfwebtocfront/" $f.tex
 		$TEX $f.tex # run TeX twice
 	fi
 
@@ -153,6 +177,8 @@ then
 		-wvzf $OUTDIR/other.tar.gz -s ,^,other/,
 	pax pdftex.pdf -wvzf $OUTDIR/pdftex.tar.gz -s ,^,pdftex/,
 	pax xetex.pdf -wvzf $OUTDIR/xetex.tar.gz -s ,^,xetex/,
+	pax ctie.pdf -wvzf $OUTDIR/ctie.tar.gz -s ,^,ctie/,
+	pax tie.pdf -wvzf $OUTDIR/tie.tar.gz -s ,^,tie/,
 fi
 
 exit 0
