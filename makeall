@@ -41,29 +41,25 @@ done
 KNUTHWHERE=$(locate /bibtex.web)
 KNUTHWARE=$(dirname $KNUTHWHERE)
 
-export CWEBINPUTS=.:$KNUTHWARE//:
+export CWEBINPUTS=$KNUTHWARE//:
+export WEBINPUTS=$KNUTHWARE//:
 
 # WEB and CWEB programs we want to get formatted; 'xetex.web' must be last,
 # because it switches the TEX engine!
 for f in \
 	$KNUTHWARE/*.web \
 	common ctangle cweave ctwill ctie tie \
-	$KNUTHWARE/pdftexdir/pdftex.web \
-	$KNUTHWARE/xetexdir/xetex.web
+	pdftex.web xetex.web
 do
 	if $CHANGES
 	then
-		c=$(basename $f .web)
+		c=$(basename $f .web).ch
 
-		case $c in
-			"pdftex"|"xetex" )
-				c=$KNUTHWARE/$c
-				c=$(echo $c | sed -e 's?\(texk/\)?Work/\1?') ;;
-			* ) c=$KNUTHWARE/$c ;;
-		esac
+		# pdftex.ch and xetex.ch for TeX Live are here
+		WEBINPUTS=$KNUTHWARE/../../Work//:$WEBINPUTS:
 
 		case $f in
-			*.web ) weave $f $c.ch ;;
+			*.web ) weave $f $c ;;
 			"common" ) cweave -f $f comm-w2c ;;
 			"ctangle" ) cweave -f $f ctang-w2c ;;
 			"cweave" ) cweave -f $f cweav-w2c ;;
