@@ -41,31 +41,35 @@ done
 KNUTHWHERE=$(locate /bibtex.web)
 KNUTHWARE=$(dirname $KNUTHWHERE)
 
+export CWEBINPUTS=.:$KNUTHWARE//:
+
 # WEB and CWEB programs we want to get formatted; 'xetex.web' must be last,
 # because it switches the TEX engine!
 for f in \
 	$KNUTHWARE/*.web \
-	$KNUTHWARE/ctiedir/ctie.w \
-	$KNUTHWARE/tiedir/tie.w \
+	common ctangle cweave ctwill ctie tie \
 	$KNUTHWARE/pdftexdir/pdftex.web \
 	$KNUTHWARE/xetexdir/xetex.web
 do
 	if $CHANGES
 	then
-		c=$(basename $f .web) ;;
+		c=$(basename $f .web)
 
 		case $c in
 			"pdftex"|"xetex" )
 				c=$KNUTHWARE/$c
 				c=$(echo $c | sed -e 's?\(texk/\)?Work/\1?') ;;
-			"ctie") c=$KNUTHWARE/ctiedir/ctie-k ;;
-			"tie" ) c=$KNUTHWARE/tiedir/tie-w2c ;;
 			* ) c=$KNUTHWARE/$c ;;
 		esac
 
 		case $f in
 			*.web ) weave $f $c.ch ;;
-			*.w ) cweave -f $f $c.ch ;;
+			"common" ) cweave -f $f comm-w2c ;;
+			"ctangle" ) cweave -f $f ctang-w2c ;;
+			"cweave" ) cweave -f $f cweav-w2c ;;
+			"ctwill" ) cweave -f cweave ctwill-w2c $f ;;
+			"ctie" ) cweave -f $f $f-k ;;
+			"tie" ) cweave -f $f $f-w2c ;;
 		esac
 
 		sed -i -e "s/\(\\\\let\\\\maybe=\)\\\\iffalse/\1\\\\iftrue/" \
@@ -73,14 +77,13 @@ do
 	else
 		case $f in
 			*.web ) weave $f ;;
-			*.w ) cweave -f $f ;;
+			"common"|"ctangle"|"cweave"|"ctie"|"tie" )
+				cweave -f $f ;;
+			"ctwill" ) cweave -f cweave ctwill-w2c $f ;;
 		esac
 	fi
 
-	case $f in
-		*.web ) f=$(basename $f .web) ;;
-		*.w ) f=$(basename $f .w) ;;
-	esac
+	f=$(basename $f .web)
 
 	# use extended macros for TeX Live PDF documentation
 	if $NEW
@@ -148,9 +151,9 @@ FI
 			fi ;;
 
 		# 'cwebmac.tex' needs a little push for 'xetex'
-		# FIX: should be fixed upstream.
-		"ctie"|"tie" )
-			sed -i -e "1 s/\(\\\\input cwebmac\)/\\\\let\\\\pdf+\n\1/" \
+		# FIX: should be fixed upstream in 'cwebmac.tex'.
+		"common"|"ctangle"|"cweave"|"ctwill"|"ctie"|"tie" )
+			sed -i -e "1 s/\(\\\\input cwebmac\)/\\\\let\\\\pdf+\n\1\n\\\\input Xcwebmac/" \
 				$f.tex ;;
 	esac
 
@@ -159,7 +162,7 @@ FI
 		# shift table-of-contents pages to the front in PDF
 		sed -i -e "1 s/\(webmac\)/\1\n\\\\input pdfwebtocfront/" $f.tex
 		sed -i -e "2 s/\(cwebmac\)/\1\n\\\\input pdfwebtocfront/" $f.tex
-		$TEX $f.tex # run TeX twice
+		$TEX $f # run TeX twice
 	fi
 
 	$TEX $f
@@ -183,6 +186,8 @@ then
 	pax xetex.pdf -wvzf $OUTDIR/xetex.tar.gz -s ,^,xetex/,
 	pax ctie.pdf -wvzf $OUTDIR/ctie.tar.gz -s ,^,ctie/,
 	pax tie.pdf -wvzf $OUTDIR/tie.tar.gz -s ,^,tie/,
+	pax common.pdf ctangle.pdf cweave.pdf ctwill.pdf \
+		-wvzf $OUTDIR/cweb.tar.gz -s ,^,cweb/,
 fi
 
 exit 0
