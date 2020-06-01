@@ -28,4 +28,4 @@ created by `weave`.  From there, all depends on the “TeX engine” you use:
 clickable links and bookmarks (depending on your PDF viewer).
 
 The `pwebmac` package is free software and may be used without restraints.
-This is version “4.5.1” of the `pwebmac` package — 2020-05-29, AS.
+This is version “4.5.2” of the `pwebmac` package — 2020-06-01, AS.
