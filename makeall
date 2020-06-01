@@ -63,11 +63,12 @@ do
 			"common" ) cweave -f $f comm-w2c ;;
 			"ctangle" ) cweave -f $f ctang-w2c ;;
 			"cweave" ) cweave -f $f cweav-w2c ;;
-			"ctwill" ) cweave -f cweave ctwill-w2c $f ;;
+			"ctwill" ) cweave -f cweave $f-w2c $f ;;
 			"ctie" ) cweave -f $f $f-k ;;
 			"tie" ) cweave -f $f $f-w2c ;;
 		esac
 
+		# make full documentation with changes applied
 		sed -i -e "s/\(\\\\let\\\\maybe=\)\\\\iffalse/\1\\\\iftrue/" \
 			$(basename $f .web).tex
 	else
@@ -75,7 +76,7 @@ do
 			*.web ) weave $f ;;
 			"common"|"ctangle"|"cweave"|"ctie"|"tie" )
 				cweave -f $f ;;
-			"ctwill" ) cweave -f cweave ctwill-w2c $f ;;
+			"ctwill" ) cweave -f cweave $f-w2c $f ;;
 		esac
 	fi
 
@@ -146,11 +147,18 @@ FI
 				rm texmf-pdf.patch
 			fi ;;
 
-		# 'cwebmac.tex' needs a little push for 'xetex'
-		# FIX: should be fixed upstream in 'cwebmac.tex'.
 		"common"|"ctangle"|"cweave"|"ctwill"|"ctie"|"tie" )
-			sed -i -e "1 s/\(\\\\input cwebmac\)/\\\\let\\\\pdf+\n\1\n\\\\input Xcwebmac/" \
-				$f.tex ;;
+			# Use nicer format for C comments and assignment
+			sed -i -e "1 s/\(\\\\input cwebmac\)/\1\n\\\\input Xcwebmac/" \
+				$f.tex
+
+			# 'cwebmac.tex' needs a little push for 'xetex'
+			# FIX: should be fixed upstream in 'cwebmac.tex'.
+			if [ "xetex" = $TEX ]
+			then
+				sed -i -e "1 s/\(\\\\input cwebmac\)/\\\\let\\\\pdf+\n\1\n/" \
+					$f.tex
+			fi ;;
 	esac
 
 	if $PDFTOCFRONT
