@@ -4,7 +4,7 @@ title: WEB programs in “TeX Live 2021”
 
 # Introduction
 
-## Standard Knuthian programs
+## Canonical Knuthian WEB programs
 
 ### `errata/`
 
@@ -20,7 +20,7 @@ title: WEB programs in “TeX Live 2021”
 
 ### `web/` \[ [`WEAVE`](weave.pdf) \| [`TANGLE`](tangle.pdf) \]
 
-## Additional WEB programs
+## Complementary WEB programs
 
 ### `other/` \[ [`BibTeX`](bibtex.pdf) \| [`DVIcopy`](dvicopy.pdf) \| [`PatGen`](patgen.pdf) \| [`PKtoGF`](pktogf.pdf) \| [`PKtype`](pktype.pdf) \]
 
