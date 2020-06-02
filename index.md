@@ -1,7 +1,5 @@
 ---
-title: WEB in “TeX Live 2021”
-author: Andreas Scherer
-date: 2020-06-02
+title: WEB programs in “TeX Live 2021”
 ---
 
 # Introduction
@@ -20,7 +18,7 @@ date: 2020-06-02
 
 ### `texware/` \[ [`POOLtype`](pooltype.pdf) \| [`TFtoPL`](tftopl.pdf) \| [`PLtoTF`](pltotf.pdf) \| [`DVItype`](dvitype.pdf) \]
 
-### `web/` \[ [`TANGLE`](tangle.pdf) \| [`WEAVE`](weave.pdf) \]
+### `web/` \[ [`WEAVE`](weave.pdf) \| [`TANGLE`](tangle.pdf) \]
 
 ## Additional WEB programs
 
