@@ -1,5 +1,6 @@
 ---
 title: WEB programs in “TeX Live 2021”
+colorlinks: true
 ---
 
 ## Introduction
