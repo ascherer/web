@@ -73,6 +73,9 @@ do
 			*/bibtex.web ) sed -i -e \
 				"1 s/\(\\\\input webmac\)/\1\n\\\\let\\\\maybe=\\\\iffalse/" \
 				$(basename $f .web).tex ;;
+			xetex.web ) sed -i -e \
+				"s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse\n\\\\def\\\\pdfTeX\{pdf\\\\TeX\}/" \
+				$(basename $f .web).tex ;;
 			*.web ) sed -i -e \
 				"s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse/" \
 				$(basename $f .web).tex ;;
