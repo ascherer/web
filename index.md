@@ -8,19 +8,19 @@ colorlinks: true
 ## Canonical Knuthian WEB programs
 
 * `errata/`
-* `etc/` \[ [`VFtoVP`](vftovp.pdf) \| [`VPtoVF`](vptovf.pdf) \]
-* `mf/` \[ [`Metafont`](mf.pdf) \]
-* `mfware/` \[ [`GFtype`](gftype.pdf) \| [`GFtoPK`](gftopk.pdf) \| [`GFtoDVI`](gftodvi.pdf) \| [`MFT`](mft.pdf) \]
-* `tex/` \[ [`TeX`](tex.pdf) \]
-* `texware/` \[ [`POOLtype`](pooltype.pdf) \| [`TFtoPL`](tftopl.pdf) \| [`PLtoTF`](pltotf.pdf) \| [`DVItype`](dvitype.pdf) \]
-* `web/` \[ [`WEAVE`](weave.pdf) \| [`TANGLE`](tangle.pdf) \]
+* `etc/` \[ [`VFtoVP`](etc/vftovp.pdf)~[chg](etc/vftovfp-changes.pdf)~ \| [`VPtoVF`](etc/vptovf.pdf)~[chg](/etc/vptovf-changes.pdf)~ \]
+* `mf/` \[ [`Metafont`](mf/mf.pdf)~[chg](mf/mf-changes.pdf)~ \]
+* `mfware/` \[ [`GFtype`](mfware/gftype.pdf)~[chg](mfware/gftype-changes.pdf)~ \| [`GFtoPK`](mfware/gftopk.pdf)~[chg](mfware/gftopk-changes.pdf)~ \| [`GFtoDVI`](mfware/gftodvi.pdf)~[chg](mfware/gftodvi-changes.pdf)~ \| [`MFT`](mfware/mft.pdf)~[chg](mfware/mft-changes.pdf)~ \]
+* `tex/` \[ [`TeX`](tex/tex.pdf)~[chg](tex/tex-changes.pdf))~ \]
+* `texware/` \[ [`POOLtype`](texware/pooltype.pdf)~[chg](texware/pooltype-changes.pdf)~ \| [`TFtoPL`](texware/tftopl.pdf)~[chg](texware/tftopl-changes.pdf)~ \| [`PLtoTF`](texware/pltotf.pdf)~[chg](texware/pltotf-changes.pdf)~ \| [`DVItype`](texware/dvitype.pdf)~[chg](texware/dvitype-changes.pdf)~ \]
+* `web/` \[ [`WEAVE`](web/weave.pdf)~[chg](web/weave-changes.pdf)~ \| [`TANGLE`](web/tangle.pdf)~[chg](web/tangle-changes.pdf)~ \]
 
 ## Complementary WEB programs
 
-* `other/` \[ [`BibTeX`](bibtex.pdf) \| [`DVIcopy`](dvicopy.pdf) \| [`PatGen`](patgen.pdf) \| [`PKtoGF`](pktogf.pdf) \| [`PKtype`](pktype.pdf) \]
+* `other/` \[ [`BibTeX`](other/bibtex.pdf)~[chg](other/bibtex-changes.pdf)~ \| [`DVIcopy`](other/dvicopy.pdf)~[chg](other/dvicopy-changes.pdf)~ \| [`PatGen`](other/patgen.pdf)~[chg](other/patgen-changes.pdf)~ \| [`PKtoGF`](other/pktogf.pdf)~[chg](other/pktogf-changes.pdf)~ \| [`PKtype`](other/pktype.pdf)~[chg](other/pktype-changes.pdf)~ \]
 
 ## CWEB programs
 
-* `cweb/` \[ [`COMMON`](common.pdf) \| [`CTANGLE`](ctangle.pdf) \| [`CWEAVE`](cweave.pdf) \| [`CTWILL`](ctwill.pdf) \]
-* `ctie/` \[ [`CTIE`](ctie.pdf) \]
-* `tie/` \[ [`TIE`](tie.pdf) \]
+* `cweb/` \[ [`COMMON`](cweb/common.pdf)~[chg](cweb/common-changes.pdf)~ \| [`CTANGLE`](cweb/ctangle.pdf)~[chg](cweb/ctangle-changes.pdf)~ \| [`CWEAVE`](cweb/cweave.pdf)~[chg](cweb/cweave-changes.pdf)~ \| [`CTWILL`](cweb/ctwill.pdf)~[chg](cweb/ctwill-changes.pdf)~ \]
+* `ctie/` \[ [`CTIE`](ctie/ctie.pdf)~[chg](ctie/ctie-changes.pdf)~ \]
+* `tie/` \[ [`TIE`](tie/tie.pdf)~[chg](tie/tie-changes.pdf)~ \]
