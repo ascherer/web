@@ -5,6 +5,24 @@ colorlinks: true
 
 ## Introduction
 
+Welcome to “All Things `WEB`” in “TeX Live.”
+
+Here you find the documented source code of all major `WEB` and `CWEB` programs
+in readable format.  The “named” entries represent the unmodified base sources,
+the attached `[chg]` links point to “only the changed sections (or modules),”
+so you may want to study these pairs in parallel.  Care has been taken to keep
+the section numbers for the main parts intact.
+
+Note that all `WEB` programs are mogrified from Pascal code to C code before
+compilation, so further modifications and amendments will occur “for the real
+thing,” i.e., the production of the executable `WEB` programs.  (The `CWEB`
+programs do not require these extra modifications, they get linked directly to
+the external runtime environment.)
+
+If you believe to have found anything that remains technically, historically,
+typographically, or politically incorrect, please notify the maintainers at
+[the tex-k mailing list](mailto:tex-k@tug.org).
+
 ## Canonical Knuthian WEB programs
 
 * `errata/`
