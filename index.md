@@ -29,13 +29,17 @@ typographically, or politically incorrect, please notify the maintainers at
 * `etc/` \[
   [`VFtoVP`](etc/vftovp.pdf)<sub>[chg](etc/vftovp-changes.pdf)</sub> \|
   [`VPtoVF`](etc/vptovf.pdf)<sub>[chg](etc/vptovf-changes.pdf)</sub> \]
-* `mf/` \[ [`Metafont`](mf/mf.pdf)<sub>[chg](mf/mf-changes.pdf)</sub> \]
+* `mf/` \[
+  [`Metafont`](mf/mf.pdf)<sub>[chg](mf/mf-changes.pdf)</sub> \|
+  [`TRAPMAN`](mf/trapman.pdf) \]
 * `mfware/` \[
   [`GFtype`](mfware/gftype.pdf)<sub>[chg](mfware/gftype-changes.pdf)</sub> \|
   [`GFtoPK`](mfware/gftopk.pdf)<sub>[chg](mfware/gftopk-changes.pdf)</sub> \|
   [`GFtoDVI`](mfware/gftodvi.pdf)<sub>[chg](mfware/gftodvi-changes.pdf)</sub> \|
   [`MFT`](mfware/mft.pdf)<sub>[chg](mfware/mft-changes.pdf)</sub> \]
-* `tex/` \[ [`TeX`](tex/tex.pdf)<sub>[chg](tex/tex-changes.pdf)</sub> \]
+* `tex/` \[
+  [`TeX`](tex/tex.pdf)<sub>[chg](tex/tex-changes.pdf)</sub> \|
+  [`TRIPMAN`](tex/tripman.pdf) \]
 * `texware/` \[
   [`POOLtype`](texware/pooltype.pdf)<sub>[chg](texware/pooltype-changes.pdf)</sub> \|
   [`TFtoPL`](texware/tftopl.pdf)<sub>[chg](texware/tftopl-changes.pdf)</sub> \|
