@@ -210,7 +210,7 @@ done
 # * WEB and CWEB manuals
 if ! $CHANGES
 then
-	export TEXINPUTS=$(kpsewhich --var-value=TEXMFDIST)//:/opt/github/cweb
+	export TEXINPUTS=$(kpsewhich --var-value=TEXMFDIST)//:$KNUTHWARE//
 	$TEX tripman
 	$TEX trapman
 	$TEX webman
