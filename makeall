@@ -70,20 +70,27 @@ do
 
 		# only document changed modules/sections
 		case $f in
+			# pdfTeX and XeTeX have overlong tables-of-contents
 			pdftex.web ) sed -i -e \
 				"s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse/" \
 				-e "s/\(\\\\pageno=3\)/\1\n\\\\def\\\\contentspagenumber\{1\}/" \
 				$(basename $f .web).tex ;;
+
+			# XeTeX uses '\pdfTeX' from section 114, which
+			# is not changed and thus 'disappears'
 			xetex.web ) sed -i -e \
 				"s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse\n\\\\def\\\\pdfTeX\{pdf\\\\TeX\}/" \
 				-e "s/\(\\\\pageno=3\)/\1\n\\\\def\\\\contentspagenumber\{1\}/" \
 				$(basename $f .web).tex ;;
+
 			*.web ) sed -i -e \
 				"s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse/" \
 				$(basename $f .web).tex ;;
+
 			"common"|"ctangle"|"cweave"|"ctwill" ) sed -i -e \
 				"s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse/" \
 				$f.tex ;;
+
 			"ctie"|"tie" ) sed -i -e \
 				"1 s/\(\\\\input cwebmac\)/\1\n\\\\let\\\\maybe=\\\\iffalse/" \
 				$f.tex ;;
@@ -176,7 +183,7 @@ FI
 			# FIX: should be fixed upstream in 'cwebmac.tex'.
 			if [ "xetex" = $TEX ]
 			then
-				sed -i -e "1 s/\(\\\\input cwebmac\)/\\\\let\\\\pdf+\n\1\n/" \
+				sed -i -e "1 s/\(\\\\input cwebmac\)/\\\\let\\\\pdf+\1\n/" \
 					$f.tex
 			fi ;;
 	esac
@@ -185,7 +192,6 @@ FI
 	then
 		# shift table-of-contents pages to the front in PDF
 		sed -i -e "1 s/\(webmac\)/\1\n\\\\input pdfwebtocfront/" $f.tex
-		sed -i -e "2 s/\(cwebmac\)/\1\n\\\\input pdfwebtocfront/" $f.tex
 
 		$TEX $f # run TeX twice
 	fi
