@@ -206,10 +206,14 @@ FI
 	fi
 done
 
-# Finally, build the WEB and CWEB manuals
+# Finally, build the remaining documents
+# * TeX and Metafont test routines
+# * WEB and CWEB manuals
 if ! $CHANGES
 then
 	export TEXINPUTS=$(kpsewhich --var-value=TEXMFDIST)//:/opt/github/cweb
+	$TEX tripman
+	$TEX trapman
 	$TEX webman
 	$TEX cwebman
 fi
@@ -253,10 +257,10 @@ then
 			-wvzf $OUTDIR/cweb-changes.tar.gz -s ,^,cweb/,
 	else
 		pax vftovp.pdf vptovf.pdf -wvzf $OUTDIR/etc.tar.gz -s ,^,etc/,
-		pax mf.pdf -wvzf $OUTDIR/mf.tar.gz -s ,^,mf/,
+		pax mf.pdf trapman.pdf -wvzf $OUTDIR/mf.tar.gz -s ,^,mf/,
 		pax gftodvi.pdf gftopk.pdf gftype.pdf mft.pdf \
 			-wvzf $OUTDIR/mfware.tar.gz -s ,^,mfware/,
-		pax tex.pdf -wvzf $OUTDIR/tex.tar.gz -s ,^,tex/,
+		pax tex.pdf tripman.pdf -wvzf $OUTDIR/tex.tar.gz -s ,^,tex/,
 		pax dvitype.pdf pltotf.pdf pooltype.pdf tftopl.pdf \
 			-wvzf $OUTDIR/texware.tar.gz -s ,^,texware/,
 		pax webman.pdf tangle.pdf weave.pdf \
