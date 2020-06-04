@@ -70,9 +70,6 @@ do
 
 		# only document changed modules/sections
 		case $f in
-			*/bibtex.web ) sed -i -e \
-				"1 s/\(\\\\input webmac\)/\1\n\\\\let\\\\maybe=\\\\iffalse/" \
-				$(basename $f .web).tex ;;
 			pdftex.web ) sed -i -e \
 				"s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse/" \
 				-e "s/\(\\\\pageno=3\)/\1\n\\\\def\\\\contentspagenumber\{1\}/" \
@@ -119,8 +116,11 @@ do
 		# 'E' no longer free to be active character
 		# fix table-of-contents page for bibtex
 		# FIX: don't wait for Oren Patashnik.
-		"bibtex" ) sed -i -e "s/titlefalse/titletrue/" \
-			-e "71,77d" $f.tex ;;
+		"bibtex" ) sed -i -e "s/titlefalse/titletrue/" $f.tex
+			if ! $CHANGES
+			then
+				sed -i -e "71,78d" $f.tex
+			fi ;;
 
 		# make room for new material in weave.web
 		# FIX: should be fixed upstream.
