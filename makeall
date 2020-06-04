@@ -46,9 +46,8 @@ export WEBINPUTS=$KNUTHWARE//:
 
 # WEB and CWEB programs we want to get formatted
 for f in \
-	$KNUTHWARE/*.web \
-	common ctangle cweave ctwill ctie tie \
-	pdftex.web xetex.web
+	$KNUTHWARE/*.web pdftex.web xetex.web \
+	common ctangle cweave ctwill ctie tie
 do
 	if $CHANGES
 	then
