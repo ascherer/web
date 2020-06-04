@@ -206,6 +206,14 @@ FI
 	fi
 done
 
+# Finally, build the WEB and CWEB manuals
+if ! $CHANGES
+then
+	export TEXINPUTS=$(kpsewhich --var-value=TEXMFDIST)//:/opt/github/cweb
+	$TEX webman
+	$TEX cwebman
+fi
+
 if $PDFTOCFRONT
 then
 	# create tarballs for publication
@@ -251,7 +259,8 @@ then
 		pax tex.pdf -wvzf $OUTDIR/tex.tar.gz -s ,^,tex/,
 		pax dvitype.pdf pltotf.pdf pooltype.pdf tftopl.pdf \
 			-wvzf $OUTDIR/texware.tar.gz -s ,^,texware/,
-		pax tangle.pdf weave.pdf -wvzf $OUTDIR/web.tar.gz -s ,^,web/,
+		pax webman.pdf tangle.pdf weave.pdf \
+			-wvzf $OUTDIR/web.tar.gz -s ,^,web/,
 		pax bibtex.pdf -wvzf $OUTDIR/bibtex.tar.gz -s ,^,bibtex/,
 		pax dvicopy.pdf patgen.pdf pktogf.pdf pktype.pdf \
 			-wvzf $OUTDIR/other.tar.gz -s ,^,other/,
@@ -259,7 +268,7 @@ then
 		pax xetex.pdf -wvzf $OUTDIR/xetex.tar.gz -s ,^,xetex/,
 		pax ctie.pdf -wvzf $OUTDIR/ctie.tar.gz -s ,^,ctie/,
 		pax tie.pdf -wvzf $OUTDIR/tie.tar.gz -s ,^,tie/,
-		pax common.pdf ctangle.pdf cweave.pdf ctwill.pdf \
+		pax cwebman.pdf common.pdf ctangle.pdf cweave.pdf ctwill.pdf \
 			-wvzf $OUTDIR/cweb.tar.gz -s ,^,cweb/,
 	fi
 fi

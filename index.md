@@ -42,6 +42,7 @@ typographically, or politically incorrect, please notify the maintainers at
   [`PLtoTF`](texware/pltotf.pdf)<sub>[chg](texware/pltotf-changes.pdf)</sub> \|
   [`DVItype`](texware/dvitype.pdf)<sub>[chg](texware/dvitype-changes.pdf)</sub> \]
 * `web/` \[
+  [`WEBMAN`](web/webman.pdf) \|
   [`WEAVE`](web/weave.pdf)<sub>[chg](web/weave-changes.pdf)</sub> \|
   [`TANGLE`](web/tangle.pdf)<sub>[chg](web/tangle-changes.pdf)</sub> \]
 
@@ -59,6 +60,7 @@ typographically, or politically incorrect, please notify the maintainers at
 ## CWEB programs
 
 * `cweb/` \[
+  [`CWEBMAN`](cweb/cwebman.pdf) \|
   [`COMMON`](cweb/common.pdf)<sub>[chg](cweb/common-changes.pdf)</sub> \|
   [`CTANGLE`](cweb/ctangle.pdf)<sub>[chg](cweb/ctangle-changes.pdf)</sub> \|
   [`CWEAVE`](cweb/cweave.pdf)<sub>[chg](cweb/cweave-changes.pdf)</sub> \|
