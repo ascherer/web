@@ -44,8 +44,7 @@ KNUTHWARE=$(dirname $KNUTHWHERE)
 export CWEBINPUTS=$KNUTHWARE//:
 export WEBINPUTS=$KNUTHWARE//:
 
-# WEB and CWEB programs we want to get formatted; 'xetex.web' must be last,
-# because it switches the TEX engine!
+# WEB and CWEB programs we want to get formatted
 for f in \
 	$KNUTHWARE/*.web \
 	common ctangle cweave ctwill ctie tie \
@@ -141,8 +140,6 @@ do
 			then
 				# purge obsolete macros from XeTeX
 				sed -i -e "/\\\\input xewebmac/d" $f.tex
-				# only XeTeX can process XeTeX
-				TEX=xetex
 			fi
 			if $NEW
 			then
@@ -193,10 +190,20 @@ FI
 		# shift table-of-contents pages to the front in PDF
 		sed -i -e "1 s/\(webmac\)/\1\n\\\\input pdfwebtocfront/" $f.tex
 
-		$TEX $f # run TeX twice
+		if [ "xetex" = $f ]
+		then
+			$f $f # run TeX twice
+		else
+			$TEX $f # run TeX twice
+		fi
 	fi
 
-	$TEX $f
+	if [ "xetex" = $f ]
+	then
+		$f $f
+	else
+		$TEX $f
+	fi
 done
 
 if $PDFTOCFRONT
