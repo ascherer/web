@@ -58,12 +58,12 @@ do
 
 		case $f in
 			*.web ) weave $f $c ;;
-			"common" ) cweave -f $f comm-w2c ;;
-			"ctangle" ) cweave -f $f ctang-w2c ;;
-			"cweave" ) cweave -f $f cweav-w2c ;;
-			"ctwill" ) cweave -f cweave $f-w2c $f ;;
-			"ctie" ) cweave -f $f $f-k ;;
-			"tie" ) cweave -f $f $f-w2c ;;
+			"common" ) cweave -f -lX $f comm-w2c ;;
+			"ctangle" ) cweave -f -lX $f ctang-w2c ;;
+			"cweave" ) cweave -f -lX $f cweav-w2c ;;
+			"ctwill" ) cweave -f -lX cweave $f-w2c $f ;;
+			"ctie" ) cweave -f -lX $f $f-k ;;
+			"tie" ) cweave -f -lX $f $f-w2c ;;
 		esac
 
 		# only document changed modules/sections
@@ -97,8 +97,8 @@ do
 		case $f in
 			*.web ) weave $f ;;
 			"common"|"ctangle"|"cweave"|"ctie"|"tie" )
-				cweave -f $f ;;
-			"ctwill" ) cweave -f cweave $f-w2c $f ;;
+				cweave -f -lX $f ;;
+			"ctwill" ) cweave -f -lX cweave $f-w2c $f ;;
 		esac
 	fi
 
@@ -171,15 +171,11 @@ FI
 			fi ;;
 
 		"common"|"ctangle"|"cweave"|"ctwill"|"ctie"|"tie" )
-			# Use nicer format for C comments and assignment
-			sed -i -e "1 s/\(\\\\input cwebmac\)/\1\n\\\\input Xcwebmac/" \
-				$f.tex
-
 			# 'cwebmac.tex' needs a little push for 'xetex'
 			# FIX: should be fixed upstream in 'cwebmac.tex'.
 			if [ "xetex" = $TEX ]
 			then
-				sed -i -e "1 s/\(\\\\input cwebmac\)/\\\\let\\\\pdf+\1\n/" \
+				sed -i -e "1 s/\(\\\\input\)/\\\\let\\\\pdf+\1/" \
 					$f.tex
 			fi ;;
 	esac
