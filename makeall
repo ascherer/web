@@ -44,7 +44,7 @@ KNUTHWARE=$(dirname $KNUTHWHERE)
 export CWEBINPUTS=$KNUTHWARE//:
 export WEBINPUTS=$KNUTHWARE//:
 
-CWEAVE=cweave -f -lX
+CWEAVE="cweave -f -lX"
 
 # WEB and CWEB programs we want to get formatted
 for f in \
@@ -72,24 +72,17 @@ do
 		# only document changed modules/sections
 		case $f in
 			# pdfTeX and XeTeX have overlong tables-of-contents
-			pdftex ) sed -i -e \
-				"s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse/" \
+			pdftex ) sed -i -e "s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse/" \
 				-e "s/\(\\\\pageno=3\)/\1\n\\\\def\\\\contentspagenumber{1}/" \
 				$f.tex ;;
 
 			# XeTeX uses '\pdfTeX' from section 114, which
 			# is not changed and thus 'disappears'
-			xetex ) sed -i -e \
-				"s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse\n\\\\def\\\\pdfTeX{pdf\\\\TeX}/" \
+			xetex ) sed -i -e "s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse\n\\\\def\\\\pdfTeX{pdf\\\\TeX}/" \
 				-e "s/\(\\\\pageno=3\)/\1\n\\\\def\\\\contentspagenumber{1}/" \
 				$f.tex ;;
 
-			ctie | tie ) sed -i -e \
-				"1 s/\(\\\\input cwebmac\)/\1\n\\\\let\\\\maybe=\\\\iffalse/" \
-				$f.tex ;;
-
-			* ) sed -i -e \
-				"s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse/" \
+			* ) sed -i -e "s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse/" \
 				$f.tex ;;
 		esac
 	else
@@ -212,7 +205,6 @@ then
 	then
 		for f in *.pdf
 		do
-			f=$(basename $f -changes.pdf).pdf
 			mv $f $(basename $f .pdf)-changes.pdf
 		done
 		pax vftovp-changes.pdf vptovf-changes.pdf \
