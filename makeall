@@ -32,7 +32,7 @@ do
 		-n | --new ) NEW=true; shift ;;
 		-o | --outdir ) OUTDIR="$2"; shift 2 ;;
 		-p | --pdftocfront ) PDFTOCFRONT=true; shift ;;
-		-t | --tex ) TEX="$2"; shift 2 ;;
+		-t | --tex ) TEX=$2; shift 2 ;;
 		-- ) shift; break ;;
 		* ) break ;;
 	esac
@@ -60,12 +60,12 @@ do
 
 		case $f in
 			*.web ) weave $f $c ;;
-			"common" ) $CWEAVE $f comm-w2c ;;
-			"ctangle" ) $CWEAVE $f ctang-w2c ;;
-			"cweave" ) $CWEAVE $f cweav-w2c ;;
-			"ctwill" ) $CWEAVE cweave $f-w2c $f ;;
-			"ctie" ) $CWEAVE $f $f-k ;;
-			"tie" ) $CWEAVE $f $f-w2c ;;
+			common ) $CWEAVE $f comm-w2c ;;
+			ctangle ) $CWEAVE $f ctang-w2c ;;
+			cweave ) $CWEAVE $f cweav-w2c ;;
+			ctwill ) $CWEAVE cweave $f-w2c $f ;;
+			ctie ) $CWEAVE $f $f-k ;;
+			tie ) $CWEAVE $f $f-w2c ;;
 		esac
 
 		# only document changed modules/sections
@@ -87,20 +87,20 @@ do
 				"s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse/" \
 				$(basename $f .web).tex ;;
 
-			"common"|"ctangle"|"cweave"|"ctwill" ) sed -i -e \
+			common | ctangle | cweave | ctwill ) sed -i -e \
 				"s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse/" \
 				$f.tex ;;
 
-			"ctie"|"tie" ) sed -i -e \
+			ctie | tie ) sed -i -e \
 				"1 s/\(\\\\input cwebmac\)/\1\n\\\\let\\\\maybe=\\\\iffalse/" \
 				$f.tex ;;
 		esac
 	else
 		case $f in
 			*.web ) weave $f ;;
-			"common"|"ctangle"|"cweave"|"ctie"|"tie" )
+			common | ctangle | cweave | ctie | tie )
 				$CWEAVE $f ;;
-			"ctwill" ) $CWEAVE cweave $f-w2c $f ;;
+			ctwill ) $CWEAVE cweave $f-w2c $f ;;
 		esac
 	fi
 
@@ -123,7 +123,7 @@ do
 		# 'E' no longer free to be active character
 		# fix table-of-contents page for bibtex
 		# FIX: don't wait for Oren Patashnik.
-		"bibtex" ) sed -i -e "s/titlefalse/titletrue/" $f.tex
+		bibtex ) sed -i -e "s/titlefalse/titletrue/" $f.tex
 			if ! $CHANGES
 			then
 				sed -i -e "71,78d" $f.tex
@@ -131,20 +131,20 @@ do
 
 		# make room for new material in weave.web
 		# FIX: should be fixed upstream.
-		"tangle" ) sed -i -e "s/number{123}/number{125}/" $f.tex ;;
+		tangle ) sed -i -e "s/number{123}/number{125}/" $f.tex ;;
 
 		# amend '\N' redefinition for PDF outlines in mf.tex and
 		# tex.tex (also pdftex.web and xetex.web); depends on the
 		# extended 'pwebmac.tex' macros
-		"mf"|"tex"|"pdftex"|"xetex" )
-			if [ "xetex" = $f ]
+		mf | tex | pdftex | xetex )
+			if [ xetex = $f ]
 			then
 				# purge obsolete macros from XeTeX
 				sed -i -e "/\\\\input xewebmac/d" $f.tex
 			fi
 			if $NEW
 			then
-				if [ "pdftex" = $f ]
+				if [ pdftex = $f ]
 				then
 					# pdfTeX has a looong table-of-contents
 					cat > pdftex.patch << FI
@@ -172,10 +172,10 @@ FI
 				rm texmf-pdf.patch
 			fi ;;
 
-		"common"|"ctangle"|"cweave"|"ctwill"|"ctie"|"tie" )
+		common | ctangle | cweave | ctwill | ctie | tie )
 			# 'cwebmac.tex' needs a little push for 'xetex'
 			# FIX: should be fixed upstream in 'cwebmac.tex'.
-			if [ "xetex" = $TEX ]
+			if [ xetex = $TEX ]
 			then
 				sed -i -e "1 s/\(\\\\input\)/\\\\let\\\\pdf+\1/" \
 					$f.tex
@@ -187,7 +187,7 @@ FI
 		# shift table-of-contents pages to the front in PDF
 		sed -i -e "1 s/\(webmac\)/\1\n\\\\input pdfwebtocfront/" $f.tex
 
-		if [ "xetex" = $f ]
+		if [ xetex = $f ]
 		then
 			$f $f # run TeX twice
 		else
@@ -195,7 +195,7 @@ FI
 		fi
 	fi
 
-	if [ "xetex" = $f ]
+	if [ xetex = $f ]
 	then
 		$f $f
 	else
@@ -225,52 +225,52 @@ then
 			mv $f $(basename $f .pdf)-changes.pdf
 		done
 		pax vftovp-changes.pdf vptovf-changes.pdf \
-			-wvzf $OUTDIR/etc-changes.tar.gz -s ,^,etc/,
-		pax mf-changes.pdf -wvzf $OUTDIR/mf-changes.tar.gz -s ,^,mf/,
+			-wvzf "$OUTDIR/etc-changes.tar.gz" -s ,^,etc/,
+		pax mf-changes.pdf -wvzf "$OUTDIR/mf-changes.tar.gz" -s ,^,mf/,
 		pax gftodvi-changes.pdf gftopk-changes.pdf \
 			gftype-changes.pdf mft-changes.pdf \
-			-wvzf $OUTDIR/mfware-changes.tar.gz -s ,^,mfware/,
-		pax tex-changes.pdf -wvzf $OUTDIR/tex-changes.tar.gz -s ,^,tex/,
+			-wvzf "$OUTDIR/mfware-changes.tar.gz" -s ,^,mfware/,
+		pax tex-changes.pdf -wvzf "$OUTDIR/tex-changes.tar.gz" -s ,^,tex/,
 		pax dvitype-changes.pdf pltotf-changes.pdf \
 			pooltype-changes.pdf tftopl-changes.pdf \
-			-wvzf $OUTDIR/texware-changes.tar.gz -s ,^,texware/,
+			-wvzf "$OUTDIR/texware-changes.tar.gz" -s ,^,texware/,
 		pax tangle-changes.pdf weave-changes.pdf \
-			-wvzf $OUTDIR/web-changes.tar.gz -s ,^,web/,
+			-wvzf "$OUTDIR/web-changes.tar.gz" -s ,^,web/,
 		pax bibtex-changes.pdf \
-			-wvzf $OUTDIR/bibtex-changes.tar.gz -s ,^,bibtex/,
+			-wvzf "$OUTDIR/bibtex-changes.tar.gz" -s ,^,bibtex/,
 		pax dvicopy-changes.pdf patgen-changes.pdf \
 			pktogf-changes.pdf pktype-changes.pdf \
-			-wvzf $OUTDIR/other-changes.tar.gz -s ,^,other/,
+			-wvzf "$OUTDIR/other-changes.tar.gz" -s ,^,other/,
 		pax pdftex-changes.pdf \
-			-wvzf $OUTDIR/pdftex-changes.tar.gz -s ,^,pdftex/,
+			-wvzf "$OUTDIR/pdftex-changes.tar.gz" -s ,^,pdftex/,
 		pax xetex-changes.pdf \
-			-wvzf $OUTDIR/xetex-changes.tar.gz -s ,^,xetex/,
+			-wvzf "$OUTDIR/xetex-changes.tar.gz" -s ,^,xetex/,
 		pax ctie-changes.pdf \
-			-wvzf $OUTDIR/ctie-changes.tar.gz -s ,^,ctie/,
+			-wvzf "$OUTDIR/ctie-changes.tar.gz" -s ,^,ctie/,
 		pax tie-changes.pdf \
-			-wvzf $OUTDIR/tie-changes.tar.gz -s ,^,tie/,
+			-wvzf "$OUTDIR/tie-changes.tar.gz" -s ,^,tie/,
 		pax common-changes.pdf ctangle-changes.pdf \
 			cweave-changes.pdf ctwill-changes.pdf \
-			-wvzf $OUTDIR/cweb-changes.tar.gz -s ,^,cweb/,
+			-wvzf "$OUTDIR/cweb-changes.tar.gz" -s ,^,cweb/,
 	else
-		pax vftovp.pdf vptovf.pdf -wvzf $OUTDIR/etc.tar.gz -s ,^,etc/,
-		pax mf.pdf trapman.pdf -wvzf $OUTDIR/mf.tar.gz -s ,^,mf/,
+		pax vftovp.pdf vptovf.pdf -wvzf "$OUTDIR/etc.tar.gz" -s ,^,etc/,
+		pax mf.pdf trapman.pdf -wvzf "$OUTDIR/mf.tar.gz" -s ,^,mf/,
 		pax gftodvi.pdf gftopk.pdf gftype.pdf mft.pdf \
-			-wvzf $OUTDIR/mfware.tar.gz -s ,^,mfware/,
-		pax tex.pdf tripman.pdf -wvzf $OUTDIR/tex.tar.gz -s ,^,tex/,
+			-wvzf "$OUTDIR/mfware.tar.gz" -s ,^,mfware/,
+		pax tex.pdf tripman.pdf -wvzf "$OUTDIR/tex.tar.gz" -s ,^,tex/,
 		pax dvitype.pdf pltotf.pdf pooltype.pdf tftopl.pdf \
-			-wvzf $OUTDIR/texware.tar.gz -s ,^,texware/,
+			-wvzf "$OUTDIR/texware.tar.gz" -s ,^,texware/,
 		pax webman.pdf tangle.pdf weave.pdf \
-			-wvzf $OUTDIR/web.tar.gz -s ,^,web/,
-		pax bibtex.pdf -wvzf $OUTDIR/bibtex.tar.gz -s ,^,bibtex/,
+			-wvzf "$OUTDIR/web.tar.gz" -s ,^,web/,
+		pax bibtex.pdf -wvzf "$OUTDIR/bibtex.tar.gz" -s ,^,bibtex/,
 		pax dvicopy.pdf patgen.pdf pktogf.pdf pktype.pdf \
-			-wvzf $OUTDIR/other.tar.gz -s ,^,other/,
-		pax pdftex.pdf -wvzf $OUTDIR/pdftex.tar.gz -s ,^,pdftex/,
-		pax xetex.pdf -wvzf $OUTDIR/xetex.tar.gz -s ,^,xetex/,
-		pax ctie.pdf -wvzf $OUTDIR/ctie.tar.gz -s ,^,ctie/,
-		pax tie.pdf -wvzf $OUTDIR/tie.tar.gz -s ,^,tie/,
+			-wvzf "$OUTDIR/other.tar.gz" -s ,^,other/,
+		pax pdftex.pdf -wvzf "$OUTDIR/pdftex.tar.gz" -s ,^,pdftex/,
+		pax xetex.pdf -wvzf "$OUTDIR/xetex.tar.gz" -s ,^,xetex/,
+		pax ctie.pdf -wvzf "$OUTDIR/ctie.tar.gz" -s ,^,ctie/,
+		pax tie.pdf -wvzf "$OUTDIR/tie.tar.gz" -s ,^,tie/,
 		pax cwebman.pdf common.pdf ctangle.pdf cweave.pdf ctwill.pdf \
-			-wvzf $OUTDIR/cweb.tar.gz -s ,^,cweb/,
+			-wvzf "$OUTDIR/cweb.tar.gz" -s ,^,cweb/,
 	fi
 fi
 
