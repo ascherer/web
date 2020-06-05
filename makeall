@@ -21,7 +21,7 @@ else OPTS=$(getopt $SHRTOPTS $*)
 fi
 
 if [ $? -eq 0 ] # Check return code from getopt
-then eval set -- "$OPTS"
+then eval set -- $OPTS
 else echo "Failed to parse options." >&2; exit 1
 fi
 
@@ -74,14 +74,14 @@ do
 			# pdfTeX and XeTeX have overlong tables-of-contents
 			pdftex ) sed -i -e \
 				"s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse/" \
-				-e "s/\(\\\\pageno=3\)/\1\n\\\\def\\\\contentspagenumber\{1\}/" \
+				-e "s/\(\\\\pageno=3\)/\1\n\\\\def\\\\contentspagenumber{1}/" \
 				$f.tex ;;
 
 			# XeTeX uses '\pdfTeX' from section 114, which
 			# is not changed and thus 'disappears'
 			xetex ) sed -i -e \
-				"s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse\n\\\\def\\\\pdfTeX\{pdf\\\\TeX\}/" \
-				-e "s/\(\\\\pageno=3\)/\1\n\\\\def\\\\contentspagenumber\{1\}/" \
+				"s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse\n\\\\def\\\\pdfTeX{pdf\\\\TeX}/" \
+				-e "s/\(\\\\pageno=3\)/\1\n\\\\def\\\\contentspagenumber{1}/" \
 				$f.tex ;;
 
 			common | ctangle | cweave | ctwill ) sed -i -e \
