@@ -192,10 +192,10 @@ done
 if ! $CHANGES
 then
 	export TEXINPUTS=$(kpsewhich --var-value=TEXMFDIST)//:$KNUTHWARE//
-	$TEX tripman
-	$TEX trapman
-	$TEX webman
-	$TEX cwebman
+	for f in trip trap web cweb
+	do
+		$TEX ${f}man
+	done
 fi
 
 if $PDFTOCFRONT
