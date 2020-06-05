@@ -94,10 +94,8 @@ do
 		esac
 	else
 		case $f in
-			common | ctangle | cweave | ctie | tie )
-				$CWEAVE $f ;;
+			common | ctangle | cweave | ctie | tie ) $CWEAVE $f ;;
 			ctwill ) $CWEAVE cweave $f-w2c $f ;;
-
 			* ) weave $f ;;
 		esac
 	fi
@@ -184,18 +182,14 @@ FI
 		sed -i -e "1 s/\(webmac\)/\1\n\\\\input pdfwebtocfront/" $f.tex
 
 		if [ xetex = $f ]
-		then
-			$f $f # run TeX twice
-		else
-			$TEX $f # run TeX twice
+		then $f $f # run TeX twice
+		else $TEX $f # run TeX twice
 		fi
 	fi
 
 	if [ xetex = $f ]
-	then
-		$f $f
-	else
-		$TEX $f
+	then $f $f
+	else $TEX $f
 	fi
 done
 
