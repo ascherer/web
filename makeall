@@ -191,7 +191,15 @@ done
 # * WEB and CWEB manuals
 if ! $CHANGES
 then
-	export TEXINPUTS=$(kpsewhich --var-value=TEXMFDIST)//:$KNUTHWARE//
+	export TEXINPUTS=./:$(kpsewhich --var-value=TEXMFDIST)//:$KNUTHWARE//
+
+	# FIX: Prepare 'trapman' for automatic processing; several input
+	# files are renamed in TeX Live (in fact, there are additional
+	# files for MetaPost).
+	rm -f trapman.tex
+	f=$(kpsewhich -engine tex trapman)
+	tie -m $(basename $f) $f /opt/github/web/$(basename $f .tex).ch
+
 	for f in trip trap web cweb
 	do
 		$TEX ${f}man
