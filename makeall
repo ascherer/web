@@ -84,10 +84,6 @@ do
 				-e "s/\(\\\\pageno=3\)/\1\n\\\\def\\\\contentspagenumber{1}/" \
 				$f.tex ;;
 
-			common | ctangle | cweave | ctwill ) sed -i -e \
-				"s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse/" \
-				$f.tex ;;
-
 			ctie | tie ) sed -i -e \
 				"1 s/\(\\\\input cwebmac\)/\1\n\\\\let\\\\maybe=\\\\iffalse/" \
 				$f.tex ;;
