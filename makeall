@@ -101,9 +101,9 @@ do
 		# timestamp on table-of-contents page or the first page
 		case $f in
 			bibtex | patgen | tangle | weave )
-				sed -i -e "s/\(\\\\let\\\\maybe\)/\\\\datecontentspage\n\1/" $f.tex ;;
+				sed -i -e "s/\(\\\\def\\\\title\)/\\\\datecontentspage\n\1/" $f.tex ;;
 			mf | tex | pdftex | xetex )
-				sed -i -e "s/\(\\\\def\\\\botofcontents\)/\\\\datethis\n%\1/" $f.tex ;;
+				sed -i -e "s/\(\\\\def\\\\botofcontents\)/\\\\datethis\n\1/" $f.tex ;;
 			c* | tie ) ;; # do nothing for CWEB programs
 
 			* ) sed -i -e "s/\(\\\\def\\\\botofcontents\)/%\1/" \
