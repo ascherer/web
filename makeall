@@ -97,6 +97,23 @@ do
 	if $NEW
 	then
 		sed -i -e "1 s/\\\\input webmac/\\\\input pwebmac/" $f.tex
+
+		# timestamp on table-of-contents page or the first page
+		case $f in
+			bibtex | patgen | tangle | weave )
+				sed -i -e "s/\(\\\\let\\\\maybe\)/\\\\datecontentspage\n\1/" $f.tex ;;
+			mf | tex | pdftex | xetex )
+				sed -i -e "s/\(\\\\def\\\\botofcontents\)/\\\\datethis\n%\1/" $f.tex ;;
+			c* | tie ) ;; # do nothing for CWEB programs
+
+			* ) sed -i -e "s/\(\\\\def\\\\botofcontents\)/%\1/" \
+				-e "s/  \\\\centerline{\(\\\\hsize\)/\\\\def\\\\covernote{\1/" \
+				-e "s/\(Publishing Company.}}\)}/\1\n\\\\datecontentspage/" \
+				-e "s/\(trademark of the American Mathematical Society.}}\)}/\1\n\\\\datecontentspage/" \
+				$f.tex ;;
+
+		esac
+
 	fi
 
 	# replace former convention to indicate "not a title page"
