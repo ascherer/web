@@ -111,9 +111,7 @@ do
 				-e "s/\(Publishing Company.}}\)}/\1\n\\\\datecontentspage/" \
 				-e "s/\(trademark of the American Mathematical Society.}}\)}/\1\n\\\\datecontentspage/" \
 				$f.tex ;;
-
 		esac
-
 	fi
 
 	# replace former convention to indicate "not a title page"
