@@ -180,7 +180,7 @@ FI
 			fi ;;
 
 		common | ctangle | cweave | ctwill | ctie | tie )
-			# code beautifications for CWEB sources
+			# Use nicer format for C comments and assignment
 			sed -i -e "1 s/\(cwebmac\)/\1\n\\\\input Xcwebmac/" \
 				$f.tex ;;
 	esac
