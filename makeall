@@ -44,7 +44,10 @@ KNUTHWARE=$(dirname $KNUTHWHERE)
 export CWEBINPUTS=$KNUTHWARE//:
 export WEBINPUTS=$KNUTHWARE//:
 
-CWEAVE="cweave -f -lX"
+if [ xetex = $TEX ]
+then CWEAVE="cweave -f -lp+"
+else CWEAVE="cweave -f"
+fi
 
 # WEB and CWEB programs we want to get formatted
 for f in \
@@ -177,13 +180,9 @@ FI
 			fi ;;
 
 		common | ctangle | cweave | ctwill | ctie | tie )
-			# 'cwebmac.tex' needs a little push for 'xetex'
-			# FIX: should be fixed upstream in 'cwebmac.tex'.
-			if [ xetex = $TEX ]
-			then
-				sed -i -e "1 s/\(\\\\input\)/\\\\let\\\\pdf+\1/" \
-					$f.tex
-			fi ;;
+			# code beautifications for CWEB sources
+			sed -i -e "1 s/\(cwebmac\)/\1\n\\\\input Xcwebmac/" \
+				$f.tex ;;
 	esac
 
 	if $PDFTOCFRONT
