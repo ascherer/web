@@ -219,8 +219,7 @@ then
 
 	# Prepare 'cwebman' with footnotes describing the extended CWEB.
 	f=$(kpsewhich -engine tex cwebman)
-	tie -m $(basename $f) $f /opt/github/cwebbin/$(basename $f .tex).ch
-	sed -i -e "s/@VERSION@/Version 3.64 [\\\\.{CWEBbin} 2020]/" $(basename $f)
+	tie -m $(basename $f) $f $(basename $f .tex)-w2c.ch
 
 	for f in trip trap web cweb
 	do
