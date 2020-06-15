@@ -65,7 +65,8 @@ do
 			common ) $CWEAVE $f comm-w2c ;;
 			ctangle ) $CWEAVE $f ctang-w2c ;;
 			cweave ) $CWEAVE $f cweav-w2c ;;
-			ctwill ) $CWEAVE cweave $f-w2c $f ;;
+			ctwill ) tie -m $f.w cweave.w $f-w2c.ch $f-mini.ch
+ 				$f -f +lpdf $f; $f -f +lpdf $f ;;
 			ctie ) $CWEAVE $f $f-k ;;
 			tie ) $CWEAVE $f $f-w2c ;;
 
@@ -91,7 +92,8 @@ do
 	else
 		case $f in
 			common | ctangle | cweave | ctie | tie ) $CWEAVE $f ;;
-			ctwill ) $CWEAVE cweave $f-w2c $f ;;
+			ctwill ) tie -m $f.w cweave.w $f-w2c.ch $f-mini.ch
+				$f -f +lpdf $f; $f -f +lpdf $f ;;
 			* ) weave $f ;;
 		esac
 	fi
@@ -179,7 +181,7 @@ FI
 				rm texmf-pdf.patch
 			fi ;;
 
-		common | ctangle | cweave | ctwill | ctie | tie )
+		common | ctangle | cweave | ctie | tie )
 			# Use nicer format for C comments and assignment
 			sed -i -e "1 s/\(cwebmac\)/\1\n\\\\input Xcwebmac/" \
 				$f.tex ;;
