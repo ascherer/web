@@ -48,6 +48,7 @@ if [ xetex = $TEX ]
 then CWEAVE="cweave -f -lp+"
 else CWEAVE="cweave -f"
 fi
+CTWILL="ctwill -f +lpdf"
 
 # WEB and CWEB programs we want to get formatted
 for f in \
@@ -66,7 +67,7 @@ do
 			ctangle ) $CWEAVE $f ctang-w2c ;;
 			cweave ) $CWEAVE $f cweav-w2c ;;
 			ctwill ) tie -m $f.w cweave.w $f-w2c.ch $f-mini.ch
- 				$f -f +lpdf $f; $f -f +lpdf $f ;;
+ 				$CTWILL $f; $CTWILL $f ;;
 			ctie ) $CWEAVE $f $f-k ;;
 			tie ) $CWEAVE $f $f-w2c ;;
 
@@ -93,7 +94,7 @@ do
 		case $f in
 			common | ctangle | cweave | ctie | tie ) $CWEAVE $f ;;
 			ctwill ) tie -m $f.w cweave.w $f-w2c.ch $f-mini.ch
-				$f -f +lpdf $f; $f -f +lpdf $f ;;
+				$CTWILL $f; $CTWILL $f ;;
 			* ) weave $f ;;
 		esac
 	fi
@@ -201,6 +202,12 @@ FI
 	if [ xetex = $f ]
 	then $f $f
 	else $TEX $f
+	fi
+
+	if [ ctwill = $f ]
+	then
+		ctwill-refsort < $f.ref > $f.sref
+		$TEX $f
 	fi
 done
 
