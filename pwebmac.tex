@@ -180,8 +180,8 @@
   \noindent{\let\*=\lapstar\bf\modstar.\quad}%
   \ifacro \smash{\raise\baselineskip\hbox to0pt{\let\*=\empty
     \ifpdftex \pdfdest num \modstar fith%
-    \else\ifpdf \special{pdf: dest (\romannumeral\modstar)
-      [ @thispage /FitH @ypos ]}\fi\fi}}\fi}
+    \else \special{pdf: dest (\romannumeral\modstar)
+      [ @thispage /FitH @ypos ]}\fi}}\fi}
 \let\startsection=\stsec
 \def\defin#1{\global\advance\ind by 2 \1\&{#1 } } % begin `define' or `format'
 \def\A{\note{See also section}} % xref for doubly defined section name
@@ -345,14 +345,13 @@
     \def\X##1:##2\X{\Xpdf##1:##2\X \firstsecno##1.%
       {\toksF={}\makeoutlinetoks##2\outlinedone\outlinedone}%
       \pdfoutline goto num \the\toksA \expandafter{\the\toksE}}
-  \else\ifpdf
-    \special{pdf: outline -1 << /Title (\outsecname)
+  \else \special{pdf: outline -1 << /Title (\outsecname)
       /Dest [ @thispage /FitH @ypos ] >>}
     \def\X##1:##2\X{\Xpdf##1:##2\X \firstsecno##1.%
       {\toksF={}\makeoutlinetoks##2\outlinedone\outlinedone}%
       \special{pdf: outline 0 << /Title (\the\toksE)
         /A << /S /GoTo /D (\romannumeral\the\toksA) >> >>}}
-  \fi\fi\fi}
+  \fi\fi}
 \def\makebookmarks{\def\?##1]{[##1]}%
   \let\Z=\writebookmarkline \readcontents\relax}
 \def\expnumber#1{\expandafter\ifx\csname#1\endcsname\relax 0%
