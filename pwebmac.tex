@@ -79,8 +79,8 @@
 \newskip\intersecskip \intersecskip=12pt minus 3pt % space between sections
 \let\yskip=\smallskip
 \def\to{\mathrel{.\,.}} % double dot, used only in math mode
-\def\note#1#2.{\Y\noindent{\hangindent2em%
-    \baselineskip10pt\eightrm#1~\ifacro{\pdfnote#2.}\else#2\fi.\par}}
+\def\note#1#2.{\Y\noindent{\hangindent2em\baselineskip10pt%
+    \eightrm#1~\ifacro{\pdfnote#2.}\else#2\fi.\par}}
 
 \newtoks\toksA \newtoks\toksB \newtoks\toksC \newtoks\toksD
 \newtoks\toksE \newtoks\toksF \newtoks\usersanitizer
@@ -127,7 +127,7 @@
 \def\pdfURL#1#2{\ifpdftex\pdfannotlink height\ht\strutbox depth\dp\strutbox
   attr {/Border [0 0 0]} user { /Type /Action /Subtype /Link /A
       << /S /URI /URI (#2) >> } \PDFlinkcolor #1\Black \pdfendlink
-  \else \ifpdf{\setbox0=\hbox{\special{pdf: bc [ \pdflinkcolor ]}{#1}%
+  \else\ifpdf{\setbox0=\hbox{\special{pdf: bc [ \pdflinkcolor ]}{#1}%
     \special{pdf: ec}}\special{pdf: ann width \thewidth\space height \theheight
       \space depth \thedepth\space << /Border [0 0 0]
       /Type /Action /Subtype /Link /A << /S /URI /URI (#2) >> >>}\box0\relax}%
@@ -178,11 +178,10 @@
 \def\stsec{\rightskip=0pt % get out of Pascal mode (cf. \P)
   \sfcode`;=1500 \pretolerance 200 \hyphenpenalty 50 \exhyphenpenalty 50
   \noindent{\let\*=\lapstar\bf\modstar.\quad}%
-  \ifpdftex\smash{\raise\baselineskip\hbox to0pt{%
-     \let\*=\empty\pdfdest num \modstar fith}}%
-  \else\ifpdf\smash{\raise\baselineskip\hbox to0pt{%
-     \let\*=\empty\special{%
-       pdf: dest (\romannumeral\modstar) [ @thispage /FitH @ypos ]}}}\fi\fi}
+  \ifacro \smash{\raise\baselineskip\hbox to0pt{\let\*=\empty
+    \ifpdftex \pdfdest num \modstar fith%
+    \else\ifpdf \special{pdf: dest (\romannumeral\modstar)
+      [ @thispage /FitH @ypos ]}\fi\fi}}\fi}
 \let\startsection=\stsec
 \def\defin#1{\global\advance\ind by 2 \1\&{#1 } } % begin `define' or `format'
 \def\A{\note{See also section}} % xref for doubly defined section name
