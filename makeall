@@ -217,7 +217,7 @@ FI
 	if [ ctwill = $f ]
 	then
 		ctwill-refsort < $f.ref > $f.sref
-		$TEX $f
+		xetex $f
 	fi
 done
 
