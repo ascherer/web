@@ -68,7 +68,7 @@ typographically, or politically incorrect, please notify the maintainers at
   [`COMMON`](cweb/common.pdf)<sub>[chg](cweb/common-changes.pdf)</sub> \|
   [`CTANGLE`](cweb/ctangle.pdf)<sub>[chg](cweb/ctangle-changes.pdf)</sub> \|
   [`CWEAVE`](cweb/cweave.pdf)<sub>[chg](cweb/cweave-changes.pdf)</sub> \|
-  [`CTWILL`](cweb/ctwill.pdf)<sub>[chg](cweb/ctwill-changes.pdf)</sub> \]
+  [`CTWILL`](cweb/ctwill.pdf) \]
 * `ctie/` \[ [`CTIE`](ctie/ctie.pdf)<sub>[chg](ctie/ctie-changes.pdf)</sub> \]
 * `tie/` \[ [`TIE`](tie/tie.pdf)<sub>[chg](tie/tie-changes.pdf)</sub> \]
 
