@@ -66,8 +66,7 @@ do
 			common ) $CWEAVE $f comm-w2c ;;
 			ctangle ) $CWEAVE $f ctang-w2c ;;
 			cweave ) $CWEAVE $f cweav-w2c ;;
-			ctwill ) tie -m $f.w cweave.w $f-w2c.ch $f-mini.ch
- 				$CTWILL $f; $CTWILL $f ;;
+			ctwill ) ;; # do nothing for CTWILL
 			ctie ) $CWEAVE $f $f-k ;;
 			tie ) $CWEAVE $f $f-w2c ;;
 
@@ -87,16 +86,27 @@ do
 				-e "s/\(\\\\pageno=3\)/\1\n\\\\def\\\\contentspagenumber{1}/" \
 				$f.tex ;;
 
+			ctwill ) ;; # do nothing for CTWILL
+
 			* ) sed -i -e "s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse/" \
 				$f.tex ;;
 		esac
 	else
 		case $f in
 			common | ctangle | cweave | ctie | tie ) $CWEAVE $f ;;
-			ctwill ) tie -m $f.w cweave.w $f-w2c.ch $f-mini.ch
-				$CTWILL $f; $CTWILL $f ;;
+			ctwill ) ;; # do nothing for CTWILL
 			* ) weave $f ;;
 		esac
+	fi
+
+	# Format CTWILL in its own format
+	if [ ctwill = $f ]
+	then
+		WEBINPUTS=/opt/github/cwebbin:$WEBINPUTS \
+			tie -m $f.w cweave.w $f-w2c.ch $f-mini.ch
+		cp -an /opt/github/cwebbin/*.bux .
+		$CTWILL $f
+		$CTWILL $f
 	fi
 
 	# use extended macros for TeX Live PDF documentation
