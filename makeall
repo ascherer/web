@@ -280,8 +280,7 @@ then
 			-wvzf "$OUTDIR/ctie-changes.tar.gz" -s ,^,ctie/,
 		pax tie-changes.pdf \
 			-wvzf "$OUTDIR/tie-changes.tar.gz" -s ,^,tie/,
-		pax common-changes.pdf ctangle-changes.pdf \
-			cweave-changes.pdf \
+		pax common-changes.pdf ctangle-changes.pdf cweave-changes.pdf \
 			-wvzf "$OUTDIR/cweb-changes.tar.gz" -s ,^,cweb/,
 	else
 		pax vftovp.pdf vptovf.pdf -wvzf "$OUTDIR/etc.tar.gz" -s ,^,etc/,
