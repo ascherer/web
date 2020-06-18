@@ -77,6 +77,7 @@
 \def\7{\Y\6} % forced break and a little extra space
 
 \newskip\intersecskip \intersecskip=12pt minus 3pt % space between sections
+\newtoks\gtitle % title of current major group
 \let\yskip=\smallskip
 \def\to{\mathrel{.\,.}} % double dot, used only in math mode
 \def\note#1#2.{\Y\noindent{\hangindent2em\baselineskip10pt%
@@ -202,9 +203,9 @@
 \let\L=\le % less than or equal sign
 \outer\def\M#1.{\MN#1.\ifon\vfil\penalty-100\vfilneg % beginning of section
   \vskip\intersecskip\startsection\ignorespaces}
-\outer\def\N#1.#2.{\MN#1.\vfil\eject % beginning of starred section
+\outer\def\N#1.#2.{% beginning of starred section
   \ifacro{\toksF={}\makeoutlinetoks#2\outlinedone\outlinedone}\fi
-  \def\rhead{\uppercase{\ignorespaces#2}} % define running headline
+  \gtitle={#2}\MN#1.\vfil\eject % define running headline
   \message{*\modno} % progress report
   \edef\next{\write\cont{\Z{#2}{\modno}% write to contents file
    {\noexpand\the\pageno}}}\next % \Z{title}{sec}{page}
@@ -214,7 +215,7 @@
 \def\MN#1.{\par % common code for \M, \N
   {\xdef\modstar{#1}\let\*=\empty\xdef\modno{#1}}% remove \* from section name
   \ifx\modno\modstar \onmaybe \else\ontrue \fi
-  \mark{{{\tensy x}\modno}{\rhead}}}
+  \mark{{{\tensy x}\modno}{\the\gtitle}}}
 % each \mark is {section reference or null}{group title}
 \def\O#1{\hbox{\rm\char'23\kern-.2em\it#1\/\kern.05em}} % octal constant
 \def\P{\rightskip=0pt plus 100pt minus 10pt % go into Pascal mode
@@ -245,10 +246,12 @@
 
 \def\onmaybe{\let\ifon=\maybe} \let\maybe=\iftrue
 \newif\ifon \newif\iftitle \newif\ifpagesaved
-\def\lheader{\mainfont\the\pageno\eightrm\qquad\rhead
+\def\lheader{\mainfont\the\pageno\eightrm\qquad\grouptitle
   \hfill\title\qquad\mainfont\topsecno} % top line on left-hand pages
 \def\rheader{\mainfont\topsecno\eightrm\qquad\title\hfill
-  \rhead\qquad\mainfont\the\pageno} % top line on right-hand pages
+  \grouptitle\qquad\mainfont\the\pageno} % top line on right-hand pages
+\def\grouptitle{\let\i=I\let\j=J\uppercase\expandafter{\expandafter
+                          \taketwo\topmark}}
 \def\topsecno{\expandafter\takeone\topmark}
 \def\takeone#1#2{#1}
 \def\taketwo#1#2{#2}
@@ -264,8 +267,8 @@
       \vfill#1}} % parameter #1 is the page itself
   \global\advance\pageno by1}
 
-\def\rhead{\.{WEB} OUTPUT} % this running head is reset by starred sections
-\mark{\noexpand\nullsec{\rhead}}
+\gtitle={\.{WEB} output} % this running head is reset by starred sections
+\mark{\noexpand\nullsec{\the\gtitle}}
 \def\title{\expandafter\uppercase\expandafter{\jobname}}
 \def\topofcontents{\centerline{\titlefont\title}\vskip.7in
   \vfill} % this material will start the table of contents page
@@ -329,7 +332,7 @@
   \if L\lr\else\null\vfill\eject\fi % finish the current page
   \ifpdftex \makebookmarks \fi % added in Version 4.5
   \parfillskip 0pt plus 1fil
-  \def\rhead{NAMES OF THE SECTIONS}
+  \def\grouptitle{NAMES OF THE SECTIONS}
   \let\topsecno=\nullsec
   \message{Section names:}
   \output={\normaloutput\page\lheader\rheader}
@@ -367,7 +370,7 @@
   \setpage \output={\normaloutput\page\lheader\rheader}
   \titletrue % prepare to output the table of contents
   \pageno=\contentspagenumber
-  \def\rhead{TABLE OF CONTENTS}
+  \def\grouptitle{TABLE OF CONTENTS}
   \message{Table of contents:}
   \topofcontents \startpdf
   \line{\hfil Section\hbox to3em{\hss Page}}
