@@ -154,8 +154,8 @@ do
 		tangle ) sed -i -e "s/number{123}/number{125}/" $f.tex ;;
 
 		# amend '\N' redefinition for PDF outlines in mf.tex and
-		# tex.tex (also pdftex.web and xetex.web); depends on the
-		# extended 'pwebmac.tex' macros
+		# tex.tex (also pdftex.web and xetex.web); this depends on
+		# the extended 'pwebmac.tex' macros
 		mf | tex | pdftex | xetex )
 			if [ xetex = $f ]
 			then
@@ -171,22 +171,30 @@ do
   \advance\vsize by 4\baselineskip
   \ifacro\advance\pdfpageheight by 4\baselineskip\fi
 FI
-					sed -i -e "/\\\\def\\\\topofcontents.*/ {
+					sed -i -e "/\\\\def\\\\topofcontents/ {
 						r pdftex.patch
 						}"  $f.tex
 				fi
-				# active links in PDF outlines/bookmarks
+
+				# 'pwebmac' defines headers differently (I)
+				sed -i -e "s/\(\\\\outer\\\\def\\\\N.*{\)/\1%/" $f.tex
+
+				# active links in PDF outlines/bookmarks (I)
 				cat > texmf-pdf.patch << FI
   \ifacro{\toksF={}\makeoutlinetoks{[#2] #3}\outlinedone\outlinedone}\fi
 FI
-				sed -i -e "/\\\\outer\\\\def\\\\N.*/ {
+				sed -i -e "/\\\\outer\\\\def\\\\N/ {
 					r texmf-pdf.patch
 					}" $f.tex
+
+				# 'pwebmac' defines headers differently (II)
+				sed -i -e "s/\\\\def\\\\rhead\(.*}\)/\\\\gtitle=\1\\\\MN#1.\\\\vfill\\\\eject/" $f.tex
 				cat > texmf-pdf.patch << FI
   \ifpdf\special{pdf: outline 0 << /Title (\the\toksE) /Dest
     [ @thispage /FitH @ypos ] >>}\fi
 FI
-				sed -i -e "/  \\\\edef\\\\next.*/ {
+				# active links in PDF outlines/bookmarks (II)
+				sed -i -e "/  \\\\edef\\\\next/ {
 					r texmf-pdf.patch
 					}" $f.tex
 				rm texmf-pdf.patch
