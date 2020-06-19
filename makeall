@@ -109,7 +109,7 @@ do
 		$CTWILL $f
 	fi
 
-	# use extended macros for TeX Live PDF documentation
+	# use extended WEB macros for TeX Live PDF documentation
 	if $NEW
 	then
 		sed -i -e "1 s/\\\\input webmac/\\\\input pwebmac/" $f.tex
@@ -193,6 +193,7 @@ FI
   \ifpdf\special{pdf: outline 0 << /Title (\the\toksE) /Dest
     [ @thispage /FitH @ypos ] >>}\fi
 FI
+
 				# active links in PDF outlines/bookmarks (II)
 				sed -i -e "/  \\\\edef\\\\next/ {
 					r texmf-pdf.patch
@@ -206,17 +207,25 @@ FI
 				$f.tex ;;
 	esac
 
+	# shift table-of-contents pages to the front in PDF
 	if $PDFTOCFRONT
 	then
-		# shift table-of-contents pages to the front in PDF
-		sed -i -e "1 s/\(webmac\)/\1\n\\\\input pdfwebtocfront/" $f.tex
+		# work around issue cwebbin#32 in 'pdfwebtocfront.tex'
+		case $f in
+			mf | tex | pdftex | xetex )
+				sed -i -e "1 s/\(webmac\)/\1\n\\\\gtitle={Part 1: Introduction}\\\\input pdfwebtocfront/" $f.tex ;;
 
+			* ) sed -i -e "1 s/\(webmac\)/\1\n\\\\gtitle={Introduction}\\\\input pdfwebtocfront/" $f.tex ;;
+		esac
+
+		# only XeTeX can process XETEX.WEB
 		if [ xetex = $f ]
 		then $f $f # run TeX twice
 		else $TEX $f # run TeX twice
 		fi
 	fi
 
+	# only XeTeX can process XETEX.WEB
 	if [ xetex = $f ]
 	then $f $f
 	else $TEX $f
