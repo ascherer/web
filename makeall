@@ -75,15 +75,9 @@ do
 
 		# only document changed modules/sections
 		case $f in
-			# pdfTeX and XeTeX have overlong tables-of-contents
-			pdftex ) sed -i -e "s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse/" \
-				-e "s/\(\\\\pageno=3\)/\1\n\\\\def\\\\contentspagenumber{1}/" \
-				$f.tex ;;
-
 			# XeTeX uses '\pdfTeX' from section 114, which
 			# is not changed and thus 'disappears'
 			xetex ) sed -i -e "s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse\n\\\\def\\\\pdfTeX{pdf\\\\TeX}/" \
-				-e "s/\(\\\\pageno=3\)/\1\n\\\\def\\\\contentspagenumber{1}/" \
 				$f.tex ;;
 
 			ctwill ) ;; # do nothing for CTWILL
@@ -164,18 +158,6 @@ do
 			fi
 			if $NEW
 			then
-				if [ pdftex = $f ]
-				then
-					# pdfTeX has a looong table-of-contents
-					cat > pdftex.patch << FI
-  \advance\vsize by 4\baselineskip
-  \ifacro\advance\pdfpageheight by 4\baselineskip\fi
-FI
-					sed -i -e "/\\\\def\\\\topofcontents/ {
-						r pdftex.patch
-						}"  $f.tex
-				fi
-
 				# 'pwebmac' defines headers differently (I)
 				sed -i -e "s/\(\\\\outer\\\\def\\\\N.*{\)/\1%/" $f.tex
 
