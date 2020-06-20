@@ -208,15 +208,10 @@ FI
 	esac
 
 	# shift table-of-contents pages to the front in PDF
-	if $PDFTOCFRONT
+	if $PDFTOCFRONT && [ ctwill != $f ]
 	then
-		# work around issue cwebbin#32 in 'pdfwebtocfront.tex'
-		case $f in
-			mf | tex | pdftex | xetex )
-				sed -i -e "1 s/\(webmac\)/\1\n\\\\gtitle={Part 1: Introduction}\\\\input pdfwebtocfront/" $f.tex ;;
-
-			* ) sed -i -e "1 s/\(webmac\)/\1\n\\\\gtitle={Introduction}\\\\input pdfwebtocfront/" $f.tex ;;
-		esac
+		sed -i -e "0,/\\\\N[1{]/s/\(\\\\N[{1]\)/\\\\input pdfwebtocfront\n\n\1/" \
+			$f.tex
 
 		# only XeTeX can process XETEX.WEB
 		if [ xetex = $f ]
