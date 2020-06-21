@@ -160,10 +160,12 @@ do
 			fi
 			if $NEW
 			then
-				# 'pwebmac' defines headers differently (I)
-				sed -i -e "s/\(\\\\outer\\\\def\\\\N.*{\)/\1%/" $f.tex
+				# 'pwebmac' defines headers differently
+				sed -i -e "s/\(\\\\outer\\\\def\\\\N.*{\)/\1%/" \
+					 -e "s/\\\\def\\\\rhead\(.*}\)/\\\\gtitle=\1\\\\MN#1.\\\\vfill\\\\eject/" \
+					 $f.tex
 
-				# active links in PDF outlines/bookmarks (I)
+				# active links in PDF outlines/bookmarks
 				cat > texmf-pdf.patch << FI
   \ifacro{\toksF={}\makeoutlinetoks{[#2] #3}\outlinedone\outlinedone}\fi
 FI
@@ -171,10 +173,6 @@ FI
 					r texmf-pdf.patch
 					}" $f.tex
 
-				# 'pwebmac' defines headers differently (II)
-				sed -i -e "s/\\\\def\\\\rhead\(.*}\)/\\\\gtitle=\1\\\\MN#1.\\\\vfill\\\\eject/" $f.tex
-
-				# active links in PDF outlines/bookmarks (II)
 				cat > texmf-pdf.patch << FI
   \ifpdf\special{pdf: outline 0 << /Title (\the\toksE) /Dest
     [ @thispage /FitH @ypos ] >>}\fi
@@ -194,7 +192,7 @@ FI
 	# shift table-of-contents pages to the front in PDF
 	if $PDFTOCFRONT && [ ctwill != $f ]
 	then
-		sed -i -e "0,/\\\\N[1{]/s/\(\\\\N[{1]\)/\\\\input pdfwebtocfront\n\n\1/" \
+		sed -i -e "0,/\\\\N[1{]/s/\(\\\\N[1{]\)/\\\\input pdfwebtocfront\n\n\1/" \
 			$f.tex
 
 		# only XeTeX can process XETEX.WEB
