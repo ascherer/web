@@ -88,7 +88,9 @@ do
 	else
 		case $f in
 			common | ctangle | cweave | ctie | tie ) $CWEAVE $f ;;
+
 			ctwill ) ;; # do nothing for CTWILL
+
 			* ) weave $f ;;
 		esac
 	fi
@@ -171,19 +173,19 @@ FI
 
 				# 'pwebmac' defines headers differently (II)
 				sed -i -e "s/\\\\def\\\\rhead\(.*}\)/\\\\gtitle=\1\\\\MN#1.\\\\vfill\\\\eject/" $f.tex
+
+				# active links in PDF outlines/bookmarks (II)
 				cat > texmf-pdf.patch << FI
   \ifpdf\special{pdf: outline 0 << /Title (\the\toksE) /Dest
     [ @thispage /FitH @ypos ] >>}\fi
 FI
-
-				# active links in PDF outlines/bookmarks (II)
 				sed -i -e "/  \\\\edef\\\\next/ {
 					r texmf-pdf.patch
 					}" $f.tex
 				rm texmf-pdf.patch
 			fi ;;
 
-		common | ctangle | cweave | ctie | tie )
+		common | ctangle | cweave | ctie | tie ) # sans ctwill
 			# Use nicer format for C comments and assignment
 			sed -i -e "1 s/\(cwebmac\)/\1\n\\\\input Xcwebmac/" \
 				$f.tex ;;
