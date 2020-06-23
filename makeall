@@ -98,8 +98,11 @@ do
 	# Format CTWILL in its own format
 	if [ ctwill = $f ]
 	then
+		# amend TeX Live's 'prod-twill.w' for (c)twill'ing
 		WEBINPUTS=/opt/github/cwebbin:$WEBINPUTS \
-			tie -m $f.w cweave.w $f-w2c.ch $f-mini.ch
+			tie -m prod-twill.w prod-twill.w prod-mini.ch
+		CWEBINPUTS=.:/opt/github/cwebbin:$CWEBINPUTS \
+			ctie -m $f.w cweave.w $f-w2c.ch $f-mini.ch
 		cp -an /opt/github/cwebbin/*.bux .
 		$CTWILL $f
 		$CTWILL $f
