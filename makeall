@@ -101,12 +101,11 @@ do
 		# amend TeX Live's 'prod-twill.w' for (c)twill'ing
 		if [ ! -e prod-twill.w ]
 		then
-			WEBINPUTS=/opt/github/cwebbin:$WEBINPUTS \
-				tie -m prod-twill.w prod-twill.w prod-mini.ch
+			tie -m prod-twill.w prod-twill.w prod-mini.ch
 		fi
-		CWEBINPUTS=.:/opt/github/cwebbin:$CWEBINPUTS \
+		CWEBINPUTS=.:$CWEBINPUTS \
 			ctie -m $f.w cweave.w $f-w2c.ch $f-mini.ch
-		cp -an /opt/github/cwebbin/*.bux .
+		cp -an $KNUTHWARE/cwebdir/*.bux .
 		$CTWILL $f
 		$CTWILL $f
 	fi
