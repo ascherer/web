@@ -29,4 +29,4 @@ clickable links and bookmarks (depending on your PDF viewer).
 
 The `pwebmac` package is free software and may be used without constraints.
 
-This is version “4.5.3” of the `pwebmac` package — 2020-06-17, AS.
+This is version “4.5.4” of the `pwebmac` package — 2020-06-27, AS.
