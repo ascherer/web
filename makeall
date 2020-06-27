@@ -57,7 +57,21 @@ for f in \
 do
 	f=$(basename $f .web)
 
-	if $CHANGES
+	if [ ctwill = $f ]
+	then
+		# amend TeX Live's 'prod-twill.w' for (c)twill'ing
+		if [ ! -e prod-twill.w ]
+		then
+			tie -m prod-twill.w prod-twill.w prod-mini.ch
+		fi
+		# apply tons of editorial changes to 'ctwill.w'
+		CWEBINPUTS=.:$CWEBINPUTS \
+			ctie -m $f.w cweave.w $f-w2c.ch $f-mini.ch
+		cp -an $KNUTHWARE/cwebdir/*.bux .
+		$CTWILL $f
+		$CTWILL $f
+
+	elif $CHANGES
 	then
 		# pdftex.ch and xetex.ch for TeX Live are assembled here
 		WEBINPUTS=$KNUTHWARE/../../Work//:$WEBINPUTS:
@@ -66,105 +80,48 @@ do
 			common ) $CWEAVE $f comm-w2c ;;
 			ctangle ) $CWEAVE $f ctang-w2c ;;
 			cweave ) $CWEAVE $f cweav-w2c ;;
-			ctwill ) ;; # do nothing for CTWILL
 			ctie ) $CWEAVE $f $f-k ;;
 			tie ) $CWEAVE $f $f-w2c ;;
 
 			* ) weave $f $f ;;
 		esac
 
+		# FIX: XeTeX uses '\pdfTeX' from section 114, which
+		# is not changed and thus 'disappears'
+		if [ xetex = $f ]
+		then
+			sed -i -e "s/\(\\\\let\\\\maybe\)/\\\\def\\\\pdfTeX{pdf\\\\TeX}\n\1/" \
+				$f.tex
+		fi
+
 		# only document changed modules/sections
-		case $f in
-			# XeTeX uses '\pdfTeX' from section 114, which
-			# is not changed and thus 'disappears'
-			xetex ) sed -i -e "s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse\n\\\\def\\\\pdfTeX{pdf\\\\TeX}/" \
-				$f.tex ;;
-
-			ctwill ) ;; # do nothing for CTWILL
-
-			* ) sed -i -e "s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse/" \
-				$f.tex ;;
-		esac
+		sed -i -e "s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse/" \
+			$f.tex
 	else
 		case $f in
-			common | ctangle | cweave | ctie | tie ) $CWEAVE $f ;;
-
-			ctwill ) ;; # do nothing for CTWILL
+			c* | tie ) $CWEAVE $f ;;
 
 			* ) weave $f ;;
 		esac
 	fi
 
-	# Format CTWILL in its own format
-	if [ ctwill = $f ]
-	then
-		# amend TeX Live's 'prod-twill.w' for (c)twill'ing
-		if [ ! -e prod-twill.w ]
-		then
-			tie -m prod-twill.w prod-twill.w prod-mini.ch
-		fi
-		CWEBINPUTS=.:$CWEBINPUTS \
-			ctie -m $f.w cweave.w $f-w2c.ch $f-mini.ch
-		cp -an $KNUTHWARE/cwebdir/*.bux .
-		$CTWILL $f
-		$CTWILL $f
-	fi
-
-	# use extended WEB macros for TeX Live PDF documentation
 	if $NEW
 	then
+		# use extended WEB macros for TeX Live PDF documentation
 		sed -i -e "1 s/\\\\input webmac/\\\\input pwebmac/" $f.tex
 
 		# timestamp on table-of-contents page or the first page
 		case $f in
+			c* | tie ) ;; # do nothing for CWEB programs
+
 			bibtex | patgen | tangle | weave )
 				sed -i -e "s/\(\\\\def\\\\title\)/\\\\datecontentspage\n\1/" $f.tex ;;
 
 			mf | tex | pdftex | xetex )
-				sed -i -e "s/\(\\\\def\\\\botofcontents\)/\\\\datethis\n\1/" $f.tex ;;
+				sed -i -e "s/\(\\\\def\\\\botofcontents\)/\\\\datethis\n\1/" $f.tex
 
-			c* | tie ) ;; # do nothing for CWEB programs
-
-			* ) sed -i -e "s/\(\\\\def\\\\botofcontents\)/%\1/" \
-				-e "s/  \\\\centerline{\(\\\\hsize\)/\\\\def\\\\covernote{\1/" \
-				-e "s/\(Publishing Company.}}\)}/\1\n\\\\datecontentspage/" \
-				-e "s/\(trademark of the American Mathematical Society.}}\)}/\1\n\\\\datecontentspage/" \
-				$f.tex ;;
-		esac
-	fi
-
-	# replace former convention to indicate "not a title page"
-	# to include page headers for table-of-contents
-	# FIX: most of the WEB codes will be corrected.
-	sed -i -e "s/\\\\def\\\\titlepage{F}/\\\\titlefalse/" $f.tex
-
-	# special treatment for individual WEB programs
-	case $f in
-		# purge conflict between bibtex.web and webmac.tex
-		# 'E' no longer free to be active character
-		# fix table-of-contents page for bibtex
-		# FIX: don't wait for Oren Patashnik.
-		bibtex ) sed -i -e "s/titlefalse/titletrue/" $f.tex
-			if ! $CHANGES
-			then
-				sed -i -e "71,78d" $f.tex
-			fi ;;
-
-		# make room for new material in weave.web
-		# FIX: should be fixed upstream.
-		tangle ) sed -i -e "s/number{123}/number{125}/" $f.tex ;;
-
-		# amend '\N' redefinition for PDF outlines in mf.tex and
-		# tex.tex (also pdftex.web and xetex.web); this depends on
-		# the extended 'pwebmac.tex' macros
-		mf | tex | pdftex | xetex )
-			if [ xetex = $f ]
-			then
-				# purge obsolete macros from XeTeX
-				sed -i -e "/\\\\input xewebmac/d" $f.tex
-			fi
-			if $NEW
-			then
+				# amend '\N' redefinition for PDF outlines in
+				# Metafont and TeX (also pdfTeX and XeTeX)
 				# 'pwebmac' defines headers differently
 				sed -i -e "s/\(\\\\outer\\\\def\\\\N.*{\)/\1%/" \
 					 -e "s/\\\\def\\\\rhead\(.*}\)/\\\\gtitle=\1\\\\MN#1.\\\\vfill\\\\eject/" \
@@ -185,11 +142,42 @@ FI
 				sed -i -e "/  \\\\edef\\\\next/ {
 					r texmf-pdf.patch
 					}" $f.tex
-				rm texmf-pdf.patch
+				rm texmf-pdf.patch ;;
+
+			* ) sed -i -e "s/\(\\\\def\\\\botofcontents\)/%\1/" \
+				-e "s/  \\\\centerline{\(\\\\hsize\)/\\\\def\\\\covernote{\1/" \
+				-e "s/\(Publishing Company.}}\)}/\1\n\\\\datecontentspage/" \
+				-e "s/\(trademark of the American Mathematical Society.}}\)}/\1\n\\\\datecontentspage/" \
+				$f.tex ;;
+		esac
+	fi
+
+	# replace former convention to indicate "not a title page"
+	# to include page headers for table-of-contents
+	# FIX: most of the WEB codes will be corrected.
+	sed -i -e "s/\\\\def\\\\titlepage{F}/\\\\titlefalse/" $f.tex
+
+	# special treatment for individual (C)WEB programs
+	case $f in
+		# purge conflict between bibtex.web and webmac.tex
+		# 'E' no longer free to be active character
+		# fix table-of-contents page for bibtex
+		# FIX: don't wait for Oren Patashnik.
+		bibtex ) sed -i -e "s/titlefalse/titletrue/" $f.tex
+			if ! $CHANGES
+			then
+				sed -i -e "71,78d" $f.tex
 			fi ;;
 
+		# make room for new material in weave.web
+		# FIX: should be fixed upstream.
+		tangle ) sed -i -e "s/number{123}/number{125}/" $f.tex ;;
+
+		# FIX: purge obsolete macros from XeTeX
+		xetex ) sed -i -e "/\\\\input xewebmac/d" $f.tex ;;
+
+		# Use nicer format for C comments and assignment
 		common | ctangle | cweave | ctie | tie ) # sans ctwill
-			# Use nicer format for C comments and assignment
 			sed -i -e "1 s/\(cwebmac\)/\1\n\\\\input Xcwebmac/" \
 				$f.tex ;;
 	esac
@@ -215,6 +203,7 @@ FI
 
 	if [ ctwill = $f ]
 	then
+		# sort mini-indexes
 		ctwill-refsort < $f.ref > $f.sref
 		$TEX $f
 	fi
