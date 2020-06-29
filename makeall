@@ -59,23 +59,14 @@ do
 
 	if [ ctwill = $f ]
 	then
-		# amend TeX Live's 'prod-twill.w' for (c)twill'ing
-		if [ ! -e prod-twill.w ]
-		then
-			tie -m prod-twill.w prod-twill.w prod-mini.ch
-		fi
 		# apply tons of editorial changes to 'ctwill.w'
-		CWEBINPUTS=.:$CWEBINPUTS \
-			ctie -m $f.w cweave.w $f-w2c.ch $f-mini.ch
+		ctie -m $f.w cweave.w $f-w2c.ch $f-mini.ch
 		cp -an $KNUTHWARE/cwebdir/*.bux .
 		$CTWILL $f
 		$CTWILL $f
 
 	elif $CHANGES
 	then
-		# pdftex.ch and xetex.ch for TeX Live are assembled here
-		WEBINPUTS=$KNUTHWARE/../../Work//:$WEBINPUTS:
-
 		case $f in
 			common ) $CWEAVE $f comm-w2c ;;
 			ctangle ) $CWEAVE $f ctang-w2c ;;
@@ -83,7 +74,9 @@ do
 			ctie ) $CWEAVE $f $f-k ;;
 			tie ) $CWEAVE $f $f-w2c ;;
 
-			* ) weave $f $f ;;
+			* ) # pdftex.ch and xetex.ch for TeX Live are assembled here
+				WEBINPUTS=$KNUTHWARE/../../Work//:$WEBINPUTS: \
+				weave $f $f ;;
 		esac
 
 		# FIX: XeTeX uses '\pdfTeX' from section 114, which
