@@ -18,18 +18,13 @@
 \def\bkminfo{}
 \outer\def\section #1.{\penalty-50\vskip 12pt plus 3pt minus 3pt
   \noindent\ifacro\vbox to 0pt{\kern-2.5ex\relax
-    \ifpdftex\pdfdest num\destcount fitbh\relax
-    \else\special{pdf: dest (\the\destcount) [ @thispage /FitBH @ypos]}\fi
+    \ifpdftex\pdfdest num \destcount fitbh\relax
+    \else\special{pdf: dest (\the\destcount) [ @thispage /FitBH @ypos ]}\fi
     \def\.##1{##1}%
-    \ifx\bkminfo\empty
-      \ifpdftex\pdfoutline goto num\destcount{#1}\relax
-      \else\special{pdf: outline 0 << /Title (#1)
-        /A << /S /GoTo /D (\the\destcount) >> >>}\fi
-    \else
-      \ifpdftex\pdfoutline goto num\destcount{#1 (\bkminfo)}\relax
-      \else\special{pdf: outline 0 << /Title (#1 (\bkminfo))
-        /A << /S /GoTo /D (\the\destcount) >> >>}\fi
-    \fi
+    \ifx\bkminfo\empty\def\sectitle{#1}\else\def\sectitle{#1 (\bkminfo)}\fi
+    \ifpdftex\pdfoutline goto num \destcount {\sectitle}\relax
+    \else\special{pdf: outline 0 << /Title (\sectitle)
+      /A << /S /GoTo /D (\the\destcount) >> >>}\fi
     \gdef\bkminfo{}%
     \global\advance\destcount by 1\relax
     \kern2.5ex\relax
