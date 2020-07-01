@@ -1,5 +1,5 @@
 % WEB user manual -- last updated by D E Knuth on 4 Dec 89
-\input pwebmac
+\input pwebmac \ifacro\else\pageno=1\fi
 \parskip 0pt plus 1pt
 \def\RA{\char'31 } % right arrow
 \def\hang{\hangindent 4em\ignorespaces}
@@ -17,23 +17,23 @@
 
 \def\bkminfo{}
 \outer\def\section #1.{\penalty-50\vskip 12pt plus 3pt minus 3pt
-  \noindent\vbox to 0pt{\kern-2.5ex\relax
-    \ifacro\ifpdftex\pdfdest num\destcount fitbh\relax
-    \else\special{pdf: dest (\destcount) [ @thispage /FitBH @ypos]}\fi\fi
+  \noindent\ifacro\vbox to 0pt{\kern-2.5ex\relax
+    \ifpdftex\pdfdest num\destcount fitbh\relax
+    \else\special{pdf: dest (\the\destcount) [ @thispage /FitBH @ypos]}\fi
     \def\.##1{##1}%
     \ifx\bkminfo\empty
-      \ifacro\ifpdftex\pdfoutline goto num\destcount{#1}\relax
+      \ifpdftex\pdfoutline goto num\destcount{#1}\relax
       \else\special{pdf: outline 0 << /Title (#1)
-        /A << /S /Goto /D (\destcount) >> >>}\fi\fi
+        /A << /S /GoTo /D (\the\destcount) >> >>}\fi
     \else
-      \ifacro\ifpdftex\pdfoutline goto num\destcount{#1 (\bkminfo)}\relax
+      \ifpdftex\pdfoutline goto num\destcount{#1 (\bkminfo)}\relax
       \else\special{pdf: outline 0 << /Title (#1 (\bkminfo))
-        /A << /S /Goto /D (\destcount) >> >>}\fi\fi
+        /A << /S /GoTo /D (\the\destcount) >> >>}\fi
     \fi
     \gdef\bkminfo{}%
     \global\advance\destcount by 1\relax
     \kern2.5ex\relax
-  }{\bf #1.}\quad\ignorespaces}
+  }\fi{\bf #1.}\quad\ignorespaces}
 
 \def\appA{7}
 \def\appB{8}
@@ -54,7 +54,7 @@
       \setbox0=\hbox{\special{pdf: bc [ \pdflinkcolor ]}{\hbox{Appendix}~#1}%
       \special{pdf: ec}}\special{pdf: ann width \thewidth height \theheight
         depth \thedepth << /Type /Annot /Subtype /Link /Border [0 0 0]
-        /A << /S /Goto /D (\csname app#1\endcsname) >> >>}\box0\relax
+        /A << /S /GoTo /D (\csname app#1\endcsname) >> >>}\box0\relax
     \fi\else Appendix~#1\fi
   \else Appendix~#1\fi}
 
