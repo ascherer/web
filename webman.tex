@@ -1,5 +1,5 @@
 % WEB user manual -- last updated by D E Knuth on 4 Dec 89
-\input webmac
+\input pwebmac
 \parskip 0pt plus 1pt
 \def\RA{\char'31 } % right arrow
 \def\hang{\hangindent 4em\ignorespaces}
@@ -13,8 +13,50 @@
 \def\pb{\.{|...|}}
 \def\lpile{\def\cr{\hfill\endline}\matrix} % I only use \lpile by itself
 
+\newcount\destcount \destcount=1\relax
+
+\def\bkminfo{}
 \outer\def\section #1.{\penalty-50\vskip 12pt plus 3pt minus 3pt
-  \noindent{\bf #1.}\quad\ignorespaces}
+  \noindent\vbox to 0pt{\kern-2.5ex\relax
+    \ifacro\ifpdftex\pdfdest num\destcount fitbh\relax
+    \else\special{pdf: dest (\destcount) [ @thispage /FitBH @ypos]}\fi\fi
+    \def\.##1{##1}%
+    \ifx\bkminfo\empty
+      \ifacro\ifpdftex\pdfoutline goto num\destcount{#1}\relax
+      \else\special{pdf: outline 0 << /Title (#1)
+        /A << /S /Goto /D (\destcount) >> >>}\fi\fi
+    \else
+      \ifacro\ifpdftex\pdfoutline goto num\destcount{#1 (\bkminfo)}\relax
+      \else\special{pdf: outline 0 << /Title (#1 (\bkminfo))
+        /A << /S /Goto /D (\destcount) >> >>}\fi\fi
+    \fi
+    \gdef\bkminfo{}%
+    \global\advance\destcount by 1\relax
+    \kern2.5ex\relax
+  }{\bf #1.}\quad\ignorespaces}
+
+\def\appA{7}
+\def\appB{8}
+\def\appC{9}
+\def\appD{0}
+\def\appE{0}
+\def\appF{10}
+\def\appG{11}
+\def\appH{12}
+
+\def\Appendix#1{\leavevmode
+  \ifnum\csname app#1\endcsname>0 %
+    \ifacro\ifpdftex
+      \pdfstartlink attr{/Border[0 0 0]} goto num\csname app#1\endcsname\relax
+      \PDFlinkcolor\hbox{Appendix}~#1\Black
+      \pdfendlink
+    \else
+      \setbox0=\hbox{\special{pdf: bc [ \pdflinkcolor ]}{\hbox{Appendix}~#1}%
+      \special{pdf: ec}}\special{pdf: ann width \thewidth height \theheight
+        depth \thedepth << /Type /Annot /Subtype /Link /Border [0 0 0]
+        /A << /S /Goto /D (\csname app#1\endcsname) >> >>}\box0\relax
+    \fi\else Appendix~#1\fi
+  \else Appendix~#1\fi}
 
 \def\lheader{\mainfont\the\pageno\hfill\sc\runninghead\hfill}
 \def\rheader{\hfill\sc\runninghead\hfill\mainfont\the\pageno}
@@ -624,7 +666,7 @@ the output is already part of a meta-comment; in the latter case
 `\.{@\{}' is converted into `\.[', since \PASCAL\ does not allow
 nested comments. Incidentally, module numbers are automatically inserted
 as meta-comments into the \PASCAL\ program, in order to help correlate the
-outputs of \.{WEAVE} and \.{TANGLE} (see Appendix~C\null). Meta-comments
+outputs of \.{WEAVE} (see \Appendix B\null) and \.{TANGLE} (see \Appendix C\null). Meta-comments
 can be used to put conditional text into a \PASCAL\ program; this helps to
 overcome one of the limitations of \.{WEB}, since the simple macro
 processing routines of \.{TANGLE} do not include the dynamic evaluation of
@@ -890,26 +932,26 @@ into new releases of the master web file that you might receive from time
 to time.
 \section Appendices.
 The basic ideas of \.{WEB} can be understood most easily by looking at
-examples of ``real'' programs. Appendix~A shows the \.{WEB} input that
-generated modules 55--59 of the \.{WEAVE} program; Appendix~B shows the
-corresponding \TeX\ code output by \.{WEAVE}; and Appendix~C shows excerpts
+examples of ``real'' programs. \Appendix A shows the \.{WEB} input that
+generated modules 55--59 of the \.{WEAVE} program; \Appendix B shows the
+corresponding \TeX\ code output by \.{WEAVE}; and \Appendix C shows excerpts
 from the corresponding \PASCAL\ code output by \.{TANGLE}.
 
 The complete webs for \.{WEAVE} and \.{TANGLE} appear as the bulk of this
-report, in Appendices D and~E. The reader should first compare Appendix~A
-to the corresponding portion of Appendix~D; then the same material should
-be compared to Appendices B and~C. Finally, if time permits, the reader may
-enjoy studying the complete programs in Appendices D and~E, since \.{WEAVE}
+report, in \Appendix D and \Appendix E. The reader should first compare \Appendix A
+to the corresponding portion of \Appendix D; then the same material should
+be compared to \Appendix B and \Appendix C. Finally, if time permits, the reader may
+enjoy studying the complete programs in \Appendix D and \Appendix E, since \.{WEAVE}
 and \.{TANGLE} contain several interesting aspects, and since an attempt
 has been made in these appendices to evolve a style of programming that
 makes good use of the \.{WEB} language.
 
-Finally, Appendix F is the `\.{webmac}' file that sets \TeX\ up to accept
-the output of \.{WEAVE}; Appendix~G discusses how to use some of its macros
-to vary the output formats; and Appendix~H discusses what needs to be done
+Finally, \Appendix F is the `\.{webmac}' file that sets \TeX\ up to accept
+the output of \.{WEAVE}; \Appendix G discusses how to use some of its macros
+to vary the output formats; and \Appendix H discusses what needs to be done
 when \.{WEAVE} and \.{TANGLE} are installed in a new operating environment.
 \section Performance statistics.
-The programs in Appendices D and E will optionally keep statistics on
+The programs in \Appendix D and \Appendix E will optionally keep statistics on
 how much memory they require. Here is what they once printed out when
 processing themselves:
 
@@ -985,8 +1027,9 @@ When first we practise to deceive!&
 }}
 \eject
 \def\runninghead{APPENDIX A --- {\tentt WEB} FILE FORMAT}
+\def\bkminfo{WEB file format}
 \section Appendix A.
-This excerpt from \.{WEAVE.WEB} produced modules 55--59 in Appendix~D.
+This excerpt from \.{WEAVE.WEB} produced modules 55--59 in \Appendix D.
 Note that some of the lines are indented to show the program structure.
 The indentation is ignored by \.{WEAVE} and \.{TANGLE}, but users find
 that \.{WEB} files are quite readable if they have some such indentation.
@@ -1057,8 +1100,9 @@ while i<id_loc do
 \endgroup
 \vfill\eject
 \def\runninghead{APPENDIX B --- TRANSLATION BY {\tentt WEAVE}}
+\def\bkminfo{Translations by WEAVE}
 \section Appendix B.
-This excerpt from \.{WEAVE.TEX} corresponds to Appendix A.
+This excerpt from \.{WEAVE.TEX} corresponds to \Appendix A.
 
 % I've inserted \vfill's here at the blank lines, to squeeze this on one page!
 \begingroup \def\tt{\eighttt} \baselineskip9pt
@@ -1139,6 +1183,7 @@ $\\{incr}(\|i)$;\6
 \endgroup
 \eject
 \def\runninghead{APPENDIX C --- TRANSLATION BY {\tentt TANGLE}}
+\def\bkminfo{Translation by TANGLE}
 \section Appendix C.
 The \.{TANGLE} processor converts \.{WEAVE.WEB} into a syntactically
 correct (but not very pretty) \PASCAL\ program \.{WEAVE.PAS}.
@@ -1458,13 +1503,13 @@ able to get two-sided output in which the page numbers line up on
 opposite sides of each sheet.
 
 \point 6. The \.{\\title} macro will appear at the top of each page
-in small caps. For example, Appendix~D was produced after saying
+in small caps. For example, \Appendix D was produced after saying
 `\.{\\def\\title\{WEAVE\}}'.
 
 \point 7. The first page usually is assigned page number 1.
 To start on page 16, with contents
 on page 15, say this: `\.{\\def\\contentspagenumber\{15\}}
-\.{\\pageno=\\contentspagenumber} \.{\\advance\\pageno by 1}'. (Appendix~D
+\.{\\pageno=\\contentspagenumber} \.{\\advance\\pageno by 1}'. (\Appendix D
 was generated that way.)
 
 \point 8. The macro \.{\\iftitle} will suppress the header line if it is
@@ -1475,7 +1520,7 @@ page is usually unnumbered.
 Two macros are provided to give flexibility to the table of
 contents: \.{\\topofcontents} is invoked just before the contents
 info is read, and \.{\\botofcontents} is invoked just after.
-For example, Appendix~D was produced with the following definitions:
+For example, \Appendix D was produced with the following definitions:
 $$\lpile{\.{\\def\\topofcontents\{\\null\\vfill}\cr
   \.{ { }\\titlefalse \% include headline on the contents page}\cr
   \.{ { }\\def\\rheader\{\\mainfont Appendix D\\hfil 15\}}\cr
@@ -1487,7 +1532,7 @@ contents page.
 
 \point 9. Data for the table of contents is written to a file that
 is read after the indexes have been \TeX ed; there's one line of data
-for every starred module. For example, when Appendix~D was being generated,
+for every starred module. For example, when \Appendix D was being generated,
 a file \.{CONTENTS.TEX} containing
 $$\lpile{\.{\\Z \{{ }Introduction\}\{1\}\{16\}}\cr
   \.{\\Z \{{ }The character set\}\{11\}\{19\}}\cr}$$
@@ -1579,7 +1624,7 @@ kind of machine. Here's what to do:
 \.{TANGLE.PAS}, and \.{WEBMAC.TEX}. The tape will probably also contain an
 example change file \.{TANGLE.CH}.
 \step(2) Look at the sections of \.{TANGLE} that are listed under ``system
-dependencies'' in the index of Appendix~E above, and figure out what changes
+dependencies'' in the index of \Appendix E above, and figure out what changes
 (if any) will be needed for your system.
 \step(3) Make a change file \.{TANGLE.CH} that contains the changes of~(2);
 do not change your copy of \.{TANGLE.WEB}, leave it intact. (The
@@ -1605,18 +1650,18 @@ $\.{TANGLE.PAS}'$. Once this test has been passed, you have got a
 working \.{TANGLE} program.
 \step(7) Make a change file \.{WEAVE.CH} analogous to (3), but this time
 consider the system-dependent parts of \.{WEAVE} that are listed in
-the index to Appendix~D.
+the index to \Appendix D.
 \step(8) Run \.{TANGLE} on \.{WEAVE.WEB} and your \.{WEAVE.CH}, obtaining
 \.{WEAVE.PAS}.
 \step(9) Use \PASCAL\ on \.{WEAVE.PAS} to make a running \.{WEAVE} program.
 \step(10) Run \.{WEAVE} on \.{TANGLE.WEB} and \.{TANGLE.CH} to produce
 \.{TANGLE.TEX}.
 \step(11) Run \TeX\ on \.{TANGLE.TEX}, obtaining a listing analogous to
-Appendix~E. This listing will incorporate your changes.
+\Appendix E. This listing will incorporate your changes.
 \step(12) Run \.{WEAVE} on \.{WEAVE.WEB} and your \.{WEAVE.CH} to produce
 \.{WEAVE.TEX}.
 \step(13) Run \TeX\ on \.{WEAVE.TEX}, obtaining a listing analogous to
-Appendix~D that incorporates your changes.
+\Appendix D that incorporates your changes.
 
 \yskip\noindent
 This description assumes that you already have a working \TeX82 system.
@@ -1662,7 +1707,7 @@ quite so large when you consider that \.{TANGLE}-followed-by-\PASCAL\ and
 
 If you have only the present report, not a tape, you will have to prepare
 files \.{WEAVE.WEB} and \.{TANGLE.WEB} by hand, typing them into the
-computer by following Appendices D and E. Then you have to simulate the
+computer by following \Appendix D and \Appendix E. Then you have to simulate the
 behavior of \.{TANGLE} by converting \.{TANGLE.WEB} manually into
 \.{TANGLE.PAS}; with a good text editor this takes about six hours. Then
 you have to correct errors that were made in all this hand work; but still
