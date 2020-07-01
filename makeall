@@ -209,12 +209,16 @@ if ! $CHANGES
 then
 	export TEXINPUTS=./:$(kpsewhich --var-value=TEXMFDIST)//:$KNUTHWARE//
 
+	rm -f trapman.tex webman.tex cwebman.tex
+
 	# FIX: Prepare 'trapman' for automatic processing; several input
 	# files are renamed in TeX Live (in fact, there are additional
 	# files for MetaPost).
-	rm -f trapman.tex cwebman.tex
-
 	f=$(kpsewhich -engine tex trapman)
+	tie -m $(basename $f) $f /opt/github/web/$(basename $f .tex).ch
+
+	# Prepare 'webman' with section links and bookmarks.
+	f=$(kpsewhich -engine tex webman)
 	tie -m $(basename $f) $f /opt/github/web/$(basename $f .tex).ch
 
 	# Prepare 'cwebman' with footnotes describing the extended CWEB.
