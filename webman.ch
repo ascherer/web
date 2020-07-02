@@ -126,6 +126,12 @@ This excerpt from \.{WEAVE.TEX} corresponds to \Appendix A.
 @z
 
 @x
+\pageno=197 % take account of the page numbers for App's D and E.
+@y
+\pageno=200 % take account of the page numbers for App's D and E.
+@z
+
+@x
 in small caps. For example, Appendix~D was produced after saying
 @y
 in small caps. For example, \Appendix D was produced after saying
