@@ -1,7 +1,14 @@
 @x
 \input webmac
 @y
-\input pwebmac \ifacro\else\pageno=1\fi
+\input pwebmac
+\ifacro
+  \pdfpagewidth=\pagewidth \advance\pdfpagewidth by 2cm
+  \pdfpageheight=\pageheight \advance\pdfpageheight by 3cm
+  \ifpdftex \pdfhorigin=1cm \pdfvorigin=1cm
+  \else \advance\pdfpageheight by 1cm \global\pageshift=-1.54cm
+    \global\hoffset=-1.54cm \global\voffset=-1.54cm \fi
+\else\pageno=1\fi
 @z
 
 @x
