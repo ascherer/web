@@ -238,6 +238,9 @@ then
 	then
 		for f in *.pdf
 		do
+			case $f in
+				*-changes.pdf ) rm -f $f
+			esac
 			mv $f $(basename $f .pdf)-changes.pdf
 		done
 		pax vftovp-changes.pdf vptovf-changes.pdf \
