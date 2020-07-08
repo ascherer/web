@@ -1,4 +1,4 @@
-@x
+@x l.2
 \input webmac
 @y
 \input pwebmac
@@ -11,7 +11,7 @@
 \else\pageno=1\fi
 @z
 
-@x
+@x l.16
 \outer\def\section #1.{\penalty-50\vskip 12pt plus 3pt minus 3pt
   \noindent{\bf #1.}\quad\ignorespaces}
 @y
@@ -57,12 +57,19 @@
 @z
 
 @x
+program for \.{TANGLE}, in the appendix, gives precise details about this
+@y
+program for \.{TANGLE}, in \pdfURL{Appendix~E}{tangle.pdf},
+gives precise details about this
+@z
+
+@x l.626
 outputs of \.{WEAVE} and \.{TANGLE} (see Appendix~C\null). Meta-comments
 @y
 outputs of \.{WEAVE} (see \Appendix B\null) and \.{TANGLE} (see \Appendix C\null). Meta-comments
 @z
 
-@x
+@x l.893
 examples of ``real'' programs. Appendix~A shows the \.{WEB} input that
 generated modules 55--59 of the \.{WEAVE} program; Appendix~B shows the
 corresponding \TeX\ code output by \.{WEAVE}; and Appendix~C shows excerpts
@@ -72,19 +79,21 @@ generated modules 55--59 of the \.{WEAVE} program; \Appendix B shows the
 corresponding \TeX\ code output by \.{WEAVE}; and \Appendix C shows excerpts
 @z
 
-@x
+@x l.900
 report, in Appendices D and~E. The reader should first compare Appendix~A
 to the corresponding portion of Appendix~D; then the same material should
 be compared to Appendices B and~C. Finally, if time permits, the reader may
 enjoy studying the complete programs in Appendices D and~E, since \.{WEAVE}
 @y
-report, in \Appendix D and \Appendix E. The reader should first compare \Appendix A
-to the corresponding portion of \Appendix D; then the same material should
-be compared to \Appendix B and \Appendix C. Finally, if time permits, the reader may
-enjoy studying the complete programs in \Appendix D and \Appendix E, since \.{WEAVE}
+report, in \pdfURL{Appendix~D}{weave.pdf} and \pdfURL{Appendix~E}{tangle.pdf}.
+The reader should first compare \Appendix A to the corresponding portion of
+\pdfURL{Appendix~D}{weave.pdf}; then the same material should be compared to
+\Appendix B and \Appendix C. Finally, if time permits, the reader may enjoy
+studying the complete programs in \pdfURL{Appendix~D}{weave.pdf} and
+\pdfURL{Appendix~E}{tangle.pdf}, since \.{WEAVE}
 @z
 
-@x
+@x l.908
 Finally, Appendix F is the `\.{webmac}' file that sets \TeX\ up to accept
 the output of \.{WEAVE}; Appendix~G discusses how to use some of its macros
 to vary the output formats; and Appendix~H discusses what needs to be done
@@ -94,22 +103,24 @@ the output of \.{WEAVE}; \Appendix G discusses how to use some of its macros
 to vary the output formats; and \Appendix H discusses what needs to be done
 @z
 
-@x
+@x l.913
 The programs in Appendices D and E will optionally keep statistics on
 @y
-The programs in \Appendix D and \Appendix E will optionally keep statistics on
+The programs in \pdfURL{Appendix~D}{weave.pdf} and
+\pdfURL{Appendix~E}{tangle.pdf} will optionally keep statistics on
 @z
 
-@x
+@x l.989
 \section Appendix A.
 This excerpt from \.{WEAVE.WEB} produced modules 55--59 in Appendix~D.
 @y
 \def\bkminfo{WEB file format}
 \section Appendix A.
-This excerpt from \.{WEAVE.WEB} produced modules 55--59 in \Appendix D.
+This excerpt from \.{WEAVE.WEB} produced modules 55--59 in
+\pdfURL{Appendix~D}{weave.pdf}.
 @z
 
-@x
+@x l.1061
 \section Appendix B.
 This excerpt from \.{WEAVE.TEX} corresponds to Appendix A.
 @y
@@ -118,69 +129,73 @@ This excerpt from \.{WEAVE.TEX} corresponds to Appendix A.
 This excerpt from \.{WEAVE.TEX} corresponds to \Appendix A.
 @z
 
-@x
+@x l.1143
 \section Appendix C.
 @y
 \def\bkminfo{Translation by TANGLE}
 \section Appendix C.
 @z
 
-@x
+@x l.1200
 \pageno=197 % take account of the page numbers for App's D and E.
 @y
 \pageno=200 % take account of the page numbers for App's D and E.
 @z
 
-@x
+@x l.1425
 in small caps. For example, Appendix~D was produced after saying
 @y
-in small caps. For example, \Appendix D was produced after saying
+in small caps. For example, \pdfURL{Appendix~D}{weave.pdf} was produced after saying
 @z
 
-@x
+@x l.1468
 \.{\\pageno=\\contentspagenumber} \.{\\advance\\pageno by 1}'. (Appendix~D
 @y
-\.{\\pageno=\\contentspagenumber} \.{\\advance\\pageno by 1}'. (\Appendix D
+\.{\\pageno=\\contentspagenumber} \.{\\advance\\pageno by 1}'.
+(\pdfURL{Appendix~D}{weave.pdf}
 @z
 
-@x
+@x l.1479
 For example, Appendix~D was produced with the following definitions:
 @y
-For example, \Appendix D was produced with the following definitions:
+For example, \pdfURL{Appendix~D}{weave.pdf} was produced with the following definitions:
 @z
 
-@x
+@x l.1491
 for every starred module. For example, when Appendix~D was being generated,
 @y
-for every starred module. For example, when \Appendix D was being generated,
+for every starred module. For example, when \pdfURL{Appendix~D}{weave.pdf}
+was being generated,
 @z
 
-@x
+@x l.1583
 dependencies'' in the index of Appendix~E above, and figure out what changes
 @y
-dependencies'' in the index of \Appendix E above, and figure out what changes
+dependencies'' in the index of \pdfURL{Appendix~E}{tangle.pdf} above,
+and figure out what changes
 @z
 
-@x
+@x l.1609
 the index to Appendix~D.
 @y
-the index to \Appendix D.
+the index to \pdfURL{Appendix~D}{weave.pdf}.
 @z
 
-@x
+@x l.1616
 Appendix~E. This listing will incorporate your changes.
 @y
-\Appendix E. This listing will incorporate your changes.
+\pdfURL{Appendix~E}{tangle.pdf}. This listing will incorporate your changes.
 @z
 
-@x
+@x l.1620
 Appendix~D that incorporates your changes.
 @y
-\Appendix D that incorporates your changes.
+\pdfURL{Appendix~D}{weave.pdf} that incorporates your changes.
 @z
 
-@x
+@x l.1666
 computer by following Appendices D and E. Then you have to simulate the
 @y
-computer by following \Appendix D and \Appendix E. Then you have to simulate the
+computer by following \pdfURL{Appendix~D}{weave.pdf} and
+\pdfURL{Appendix~E}{tangle.pdf}. Then you have to simulate the
 @z
