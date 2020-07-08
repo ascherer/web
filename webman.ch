@@ -85,12 +85,12 @@ to the corresponding portion of Appendix~D; then the same material should
 be compared to Appendices B and~C. Finally, if time permits, the reader may
 enjoy studying the complete programs in Appendices D and~E, since \.{WEAVE}
 @y
-report, in \pdfURL{Appendix~D}{weave.pdf} and \pdfURL{Appendix~E}{tangle.pdf}.
+report, in Appendices \pdfURL{D}{weave.pdf} and~\pdfURL{E}{tangle.pdf}.
 The reader should first compare \Appendix A to the corresponding portion of
 \pdfURL{Appendix~D}{weave.pdf}; then the same material should be compared to
 \Appendix B and \Appendix C. Finally, if time permits, the reader may enjoy
-studying the complete programs in \pdfURL{Appendix~D}{weave.pdf} and
-\pdfURL{Appendix~E}{tangle.pdf}, since \.{WEAVE}
+studying the complete programs in Appendices \pdfURL{D}{weave.pdf}
+and~\pdfURL{E}{tangle.pdf}, since \.{WEAVE}
 @z
 
 @x l.908
@@ -106,8 +106,8 @@ to vary the output formats; and \Appendix H discusses what needs to be done
 @x l.913
 The programs in Appendices D and E will optionally keep statistics on
 @y
-The programs in \pdfURL{Appendix~D}{weave.pdf} and
-\pdfURL{Appendix~E}{tangle.pdf} will optionally keep statistics on
+The programs in Appendices \pdfURL{D}{weave.pdf} and \pdfURL{E}{tangle.pdf}
+will optionally keep statistics on
 @z
 
 @x l.989
@@ -145,7 +145,8 @@ This excerpt from \.{WEAVE.TEX} corresponds to \Appendix A.
 @x l.1425
 in small caps. For example, Appendix~D was produced after saying
 @y
-in small caps. For example, \pdfURL{Appendix~D}{weave.pdf} was produced after saying
+in small caps. For example, \pdfURL{Appendix~D}{weave.pdf} was produced
+after saying
 @z
 
 @x l.1468
@@ -158,7 +159,8 @@ in small caps. For example, \pdfURL{Appendix~D}{weave.pdf} was produced after sa
 @x l.1479
 For example, Appendix~D was produced with the following definitions:
 @y
-For example, \pdfURL{Appendix~D}{weave.pdf} was produced with the following definitions:
+For example, \pdfURL{Appendix~D}{weave.pdf} was produced with the following
+definitions:
 @z
 
 @x l.1491
@@ -196,6 +198,6 @@ Appendix~D that incorporates your changes.
 @x l.1666
 computer by following Appendices D and E. Then you have to simulate the
 @y
-computer by following \pdfURL{Appendix~D}{weave.pdf} and
-\pdfURL{Appendix~E}{tangle.pdf}. Then you have to simulate the
+computer by following Appendices \pdfURL{D}{weave.pdf}
+and~\pdfURL{E}{tangle.pdf}. Then you have to simulate the
 @z
