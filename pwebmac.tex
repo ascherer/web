@@ -127,7 +127,7 @@
 \def\maketoksdone{\edef\st{\global\noexpand\toksA={\the\toksB}}\st}
 \def\pdfURL#1#2{\ifpdftex\pdfannotlink height\ht\strutbox depth\dp\strutbox
   attr {/Border [0 0 0]} user { /Type /Action /Subtype /Link /A
-      << /S /URI /URI (#2) >> } \PDFlinkcolor #1\Black \pdfendlink
+      << /S /URI /URI (#2) >> }\PDFlinkcolor #1\Black \pdfendlink
   \else\ifpdf{\setbox0=\hbox{\special{pdf: bc [ \pdflinkcolor ]}{#1}%
     \special{pdf: ec}}\special{pdf: ann width \thewidth\space height \theheight
       \space depth \thedepth\space << /Border [0 0 0]
