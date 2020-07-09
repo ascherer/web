@@ -202,38 +202,9 @@ FI
 	fi
 done
 
-# Finally, build the remaining documents
-# * TeX and Metafont test routines
-# * WEB and CWEB manuals
-if ! $CHANGES
-then
-	export TEXINPUTS=./:$(kpsewhich --var-value=TEXMFDIST)//:$KNUTHWARE//
-
-	rm -f trapman.tex webman.tex cwebman.tex
-
-	# FIX: Prepare 'trapman' for automatic processing; several input
-	# files are renamed in TeX Live (in fact, there are additional
-	# files for MetaPost).
-	f=$(kpsewhich -engine tex trapman)
-	tie -m $(basename $f) $f /opt/github/web/$(basename $f .tex).ch
-
-	# Prepare 'webman' with section links and bookmarks.
-	f=$(kpsewhich -engine tex webman)
-	tie -m $(basename $f) $f /opt/github/web/$(basename $f .tex).ch
-
-	# Prepare 'cwebman' with footnotes describing the extended CWEB.
-	f=$(kpsewhich -engine tex cwebman)
-	tie -m $(basename $f) $f $(basename $f .tex)-w2c.ch
-
-	for f in trip trap web cweb
-	do
-		$TEX ${f}man
-	done
-fi
-
 if $PDFTOCFRONT
 then
-	# create tarballs for publication
+	# create tarballs w/o changes for publication
 	if $CHANGES
 	then
 		for f in *.pdf
@@ -271,6 +242,32 @@ then
 		pax common-changes.pdf ctangle-changes.pdf cweave-changes.pdf \
 			-wvzf "$OUTDIR/cweb-changes.tar.gz" -s ,^,cweb/,
 	else
+		# Finally, build the remaining documents
+		# * TeX and Metafont test routines
+		# * WEB and CWEB manuals
+		export TEXINPUTS=./:$(kpsewhich --var-value=TEXMFDIST)//:$KNUTHWARE//
+
+		rm -f trapman.tex webman.tex cwebman.tex
+
+		# FIX: Prepare 'trapman' for automatic processing; several
+		# input files are renamed in TeX Live (in fact, there are
+		# additional files for MetaPost).
+		f=$(kpsewhich -engine tex trapman)
+		tie -m $(basename $f) $f /opt/github/web/$(basename $f .tex).ch
+
+		# Prepare 'webman' with section links and bookmarks.
+		f=$(kpsewhich -engine tex webman)
+		tie -m $(basename $f) $f /opt/github/web/$(basename $f .tex).ch
+
+		# Prepare 'cwebman' with footnotes describing the extended CWEB.
+		f=$(kpsewhich -engine tex cwebman)
+		tie -m $(basename $f) $f $(basename $f .tex)-w2c.ch
+
+		for f in trip trap web cweb
+		do
+			$TEX ${f}man
+		done
+
 		pax vftovp.pdf vptovf.pdf -wvzf "$OUTDIR/etc.tar.gz" -s ,^,etc/,
 		pax mf.pdf trapman.pdf -wvzf "$OUTDIR/mf.tar.gz" -s ,^,mf/,
 		pax gftodvi.pdf gftopk.pdf gftype.pdf mft.pdf \
