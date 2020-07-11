@@ -38,6 +38,7 @@ typographically, or politically incorrect, please notify the maintainers at
   [`GFtoDVI`](mfware/gftodvi.pdf)<sub>[chg](mfware/gftodvi-changes.pdf)</sub> \|
   [`MFT`](mfware/mft.pdf)<sub>[chg](mfware/mft-changes.pdf)</sub> \]
 * `tex/` \[
+  [`GLUE`](tex/glue.pdf) \|
   [`TeX`](tex/tex.pdf)<sub>[chg](tex/tex-changes.pdf)</sub> \|
   [`TRIPMAN`](tex/tripman.pdf) \]
 * `texware/` \[

@@ -4,8 +4,21 @@
 # './makeall --new --pdftocfront --tex={pdftex,xetex}').
 # Public domain.  Originally written by Andreas Scherer, 2020.
 
-LONGOPTS=changes,new,outdir:,pdftocfront,tex:
-SHRTOPTS=cno:pt:
+LONGOPTS=changes,files:,new,outdir:,pdftocfront,tex:
+SHRTOPTS=cf:no:pt:
+
+# Initial list of WEB and CWEB sources to process:
+KNUTHWHERE=$(locate /bibtex.web)
+KNUTHWARE=$(dirname $KNUTHWHERE)
+
+FILES="$KNUTHWARE/*.web pdftex.web xetex.web"
+FILES="$FILES common ctangle cweave ctwill ctie tie"
+
+KNUTHWHERE=$(locate /glue.web)
+FILES="$FILES $KNUTHWHERE"
+
+export CWEBINPUTS=$KNUTHWARE//:
+export WEBINPUTS=$(dirname $KNUTHWHERE):$KNUTHWARE//:
 
 CHANGES=false # apply main changefile to WEB source
 NEW=false # '\input pwebmac' instead of '\input webmac'
@@ -29,6 +42,7 @@ while true
 do
 	case "$1" in
 		-c | --changes ) CHANGES=true; shift ;;
+		-f | --file ) FILES="$2"; shift 2 ;;
 		-n | --new ) NEW=true; shift ;;
 		-o | --outdir ) OUTDIR="$2"; shift 2 ;;
 		-p | --pdftocfront ) PDFTOCFRONT=true; shift ;;
@@ -38,12 +52,6 @@ do
 	esac
 done
 
-KNUTHWHERE=$(locate /bibtex.web)
-KNUTHWARE=$(dirname $KNUTHWHERE)
-
-export CWEBINPUTS=$KNUTHWARE//:
-export WEBINPUTS=$KNUTHWARE//:
-
 if [ xetex = $TEX ]
 then CWEAVE="cweave -f -lp+"
 else CWEAVE="cweave -f"
@@ -51,9 +59,7 @@ fi
 CTWILL="ctwill -f +lpdf"
 
 # WEB and CWEB programs we want to get formatted
-for f in \
-	$KNUTHWARE/*.web pdftex.web xetex.web \
-	common ctangle cweave ctwill ctie tie
+for f in $FILES
 do
 	f=$(basename $f .web)
 
@@ -64,6 +70,10 @@ do
 		cp -an $KNUTHWARE/cwebdir/*.bux .
 		$CTWILL $f
 		$CTWILL $f
+
+	elif [ glue = $f ]
+	then
+		weave $f # no 'glue.ch' at this time
 
 	elif $CHANGES
 	then
@@ -161,6 +171,10 @@ FI
 			then
 				sed -i -e "71,78d" $f.tex
 			fi ;;
+
+		# FIX: 'glue.web' obviously uses an old 'webmac.tex'.
+		glue ) sed -i -e "s/\(\\\\def\\\\title{GLUE}\)/\1\n\\\\pageno=\\\\contentspagenumber \\\\advance\\\\pageno by1\\\\relax/" \
+			-e "s/titlefalse/titletrue/" $f.tex ;;
 
 		# make room for new material in weave.web
 		# FIX: should be fixed upstream.
@@ -272,7 +286,8 @@ then
 		pax mf.pdf trapman.pdf -wvzf "$OUTDIR/mf.tar.gz" -s ,^,mf/,
 		pax gftodvi.pdf gftopk.pdf gftype.pdf mft.pdf \
 			-wvzf "$OUTDIR/mfware.tar.gz" -s ,^,mfware/,
-		pax tex.pdf tripman.pdf -wvzf "$OUTDIR/tex.tar.gz" -s ,^,tex/,
+		pax glue.pdf tex.pdf tripman.pdf \
+			-wvzf "$OUTDIR/tex.tar.gz" -s ,^,tex/,
 		pax dvitype.pdf pltotf.pdf pooltype.pdf tftopl.pdf \
 			-wvzf "$OUTDIR/texware.tar.gz" -s ,^,texware/,
 		pax webman.pdf tangle.pdf weave.pdf \
