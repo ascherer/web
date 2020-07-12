@@ -225,6 +225,7 @@ then
 		do
 			case $f in
 				*-changes.pdf ) rm -f $f
+					continue ;;
 			esac
 			mv $f $(basename $f .pdf)-changes.pdf
 		done
