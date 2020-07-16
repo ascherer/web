@@ -78,15 +78,22 @@ do
 	elif $CHANGES
 	then
 		case $f in
+			# CWEB programs have individual changefiles
 			common ) $CWEAVE $f comm-w2c ;;
 			ctangle ) $CWEAVE $f ctang-w2c ;;
 			cweave ) $CWEAVE $f cweav-w2c ;;
 			ctie ) $CWEAVE $f $f-k ;;
 			tie ) $CWEAVE $f $f-w2c ;;
 
-			* ) # pdftex.ch and xetex.ch for TeX Live are assembled here
-				WEBINPUTS=$KNUTHWARE/../../Work//:$WEBINPUTS: \
+			# main WEB programs have complex change files
+			tex | mf ) WEBINPUTS=$KNUTHWARE/../../Work//:$WEBINPUTS: \
+				weave $f $f-final ;;
+
+			pdftex | xetex ) WEBINPUTS=$KNUTHWARE/../../Work//:$WEBINPUTS: \
 				weave $f $f ;;
+
+			# all other WEB codes have singular changefiles
+			* ) weave $f $f ;;
 		esac
 
 		# FIX: XeTeX uses '\pdfTeX' from section 114, which
