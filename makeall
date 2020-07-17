@@ -86,11 +86,9 @@ do
 			tie ) $CWEAVE $f $f-w2c ;;
 
 			# main WEB programs have complex change files
-			tex | mf ) WEBINPUTS=$KNUTHWARE/../../Work//:$WEBINPUTS: \
+			tex | mf | pdftex | xetex )
+				WEBINPUTS=$KNUTHWARE/../../Work//:$WEBINPUTS: \
 				weave $f $f-final ;;
-
-			pdftex | xetex ) WEBINPUTS=$KNUTHWARE/../../Work//:$WEBINPUTS: \
-				weave $f $f ;;
 
 			# all other WEB codes have singular changefiles
 			* ) weave $f $f ;;
