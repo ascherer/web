@@ -62,6 +62,7 @@ then CWEAVE="cweave -f -lp+"
 else CWEAVE="cweave -f"
 fi
 CTWILL="ctwill -f +lpdf"
+SED_I="sed -i" # non-GNU-sed requires an extra '' argument for '-i' option.
 
 # WEB and CWEB programs we want to get formatted
 for f in $FILES
@@ -103,12 +104,12 @@ do
 		# is not changed and thus 'disappears'
 		if [ xetex = $f ]
 		then
-			sed -i -e "s/\(\\\\let\\\\maybe\)/\\\\def\\\\pdfTeX{pdf\\\\TeX}\n\1/" \
+			$SED_I -e "s/\(\\\\let\\\\maybe\)/\\\\def\\\\pdfTeX{pdf\\\\TeX}\n\1/" \
 				$f.tex
 		fi
 
 		# only document changed modules/sections
-		sed -i -e "s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse/" \
+		$SED_I -e "s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse/" \
 			$f.tex
 	else
 		case $f in
@@ -121,22 +122,22 @@ do
 	if $NEW
 	then
 		# use extended WEB macros for TeX Live PDF documentation
-		sed -i -e "1 s/\\\\input webmac/\\\\input pwebmac/" $f.tex
+		$SED_I -e "1 s/\\\\input webmac/\\\\input pwebmac/" $f.tex
 
 		# timestamp on table-of-contents page or the first page
 		case $f in
 			c* | tie ) ;; # do nothing for CWEB programs
 
 			bibtex | patgen | tangle | weave )
-				sed -i -e "s/\(\\\\def\\\\title\)/\\\\datecontentspage\n\1/" $f.tex ;;
+				$SED_I -e "s/\(\\\\def\\\\title\)/\\\\datecontentspage\n\1/" $f.tex ;;
 
 			mf | tex | pdftex | xetex )
-				sed -i -e "s/\(\\\\def\\\\botofcontents\)/\\\\datethis\n\1/" $f.tex
+				$SED_I -e "s/\(\\\\def\\\\botofcontents\)/\\\\datethis\n\1/" $f.tex
 
 				# amend '\N' redefinition for PDF outlines in
 				# Metafont and TeX (also pdfTeX and XeTeX)
 				# 'pwebmac' defines headers differently
-				sed -i -e "s/\(\\\\outer\\\\def\\\\N.*{\)/\1%/" \
+				$SED_I -e "s/\(\\\\outer\\\\def\\\\N.*{\)/\1%/" \
 					 -e "s/\\\\def\\\\rhead\(.*}\)/\\\\gtitle=\1\\\\MN#1.\\\\vfill\\\\eject/" \
 					 $f.tex
 
@@ -144,7 +145,7 @@ do
 				cat > texmf-pdf.patch << FI
   \ifacro{\toksF={}\makeoutlinetoks{[#2] #3}\outlinedone\outlinedone}\fi
 FI
-				sed -i -e "/\\\\outer\\\\def\\\\N/ {
+				$SED_I -e "/\\\\outer\\\\def\\\\N/ {
 					r texmf-pdf.patch
 					}" $f.tex
 
@@ -152,12 +153,12 @@ FI
   \ifpdf\special{pdf: outline 0 << /Title (\the\toksE) /Dest
     [ @thispage /FitH @ypos ] >>}\fi
 FI
-				sed -i -e "/  \\\\edef\\\\next/ {
+				$SED_I -e "/  \\\\edef\\\\next/ {
 					r texmf-pdf.patch
 					}" $f.tex
 				rm texmf-pdf.patch ;;
 
-			* ) sed -i -e "s/\(\\\\def\\\\botofcontents\)/%\1/" \
+			* ) $SED_I -e "s/\(\\\\def\\\\botofcontents\)/%\1/" \
 				-e "s/  \\\\centerline{\(\\\\hsize\)/\\\\def\\\\covernote{\1/" \
 				-e "s/\(Publishing Company.}}\)}/\1\n\\\\datecontentspage/" \
 				-e "s/\(trademark of the American Mathematical Society.}}\)}/\1\n\\\\datecontentspage/" \
@@ -168,7 +169,7 @@ FI
 	# replace former convention to indicate "not a title page"
 	# to include page headers for table-of-contents
 	# FIX: most of the WEB codes will be corrected.
-	sed -i -e "s/\\\\def\\\\titlepage{F}/\\\\titlefalse/" $f.tex
+	$SED_I -e "s/\\\\def\\\\titlepage{F}/\\\\titlefalse/" $f.tex
 
 	# special treatment for individual (C)WEB programs
 	case $f in
@@ -176,33 +177,33 @@ FI
 		# 'E' no longer free to be active character
 		# fix table-of-contents page for bibtex
 		# FIX: don't wait for Oren Patashnik.
-		bibtex ) sed -i -e "s/titlefalse/titletrue/" $f.tex
+		bibtex ) $SED_I -e "s/titlefalse/titletrue/" $f.tex
 			if ! $CHANGES
 			then
-				sed -i -e "71,78d" $f.tex
+				$SED_I -e "71,78d" $f.tex
 			fi ;;
 
 		# FIX: 'glue.web' obviously uses an old 'webmac.tex'.
-		glue ) sed -i -e "s/\(\\\\def\\\\title{GLUE}\)/\1\n\\\\pageno=\\\\contentspagenumber \\\\advance\\\\pageno by1\\\\relax/" \
+		glue ) $SED_I -e "s/\(\\\\def\\\\title{GLUE}\)/\1\n\\\\pageno=\\\\contentspagenumber \\\\advance\\\\pageno by1\\\\relax/" \
 			-e "s/titlefalse/titletrue/" $f.tex ;;
 
 		# make room for new material in weave.web
 		# FIX: should be fixed upstream.
-		tangle ) sed -i -e "s/number{123}/number{125}/" $f.tex ;;
+		tangle ) $SED_I -e "s/number{123}/number{125}/" $f.tex ;;
 
 		# FIX: purge obsolete macros from XeTeX
-		xetex ) sed -i -e "/\\\\input xewebmac/d" $f.tex ;;
+		xetex ) $SED_I -e "/\\\\input xewebmac/d" $f.tex ;;
 
 		# Use nicer format for C comments and assignment
 		common | ctangle | cweave | ctie | tie ) # sans ctwill
-			sed -i -e "1 s/\(cwebmac\)/\1\n\\\\input Xcwebmac/" \
+			$SED_I -e "1 s/\(cwebmac\)/\1\n\\\\input Xcwebmac/" \
 				$f.tex ;;
 	esac
 
 	# shift table-of-contents pages to the front in PDF
 	if $PDFTOCFRONT && [ ctwill != $f ]
 	then
-		sed -i -e "0,/\\\\N[1{]/s/\(\\\\N[1{]\)/\\\\input pdfwebtocfront\n\n\1/" \
+		$SED_I -e "0,/\\\\N[1{]/s/\(\\\\N[1{]\)/\\\\input pdfwebtocfront\n\n\1/" \
 			$f.tex
 
 		# only XeTeX can process XETEX.WEB
