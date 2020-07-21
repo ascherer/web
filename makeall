@@ -9,6 +9,11 @@ SHRTOPTS=cf:no:pt:
 
 # Initial list of WEB and CWEB sources to process:
 KNUTHWHERE=$(locate /bibtex.web)
+if [ -z $KNUTHWHERE ]
+then
+	echo "$0: Can't locate the TeX Live source tree!"
+	exit
+fi
 KNUTHWARE=$(dirname $KNUTHWHERE)
 
 FILES="$KNUTHWARE/*.web pdftex.web xetex.web"
