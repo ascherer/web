@@ -12,18 +12,23 @@ KNUTHWHERE=$(locate /bibtex.web)
 if [ -z $KNUTHWHERE ]
 then
 	echo "$0: Can't locate the TeX Live source tree!"
-	exit
+	exit 1
 fi
 KNUTHWARE=$(dirname $KNUTHWHERE)
 
 FILES="$KNUTHWARE/*.web pdftex.web xetex.web"
 FILES="$FILES common ctangle cweave ctwill ctie tie"
 
-KNUTHWHERE=$(locate /glue.web)
-FILES="$FILES $KNUTHWHERE"
-
 export CWEBINPUTS=$KNUTHWARE//:
-export WEBINPUTS=$(dirname $KNUTHWHERE):$KNUTHWARE//:
+export WEBINPUTS=$KNUTHWARE//:
+
+KNUTHWHERE=$(locate /glue.web)
+if [ -n $KNUTHWHERE ]
+then
+	FILES="$FILES $KNUTHWHERE"
+
+	export WEBINPUTS=$(dirname $KNUTHWHERE):$KNUTHWARE//:
+fi
 
 CHANGES=false # apply main changefile to WEB source
 NEW=false # '\input pwebmac' instead of '\input webmac'
