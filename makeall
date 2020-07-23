@@ -1,13 +1,19 @@
 #!/bin/sh
 # Test driver for 'pwebmac.tex' in combination with various TeX engines.
 # Production tool for all major WEB programs in TeX Live (invoked as
-# './makeall --new --pdftocfront --tex={pdftex,xetex}').
+# './makeall --new --pdftocfront [--changes] --tex={pdftex,xetex}').
 # Public domain.  Originally written by Andreas Scherer, 2020.
 
 LONGOPTS=changes,files:,new,outdir:,pdftocfront,tex:
 SHRTOPTS=cf:no:pt:
 
-# Initial list of WEB and CWEB sources to process:
+CHANGES=false # apply changefile to C/WEB source
+NEW=false # '\input pwebmac' instead of '\input webmac' for PDF et al.
+OUTDIR=. # path where the resulting tarballs are placed
+PDFTOCFRONT=false # push table-of-contents to front of PDF output
+TEX=tex # or 'pdftex' or 'xetex'
+
+# Initial list of C/WEB sources to process, overridable with option '-f':
 KNUTHWHERE=$(locate /bibtex.web)
 if [ -z $KNUTHWHERE ]
 then
@@ -28,12 +34,6 @@ then
 	FILES="$FILES $KNUTHWHERE"
 	export WEBINPUTS=$(dirname $KNUTHWHERE):$KNUTHWARE//:
 fi
-
-CHANGES=false # apply main changefile to WEB source
-NEW=false # '\input pwebmac' instead of '\input webmac'
-OUTDIR=. # path where the resulting tarballs are placed
-PDFTOCFRONT=false # push table-of-contents to front of PDF output
-TEX=tex # or 'pdftex' or 'xetex'
 
 getopt -T >/dev/null
 
@@ -175,7 +175,7 @@ FI
 	# FIX: most of the WEB codes will be corrected.
 	$SED_I -e "s/\\\\def\\\\titlepage{F}/\\\\titlefalse/" $f.tex
 
-	# special treatment for individual (C)WEB programs
+	# special treatment for individual C/WEB programs
 	case $f in
 		# purge conflict between bibtex.web and webmac.tex
 		# 'E' no longer free to be active character
