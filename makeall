@@ -17,7 +17,7 @@ PROG=$(basename $0)
 
 # Initial list of C/WEB sources to process, overridable with option '-f':
 KNUTHWHERE=$(locate /bibtex.web)
-if [ -z $KNUTHWHERE ]
+if [ -z "$KNUTHWHERE" ]
 then
 	echo "$PROG: Can't locate the TeX Live source tree!"
 	exit 1
@@ -25,17 +25,19 @@ fi
 KNUTHWARE=$(dirname $KNUTHWHERE)
 
 FILES="$KNUTHWARE/*.web pdftex.web xetex.web"
-export WEBINPUTS=$KNUTHWARE//:
+WEBINPUTS=$KNUTHWARE//:
 
 FILES="$FILES common ctangle cweave ctwill ctie tie"
-export CWEBINPUTS=$KNUTHWARE//:
+CWEBINPUTS=$KNUTHWARE//:
 
 KNUTHWHERE=$(locate /glue.web)
-if [ -n $KNUTHWHERE ]
+if [ -n "$KNUTHWHERE" ]
 then
 	FILES="$FILES $KNUTHWHERE"
-	export WEBINPUTS=$(dirname $KNUTHWHERE):$KNUTHWARE//:
+	WEBINPUTS=$(dirname $KNUTHWHERE):$KNUTHWARE//:
 fi
+
+export WEBINPUTS CWEBINPUTS
 
 usage ()
 {
@@ -62,7 +64,7 @@ getopt -T >/dev/null
 
 if [ $? -eq 4 ] # Check for Linux-getopt with extensions
 then OPTS=$(getopt -n downloadable-programs -o $SHRTOPTS -l $LONGOPTS -- "$@")
-else OPTS=$(getopt $SHRTOPTS $*)
+else OPTS=$(getopt $SHRTOPTS $@)
 fi
 
 if [ $? -eq 0 ] # Check return code from getopt
@@ -299,7 +301,7 @@ then
 		# Finally, build the remaining documents
 		# * TeX and Metafont test routines
 		# * WEB and CWEB manuals
-		export TEXINPUTS=./:$(kpsewhich --var-value=TEXMFDIST)//:$KNUTHWARE//
+		export TEXINPUTS=.:$(kpsewhich --var-value=TEXMFDIST)//:$KNUTHWARE//
 
 		rm -f trapman.tex webman.tex cwebman.tex
 
