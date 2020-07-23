@@ -64,7 +64,7 @@ getopt -T >/dev/null
 
 if [ $? -eq 4 ] # Check for Linux-getopt with extensions
 then OPTS=$(getopt -n downloadable-programs -o $SHRTOPTS -l $LONGOPTS -- "$@")
-else OPTS=$(getopt $SHRTOPTS $@)
+else OPTS=$(getopt $SHRTOPTS "$@")
 fi
 
 if [ $? -eq 0 ] # Check return code from getopt
