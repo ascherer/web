@@ -17,16 +17,15 @@ fi
 KNUTHWARE=$(dirname $KNUTHWHERE)
 
 FILES="$KNUTHWARE/*.web pdftex.web xetex.web"
-FILES="$FILES common ctangle cweave ctwill ctie tie"
-
-export CWEBINPUTS=$KNUTHWARE//:
 export WEBINPUTS=$KNUTHWARE//:
+
+FILES="$FILES common ctangle cweave ctwill ctie tie"
+export CWEBINPUTS=$KNUTHWARE//:
 
 KNUTHWHERE=$(locate /glue.web)
 if [ -n $KNUTHWHERE ]
 then
 	FILES="$FILES $KNUTHWHERE"
-
 	export WEBINPUTS=$(dirname $KNUTHWHERE):$KNUTHWARE//:
 fi
 
