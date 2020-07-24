@@ -60,7 +60,7 @@ export WEBINPUTS CWEBINPUTS
 getopt -T >/dev/null
 
 if [ $? -eq 4 ] # Check for Linux-getopt with extensions
-then OPTS=$(getopt -n downloadable-programs -o $SHRTOPTS -l $LONGOPTS -- "$@")
+then OPTS=$(getopt -n $PROG -o $SHRTOPTS -l $LONGOPTS -- "$@")
 else OPTS=$(getopt $SHRTOPTS $*)
 fi
 
