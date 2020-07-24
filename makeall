@@ -1,8 +1,28 @@
 #!/bin/sh
-# Test driver for 'pwebmac.tex' in combination with various TeX engines.
-# Production tool for all major WEB programs in TeX Live (invoked as
-# './makeall --new --pdftocfront [--changes] --tex={pdftex,xetex}').
-# Public domain.  Originally written by Andreas Scherer, 2020.
+
+PROG=$(basename $0)
+
+usage ()
+{
+cat <<HELP
+Usage: $PROG [options]
+
+Test driver for 'pwebmac.tex' in combination with various TeX engines.
+Produce TeX output in DVI or PDF from a set of C/WEB programs included
+in the 'TeX Live' source tree.
+
+Options are (--long options only with GNU getopt):
+	-c, --changes		Apply change file to C/WEB source
+	-f, --file STRING	Process only subset of C/WEB programs
+	-h, --help		Print this help message and exit
+	-n, --new		Use 'pwebmac' instead of 'webmac'
+	-o, --outdir ARG	Create tarballs in path ARG
+	-p, --pdftocfront	Place TOC page at the front (PDF only)
+	-t, --tex ARG		Use TeX variant ARG={tex,pdftex,xetex}
+
+Public domain.  Originally written by Andreas Scherer, 2020.
+HELP
+}
 
 LONGOPTS=changes,files:,help,new,outdir:,pdftocfront,tex:
 SHRTOPTS=cf:hno:pt:
@@ -12,8 +32,6 @@ NEW=false # '\input pwebmac' instead of '\input webmac' for PDF et al.
 OUTDIR=. # path where the resulting tarballs are placed
 PDFTOCFRONT=false # push table-of-contents to front of PDF output
 TEX=tex # or 'pdftex' or 'xetex'
-
-PROG=$(basename $0)
 
 # Initial list of C/WEB sources to process, overridable with option '-f':
 KNUTHWHERE=$(locate /bibtex.web)
@@ -38,27 +56,6 @@ then
 fi
 
 export WEBINPUTS CWEBINPUTS
-
-usage ()
-{
-cat <<HELP
-Usage: $PROG [options]
-
-Produce TeX output in DVI or PDF from a set of C/WEB programs
-included in the 'TeX Live' source tree.
-
-Options are (--long options only with GNU getopt):
-	-c, --changes		Apply change file to C/WEB source
-	-f, --file STRARG	Process only subset of C/WEB programs
-	-h, --help		Print this help message and exit
-	-n, --new		Use 'pwebmac' instead of 'webmac'
-	-o, --outdir ARG	Create tarballs in path ARG
-	-p, --pdftocfront	Place TOC page at the front (PDF only)
-	-t, --tex ARG		Use TeX variant ARG={tex,pdftex,xetex}
-
-Public domain.  Originally written by Andreas Scherer, 2020.
-HELP
-}
 
 getopt -T >/dev/null
 
