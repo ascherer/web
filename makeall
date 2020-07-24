@@ -36,9 +36,7 @@ TEX=tex # or 'pdftex' or 'xetex'
 # Initial list of C/WEB sources to process, overridable with option '-f':
 KNUTHWHERE=$(locate /bibtex.web)
 if [ -z "$KNUTHWHERE" ]
-then
-	echo "$PROG: Can't locate the TeX Live source tree!"
-	exit 1
+then echo "$PROG: Can't locate the TeX Live source tree!" >&2; exit 1
 fi
 KNUTHWARE=$(dirname $KNUTHWHERE)
 
@@ -141,7 +139,6 @@ do
 	else
 		case $f in
 			c* | tie ) $CWEAVE $f ;;
-
 			* ) weave $f ;;
 		esac
 	fi
