@@ -78,7 +78,7 @@ do
 		-p | --pdftocfront ) PDFTOCFRONT=true; shift ;;
 		-t | --tex ) TEX=$2; shift 2 ;;
 		-- ) shift; break ;;
-		* ) break ;;
+		* ) usage; exit 1 ;;
 	esac
 done
 
