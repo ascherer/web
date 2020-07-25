@@ -71,7 +71,7 @@ while true
 do
 	case "$1" in
 		-c | --changes ) CHANGES=true; shift ;;
-		-f | --file ) FILES="$2"; shift 2 ;;
+		-f | --files ) FILES="$2"; shift 2 ;;
 		-h | --help ) usage; exit 0 ;;
 		-n | --new ) NEW=true; shift ;;
 		-o | --outdir ) OUTDIR="$2"; shift 2 ;;
