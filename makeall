@@ -38,7 +38,7 @@ KNUTHWHERE=$(locate /bibtex.web)
 if [ -z "$KNUTHWHERE" ]
 then echo "$PROG: Can't locate the TeX Live source tree!" >&2; exit 1
 fi
-KNUTHWARE=$(dirname $KNUTHWHERE)
+KNUTHWARE=$(dirname "$KNUTHWHERE")
 
 FILES="$KNUTHWARE/*.web pdftex.web xetex.web"
 WEBINPUTS=$KNUTHWARE//:
@@ -50,7 +50,7 @@ KNUTHWHERE=$(locate /glue.web)
 if [ -n "$KNUTHWHERE" ]
 then
 	FILES="$FILES $KNUTHWHERE"
-	WEBINPUTS=$(dirname $KNUTHWHERE):$KNUTHWARE//:
+	WEBINPUTS=$(dirname "$KNUTHWHERE"):$KNUTHWARE//:
 fi
 
 export WEBINPUTS CWEBINPUTS
