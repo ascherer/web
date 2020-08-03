@@ -126,14 +126,6 @@ do
 			* ) weave $f $f ;;
 		esac
 
-		# FIX: pdfTeX uses '\pdfTeX' in section names; these should
-		# appear correctly in the bookmarks, too.
-		if [ pdftex = $f ] && $NEW && [ tex != $TEX ]
-		then
-			$SED_I -e "s/\(\\\\def\\\\pdfTeX{pdf\\\\TeX}\)/\1 \\\\sanitizecommand\\\\pdfTeX{pdfTeX}\\\\sanitizecommand\\\\eTeX{eTeX}/" \
-				$f.tex
-		fi
-
 		# FIX: XeTeX uses '\pdfTeX' from section 114, which is not
 		# changed and thus 'disappears'; repeat in preamble.
 		if [ xetex = $f ]
@@ -219,6 +211,15 @@ FI
 		# FIX: 'glue.web' obviously uses an old 'webmac.tex'.
 		glue ) $SED_I -e "s/\(\\\\def\\\\title{GLUE}\)/\1\n\\\\pageno=\\\\contentspagenumber \\\\advance\\\\pageno by1\\\\relax/" \
 			-e "s/titlefalse/titletrue/" $f.tex ;;
+
+		# FIX: pdfTeX uses '\pdfTeX' in section names; these should
+		# appear correctly in the bookmarks, too.
+		pdftex )
+			if $NEW && [ tex != $TEX ]
+			then
+				$SED_I -e "s/\(\\\\def\\\\pdfTeX{pdf\\\\TeX}\)/\1 \\\\sanitizecommand\\\\pdfTeX{pdfTeX}\\\\sanitizecommand\\\\eTeX{e-TeX}/" \
+					$f.tex
+			fi ;;
 
 		# make room for new material in weave.web
 		# FIX: should be fixed upstream.
