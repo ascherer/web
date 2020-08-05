@@ -309,7 +309,7 @@ then
 		# * WEB and CWEB manuals
 		export TEXINPUTS=.:$(kpsewhich --var-value=TEXMFDIST)//:$KNUTHWARE//
 
-		rm -f trapman.tex webman.tex cwebman.tex
+		rm -f trapman.tex webman.tex cwebman.tex errorlog.tex
 
 		# FIX: Prepare 'trapman' for automatic processing; several
 		# input files are renamed in TeX Live (in fact, there are
@@ -325,9 +325,14 @@ then
 		f=$(kpsewhich -engine tex cwebman)
 		tie -m $(basename $f) $f $(basename $f .tex)-w2c.ch
 
-		for f in trip trap web cweb
+		# FIX: Prepare 'errorlog.tex' for automatic processing;
+		# requires a 'meta-bug' to be fixed.
+		f=$(kpsewhich -engine tex errorlog)
+		tie -m $(basename $f) $f /opt/github/web/$(basename $f .tex).ch
+
+		for f in tripman trapman webman cwebman errorlog
 		do
-			$TEX ${f}man
+			$TEX $f
 		done
 
 		$PAX "$OUTDIR/etc.tar.gz" -s ,^,etc/, vftovp.pdf vptovf.pdf
