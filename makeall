@@ -331,10 +331,19 @@ then
 		tie -m $(basename $f) $f /opt/github/web/$(basename $f .tex).ch
 		touch pages.tex # let 'manmac' produce output at all
 
-		for f in tripman trapman webman cwebman errorlog errata
+		for f in tripman trapman webman cwebman errorlog
 		do
 			$TEX $f
 		done
+
+		for f in one two three four five six seven eight nine ten \
+			eleven # twelve
+		do
+			$TEX errata.$f
+			mv errata.pdf errata.$f.pdf
+		done
+
+		$TEX errata
 
 		$PAX "$OUTDIR/etc.tar.gz" -s ,^,etc/, vftovp.pdf vptovf.pdf
 		$PAX "$OUTDIR/mf.tar.gz" -s ,^,mf/, mf.pdf trapman.pdf
