@@ -329,6 +329,7 @@ then
 		# requires a 'meta-bug' to be fixed.
 		f=$(kpsewhich -engine tex errorlog)
 		tie -m $(basename $f) $f /opt/github/web/$(basename $f .tex).ch
+		touch pages.tex # let 'manmac' produce output at all
 
 		for f in tripman trapman webman cwebman errorlog
 		do
