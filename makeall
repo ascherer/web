@@ -345,6 +345,8 @@ then
 
 		$TEX errata
 
+		$PAX "$OUTDIR/errata.tar.gz" -s ,^,errata/, \
+			errorlog.pdf errata.*.pdf errata.pdf
 		$PAX "$OUTDIR/etc.tar.gz" -s ,^,etc/, vftovp.pdf vptovf.pdf
 		$PAX "$OUTDIR/mf.tar.gz" -s ,^,mf/, mf.pdf trapman.pdf
 		$PAX "$OUTDIR/mfware.tar.gz" -s ,^,mfware/, \

@@ -25,7 +25,20 @@ typographically, or politically incorrect, please notify the maintainers at
 
 ## Canonical Knuthian WEB programs
 
-* `errata/`
+* `errata/` \[
+  [`errorlog`](errata/errorlog.pdf) \|
+  [`errata.one`](errata/errata.one.pdf) \|
+  [`errata.two`](errata/errata.two.pdf) \|
+  [`errata.three`](errata/errata.three.pdf) \|
+  [`errata.four`](errata/errata.four.pdf) \|
+  [`errata.five`](errata/errata.five.pdf) \|
+  [`errata.six`](errata/errata.six.pdf) \|
+  [`errata.seven`](errata/errata.seven.pdf) \|
+  [`errata.eight`](errata/errata.eight.pdf) \|
+  [`errata.nine`](errata/errata.nine.pdf) \|
+  [`errata.ten`](errata/errata.ten.pdf) \|
+  [`errata.eleven`](errata/errata.eleven.pdf) \|
+  [`errata`](errata/errata.pdf) \]
 * `etc/` \[
   [`VFtoVP`](etc/vftovp.pdf)<sub>[chg](etc/vftovp-changes.pdf)</sub> \|
   [`VPtoVF`](etc/vptovf.pdf)<sub>[chg](etc/vptovf-changes.pdf)</sub> \]
