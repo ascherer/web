@@ -331,7 +331,7 @@ then
 		tie -m $(basename $f) $f /opt/github/web/$(basename $f .tex).ch
 		touch pages.tex # let 'manmac' produce output at all
 
-		for f in tripman trapman webman cwebman errorlog
+		for f in tripman trapman webman cwebman errorlog errata
 		do
 			$TEX $f
 		done
