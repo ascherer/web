@@ -27,8 +27,8 @@ typographically, or politically incorrect, please notify the maintainers at
 
 * `errata/` \[
   [The Errors of TeX](errata/errorlog.pdf) \|
-  [Bugs in The TeXbook, 1st\ printing](errata/errata.one.pdf) \|
-  [Bugs in The TeXbook, 2nd\ printing](errata/errata.two.pdf) \|
+  [Bugs in The TeXbook, 1<sup>st</sup>\ printing](errata/errata.one.pdf) \|
+  [Bugs in The TeXbook, 2<sup>nd</sup>\ printing](errata/errata.two.pdf) \|
   [Computers&Typesetting, 15\ June\ 1987](errata/errata.three.pdf) \|
   [Computers&Typesetting, 20\ February\ 1989](errata/errata.four.pdf) \|
   [Computers&Typesetting, 30\ September\ 1989](errata/errata.five.pdf) \|
@@ -36,9 +36,9 @@ typographically, or politically incorrect, please notify the maintainers at
   [Computers&Typesetting, 15\ March\ 1992](errata/errata.seven.pdf) \|
   [Computers&Typesetting, pre-Millennium\ ed.](errata/errata.eight.pdf) \|
   [The TeXbook, September 1996](errata/errata.nine.pdf) \|
-  [Computers&Typesetting, 1st\ Millennium\ ed.](errata/errata.ten.pdf) \|
-  [Computers&Typesetting, 2nd\ Millennium\ ed.](errata/errata.eleven.pdf) \|
-  [Computers&Typesetting, curr.](errata/errata.pdf) \]
+  [Computers&Typesetting, 1<sup>st</sup>\ Millennium\ ed.](errata/errata.ten.pdf) \|
+  [Computers&Typesetting, 2<sup>nd</sup>\ Millennium\ ed.](errata/errata.eleven.pdf) \|
+  [Computers&Typesetting, present](errata/errata.pdf) \]
 * `etc/` \[
   [`VFtoVP`](etc/vftovp.pdf)<sub>[chg](etc/vftovp-changes.pdf)</sub> \|
   [`VPtoVF`](etc/vptovf.pdf)<sub>[chg](etc/vptovf-changes.pdf)</sub> \]
