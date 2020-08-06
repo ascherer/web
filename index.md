@@ -27,8 +27,8 @@ typographically, or politically incorrect, please notify the maintainers at
 
 * `errata/` \[
   [The Errors of TeX](errata/errorlog.pdf) \|
-  [Bugs in The TeXbook, 1<sup>st</sup>\ printing](errata/errata.one.pdf) \|
-  [Bugs in The TeXbook, 2<sup>nd</sup>\ printing](errata/errata.two.pdf) \|
+  [The TeXbook, 1<sup>st</sup>\ printing](errata/errata.one.pdf) \|
+  [The TeXbook, 2<sup>nd</sup>\ printing](errata/errata.two.pdf) \|
   [Computers&Typesetting, 15\ June\ 1987](errata/errata.three.pdf) \|
   [Computers&Typesetting, 20\ February\ 1989](errata/errata.four.pdf) \|
   [Computers&Typesetting, 30\ September\ 1989](errata/errata.five.pdf) \|
