@@ -27,8 +27,8 @@ typographically, or politically incorrect, please notify the maintainers at
 
 * `errata/` \[
   [The Errors of TeX](errata/errorlog.pdf) \|
-  [The TeXbook, 1<sup>st</sup>\ printing](errata/errata.one.pdf) \|
-  [The TeXbook, 2<sup>nd</sup>\ printing](errata/errata.two.pdf) \|
+  [The TeXbook, 1^st^\ printing](errata/errata.one.pdf) \|
+  [The TeXbook, 2^nd^\ printing](errata/errata.two.pdf) \|
   [Computers&Typesetting, 15\ June\ 1987](errata/errata.three.pdf) \|
   [Computers&Typesetting, 20\ February\ 1989](errata/errata.four.pdf) \|
   [Computers&Typesetting, 30\ September\ 1989](errata/errata.five.pdf) \|
@@ -36,54 +36,54 @@ typographically, or politically incorrect, please notify the maintainers at
   [Computers&Typesetting, 15\ March\ 1992](errata/errata.seven.pdf) \|
   [Computers&Typesetting, pre-Millennium\ ed.](errata/errata.eight.pdf) \|
   [The TeXbook, September 1996](errata/errata.nine.pdf) \|
-  [Computers&Typesetting, 1<sup>st</sup>\ Millennium\ ed.](errata/errata.ten.pdf) \|
-  [Computers&Typesetting, 2<sup>nd</sup>\ Millennium\ ed.](errata/errata.eleven.pdf) \|
+  [Computers&Typesetting, 1^st^\ Millennium\ ed.](errata/errata.ten.pdf) \|
+  [Computers&Typesetting, 2^nd^\ Millennium\ ed.](errata/errata.eleven.pdf) \|
   [Computers&Typesetting, present](errata/errata.pdf) \]
 * `etc/` \[
-  [`VFtoVP`](etc/vftovp.pdf)<sub>[chg](etc/vftovp-changes.pdf)</sub> \|
-  [`VPtoVF`](etc/vptovf.pdf)<sub>[chg](etc/vptovf-changes.pdf)</sub> \]
+  [`VFtoVP`](etc/vftovp.pdf)~[chg](etc/vftovp-changes.pdf)~ \|
+  [`VPtoVF`](etc/vptovf.pdf)~[chg](etc/vptovf-changes.pdf)~ \]
 * `mf/` \[
-  [`Metafont`](mf/mf.pdf)<sub>[chg](mf/mf-changes.pdf)</sub> \|
+  [`Metafont`](mf/mf.pdf)~[chg](mf/mf-changes.pdf)~ \|
   [`TRAPMAN`](mf/trapman.pdf) \]
 * `mfware/` \[
-  [`GFtype`](mfware/gftype.pdf)<sub>[chg](mfware/gftype-changes.pdf)</sub> \|
-  [`GFtoPK`](mfware/gftopk.pdf)<sub>[chg](mfware/gftopk-changes.pdf)</sub> \|
-  [`GFtoDVI`](mfware/gftodvi.pdf)<sub>[chg](mfware/gftodvi-changes.pdf)</sub> \|
-  [`MFT`](mfware/mft.pdf)<sub>[chg](mfware/mft-changes.pdf)</sub> \]
+  [`GFtype`](mfware/gftype.pdf)~[chg](mfware/gftype-changes.pdf)~ \|
+  [`GFtoPK`](mfware/gftopk.pdf)~[chg](mfware/gftopk-changes.pdf)~ \|
+  [`GFtoDVI`](mfware/gftodvi.pdf)~[chg](mfware/gftodvi-changes.pdf)~ \|
+  [`MFT`](mfware/mft.pdf)~[chg](mfware/mft-changes.pdf)~ \]
 * `tex/` \[
   [`GLUE`](tex/glue.pdf) \|
-  [`TeX`](tex/tex.pdf)<sub>[chg](tex/tex-changes.pdf)</sub> \|
+  [`TeX`](tex/tex.pdf)~[chg](tex/tex-changes.pdf)~ \|
   [`TRIPMAN`](tex/tripman.pdf) \]
 * `texware/` \[
-  [`POOLtype`](texware/pooltype.pdf)<sub>[chg](texware/pooltype-changes.pdf)</sub> \|
-  [`TFtoPL`](texware/tftopl.pdf)<sub>[chg](texware/tftopl-changes.pdf)</sub> \|
-  [`PLtoTF`](texware/pltotf.pdf)<sub>[chg](texware/pltotf-changes.pdf)</sub> \|
-  [`DVItype`](texware/dvitype.pdf)<sub>[chg](texware/dvitype-changes.pdf)</sub> \]
+  [`POOLtype`](texware/pooltype.pdf)~[chg](texware/pooltype-changes.pdf)~ \|
+  [`TFtoPL`](texware/tftopl.pdf)~[chg](texware/tftopl-changes.pdf)~ \|
+  [`PLtoTF`](texware/pltotf.pdf)~[chg](texware/pltotf-changes.pdf)~ \|
+  [`DVItype`](texware/dvitype.pdf)~[chg](texware/dvitype-changes.pdf)~ \]
 * `web/` \[
   [`WEBMAN`](web/webman.pdf) \|
-  [`WEAVE`](web/weave.pdf)<sub>[chg](web/weave-changes.pdf)</sub> \|
-  [`TANGLE`](web/tangle.pdf)<sub>[chg](web/tangle-changes.pdf)</sub> \]
+  [`WEAVE`](web/weave.pdf)~[chg](web/weave-changes.pdf)~ \|
+  [`TANGLE`](web/tangle.pdf)~[chg](web/tangle-changes.pdf)~ \]
 
 ## Complementary WEB programs
 
 * `other/` \[
-  [`DVIcopy`](other/dvicopy.pdf)<sub>[chg](other/dvicopy-changes.pdf)</sub> \|
-  [`PatGen`](other/patgen.pdf)<sub>[chg](other/patgen-changes.pdf)</sub> \|
-  [`PKtoGF`](other/pktogf.pdf)<sub>[chg](other/pktogf-changes.pdf)</sub> \|
-  [`PKtype`](other/pktype.pdf)<sub>[chg](other/pktype-changes.pdf)</sub> \]
-* `bibtex/` \[ [`BibTeX`](bibtex/bibtex.pdf)<sub>[chg](bibtex/bibtex-changes.pdf)</sub> \]
-* `pdftex/` \[ [`pdfTeX`](pdftex/pdftex.pdf)<sub>[chg](pdftex/pdftex-changes.pdf)</sub> \]
-* `xetex/` \[ [`XeTeX`](xetex/xetex.pdf)<sub>[chg](xetex/xetex-changes.pdf)</sub> \]
+  [`DVIcopy`](other/dvicopy.pdf)~[chg](other/dvicopy-changes.pdf)~ \|
+  [`PatGen`](other/patgen.pdf)~[chg](other/patgen-changes.pdf)~ \|
+  [`PKtoGF`](other/pktogf.pdf)~[chg](other/pktogf-changes.pdf)~ \|
+  [`PKtype`](other/pktype.pdf)~[chg](other/pktype-changes.pdf)~ \]
+* `bibtex/` \[ [`BibTeX`](bibtex/bibtex.pdf)~[chg](bibtex/bibtex-changes.pdf)~ \]
+* `pdftex/` \[ [`pdfTeX`](pdftex/pdftex.pdf)~[chg](pdftex/pdftex-changes.pdf)~ \]
+* `xetex/` \[ [`XeTeX`](xetex/xetex.pdf)~[chg](xetex/xetex-changes.pdf)~ \]
 
 ## CWEB programs
 
 * `cweb/` \[
   [`CWEBMAN`](cweb/cwebman.pdf) \|
-  [`COMMON`](cweb/common.pdf)<sub>[chg](cweb/common-changes.pdf)</sub> \|
-  [`CTANGLE`](cweb/ctangle.pdf)<sub>[chg](cweb/ctangle-changes.pdf)</sub> \|
-  [`CWEAVE`](cweb/cweave.pdf)<sub>[chg](cweb/cweave-changes.pdf)</sub> \|
+  [`COMMON`](cweb/common.pdf)~[chg](cweb/common-changes.pdf)~ \|
+  [`CTANGLE`](cweb/ctangle.pdf)~[chg](cweb/ctangle-changes.pdf)~ \|
+  [`CWEAVE`](cweb/cweave.pdf)~[chg](cweb/cweave-changes.pdf)~ \|
   [`CTWILL`](cweb/ctwill.pdf) \]
-* `ctie/` \[ [`CTIE`](ctie/ctie.pdf)<sub>[chg](ctie/ctie-changes.pdf)</sub> \]
-* `tie/` \[ [`TIE`](tie/tie.pdf)<sub>[chg](tie/tie-changes.pdf)</sub> \]
+* `ctie/` \[ [`CTIE`](ctie/ctie.pdf)~[chg](ctie/ctie-changes.pdf)~ \]
+* `tie/` \[ [`TIE`](tie/tie.pdf)~[chg](tie/tie-changes.pdf)~ \]
 
 ## Happy C/WEB Programming!
