@@ -87,6 +87,7 @@ typographically, or politically incorrect, please notify the maintainers on
   * [The \TeX book, September 1996](errata/errata.nine.pdf)
   * [Computers & Typesetting, 1^st^\ Millennium\ ed.](errata/errata.ten.pdf)
   * [Computers & Typesetting, 2^nd^\ Millennium\ ed.](errata/errata.eleven.pdf)
-  * [Computers & Typesetting, present](errata/errata.pdf)
+  * [Computers & Typesetting, early 2014](errata/errata.twelve.pdf)
+  * [Computers & Typesetting, 31\ January\ 2021](errata/errata.pdf)
 
 ## Happy C/WEB Programming!

@@ -302,7 +302,7 @@ then
 		# * WEB and CWEB manuals
 		export TEXINPUTS=.:$(kpsewhich --var-value=TEXMFDIST)//:$KNUTHWARE//
 
-		rm -f trapman.tex webman.tex cwebman.tex errorlog.tex
+		rm -f trapman.tex webman.tex cwebman.tex
 
 		# FIX: Prepare 'trapman' for automatic processing; several
 		# input files are renamed in TeX Live (in fact, there are
@@ -318,10 +318,6 @@ then
 		f=$(kpsewhich -engine tex cwebman)
 		tie -m $(basename $f) $f $(basename $f .tex)-w2c.ch
 
-		# FIX: Prepare 'errorlog.tex' for automatic processing;
-		# requires a 'meta-bug' to be fixed.
-		f=$(kpsewhich -engine tex errorlog)
-		tie -m $(basename $f) $f /opt/github/web/$(basename $f .tex).ch
 		touch pages.tex # let 'manmac' produce output at all
 
 		for f in tripman trapman webman cwebman errorlog
@@ -330,7 +326,7 @@ then
 		done
 
 		for f in one two three four five six seven eight nine ten \
-			eleven # twelve
+			eleven twelve
 		do
 			$TEX errata.$f
 			mv errata.pdf errata.$f.pdf
