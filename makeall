@@ -191,18 +191,15 @@ FI
 		esac
 	fi
 
-	# replace former convention to indicate "not a title page"
-	# to include page headers for table-of-contents
-	# FIX: most of the WEB codes will be corrected upstream.
-	$SED_I -e "s/\\\\def\\\\titlepage{F}/\\\\titlefalse/" $f.tex
-
 	# special treatment for individual C/WEB programs
 	case $f in
+		# replace former convention to indicate "not a title
+		# page" to include page headers for table-of-contents;
 		# purge conflict between bibtex.web and webmac.tex
 		# 'E' no longer free to be active character
 		# fix table-of-contents page for bibtex
 		# FIX: don't wait for Oren Patashnik.
-		bibtex ) $SED_I -e "s/titlefalse/titletrue/" $f.tex
+		bibtex ) $SED_I -e "s/\\\\def\\\\titlepage{F}/\\\\titletrue/" $f.tex
 			if ! $CHANGES
 			then
 				$SED_I -e "71,78d" $f.tex
@@ -220,10 +217,6 @@ FI
 				$SED_I -e "s/\(\\\\def\\\\pdfTeX{pdf\\\\TeX}\)/\1 \\\\sanitizecommand\\\\pdfTeX{pdfTeX}\\\\sanitizecommand\\\\eTeX{e-TeX}/" \
 					$f.tex
 			fi ;;
-
-		# make room for new material in weave.web
-		# FIX: should be fixed upstream.
-		tangle ) $SED_I -e "s/number{123}/number{125}/" $f.tex ;;
 
 		# FIX: purge obsolete macros from XeTeX.
 		xetex ) $SED_I -e "/\\\\input xewebmac/d" $f.tex ;;
