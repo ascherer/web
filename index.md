@@ -2,6 +2,8 @@
 title: C/WEB programs in “\TeX\ Live 2021”
 colorlinks: true
 ---
+\raggedright
+\vspace{-2\baselineskip}
 
 ## Introduction
 
