@@ -82,10 +82,7 @@ do
 	esac
 done
 
-if [ xetex = $TEX ]
-then CWEAVE="cweave -f -lp+"
-else CWEAVE="cweave -f"
-fi
+CWEAVE="cweave -f"
 CTWILL="ctwill -f +lpdf"
 PAX="pax -wvzf"
 SED_I="sed -i" # non-GNU-sed requires an extra '' argument for '-i' option.
