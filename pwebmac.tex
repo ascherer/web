@@ -4,7 +4,7 @@
 % macro integration \`a la CWEB by Andreas Scherer <andreas_tex@freenet.de>.
 % This file is not copyrighted and can be used freely.
 \ifx\renewenvironment\undefined\else\endinput\fi % LaTeX will use other macros
-\xdef\fmtversion{\fmtversion+WEBMAC4.5}
+\xdef\fmtversion{\fmtversion+WEBMAC4.6}
 \newif\ifpdf
 \ifx\pdf+\pdftrue\fi
 % Uncomment the following line if you want PDF goodies to be the default
@@ -15,7 +15,7 @@
 \ifx\pdfoutput\undefined \pdftexfalse \else\ifnum\pdfoutput=0 \pdftexfalse
 \else \pdftextrue \pdfoutput=1
   \def\Black{\pdfliteral{0 g 0 G}}  % use rgb colors for direct PDF output too
-  \def\PDFlinkcolor{\pdfliteral{\pdflinkcolor rg \pdflinkcolor RG}}
+  \def\PDFlinkcolor{\pdfliteral{\pdflinkcolor\space rg \pdflinkcolor\space RG}}
 \fi\fi
 \newif\ifacro \ifpdf\acrotrue\fi \ifpdftex\acrotrue\fi
 
