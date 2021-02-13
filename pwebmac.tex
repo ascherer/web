@@ -272,7 +272,26 @@
 \def\title{\expandafter\uppercase\expandafter{\jobname}}
 \def\topofcontents{\centerline{\titlefont\title}\vskip.7in
   \vfill} % this material will start the table of contents page
-\def\startpdf{\ifpdftex\pdfcatalog{/PageMode /UseOutlines}\else
+\def\startpdf{\ifpdftex
+  \immediate\pdfobj stream attr{/N 3} file{sRGB2014.icc}
+  \pdfcatalog{/PageMode /UseOutlines
+    /OutputIntents [
+      <<
+        /Type /OutputIntent
+        /S /GTS_PDFA1
+        /DestOutputProfile \the\pdflastobj\space 0 R
+        /OutputConditionIdentifier (sRGB)
+        /Info (sRGB)
+      >>
+      <<
+        /Type /OutputIntent
+        /S /GTS_PDFX
+        /DestOutputProfile \the\pdflastobj\space 0 R
+        /OutputConditionIdentifier (sRGB)
+        /Info (sRGB)
+      >>
+    ]
+  }\else
     \ifpdf{\special{pdf: docview << /PageMode /UseOutlines >>}}\fi\fi}
 \def\botofcontents{\vfill
   \centerline{\covernote}} % this material will end the table of contents page
