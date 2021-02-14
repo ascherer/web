@@ -622,7 +622,8 @@ in the final \PASCAL\ program. The \.{TANGLE} processor will convert
 `\.{@\{}' into `\.\{' in the \PASCAL\ output file, unless
 the output is already part of a meta-comment; in the latter case
 `\.{@\{}' is converted into `\.[', since \PASCAL\ does not allow
-nested comments. Incidentally, module numbers are automatically inserted
+nested comments. The \.{WEAVE} processor outputs `\.{@\{}'.
+Incidentally, module numbers are automatically inserted
 as meta-comments into the \PASCAL\ program, in order to help correlate the
 outputs of \.{WEAVE} and \.{TANGLE} (see Appendix~C\null). Meta-comments
 can be used to put conditional text into a \PASCAL\ program; this helps to
@@ -633,6 +634,7 @@ boolean expressions.
 \@\} [P] The end of a ``meta comment'' is indicated by `\.{@\}}'; this is
 converted either into `\.\}' or `\.{]}' in the \PASCAL\ output, according
 to the conventions explained for \.{@\{} above.
+The \.{WEAVE} processor outputs `\.{@\}}'.
 
 \@\& [P] The \.{@\&} operation causes whatever is on its left to be
 adjacent to whatever is on its right, in the \PASCAL\ output. No spaces or
@@ -812,7 +814,7 @@ comment that includes a brace in a string in \pb---e.g., `\.{\{{ }look at
 this |"\{"| \}}'---will be handled correctly by \.{WEAVE}, but \.{TANGLE}
 will think there is an unmatched left brace. In order to satisfy both
 processors, one can write `\.{\{{ }look at this \\leftbrace\\{ }\}}', after
-setting up`\.{\\def\\leftbrace\{|"\{"|\}}'.
+setting up `\.{\\def\\leftbrace\{|"\{"|\}}'.
 
 7. Reserved words of \PASCAL\ must appear entirely in lowercase letters
 in the \.{WEB} file; otherwise their special nature will not be recognized
@@ -1196,7 +1198,7 @@ WRITE(TERMOUT,'(That was a fatal error, my friend.)');END;END{:263};
 END.{:261}
 ?endgroup
 \vfill\eject
-\pageno=197 % take account of the page numbers for App's D and E.
+\pageno=200 % take account of the page numbers for App's D and E.
 \def\runninghead{APPENDIX F --- MACROS FOR FORMATTING}
 \section Appendix F: The \.{webmac.tex} file.
 This is the file that extends ``plain \TeX'' format in order to support the
@@ -1590,7 +1592,7 @@ define all the ``switches'' like \&{debug} and \&{gubed} to be null in your
 first change files; then you can sure that your compiler will handle
 all of the code.)
 \step(4) Make the changes of (2) in your copy of \.{TANGLE.PAS}. (If these
-changes are extensive, you might be better off finding some computer that
+changes are extensive, you might be better off finding some computer
 that already has \.{TANGLE} running, and making the new \.{TANGLE.PAS}
 from \.{TANGLE.WEB} and your \.{TANGLE.CH}.)
 \step(5) Use your \PASCAL\ compiler to convert your copy of \.{TANGLE.PAS}

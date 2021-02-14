@@ -66,7 +66,8 @@ gives precise details about this
 @x l.626
 outputs of \.{WEAVE} and \.{TANGLE} (see Appendix~C\null). Meta-comments
 @y
-outputs of \.{WEAVE} (see \Appendix B\null) and \.{TANGLE} (see \Appendix C\null). Meta-comments
+outputs of \.{WEAVE} (see \Appendix B\null) and \.{TANGLE}
+(see \Appendix C\null). Meta-comments
 @z
 
 @x l.893
@@ -134,12 +135,6 @@ This excerpt from \.{WEAVE.TEX} corresponds to \Appendix A.
 @y
 \def\bkminfo{Translation by TANGLE}
 \section Appendix C.
-@z
-
-@x l.1200
-\pageno=197 % take account of the page numbers for App's D and E.
-@y
-\pageno=200 % take account of the page numbers for App's D and E.
 @z
 
 @x l.1425
