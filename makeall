@@ -235,6 +235,11 @@ FI
 		then $f $f # run TeX twice
 		else $TEX $f # run TeX twice
 		fi
+
+		# run TEX.WEB three times to fix table-of-contents
+		if [ tex = $f ]
+		then $TEX $f
+		fi
 	fi
 
 	# only XeTeX can process XETEX.WEB
