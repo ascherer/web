@@ -1,8 +1,6 @@
 [Git-archive]
 .gitattributes export-ignore
 pdfwebmac.tex export-ignore
-tangle.web export-ignore
-weave.web export-ignore
-webmac.tex export-ignore
-webman.tex export-ignore
+*.web export-ignore
+webma?.tex export-ignore
 xewebmac.tex export-ignore
