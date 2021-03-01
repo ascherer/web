@@ -358,6 +358,15 @@ then
 		$PAX "$OUTDIR/cweb.tar.gz" -s ,^,cweb/, \
 			cwebman.pdf common.pdf ctangle.pdf cweave.pdf ctwill.pdf
 	fi
+
+	# Notes to self:
+	# (1) Create a user-friendly central entrypoint with
+	#     (a) pandoc index.md -o index.pdf
+	#     (b) pandoc index.md -o index.tex;
+	#         pandoc index.tex -s -o index.html;
+	#         rm index.tex
+	# (2) Prepare a super-tarball from all the contents of these
+	#     individual tarballs with 'pax -wzf knuth-lib.tar.gz'.
 fi
 
 exit 0

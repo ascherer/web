@@ -3,8 +3,8 @@
 The original [WEB](https://ctan.org/pkg/web) system by Donald Knuth has the
 macros `webmac.tex` that produce DVI output only; for historic reasons, it
 will never be modified (apart from catastrophic errors).
-Hàn Thế Thành has modified these macros in his `pdfwebmac.tex` for PDF output
-(only) with [pdfTeX](https://ctan.org/pkg/pdftex).
+Hàn Thế Thành has modified these macros in his (outdated?) `pdfwebmac.tex` for
+PDF output (only) with [pdfTeX](https://ctan.org/pkg/pdftex).
 Jonathan Kew's [XeTeX](https://ctan.org/pkg/xetex) has similar macros
 `xewebmac.tex` by Khaled Hosny that _modify_ `webmac.tex` for PDF output;
 these macros can only be used with a specific “TeX engine” each.
@@ -29,4 +29,4 @@ clickable links and bookmarks (depending on your PDF viewer).
 
 The `pwebmac` package is free software and may be used without constraints.
 
-This is version “4.5.7” of the `pwebmac` package — 2021-02-11, AS.
+This is version “4.6” of the `pwebmac` package — 2021-03-01, AS.
