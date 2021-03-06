@@ -43,7 +43,7 @@ KNUTHWARE=$(dirname $KNUTHWHERE)
 FILES="$KNUTHWARE/*.web pdftex.web xetex.web"
 WEBINPUTS=$KNUTHWARE//:
 
-FILES="$FILES common ctangle cweave ctwill ctie tie"
+FILES="$FILES common ctangle cweave ctwill refsort twinx ctie tie"
 CWEBINPUTS=$KNUTHWARE//:
 
 KNUTHWHERE=$(locate /glue.web)
@@ -111,6 +111,7 @@ do
 			common ) $CWEAVE $f comm-w2c ;;
 			ctangle ) $CWEAVE $f ctang-w2c ;;
 			cweave ) $CWEAVE $f cweav-w2c ;;
+			refsort | twinx ) $CWEAVE $f $f ;;
 			ctie ) $CWEAVE $f $f-k ;;
 			tie ) $CWEAVE $f $f-w2c ;;
 
@@ -136,7 +137,7 @@ do
 			$f.tex
 	else
 		case $f in
-			c* | tie ) $CWEAVE $f ;;
+			c* | refsort | twinx | tie ) $CWEAVE $f ;;
 			* ) weave $f ;;
 		esac
 	fi
@@ -218,8 +219,8 @@ FI
 		# FIX: purge obsolete macros from XeTeX.
 		xetex ) $SED_I -e "/\\\\input xewebmac/d" $f.tex ;;
 
-		# Use nicer format for C comments and assignment
-		common | ctangle | cweave | ctie | tie ) # sans ctwill
+		# Use nicer format for C comments and assignment; sans ctwill
+		common | ctangle | cweave | refsort | twinx | ctie | tie )
 			$SED_I -e "1 s/\(cwebmac\)/\1\n\\\\input Xcwebmac/" \
 				$f.tex ;;
 	esac
@@ -297,7 +298,8 @@ then
 			tie-changes.pdf
 		$PAX "$OUTDIR/cweb-changes.tar.gz" -s ,^,cweb/, \
 			common-changes.pdf ctangle-changes.pdf \
-			cweave-changes.pdf
+			cweave-changes.pdf refsort-changes.pdf \
+			twinx-changes.pdf
 	else
 		# Finally, build the remaining documents
 		# * TeX and Metafont test routines
@@ -356,7 +358,8 @@ then
 		$PAX "$OUTDIR/ctie.tar.gz" -s ,^,ctie/, ctie.pdf
 		$PAX "$OUTDIR/tie.tar.gz" -s ,^,tie/, tie.pdf
 		$PAX "$OUTDIR/cweb.tar.gz" -s ,^,cweb/, \
-			cwebman.pdf common.pdf ctangle.pdf cweave.pdf ctwill.pdf
+			cwebman.pdf common.pdf ctangle.pdf cweave.pdf \
+			ctwill.pdf refsort.pdf twinx.pdf
 	fi
 
 	# Notes to self:
