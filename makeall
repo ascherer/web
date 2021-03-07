@@ -28,6 +28,7 @@ LONGOPTS=changes,files:,help,new,outdir:,pdftocfront,tex:
 SHRTOPTS=cf:hno:pt:
 
 CHANGES=false # apply changefile to C/WEB source
+FILESELECT=false # user-defined '--files' selection
 NEW=false # '\input pwebmac' instead of '\input webmac' for PDF et al.
 OUTDIR=. # path where the resulting tarballs are placed
 PDFTOCFRONT=false # push table-of-contents to front of PDF output
@@ -71,7 +72,7 @@ while true
 do
 	case "$1" in
 		-c | --changes ) CHANGES=true; shift ;;
-		-f | --files ) FILES="$2"; shift 2 ;;
+		-f | --files ) FILES="$2"; FILESELECT=true; shift 2 ;;
 		-h | --help ) usage; exit 0 ;;
 		-n | --new ) NEW=true; shift ;;
 		-o | --outdir ) OUTDIR="$2"; shift 2 ;;
@@ -257,7 +258,7 @@ FI
 	fi
 done
 
-if $PDFTOCFRONT
+if $PDFTOCFRONT && ! $FILESELECT
 then
 	# create tarballs w/o changes for publication
 	if $CHANGES
