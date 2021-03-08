@@ -150,7 +150,8 @@ do
 
 		# timestamp on table-of-contents page or the first page
 		case $f in
-			c* | tie ) ;; # do nothing for CWEB programs
+			# do nothing for CWEB programs
+			c* | refsort | twinx | tie ) ;;
 
 			bibtex | patgen | tangle | weave )
 				$SED_I -e "s/\(\\\\def\\\\title\)/\\\\datecontentspage\n\1/" $f.tex ;;
