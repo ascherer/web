@@ -75,7 +75,7 @@ typographically, or politically incorrect, please feel free to
   [`CWEBMAN`](cweb/cwebman.pdf) \|
   [`COMMON`](cweb/common.pdf)\ ~[`chg`](cweb/common-changes.pdf)~ \|
   [`CTANGLE`](cweb/ctangle.pdf)\ ~[`chg`](cweb/ctangle-changes.pdf)~ \|
-  [`CWEAVE`](cweb/cweave.pdf)\ ~[`chg`](cweb/cweave-changes.pdf)~ \|
+  [`CWEAVE`](cweb/cweave.pdf)\ ~[`chg`](cweb/cweave-changes.pdf)~ \|\
   [`CTWILL`](cweb/ctwill.pdf) \|
   [`REFSORT`](cweb/refsort.pdf)\ ~[`chg`](cweb/refsort-changes.pdf)~ \|
   [`TWINX`](cweb/twinx.pdf)\ ~[`chg`](cweb/twinx-changes.pdf)~ \]
