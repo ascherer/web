@@ -371,7 +371,9 @@ then
 	#         pandoc index.tex -s -o index.html;
 	#         rm index.tex
 	# (2) Prepare a super-tarball from all the contents of these
-	#     individual tarballs with 'pax -wzf knuth-lib.tar.gz'.
+	#     individual tarballs (27/31) with either of
+	#     (a) pax -wzf knuth-pdf.tar.gz knuth-pdf
+	#     (b) zip -r knuth-pdf.zip knuth-pdf
 fi
 
 exit 0
