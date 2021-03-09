@@ -248,6 +248,8 @@ FI
 	# only XeTeX can process XETEX.WEB
 	if [ xetex = $f ]
 	then $f $f
+	elif [ refsort = $f ]
+	then $TEX -interaction nonstopmode $f
 	else $TEX $f
 	fi
 
