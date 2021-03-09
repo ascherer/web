@@ -1,6 +1,7 @@
 [Git-archive]
 .gitattributes export-ignore
+knuth-pdf.md export-ignore
 pdfwebmac.tex export-ignore
-*.web export-ignore
 webma?.tex export-ignore
 xewebmac.tex export-ignore
+*.web export-ignore
