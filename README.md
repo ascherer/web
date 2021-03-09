@@ -18,7 +18,8 @@ Its initial application is the production of PDF files for all major WEB
 programs for “TeX and friends” as distributed in
 [TeX Live](https://www.tug.org/texlive).  For this purpose, the shell script
 `makeall` was whipped together; it provides various commandline options and
-works around several “quirks” in the WEB sources.
+works around several “quirks” in the WEB sources.  The resulting ``PDF
+library'' can be browsed in the `knuth-pdf` package.
 
 WEB programmers who want to use `pwebmac.tex` instead of the default
 `webmac.tex` in their programs have to change the first line in the TeX file
@@ -29,4 +30,4 @@ clickable links and bookmarks (depending on your PDF viewer).
 
 The `pwebmac` package is free software and may be used without constraints.
 
-This is version “4.6” of the `pwebmac` package — 2021-03-01, AS.
+This is version “4.6.1” of the `pwebmac` package — 2021-03-09, AS.
