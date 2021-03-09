@@ -17,6 +17,10 @@ the attached “`chg`” links point to “only the changed sections (or modules
 so you may want to study these pairs in parallel.  Care has been taken to keep
 the section numbers for the main parts intact.
 
+Although not all the programs here are written or maintained by Donald Knuth,
+it is more convenient for everything to be collected in one place for reading
+and searching. And they all stem from the system that Knuth created.
+
 Note that all `WEB` programs are mogrified from Pascal code to C code before
 compilation, so further modifications and amendments will occur “for the real
 thing,” i.e., the production of the executable `WEB` programs.  (The `CWEB`
@@ -24,8 +28,8 @@ programs do not require these extra modifications, they get linked directly to
 the external runtime environment.)
 
 If you believe to have found anything that remains technically, historically,
-typographically, or politically incorrect, please notify the maintainers on
-[the tex-k mailing list](mailto:tex-k@tug.org).
+typographically, or politically incorrect, please feel free to
+[report bugs in \TeX\ and friends](https://tug.org/texmfbug/).
 
 ## Canonical Knuthian WEB programs
 
