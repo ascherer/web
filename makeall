@@ -83,7 +83,7 @@ do
 	esac
 done
 
-CWEAVE="cweave -f"
+CWEAVE="cweave -f +lX"
 CTWILL="ctwill -f +lpdf"
 PAX="pax -wvzf"
 SED_I="sed -i" # non-GNU-sed requires an extra '' argument for '-i' option.
@@ -220,11 +220,6 @@ FI
 
 		# FIX: purge obsolete macros from XeTeX.
 		xetex ) $SED_I -e "/\\\\input xewebmac/d" $f.tex ;;
-
-		# Use nicer format for C comments and assignment; sans ctwill
-		common | ctangle | cweave | refsort | twinx | ctie | tie )
-			$SED_I -e "1 s/\(cwebmac\)/\1\n\\\\input Xcwebmac/" \
-				$f.tex ;;
 	esac
 
 	# shift table-of-contents pages to the front in PDF
