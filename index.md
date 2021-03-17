@@ -14,9 +14,9 @@ Welcome to “All Things `WEB`” in “\TeX\ Live.”
 Here you find the documented source code of all major `WEB` and `CWEB` programs
 in readable format.  The “named” entries represent the unmodified base sources
 as written by their respective authors, the attached “`chg`” links point to
-“only the changed sections (or modules)” as applied for release in the “\TeX\
-Live” distribution, so you may want to study these pairs in parallel.  Care has
-been taken to keep the section numbers for the main parts intact.
+“only the changed sections (or modules)” as applied for release in the
+“\TeX\ Live” distribution, so you may want to study these pairs in parallel.
+Care has been taken to keep the section numbers for the main parts intact.
 
 Although not all the programs presented here are written or maintained by
 Donald Knuth, it is more convenient for everything to be collected in one place
