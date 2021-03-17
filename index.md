@@ -12,14 +12,16 @@ urlcolor: blue
 Welcome to “All Things `WEB`” in “\TeX\ Live.”
 
 Here you find the documented source code of all major `WEB` and `CWEB` programs
-in readable format.  The “named” entries represent the unmodified base sources,
-the attached “`chg`” links point to “only the changed sections (or modules),”
-so you may want to study these pairs in parallel.  Care has been taken to keep
-the section numbers for the main parts intact.
+in readable format.  The “named” entries represent the unmodified base sources
+as written by their respective authors, the attached “`chg`” links point to
+“only the changed sections (or modules)” as applied for release in the “\TeX\
+Live” distribution, so you may want to study these pairs in parallel.  Care has
+been taken to keep the section numbers for the main parts intact.
 
-Although not all the programs here are written or maintained by Donald Knuth,
-it is more convenient for everything to be collected in one place for reading
-and searching. And they all stem from the system that Knuth created.
+Although not all the programs presented here are written or maintained by
+Donald Knuth, it is more convenient for everything to be collected in one place
+for reading and searching.  And they all stem from the system that Knuth
+created.
 
 Note that all `WEB` programs are mogrified from Pascal code to C code before
 compilation, so further modifications and amendments will occur “for the real
@@ -28,8 +30,10 @@ programs do not require these extra modifications, they get linked directly to
 the external runtime environment.)
 
 If you believe to have found anything that remains technically, historically,
-typographically, or politically incorrect, please feel free to
-[report bugs in \TeX\ and friends](https://tug.org/texmfbug/).
+typographically, or politically incorrect in any of these files, please feel
+free to [report bugs in \TeX\ and friends](https://tug.org/texmfbug/) or
+[contact the maintainer of this library](mailto:andreas_github@freenet.de)
+directly.
 
 ## Canonical Knuthian WEB programs
 
@@ -58,7 +62,7 @@ typographically, or politically incorrect, please feel free to
   [`WEAVE`](web/weave.pdf)\ ~[`chg`](web/weave-changes.pdf)~ \|
   [`TANGLE`](web/tangle.pdf)\ ~[`chg`](web/tangle-changes.pdf)~ \]
 
-## Complementary WEB programs
+## Complementary WEB programs by other authors
 
 * `other/` \[
   [`DVIcopy`](other/dvicopy.pdf)\ ~[`chg`](other/dvicopy-changes.pdf)~ \|
@@ -69,7 +73,7 @@ typographically, or politically incorrect, please feel free to
 * `pdftex/` \[ [`pdfTeX`](pdftex/pdftex.pdf)\ ~[`chg`](pdftex/pdftex-changes.pdf)~ \]
 * `xetex/` \[ [`XeTeX`](xetex/xetex.pdf)\ ~[`chg`](xetex/xetex-changes.pdf)~ \]
 
-## CWEB programs
+## CWEB programs by Knuth _et\ al._
 
 * `cweb/` \[
   [`CWEBMAN`](cweb/cwebman.pdf) \|
@@ -82,7 +86,7 @@ typographically, or politically incorrect, please feel free to
 * `ctie/` \[ [`CTIE`](ctie/ctie.pdf)\ ~[`chg`](ctie/ctie-changes.pdf)~ \]
 * `tie/` \[ [`TIE`](tie/tie.pdf)\ ~[`chg`](tie/tie-changes.pdf)~ \]
 
-## Errata for “Computers & Typesetting”
+## Errata for “Computers & Typesetting” by Donald E.\ Knuth
 
 * `errata/`
   * [The Errors of \TeX](errata/errorlog.pdf)
@@ -101,3 +105,5 @@ typographically, or politically incorrect, please feel free to
   * [Computers & Typesetting, 31\ January\ 2021](errata/errata.pdf)
 
 ## Happy C/WEB Programming!
+
+2021-03-17 Andreas Scherer
