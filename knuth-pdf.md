@@ -9,11 +9,19 @@ the sources and their changes in parallel.  Also included is the collection of
 
 Although not all the texts here are written or maintained by Donald Knuth, it
 is more convenient for everything to be collected in one place for reading and
-searching. And they all stem from the system that Knuth created.  The central
+searching.  And they all stem from the system that Knuth created.  The central
 entry point is the ‘index’ file, with links to the individual documents, either
 in HTML or in PDF format.
 
-The `knuth-pdf` package is free software and may be used without constraints.
-In part it is an update and replacement for the `latex-tds` package.
+If you believe to have found anything that remains technically, historically,
+typographically, or politically incorrect in any of these files, please feel
+free to [report bugs in \TeX\ and friends](https://tug.org/texmfbug/) or
+[contact the maintainer](mailto:andreas_github@freenet.de) directly.
 
-This is version “1.0” of the `knuth-pdf` package — 2021-03-09, AS.
+The “License” of the `knuth-pdf` package is “Public Domain” and it covers only
+the contents of this package, _not_ the various (and varying) “free software”
+licenses of the presented software codes.
+
+In part `knuth-pdf` is an update and replacement for the `latex-tds` package.
+
+This is version “1.1” of the `knuth-pdf` package — 2021-03-17, Andreas Scherer.
