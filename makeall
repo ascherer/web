@@ -323,10 +323,12 @@ then
 
 		touch pages.tex # let 'manmac' produce output at all
 
-		for f in tripman trapman webman cwebman errorlog
+		for f in tripman trapman webman cwebman
 		do
 			$TEX $f
 		done
+
+		$TEX -jobname=errorlog /opt/github/web/Xerrorlog.tex
 
 		for f in one two three four five six seven eight nine ten \
 			eleven twelve

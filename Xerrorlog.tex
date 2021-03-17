@@ -1,0 +1,31 @@
+\let\goodbye=\bye % we replace \bye with another command
+
+\def\endofpapermacros{% output some lines after the \bye in errorlog.tex
+   % 1. step: skip the motto by Turing; DRF=<initials> of the first name
+   \long\def\skipmotto##1DRF{% ##1: ignored text
+      \smallskip\line{\bf List of abbreviated  names:\hss}% a title line
+      \simpleline DRF}% see step 2a)
+   % 2. step: two kind of input lines
+   %  a) <initials> <first names> <surname>           coded as \simpleline
+   %  b) <initials> <first names> <surname> (<info>)  coded as \parensline
+   % Note: step 1 starts with type a) and <initials>=DRF
+   %       if <initials>=CET switch to b); last line has <initials>=MDS
+   \def\next{\simpleline}\def\withparens{CET}\def\lastline{MDS}%
+   \def\simpleline##1 ##2 ##3 {\processtext!##1!##2 ##3!}% the default for \next
+   \def\parensline##1 ##2 ##3 (##4) {\processtext!##1!##2 ##3!}% <info> isn't needed
+   % 3. step: output name, test for switch to 2b), and test for last line
+   \def\processtext!##1!##2!{% ##1: <initials>; ##2: <first names> <surname>
+      \line{\hbox to 50pt{\hss##1:}\quad##2\hss}% output
+      \def\nxt{##1}%                    store <initials>
+      \ifx\nxt\withparens  % true: switch from 2a) to 2b)
+         \def\next{\parensline}%
+      \else\ifx\nxt\lastline   % true: it's the last line
+         \def\next{\csname goodbye\endcsname}% \next=\bye
+      \fi\fi
+      \next}%
+   % 4. step: activate this chain of macros
+   \skipmotto}
+
+\let\bye=\endofpapermacros
+
+\input errorlog
