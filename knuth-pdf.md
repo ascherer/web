@@ -1,4 +1,4 @@
-# knuth-pdf – PDF library of C/WEB sources in TeX Live
+# knuth-pdf – PDF collection of typeset C/WEB sources in TeX Live
 
 Here you find a large collection of PDF documents for many C/WEB programs in
 TeX\ Live, both in their original form as written by their respective authors,
@@ -9,7 +9,7 @@ sources and their changes in parallel.  Also included is the collection of
 
 Although not all the texts here are written or maintained by Donald Knuth, it
 is more convenient for everything to be collected in one place for reading and
-searching.  And they all stem from the system that Knuth created.  The central
+searching.  They all stem from the system that Knuth created.  The central
 entry point is the ‘index’ file, with links to the individual documents, either
 in HTML or in PDF format.
 
