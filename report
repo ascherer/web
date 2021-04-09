@@ -1,0 +1,91 @@
+All bugs occur when weave prints changed modules only.
+
+bug 1: Excessive memory usage.
+reason: All modules \mark their module numbers on the current page.
+In tex.tex modules 880 to 1332 put their marks all on page 25, since
+most of these modules are unchanged. The fix is obvious: mark
+your module number only when you are going to be printed.
+
+bug 2:  The module number in the header sometime differs from the first
+module on the page.
+reason: To keep it simple, we denote the four kinds of Modules with letters:
+m: unchanged unstarred Module
+n: unchanged starred Module
+M: changed unstarred Module
+N: changed starred Module
+
+The module sequence "n M", leads to the course of actions:
+1. n marks its number on page p.
+2. n \ejects p.
+3. M marks its number on page p+1
+4. M tentativly tries a page break. This break is prohibitive expensive.
+   M is still at the start of p+1. 
+5. Eventually page p+1 is shipped out.
+6. The \output routine writes the last mark from the previous page as module
+   number in the header. This is the number of n.
+The fix is obvious: Don't \eject a page when you are not going to
+be printed. This way there is always some text of the previous
+module (or of the initial "\vbox to \vsize".) when it marks its
+number.  If the break after the mark is performed, M will have put
+its mark on the previous page and the heading will show its number.
+If the break is not performed, there will be some text some text
+of the previous module, that is, M will not print at the start of
+the page and the heading shows correctly the number of the previous
+module.
+
+bug 3:  A (nonstarred) module starts on a new page, even though there
+was enough room left for the whole module on the old page.
+The fix of bug 2 also fixes bug 3.
+
+bug 4:  Some starred modules are not listed in the contents file.
+This bug is introduced by the fix of bug 2.
+This bug is triggered, when the first module of the program is starred but not
+changed.
+Writing the contents line is delayed until the current page is
+shipped out. Because only then the page number is determined. But
+the very first page, the dummy page, will never be shipped out.
+Because the dummy page is not ejected before n writes its content line, the
+write will get lost.
+The fix is obious: Maintain a flag "dp" with the meaning: "Writing
+to dummy page" and collect the lines in a macro like this:
+\ifdp
+  \edef\cline{\cline "line for this module"}
+\else
+  \edef\cline{"line for this module"}\cline
+\fi
+
+bug 5: Sometimes the heading shows the wrong part name 
+The fix of bug2 introduces bug5.
+A starred module defines its part name in the macro \rhead.
+The \output-routine then displays \rhead in the heading.
+The sequence n1.p1. n2.p2 M3 N4.p3. triggers the bug: M2 is member of part p2,
+but the heading for M2 displays p3 instead of p2. That's because N4 puts p3
+in \rhead and then \ejects. The \ejected page starts with M3 but the
+\output routine includes the \rhead as defined at the time of \output.
+
+The fix is obvious: Store both the part name and the module number in
+the mark. And use both components of the mark to fill the header.
+
+bug 6: \input webmac and the say \bye. The \output will \cycle and fill your
+disk.
+The fix of bug5 triggers this bug.
+What happened? The mark (to the dummy page) is defined to contain \rhead
+and \def\rhead{\.{WEB} OUTPUT} breaks the execution of the tokenlist in
+the mark.
+
+The kludge is obvious: \def\rhead{WEB OUTPUT} saves the day. The
+\.-Macro kills the \output routine.
+
+Why and how the \. macro does its devastating deeds, you ask? Don't
+know, I answer.
+
+bug 7: weaving tex.web w/o tex.ch will give you wrong part names in the
+header, namely the one of the preceding part.
+case: N1.p1 M2 N3.p2 will display the part name WEB OUTPUT for N1.p1
+and part name p1 for N3.p2. It should show p1 and p2.
+The reason is simple: tex.tex defines a private macro \N which assumes
+the old \output routine which puts the part name via \rhead into the header.
+(See bug5)
+The fix is obvious: \NM is invoked only by the private unchanged \N of
+pure TeX or mf. This sets a flag, that controls the \output routine to
+get the part name from the topmark (not compatible) or from the \rhead.
