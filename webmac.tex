@@ -1,5 +1,7 @@
 % standard macros for WEB listings (in addition to PLAIN.TEX)
-\xdef\fmtversion{\fmtversion+WEBMAC4.2} % identifies current set of macros
+\xdef\fmtversion{\fmtversion+WEBMAC4.2+TeX-FPC, 4th ed.}
+  % identifies current set of macros
+\message{\fmtversion}
 \parskip 0pt % no stretch between paragraphs
 \parindent 1em % for paragraphs and for the first line of Pascal text
 
@@ -76,18 +78,40 @@
 \def\J{\.{@\&}} % TANGLE's join operation
 \let\K=\gets % left arrow
 \let\L=\le % less than or equal sign
-\outer\def\M#1.{\MN#1.\ifon\vfil\penalty-100\vfilneg % beginning of section
-  \vskip12ptminus3pt\startsection\ignorespaces}
-\outer\def\N#1.#2.{\MN#1.\vfil\eject % beginning of starred section
-  \def\rhead{\uppercase{\ignorespaces#2}} % define running headline
-  \message{*\modno} % progress report
-  \edef\next{\write\cont{\Z{#2}{\modno}{\the\pageno}}}\next % to contents file
-  \ifon\startsection{\bf\ignorespaces#2.\quad}\ignorespaces}
-\def\MN#1.{\par % common code for \M, \N
+\outer\def\M#1.{ % beginning of section
+  {\xdef\modstar{#1}\let\*=\empty\xdef\modno{#1}}
+  \ifx\modno\modstar \onmaybe \else\ontrue \fi
+  \ifon
+    \mark{{{\tensy x}\modno}{\rhead}}
+    \vfil\penalty-100\vfilneg
+    \vskip12ptminus3pt\startsection\ignorespaces
+}
+\outer\def\N#1.#2.{ % beginning of starred section
   {\xdef\modstar{#1}\let\*=\empty\xdef\modno{#1}}% remove \* from section name
   \ifx\modno\modstar \onmaybe \else\ontrue \fi
-  \mark{{{\tensy x}\modno}{\rhead}}}
-  % each \mark is {section reference or null}{group title}
+  \def\rhead{\uppercase{\ignorespaces#2}} % define running headline
+  \ifon\mark{{{\tensy x}\modno}{\rhead}}
+    \vfil\eject
+  \fi
+  \ifdp
+    \edef\nextcl{\nextcl\write\cont{\Z{#2}{\modno}{\the\pageno}}}
+    \wptrue
+  \else
+    \ifwp
+      \nextcl
+      \wpfalse
+    \fi
+    \edef\nextcl{\write\cont{\Z{#2}{\modno}{\the\pageno}}}\nextcl
+      % to contents file
+  \fi
+  \message{*\modno} % progress report
+  \ifon\startsection{\bf\ignorespaces#2.\quad}\ignorespaces}
+\def\MN#1.{\par % common code for \M, \N only called by private \N module
+  {\xdef\modstar{#1}\let\*=\empty\xdef\modno{#1}}% remove \* from section name
+  \comptrue
+  \ifx\modno\modstar \onmaybe \else\ontrue \fi
+  \ifon \mark{{{\tensy x}\modno}{\rhead}}\fi}
+
 \def\O#1{\hbox{\rm\char'23\kern-.2em\it#1\/\kern.05em}} % octal constant
 \def\P{\rightskip=0pt plus 100pt minus 10pt % go into Pascal mode
   \sfcode`;=3000
@@ -117,11 +141,19 @@
 
 \def\onmaybe{\let\ifon=\maybe} \let\maybe=\iftrue
 \newif\ifon \newif\iftitle \newif\ifpagesaved
-\def\lheader{\mainfont\the\pageno\eightrm\qquad\rhead
+\newif\ifcomp \compfalse
+% compatible
+\def\clheader{\mainfont\the\pageno\eightrm\qquad\rhead
+  \hfill\title\qquad\mainfont\topsecno} % top line on left-hand pages
+\def\crheader{\mainfont\topsecno\eightrm\qquad\title\hfill
+  \rhead\qquad\mainfont\the\pageno} % top line on right-hand pages
+% not compatible
+\def\lheader{\mainfont\the\pageno\eightrm\qquad\toppart
   \hfill\title\qquad\mainfont\topsecno} % top line on left-hand pages
 \def\rheader{\mainfont\topsecno\eightrm\qquad\title\hfill
-  \rhead\qquad\mainfont\the\pageno} % top line on right-hand pages
+  \toppart\qquad\mainfont\the\pageno} % top line on right-hand pages
 \def\topsecno{\expandafter\takeone\topmark}
+\def\toppart{\expandafter\taketwo\topmark}
 \def\takeone#1#2{#1}
 \def\taketwo#1#2{#2}
 \def\nullsec{\eightrm\kern-2em} % the \kern-2em cancels \qquad in headers
@@ -134,7 +166,8 @@
       \vfill#1}} % parameter #1 is the page itself
   \global\advance\pageno by1}
 
-\def\rhead{\.{WEB} OUTPUT} % this running head is reset by starred sections
+\def\rhead{WEB OUTPUT} % this running head is reset by starred sections
+\def\rrhead{WEB OUTPUT} % \rrhead and \rhead match for unchanged tex.tex
 \mark{\noexpand\nullsec{\rhead}}
 \def\title{} % an optional title can be set by the user
 \def\topofcontents{\centerline{\titlefont\title}
@@ -153,10 +186,19 @@
 
 \newwrite\cont
 \output{\setbox0=\page % the first page is garbage
+  \global\dpfalse % not writing to dummy page
   \openout\cont=\contentsfile
-  \global\output{\normaloutput\page\lheader\rheader}}
+  \ifcomp
+    \global\output{\normaloutput\page\clheader\crheader}
+  \else
+    \global\output{\normaloutput\page\lheader\rheader}
+  \fi
+}
 \setpage
 \vbox to \vsize{} % the first \topmark won't be null
+\newif\ifdp \dptrue % writing to dummy page
+\newif\ifwp \wpfalse % writing not pending
+\edef\nextcl{}
 
 \def\ch{\note{The following sections were changed by the change file:}
   \let\*=\relax}
@@ -190,6 +232,7 @@
   \if L\lr\else\null\vfill\eject\fi % finish the current page
   \parfillskip 0pt plus 1fil
   \def\rhead{NAMES OF THE SECTIONS}
+  \let\toppart\rhead
   \let\topsecno=\nullsec
   \message{Section names:}
   \output{\normaloutput\page\lheader\rheader}
@@ -205,6 +248,7 @@
   \output{\normaloutput\page\lheader\rheader}
   \titletrue % prepare to output the table of contents
   \pageno=\contentspagenumber \def\rhead{TABLE OF CONTENTS}
+  \let\toppart\rhead
   \message{Table of contents:}
   \topofcontents
   \line{\hfil Section\hbox to3em{\hss Page}}
