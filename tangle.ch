@@ -54,3 +54,12 @@ Section 22.
 @y
 @d update_terminal == flush(term_out) {empty the terminal output buffer}
 @z
+
+Section 187
+
+@x l.3305
+end {there are no other cases}
+@y
+end; {there are no other cases}
+new_line
+@z
