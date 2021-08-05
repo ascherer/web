@@ -193,7 +193,7 @@ should be sufficient for most applications of \.{TANGLE}.
 @!line_length=72; {lines of \PASCAL\ output have at most this many characters}
 @!out_buf_size=144; {length of output buffer, should be twice |line_length|}
 @!stack_size=50; {number of simultaneous levels of macro expansion}
-@!max_id_length=12; {long identifiers are chopped to this length, which must
+@!max_id_length=32; {long identifiers are chopped to this length, which must
   not exceed |line_length|}
 @!unambig_length=7; {identifiers must be unique if chopped to this length}
   {note that 7 is more strict than \PASCAL's 8, but this can be varied}
