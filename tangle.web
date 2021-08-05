@@ -513,7 +513,8 @@ consist of characters of type |text_char|:
   begin new_line; print(#);
   end
 
-@d term_out==output {the terminal as an output file}
+@<Globals...@>=
+@!term_out:text; {the terminal as an output file}
 
 @ Different systems have different ways of specifying that the output on a
 certain file will appear on the user's terminal. Here is one way to do this
@@ -521,14 +522,14 @@ on the \PASCAL\ system that was used in \.{TANGLE}'s initial development:
 @^system dependencies@>
 
 @<Set init...@>=
-{send |term_out| output to the terminal}
+assign(term_out,''); {send |term_out| output to the terminal}
 
 @ The |update_terminal| procedure is called when we want
 to make sure that everything we have output to the terminal so far has
 actually left the computer's internal buffers and been sent.
 @^system dependencies@>
 
-@d update_terminal == break(term_out) {empty the terminal output buffer}
+@d update_terminal == flush(term_out) {empty the terminal output buffer}
 
 @ The main input comes from |web_file|; this input may be overridden
 by changes in |change_file|. (If |change_file| is empty, there are no changes.)
