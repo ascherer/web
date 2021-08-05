@@ -33,9 +33,13 @@ grok line 306 in a change:
 @<Types...@>=
 produces the error message '1 of the preceding lines failed to match'.
 
-@x l.307
+@x l.304
+@d last_text_char=255 {ordinal number of the largest element of |text_char|}
+
+@<Types...@>=
 @!text_file=packed file of text_char;
 @y
+@d last_text_char=255 {ordinal number of the largest element of |text_char|}
 @z
 
 Section 21.
