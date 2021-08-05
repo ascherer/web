@@ -303,9 +303,6 @@ following definitions should be adjusted if necessary.
 @d first_text_char=0 {ordinal number of the smallest element of |text_char|}
 @d last_text_char=255 {ordinal number of the largest element of |text_char|}
 
-@<Types...@>=
-@!text_file=packed file of text_char;
-
 @ The \.{WEAVE} and \.{TANGLE} processors convert between ASCII code and
 the user's external character set by means of arrays |xord| and |xchr|
 that are analogous to \PASCAL's |ord| and |chr| functions.
