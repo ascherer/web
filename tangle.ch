@@ -1,3 +1,7 @@
+Changes for TANGLE.WEB to compile itself with Free Pascal.
+
+Public domain.  Originally written by Andreas Scherer, 2021.
+
 Section 4.
 
 @x l.121
@@ -42,7 +46,7 @@ rewrite(term_out,'TTY:'); {send |term_out| output to the terminal}
 assign(term_out,''); rewrite(term_out);
   {send |term_out| output to the terminal}
 @z
- 
+
 Section 22.
 
 @x l.532
