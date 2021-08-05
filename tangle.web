@@ -171,7 +171,7 @@ would have taken the trouble to modify \.{TANGLE} so that such extensions
 were done automatically, if he had not wanted to encourage \PASCAL\
 compiler writers to make this important change in \PASCAL, where it belongs.)
 
-@d othercases == others: {default for cases not listed explicitly}
+@d othercases == else {default for cases not listed explicitly}
 @d endcases == @+end {follows the default case in an extended |case| statement}
 @f othercases == else
 @f endcases == end
