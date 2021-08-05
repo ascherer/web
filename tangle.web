@@ -522,7 +522,8 @@ on the \PASCAL\ system that was used in \.{TANGLE}'s initial development:
 @^system dependencies@>
 
 @<Set init...@>=
-assign(term_out,''); {send |term_out| output to the terminal}
+assign(term_out,''); rewrite(term_out);
+  {send |term_out| output to the terminal}
 
 @ The |update_terminal| procedure is called when we want
 to make sure that everything we have output to the terminal so far has
