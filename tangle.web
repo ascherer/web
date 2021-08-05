@@ -118,7 +118,7 @@ for the \PASCAL\ debugger's benefit, although interrupts will occur if
 there is arithmetic overflow.
 
 @<Compiler directives@>=
-@{@&$C-,A+,D-@} {no range check, catch arithmetic overflow, no debug overhead}
+@{@&$mode ISO@} {switch to ISO mode of Free \PASCAL}
 @!debug @{@&$C+,D+@}@+ gubed {but turn everything on when debugging}
 
 @ Labels are given symbolic names by the following definitions. We insert
