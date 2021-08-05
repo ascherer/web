@@ -24,7 +24,12 @@ Section 8.
 
 Section 12.
 
-@x l.306
+Both TL tangle and FPC tangle, i.e., the "original" Knuthian tangle, fail to
+grok line 306 in a change:
+@<Types...@>=
+produces the error message '1 of the preceding lines failed to match'.
+
+@x l.307
 @!text_file=packed file of text_char;
 @y
 @z
