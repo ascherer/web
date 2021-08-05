@@ -118,7 +118,7 @@ for the \PASCAL\ debugger's benefit, although interrupts will occur if
 there is arithmetic overflow.
 
 @<Compiler directives@>=
-@{@&$mode ISO@} {switch to ISO mode of Free \PASCAL}
+@{@&$C-,A+,D-@} {no range check, catch arithmetic overflow, no debug overhead}
 @!debug @{@&$C+,D+@}@+ gubed {but turn everything on when debugging}
 
 @ Labels are given symbolic names by the following definitions. We insert
@@ -171,7 +171,7 @@ would have taken the trouble to modify \.{TANGLE} so that such extensions
 were done automatically, if he had not wanted to encourage \PASCAL\
 compiler writers to make this important change in \PASCAL, where it belongs.)
 
-@d othercases == @+else {default for cases not listed explicitly}
+@d othercases == others: {default for cases not listed explicitly}
 @d endcases == @+end {follows the default case in an extended |case| statement}
 @f othercases == else
 @f endcases == end
@@ -193,7 +193,7 @@ should be sufficient for most applications of \.{TANGLE}.
 @!line_length=72; {lines of \PASCAL\ output have at most this many characters}
 @!out_buf_size=144; {length of output buffer, should be twice |line_length|}
 @!stack_size=50; {number of simultaneous levels of macro expansion}
-@!max_id_length=32; {long identifiers are chopped to this length, which must
+@!max_id_length=12; {long identifiers are chopped to this length, which must
   not exceed |line_length|}
 @!unambig_length=7; {identifiers must be unique if chopped to this length}
   {note that 7 is more strict than \PASCAL's 8, but this can be varied}
@@ -302,6 +302,9 @@ following definitions should be adjusted if necessary.
 @d text_char == char {the data type of characters in text files}
 @d first_text_char=0 {ordinal number of the smallest element of |text_char|}
 @d last_text_char=255 {ordinal number of the largest element of |text_char|}
+
+@<Types...@>=
+@!text_file=packed file of text_char;
 
 @ The \.{WEAVE} and \.{TANGLE} processors convert between ASCII code and
 the user's external character set by means of arrays |xord| and |xchr|
@@ -511,7 +514,7 @@ consist of characters of type |text_char|:
   end
 
 @<Globals...@>=
-@!term_out:text; {the terminal as an output file}
+@!term_out:text_file; {the terminal as an output file}
 
 @ Different systems have different ways of specifying that the output on a
 certain file will appear on the user's terminal. Here is one way to do this
@@ -519,15 +522,14 @@ on the \PASCAL\ system that was used in \.{TANGLE}'s initial development:
 @^system dependencies@>
 
 @<Set init...@>=
-assign(term_out,''); rewrite(term_out);
-  {send |term_out| output to the terminal}
+rewrite(term_out,'TTY:'); {send |term_out| output to the terminal}
 
 @ The |update_terminal| procedure is called when we want
 to make sure that everything we have output to the terminal so far has
 actually left the computer's internal buffers and been sent.
 @^system dependencies@>
 
-@d update_terminal == flush(term_out) {empty the terminal output buffer}
+@d update_terminal == break(term_out) {empty the terminal output buffer}
 
 @ The main input comes from |web_file|; this input may be overridden
 by changes in |change_file|. (If |change_file| is empty, there are no changes.)
