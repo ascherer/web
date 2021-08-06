@@ -4,8 +4,17 @@ Public domain.  Originally written by Andreas Scherer, 2021.
 
 Section 4.
 
+@x l.118
+there is arithmetic overflow.
+@y
+there is arithmetic overflow.
+
+The Free \PASCAL\ Compiler is set into `ISO' mode.
+@z
+
 @x l.121
 @{@&$C-,A+,D-@} {no range check, catch arithmetic overflow, no debug overhead}
+@!debug @{@&$C+,D+@}@+ gubed {but turn everything on when debugging}
 @y
 @{@&$mode ISO@} {switch to ISO mode of Free \PASCAL}
 @z
@@ -29,13 +38,15 @@ Section 8.
 Section 12.
 
 Both TL tangle and FPC tangle, i.e., the "original" Knuthian tangle, fail to
-grok line 306 in a change:
+grok line 306 as the first line in a change:
 'at'x
 @<Types...@>=
 @!text_file=packed file of text_char;
 'at'y
 'at'z
 produces the error message '1 of the preceding lines failed to match'.
+
+With a little more context, the intended change succeeds:
 
 @x l.304
 @d last_text_char=255 {ordinal number of the largest element of |text_char|}
@@ -47,6 +58,13 @@ produces the error message '1 of the preceding lines failed to match'.
 @z
 
 Section 21.
+
+@x l.521
+on the \PASCAL\ system that was used in \.{TANGLE}'s initial development:
+@y
+on the Free \PASCAL\ system that was used decades after \.{TANGLE}'s initial
+development:
+@z
 
 @x l.525
 rewrite(term_out,'TTY:'); {send |term_out| output to the terminal}
