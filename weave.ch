@@ -16,7 +16,7 @@ The Free \PASCAL\ Compiler is set in `ISO' mode and range checking is enabled.
 @{@&$C-,A+,D-@} {no range check, catch arithmetic overflow, no debug overhead}
 @!debug @{@&$C+,D+@}@+ gubed {but turn everything on when debugging}
 @y
-@{@&$mode ISO@} {switch to ISO mode of Free \PASCAL}
+@{@&$M@&O@&D@&E@,@,ISO@} {switch to ISO mode of Free \PASCAL}
 @!debug @{@&$R+@}@+ gubed {turn range checking on when debugging}
 @z
 
