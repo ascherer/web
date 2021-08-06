@@ -15,19 +15,6 @@ and use 'weave-squash.ch' instead of 'weave.ch' when tangling and weaving.
 Public domain.  Originally written by Andreas Scherer, 2021.
 
 @x
-{\sl Caution:\/} The macros |app|, |app1|, |app2|, and |app3| are
-@y
-{\sl Caution:\/} The macros |app|, |app1|, |app2|, |app3|, and |app4| are
-@z
-
-@x
-@d app3(#)==app2(#);app1(#+2)
-@y
-@d app3(#)==app2(#);app1(#+2)
-@d app4(#)==app3(#);app1(#+3)
-@z
- 
-@x
 else if cat[pp+1]=simp then squash(pp+1,1,math,0)(4)
 @y
 else if cat[pp+1]=simp then
@@ -135,7 +122,6 @@ begin
   1: begin app1(j);@+ end;
   2: begin app2(j);@+ end;
   3: begin app3(j);@+ end;
-  4: begin app4(j);@+ end;
   othercases confusion('squash')
   endcases;@/
   red(j,k,c,d);
