@@ -62,6 +62,14 @@ Section 22.
 @d update_terminal == flush(term_out) {empty the terminal output buffer}
 @z
 
+Section 249.
+
+@x l.4663
+  begin if sort_ptr>max_sorts then overflow('sorting');
+@y
+  begin if sort_ptr=max_sorts then overflow('sorting');
+@z
+
 Section 263.
 
 @x l.4883
