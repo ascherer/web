@@ -9,7 +9,7 @@ there is arithmetic overflow.
 @y
 there is arithmetic overflow.
 
-The Free \PASCAL\ Compiler is set into `ISO' mode.
+The Free \PASCAL\ Compiler is set in `ISO' mode and range checking is enabled.
 @z
 
 @x l.121
@@ -17,6 +17,7 @@ The Free \PASCAL\ Compiler is set into `ISO' mode.
 @!debug @{@&$C+,D+@}@+ gubed {but turn everything on when debugging}
 @y
 @{@&$mode ISO@} {switch to ISO mode of Free \PASCAL}
+@!debug @{@&$R+@}@+ gubed {turn range checking on when debugging}
 @z
 
 Section 7.
