@@ -63,6 +63,26 @@ Section 22.
 @d update_terminal == flush(term_out) {empty the terminal output buffer}
 @z
 
+Section 124.
+
+@x l.2199
+`\.{\\input webmac}'.
+@.\\input webmac@>
+@.webmac@>
+@y
+`\.{\\input pwebmac}'.
+@.\\input pwebmac@>
+@.\\input webmac@>
+@.pwebmac@>
+@.webmac@>
+@z
+
+@x
+out_ptr:=1; out_line:=1; out_buf[1]:="c"; write(tex_file,'\input webma');
+@y
+out_ptr:=1; out_line:=1; out_buf[1]:="c"; write(tex_file,'\input pwebma');
+@z
+
 Section 249.
 
 @x l.4663
