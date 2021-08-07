@@ -4,13 +4,9 @@ The original 'squash(..,1,..)' was /not/ a combination of 'app1()' and
 'reduce(..,1,..)'; instead, it was an ultra-compact variant of 'reduce'.
 
 Moving the special case 'k==1' from 'sq' to 'red' as separate case 'k==0'
-makes 'squash(..,k,..)' orthogonal in 'k=1,..,3'.  Curiously enough, now
+makes 'squash(..,k,..)' consistent for 'k=1,2,3'.  Curiously enough, now
 there's no 'squash(..,1,..)' anymore, but CWEAVE has at least two rules
-that apply this case.
-
-Apply this extended change file with
-$> tie -c weave-squash.ch weave.web weave.ch squash.ch
-and use 'weave-squash.ch' instead of 'weave.ch' when tangling and weaving.
+that apply this case (and it even works for 'k=4').
 
 Public domain.  Originally written by Andreas Scherer, 2021.
 
