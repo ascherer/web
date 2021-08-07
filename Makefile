@@ -65,6 +65,9 @@ ALL =  tangle.web weave.web \
 	 xetex ) xetex $* ;; \
 	esac
 
+boot:
+	$(PC) tangle.pas
+
 all: tangle weave
 
 cautiously: tangle
