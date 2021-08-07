@@ -12,13 +12,16 @@
 # under the terms of a permission notice identical to this one.
 
 # Set TCHANGES to tang-foo.ch if you need changes to tangle.web
-TCHANGES=tang-fpc.ch
+TCHANGES=tangle.ch
 
 # Set WCHANGES to cweav-foo.ch if you need changes to weave.web
-WCHANGES=weav-fpc.ch
+WCHANGES=weave.ch
 
 # What PASCAL compiler are you using?
 PC = fpc
+
+# Klaus Guntermann's Tie 2.4 processor can easily be installed on UNIX.
+TIE = tie
 
 # RM and CP are used below in case rm and cp are aliased
 RM= /bin/rm
@@ -39,7 +42,7 @@ WEAVE = ./weave
 TANGLE = ./tangle
 SOURCES = weave.web tangle.web
 ALL =  tangle.web weave.web \
-	tang-fpc.ch weav-fpc.ch weav-squash.ch \
+	web-fpc.ch tang-patch.ch weav-patch.ch weav-squash.ch \
 	Makefile tangle.pas \
 	webman.tex webmac.tex
 
@@ -82,11 +85,17 @@ tangle: tangle.pas
 tangle.pas: tangle.web $(TCHANGES)
 	$(TANGLE) tangle.web $(TCHANGES) tangle.pas $(EMPTY)
 
+$(TCHANGES): tangle.web web-fpc.ch tang-patch.ch
+	$(TIE) -c $@ $^
+
 weave: weave.pas
 	$(PC) weave.pas
 
 weave.pas: weave.web $(WCHANGES)
 	$(TANGLE) weave.web $(WCHANGES) weave.pas $(EMPTY)
+
+$(WCHANGES): weave.web web-fpc.ch weav-patch.ch weav-squash.ch
+	$(TIE) -c $@ $^
 
 doc: $(SOURCES:.web=.dvi)
 
@@ -103,4 +112,5 @@ fullmanual: usermanual $(SOURCES)
 # be sure to leave tangle.pas for bootstrapping
 clean:
 	$(RM) -f -r *~ .*~ *.o weave.tex weave.pas tangle.tex CONTENTS.tex \
-	  *.log *.dvi *.toc *.idx *.scn *.pdf core weave tangle
+	  *.log *.dvi *.toc *.idx *.scn *.pdf core weave tangle \
+	  $(TCHANGES) $(WCHANGES)

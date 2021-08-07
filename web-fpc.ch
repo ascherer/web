@@ -1,10 +1,12 @@
 Changes for TANGLE.WEB to compile itself with Free Pascal.
 
+Also applicable for WEAVE.WEB (section and line numbers in []).
+
 Public domain.  Originally written by Andreas Scherer, 2021.
 
 Section 4.
 
-@x l.118
+@x l.118 [124]
 there is arithmetic overflow.
 @y
 there is arithmetic overflow.
@@ -12,7 +14,7 @@ there is arithmetic overflow.
 The Free \PASCAL\ Compiler is set in `ISO' mode and range checking is enabled.
 @z
 
-@x l.121
+@x l.121 [127]
 @{@&$C-,A+,D-@} {no range check, catch arithmetic overflow, no debug overhead}
 @!debug @{@&$C+,D+@}@+ gubed {but turn everything on when debugging}
 @y
@@ -22,18 +24,10 @@ The Free \PASCAL\ Compiler is set in `ISO' mode and range checking is enabled.
 
 Section 7.
 
-@x l.174
+@x l.174 [177]
 @d othercases == others: {default for cases not listed explicitly}
 @y
 @d othercases == @+else {default for cases not listed explicitly}
-@z
-
-Section 8.
-
-@x l.196
-@!max_id_length=12; {long identifiers are chopped to this length, which must
-@y
-@!max_id_length=32; {long identifiers are chopped to this length, which must
 @z
 
 Section 12.
@@ -49,7 +43,7 @@ produces the error message '1 of the preceding lines failed to match'.
 
 With a little more context, the intended change succeeds:
 
-@x l.304
+@x l.304 [309]
 @d last_text_char=255 {ordinal number of the largest element of |text_char|}
 
 @<Types...@>=
@@ -60,14 +54,14 @@ With a little more context, the intended change succeeds:
 
 Section 21.
 
-@x l.521
+@x l.521 [526]
 on the \PASCAL\ system that was used in \.{TANGLE}'s initial development:
 @y
 on the Free \PASCAL\ system that was used decades after \.{TANGLE}'s initial
 development:
 @z
 
-@x l.525
+@x l.525 [530]
 rewrite(term_out,'TTY:'); {send |term_out| output to the terminal}
 @y
 assign(term_out,''); rewrite(term_out);
@@ -76,15 +70,15 @@ assign(term_out,''); rewrite(term_out);
 
 Section 22.
 
-@x l.532
+@x l.532 [537]
 @d update_terminal == break(term_out) {empty the terminal output buffer}
 @y
 @d update_terminal == flush(term_out) {empty the terminal output buffer}
 @z
 
-Section 187
+Section 187 [263]
 
-@x l.3305
+@x l.3305 [4883]
 end {there are no other cases}
 @y
 end; {there are no other cases}
