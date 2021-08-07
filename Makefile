@@ -12,10 +12,10 @@
 # under the terms of a permission notice identical to this one.
 
 # Set TCHANGES to tang-foo.ch if you need changes to tangle.web
-TCHANGES=tangle.ch
+TCHANGES=tang-fpc.ch
 
 # Set WCHANGES to cweav-foo.ch if you need changes to weave.web
-WCHANGES=weave.ch
+WCHANGES=weav-fpc.ch
 
 # What PASCAL compiler are you using?
 PC = fpc
@@ -39,6 +39,7 @@ WEAVE = ./weave
 TANGLE = ./tangle
 SOURCES = weave.web tangle.web
 ALL =  tangle.web weave.web \
+	tang-fpc.ch weav-fpc.ch weav-squash.ch \
 	Makefile tangle.pas \
 	webman.tex webmac.tex
 
