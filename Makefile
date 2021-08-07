@@ -49,7 +49,7 @@ ALL =  tangle.web weave.web \
 .SUFFIXES: .dvi .tex .w .pdf
 
 .web.tex:
-	$(WEAVE) $*
+	$(WEAVE) $*.web $*.ch $*.tex
 
 .tex.dvi:	
 	tex $<
@@ -59,7 +59,7 @@ ALL =  tangle.web weave.web \
 	make $*.dvi
 
 .web.pas:
-	$(CTANGLE) $*
+	$(CTANGLE) $*.web $*.ch $*.pas $(EMPTY)
 
 .web.pdf:
 	make $*.tex
