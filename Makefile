@@ -102,7 +102,7 @@ doc: $(SOURCES:.web=.dvi)
 usermanual: webman.tex webmac.tex
 	$(PDF)tex webman
 
-fullmanual: usermanual $(SOURCES)
+fullmanual: usermanual $(SOURCES) $(TCHANGES) $(WCHANGES)
 	make weave
 	./weave tangle.web $(TCHANGES) tangle.tex
 	$(PDF)tex tangle.tex
