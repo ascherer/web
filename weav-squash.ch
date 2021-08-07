@@ -4,7 +4,7 @@ The original 'squash(..,1,..)' was /not/ a combination of 'app1()' and
 'reduce(..,1,..)'; instead, it was an ultra-compact variant of 'reduce'.
 
 Moving the special case 'k==1' from 'sq' to 'red' as separate case 'k==0'
-makes 'squash(..,k,..)' orthogonal in 'k=1,..,4'.  Curiously enough, now
+makes 'squash(..,k,..)' orthogonal in 'k=1,..,3'.  Curiously enough, now
 there's no 'squash(..,1,..)' anymore, but CWEAVE has at least two rules
 that apply this case.
 
@@ -15,49 +15,51 @@ and use 'weave-squash.ch' instead of 'weave.ch' when tangling and weaving.
 Public domain.  Originally written by Andreas Scherer, 2021.
 
 @x
+@d production(#)==@!debug prod(#) gubed; goto found
+@d reduce(#)==red(#); production
+@d production_end(#)==@!debug prod(#) gubed; goto found;
+  end
+@d squash(#)==begin sq(#); production_end
+@y
+@d production(#)==@!debug prod(#) gubed; goto found; end
+@d reduce(#)==begin red(#); production
+@d squash(#)==begin sq(#); production
+@z
+
+@x
 else if cat[pp+1]=simp then squash(pp+1,1,math,0)(4)
 @y
-else if cat[pp+1]=simp then
-  begin reduce(pp+1,0,math,0)(4);
-  end
+else if cat[pp+1]=simp then reduce(pp+1,0,math,0)(4)
 @z
  
 @x
 squash(pp,1,intro,-3)(14)
 @y
-begin reduce(pp,0,intro,-3)(14);
-end
+reduce(pp,0,intro,-3)(14)
 @z
 
 @x
 else squash(pp,1,simp,-2)(25)
 @y
-else
-  begin reduce(pp,0,simp,-2)(25);
-  end
+else reduce(pp,0,simp,-2)(25)
 @z
  
 @x
 else if cat[pp+1]=simp then squash(pp+1,1,math,0)(35)
 @y
-else if cat[pp+1]=simp then
-  begin reduce(pp+1,0,math,0)(35);
-  end
+else if cat[pp+1]=simp then reduce(pp+1,0,math,0)(35)
 @z
 
 @x
 squash(pp,1,terminator,-3)(42)
 @y
-begin reduce(pp,0,terminator,-3)(42);
-end
+reduce(pp,0,terminator,-3)(42)
 @z
  
 @x
 if cat[pp+1]=close then squash(pp,1,stmt,-2)(43)
 @y
-if cat[pp+1]=close then
-  begin reduce(pp,0,stmt,-2)(43);
-  end
+if cat[pp+1]=close then reduce(pp,0,stmt,-2)(43)
 @z
 
 @x
@@ -69,16 +71,13 @@ if cat[pp+1]=close then
 @x
 squash(pp,1,stmt,-2)(50)
 @y
-begin reduce(pp,0,stmt,-2)(50);
-end
+reduce(pp,0,stmt,-2)(50)
 @z
  
 @x
 if cat[pp+1]=beginning then squash(pp,1,stmt,-2)(51)
 @y
-if cat[pp+1]=beginning then
-  begin reduce(pp,0,stmt,-2)(51);
-  end
+if cat[pp+1]=beginning then reduce(pp,0,stmt,-2)(51)
 @z
 
 @x
