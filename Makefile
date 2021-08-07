@@ -59,7 +59,7 @@ ALL =  tangle.web weave.web \
 	make $*.dvi
 
 .web.pas:
-	$(CTANGLE) $*.web $*.ch $*.pas $(EMPTY)
+	$(TANGLE) $*.web $*.ch $*.pas $(EMPTY)
 
 .web.pdf:
 	make $*.tex
@@ -75,7 +75,7 @@ boot:
 all: tangle weave
 
 cautiously: tangle
-	./tangle tangle.web $(TCHANGES) tangle.p $(EMPTY)
+	$(TANGLE) tangle.web $(TCHANGES) tangle.p $(EMPTY)
 	diff tangle.p tangle.pas
 	$(RM) tangle.p
 
@@ -104,9 +104,9 @@ usermanual: webman.tex webmac.tex
 
 fullmanual: usermanual $(SOURCES) $(TCHANGES) $(WCHANGES)
 	make weave
-	./weave tangle.web $(TCHANGES) tangle.tex
+	$(WEAVE) tangle.web $(TCHANGES) tangle.tex
 	$(PDF)tex tangle.tex
-	./weave weave.web $(WCHANGES) weave.tex
+	$(WEAVE) weave.web $(WCHANGES) weave.tex
 	$(PDF)tex weave.tex
 
 # be sure to leave tangle.pas for bootstrapping
