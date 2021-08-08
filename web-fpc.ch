@@ -18,8 +18,8 @@ it is safe to avoid range checks and to leave out the extra code it inserts
 for the \PASCAL\ debugger's benefit, although interrupts will occur if
 there is arithmetic overflow.
 @y
-``ISO'' mode should be used.
-When debugging is requested, range checking is enabled.
+``ISO'' mode should be used, permitting -- among other features -- non-local
+\&{goto}s.  When debugging is requested, range checking is enabled.
 @z
 
 @x l.121 [127]
