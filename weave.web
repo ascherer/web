@@ -108,9 +108,9 @@ if statistics about \.{WEAVE}'s memory usage are desired.
 @f debug==begin
 @f gubed==end
 @#
-@d stat==@{ {change this to `$\\{stat}\equiv\null$'
+@d stat== {change this to `$\\{stat}\equiv\null$'
   when gathering usage statistics}
-@d tats==@t@>@} {change this to `$\\{tats}\equiv\null$'
+@d tats== {change this to `$\\{tats}\equiv\null$'
   when gathering usage statistics}
 @f stat==begin
 @f tats==end

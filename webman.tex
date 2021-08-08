@@ -921,21 +921,21 @@ processing themselves:
 
 \pstat{TANGLE}{TANGLE}{15}
 {Memory usage statistics:\cr
-456 names, 215 replacement texts;\cr
-3396+3361 bytes, 6685+7329+5805 tokens.\cr}
+458 names, 215 replacement texts;\cr
+3525+3255 bytes, 6890+7379+5865 tokens.\cr}
 
 \pstat{TANGLE}{WEAVE}{30}
 {Memory usage statistics:\cr
-692 names, 339 replacement texts;\cr
-4576+4294 bytes, 10184+9875+9150 tokens.\cr}
+698 names, 340 replacement texts;\cr
+4394+4562 bytes, 9682+10537+9458 tokens.\cr}
 
 \pstat{WEAVE}{TANGLE}{45}
-{Memory usage statistics: 478 names, 2045 cross references, 4159+3729 bytes;\cr
+{Memory usage statistics: 480 names, 2048 cross references, 3678+4239 bytes;\cr
 parsing required 684 scraps, 1300 texts, 3766 tokens, 119 levels;\cr
 sorting required 34 levels.\cr}
 
 \pstat{WEAVE}{WEAVE}{65}
-{Memory usage statistics: 737 names, 3306 cross references, 4896+4962 bytes;\cr
+{Memory usage statistics: 748 names, 3326 cross references, 5106+4878 bytes;\cr
 parsing required 684 scraps, 1300 texts, 3766 tokens, 119 levels;\cr
 sorting required 73 levels.\cr}
 
@@ -948,28 +948,28 @@ seconds per printed page, where these pages are substantially larger than
 the pages in a normal book). All cpu times quoted are for a DECsystem-10.
 
 \def\K{{\mc K}}
-The file \.{TANGLE.WEB} is about 125\K\ characters long; \.{TANGLE}
-reduces it to a file \.{TANGLE.PAS} whose size is about 42\K\ characters,
-while \.{WEAVE} expands it to a file \.{TANGLE.TEX} of about 185\K\null.
+The file \.{TANGLE.WEB} is about 127\K\ characters long; \.{TANGLE}
+reduces it to a file \.{TANGLE.PAS} whose size is about 44\K\ characters,
+while \.{WEAVE} expands it to a file \.{TANGLE.TEX} of about 193\K\null.
 The corresponding file sizes for \.{WEAVE.WEB}, \.{WEAVE.PAS}, and
-\.{WEAVE.TEX} are 180\K, 89\K, and 265\K.
+\.{WEAVE.TEX} are 182\K, 91\K, and 282\K.
 
-The much larger file \.{TEX.WEB} led to the following numbers:
+The much larger file \.{TEX.WEB} (approx.~1007\K) led to the following numbers:
 
 \pstat{TANGLE}{TEX}{110}
 {Memory usage statistics:\cr
-3750 names, 1768 replacement texts;\cr
-41895+41053 bytes, 42378+45074+41091 tokens.\cr}
+3904 names, 1810 replacement texts;\cr
+42223+43083 bytes, 46353+46209+46426 tokens.\cr}
 
 \pstat{WEAVE}{TEX}{270}
-{Memory usage statistics: 3412 names, 19699 cross references,
-  37900+40232 bytes;\cr
-parsing required 685 scraps, 1303 texts, 3784 tokens, 104 levels;\cr
+{Memory usage statistics: 3562 names, 20820 cross references,
+  40138+40512 bytes;\cr
+parsing required 669 scraps, 1276 texts, 3652 tokens, 102 levels;\cr
 sorting required 52 levels.\cr}
 
 \yskip\noindent
-\PASCAL\ did \.{TEX.PAS} in about 75 seconds; \TeX\ did \.{TEX.TEX}
-in about 3600.
+\PASCAL\ did \.{TEX.PAS} (approx.~348\K) in about 75 seconds;
+\TeX\ did \.{TEX.TEX} (approx.~1583\K) in about 3600.
 % Here is a quotation that could not really be omitted
 
 \vfill
