@@ -121,6 +121,12 @@ This excerpt from \.{WEAVE.WEB} produced modules 55--59 in
 \pdfURL{Appendix~D}{weave.pdf}.
 @z
 
+@x l.1050
+ASCII codes is $c_1c_2\ldots c_m$, its hash value will be
+@y
+ASCII codes is $c_1c_2\ldots c_n$, its hash value will be
+@z
+
 @x l.1061
 \section Appendix B.
 This excerpt from \.{WEAVE.TEX} corresponds to Appendix A.
@@ -130,11 +136,94 @@ This excerpt from \.{WEAVE.TEX} corresponds to Appendix A.
 This excerpt from \.{WEAVE.TEX} corresponds to \Appendix A.
 @z
 
+@x l.1129
+ASCII codes is $c_1c_2\ldots c_m$, its hash value will be
+@y
+ASCII codes is $c_1c_2\ldots c_n$, its hash value will be
+@z
+
+@x l.1139
+\U section~58.\fi
+@y
+\U58.\fi
+@z
+
 @x l.1143
 \section Appendix C.
 @y
 \def\bkminfo{Translation by TANGLE}
 \section Appendix C.
+@z
+
+@x l.1149
+those lines. There are 1559 lines in all; the notation
+@y
+those lines. There are 1585 lines in all; the notation
+@z
+
+@x l.1158
+{2:}{4:}{$C-,A+,D-}{[$C+,D+]}{:4}
+PROGRAM WEAVE(WEBFILE,CHANGEFILE,TEXFILE);LABEL 9999;CONST{8:}
+MAXBYTES=45000;MAXNAMES=5000;MAXMODULES=2000;HASHSIZE=353;BUFSIZE=100;
+@y
+{2:}{4:}{$C-,A+,D-}{[$C+,D+]}
+{:4}PROGRAM WEAVE(WEBFILE,CHANGEFILE,TEXFILE);LABEL 9999;
+CONST{8:}MAXBYTES=45000;MAXNAMES=5000;MAXMODULES=2000;HASHSIZE=353;
+@z
+
+@x l.1162
+TOKPTR:0..MAXTOKS;{MAXTOKPTR,MAXTXTPTR:0..MAXTOKS;}{:53}{55:}
+IDFIRST:0..LONGBUFSIZE;IDLOC:0..LONGBUFSIZE;
+@y
+{:53}{55:}IDFIRST:0..LONGBUFSIZE;IDLOC:0..LONGBUFSIZE;
+@z
+
+@x l.1166
+PROCEDURE INITIALIZE;VAR{16:}I:0..127;{:16}{40:}WI:0..1;{:40}{56:}
+H:0..HASHSIZE;{:56}{247:}C:ASCIICODE;{:247}BEGIN{10:}HISTORY:=0;{:10}
+@y
+{:40}{56:}H:0..HASHSIZE;{:56}{247:}C:ASCIICODE;
+@z
+
+@x l.1169
+TOKPTR:=1;TEXTPTR:=1;TOKSTART[0]:=1;TOKSTART[1]:=1;{MAXTOKPTR:=1;
+MAXTXTPTR:=1;}{:54}{57:}FOR H:=0 TO HASHSIZE-1 DO HASH[H]:=0;{:57}{94:}
+SCANNINGHEX:=FALSE;{:94}{102:}MODTEXT[0]:=32;{:102}{124:}OUTPTR:=1;
+@y
+{:54}{57:}FOR H:=0 TO HASHSIZE-1 DO HASH[H]:=0;
+{:57}{94:}SCANNINGHEX:=FALSE;{:94}{102:}MODTEXT[0]:=32;
+@z
+
+@x l.1173
+IF R=0 THEN XREF[P]:=XREFPTR ELSE XMEM[R].XLINKFIELD:=XREFPTR;END;{:51}
+{58:}FUNCTION IDLOOKUP(T:EIGHTBITS):NAMEPOINTER;LABEL 31;
+@y
+IF R=0 THEN XREF[P]:=XREFPTR ELSE XMEM[R].XLINKFIELD:=XREFPTR;END;
+{:51}{58:}FUNCTION IDLOOKUP(T:EIGHTBITS):NAMEPOINTER;LABEL 31;
+@z
+
+@x l.1176
+L:0..LONGBUFSIZE;P:NAMEPOINTER;BEGIN L:=IDLOC-IDFIRST;{59:}
+H:=BUFFER[IDFIRST];I:=IDFIRST+1;
+@y
+L:0..LONGBUFSIZE;P:NAMEPOINTER;BEGIN L:=IDLOC-IDFIRST;
+{59:}H:=BUFFER[IDFIRST];I:=IDFIRST+1;
+@z
+
+@x l.1184
+LINK[P]:=HASH[H];HASH[H]:=P;31:{:60};IF P=NAMEPTR THEN{62:}
+BEGIN W:=NAMEPTR MOD 2;
+@y
+LINK[P]:=HASH[H];HASH[H]:=P;31:{:60};
+IF P=NAMEPTR THEN{62:}BEGIN W:=NAMEPTR MOD 2;
+@z
+
+@x l.1194
+XREF[P]:=0;END{:62};IDLOOKUP:=P;END;{:58}{66:}
+FUNCTION MODLOOKUP(L:SIXTEENBITS):NAMEPOINTER;LABEL 31;VAR C:0..4;
+@y
+XREF[P]:=0;END{:62};IDLOOKUP:=P;END;
+{:58}{66:}FUNCTION MODLOOKUP(L:SIXTEENBITS):NAMEPOINTER;LABEL 31;
 @z
 
 @x l.1425
@@ -170,6 +259,12 @@ dependencies'' in the index of Appendix~E above, and figure out what changes
 @y
 dependencies'' in the index of \pdfURL{Appendix~E}{tangle.pdf} above,
 and figure out what changes
+@z
+
+@x l.1592
+first change files; then you can sure that your compiler will handle
+@y
+first change files; then you can be sure that your compiler will handle
 @z
 
 @x l.1609
