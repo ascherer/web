@@ -1126,7 +1126,7 @@ $\\{id\_lookup}\K\|p$;\6
 \fi
 ?vfill?verbatimgobble
 \M59. A simple hash code is used: If the sequence of
-ASCII codes is $c_1c_2\ldots c_m$, its hash value will be
+ASCII codes is $c_1c_2\ldots c_n$, its hash value will be
 $$(2^{n-1}c_1+2^{n-2}c_2+\cdots+c_n)\,\bmod\,\\{hash\_size}.$$
 ?vfill?verbatimgobble
 \Y\P$\4\X59:Compute the hash code \|h\X\S$\6
@@ -1136,7 +1136,7 @@ $\|i\K\\{id\_first}+1$;\6
 \&{begin} \37$\|h\K(\|h+\|h+\\{buffer}[\|i])\mathbin{\&{mod}}\\{hash\_size}$;\5
 $\\{incr}(\|i)$;\6
 \&{end}\2\par
-\U section~58.\fi
+\U58.\fi
 ?endgroup
 \endgroup
 \eject
