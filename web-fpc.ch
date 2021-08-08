@@ -76,7 +76,16 @@ Section 22.
 @d update_terminal == flush(term_out) {empty the terminal output buffer}
 @z
 
-Section 187 [263]
+Section 180 [259].
+
+@x l.3206 [4903]
+reset(term_in,'TTY:','/I'); {open |term_in| as the terminal, don't do a |get|}
+@y
+assign(term_in,''); reset(term_in);
+  {open |term_in| as the terminal, don't do a |get|}
+@z
+
+Section 187 [263].
 
 @x l.3305 [4883]
 end {there are no other cases}
