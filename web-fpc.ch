@@ -6,12 +6,20 @@ Public domain.  Originally written by Andreas Scherer, 2021.
 
 Section 4.
 
-@x l.118 [124]
+@x l.112 [118]
+@ The \PASCAL\ compiler used to develop this system has ``compiler
+@y
+@ The Free \PASCAL\ Compiler used decades after the development of this system
+has ``compiler
+@z
+
+@x l.116 [122]
+it is safe to avoid range checks and to leave out the extra code it inserts
+for the \PASCAL\ debugger's benefit, although interrupts will occur if
 there is arithmetic overflow.
 @y
-there is arithmetic overflow.
-
-The Free \PASCAL\ Compiler is set in `ISO' mode and range checking is enabled.
+``ISO'' mode should be used.
+When debugging is requested, range checking is enabled.
 @z
 
 @x l.121 [127]
