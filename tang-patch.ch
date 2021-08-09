@@ -6,6 +6,21 @@ with this patch.
 
 Public domain.  Originally written by Andreas Scherer, 2021.
 
+Limbo.
+
+@x
+\def\({} % kludge for alphabetizing certain module names
+@y
+\def\({} % kludge for alphabetizing certain module names
+
+% Fix several section names in the PDF bookmarks:
+\sanitizecommand\PASCAL{Pascal}
+\sanitizecommand\S{==}
+\sanitizecommand\#{hashmark}
+\sanitizecommand\_{_}
+\sanitizecommand\ { }
+@z
+
 Section 8.
 
 @x l.196
