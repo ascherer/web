@@ -229,59 +229,24 @@ XREF[P]:=0;END{:62};IDLOOKUP:=P;END;
 {:58}{66:}FUNCTION MODLOOKUP(L:SIXTEENBITS):NAMEPOINTER;LABEL 31;
 @z
 
+@x l.1208
+\verbatim
+@y
+\begingroup \def\tt{\ninett} \baselineskip10pt
+\verbatim
+@z
+
 @x l.1210
 \xdef\fmtversion{\fmtversion+WEBMAC4.0} % identifies current set of macros
 @y
 \xdef\fmtversion{\fmtversion+WEBMAC4.2} % identifies current set of macros
 @z
 
-@x
-\parindent 1em % for paragraphs and for the first line of Pascal text
-
-@y
-\parindent 1em % for paragraphs and for the first line of Pascal text
-?vskip-.8?baselineskip
-@z
-
 @x l.1218
 \font\tentex=cmtex10 % TeX extended character set (used in strings)
-
 @y
 \font\tentex=cmtex10 % TeX extended character set (used in strings)
 \fontdimen7\tentex=0pt % no extra space after punctuation
-?vskip-.8?baselineskip
-@z
-
-@x l.1239
-\def\AT!{@} % at sign for control text
-
-@y
-\def\AT!{@} % at sign for control text
-?vskip-.8?baselineskip
-@z
-
-@x l.1249
-\chardef\UL=`\_ % underline character in a string
-
-@y
-\chardef\UL=`\_ % underline character in a string
-?vskip-.8?baselineskip
-@z
-
-@x l.1252
-\newbox\bakk\setbox\bakk=\hbox to -2em{} % backspace two ems
-
-@y
-\newbox\bakk\setbox\bakk=\hbox to -2em{} % backspace two ems
-?vskip-.8?baselineskip
-@z
-
-@x l.1262
-\def\7{\Y\6} % forced break and a little extra space
-
-@y
-\def\7{\Y\6} % forced break and a little extra space
-?vskip-.8?baselineskip
 @z
 
 @x l.1294
@@ -292,14 +257,6 @@ XREF[P]:=0;END{:62};IDLOOKUP:=P;END;
   \ifx\modno\modstar \onmaybe \else\ontrue \fi
   \mark{{{\tensy x}\modno}{\rhead}}}
   % each \mark is {section reference or null}{group title}
-@z
-
-@x l.1321
-\let\*=*
-
-@y
-\let\*=*
-?vskip-.8?baselineskip
 @z
 
 @x l.1325
@@ -319,30 +276,10 @@ XREF[P]:=0;END{:62};IDLOOKUP:=P;END;
 @z
 
 @x l.1336
-  \global\advance\pageno by1}
-
 \def\rhead{\.{WEB} OUTPUT} % this running head is reset by starred sections
 @y
-  \global\advance\pageno by1}
-?vskip-.8?baselineskip
 \def\rhead{\.{WEB} OUTPUT} % this running head is reset by starred sections
 \mark{\noexpand\nullsec{\rhead}}
-@z
-
-@x l.1352
-\def\readcontents{\input CONTENTS}
-
-@y
-\def\readcontents{\input CONTENTS}
-?vskip-.8?baselineskip
-@z
-
-@x l.1359
-\vbox to \vsize{} % the first \topmark won't be null
-
-@y
-\vbox to \vsize{} % the first \topmark won't be null
-?vskip-.8?baselineskip
 @z
 
 @x l.1392
@@ -356,6 +293,13 @@ XREF[P]:=0;END{:62};IDLOOKUP:=P;END;
   \def\note##1##2.{\hfil\penalty-1\hfilneg\quad{\eightrm##1 ##2.}}
 @y
   \def\note##1##2.{\hfil\penalty-1\hfilneg\quad{\eightrm##1~##2.}}
+@z
+
+@x l.1414
+?endgroup
+@y
+?endgroup
+\endgroup
 @z
 
 @x l.1425
