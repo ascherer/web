@@ -14,8 +14,11 @@
 # Set TCHANGES to tang-foo.ch if you need changes to tangle.web
 TCHANGES=tangle.ch
 
-# Set WCHANGES to cweav-foo.ch if you need changes to weave.web
+# Set WCHANGES to weav-foo.ch if you need changes to weave.web
 WCHANGES=weave.ch
+
+# Set MCHANGES to webman-foo.ch if you need changes to webman.tex
+MCHANGES=webman.ch
 
 # What PASCAL compiler are you using?
 PC = fpc
@@ -99,8 +102,10 @@ $(WCHANGES): weave.web web-fpc.ch weav-patch.ch weav-squash.ch
 
 doc: $(SOURCES:.web=.dvi)
 
-usermanual: webman.tex webmac.tex
-	$(PDF)tex webman
+usermanual: webman.tex webmac.tex $(MCHANGES)
+	$(TIE) -m webman-2021.tex webman.tex $(MCHANGES)
+	$(PDF)tex -jobname=webman webman-2021
+	$(RM) -f webman-2021.tex
 
 fullmanual: usermanual $(SOURCES) $(TCHANGES) $(WCHANGES)
 	make weave
