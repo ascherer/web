@@ -230,8 +230,10 @@
   \ifacro{\toksF={}\makeoutlinetoks#2\outlinedone\outlinedone}\fi
   \gtitle={#2}\MN#1.\vfil\eject % define running headline
   \message{*\modno} % progress report
+  \def\stripprefix##1>{}\def\gtitletoks{#2}%
+  \edef\gtitletoks{\expandafter\stripprefix\meaning\gtitletoks}%
   \edef\next{\write\cont{\Z{#2}{\modno}% write to contents file
-   {\noexpand\the\pageno}}}\next % \Z{title}{sec}{page}
+   {\noexpand\the\pageno}{\the\toksE}}}\next % \Z{title}{sec}{page}{ss}
   \ifpdf\special{pdf: outline 0 << /Title (\the\toksE) /Dest
     [ @thispage /FitH @ypos ] >>}\fi
   \ifon\startsection{\bf#2.\quad}\ignorespaces}
@@ -384,9 +386,9 @@
   \else \csname#1\endcsname \fi} % Petr Olsak's macros from texinfo.tex
 \def\advancenumber#1{\countA=\expnumber{#1}\relax \advance\countA by1
   \expandafter\xdef\csname#1\endcsname{\the\countA}}
-\def\writebookmarkline#1#2#3{{%
+\def\writebookmarkline#1#2#3#4{{%
   \let\(=\let \let\)=\let \let\[=\let \let\]=\let \let\/=\let
-  \pdfoutline goto num #2{#1}}}
+  \pdfoutline goto num #2{#4}}}
 \def\con{\par\vfill\eject % finish the section names
 % \ifodd\pageno\else\titletrue\null\vfill\eject\fi % for duplex printers
   \rightskip 0pt \hyphenpenalty 50 \tolerance 200
@@ -400,7 +402,7 @@
   \let\Z=\contentsline
   \readcontents\relax % read the contents info
   \botofcontents \end} % print the contents page(s) and terminate
-\def\contentsline#1#2#3{%
+\def\contentsline#1#2#3#4{%
     \line{\ignorespaces#1
       \rm\leaders\hbox to .5em{.\hfil}\hfil
       \ \ifacro\pdflink{#2}{\romannumeral#2}\else#2\fi\hbox to3em{\hss#3}}}
