@@ -174,6 +174,8 @@ FI
 					r texmf-pdf.patch
 					}" $f.tex
 
+				$SED_I -e "s/{\\\\the\\\\pageno}}}\\\\next/{\\\\the\\\\pageno}{\\\\the\\\\toksE}}}\\\\next/" $f.tex
+
 				cat > texmf-pdf.patch << FI
   \ifpdf\special{pdf: outline 0 << /Title (\the\toksE) /Dest
     [ @thispage /FitH @ypos ] >>}\fi
