@@ -54,7 +54,7 @@ ALL =  tangle.web weave.web \
 .web.tex:
 	$(WEAVE) $*.web $*.ch $*.tex
 
-.tex.dvi:	
+.tex.dvi:
 	tex $<
 
 .web.dvi:

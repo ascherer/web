@@ -27,7 +27,7 @@ else if cat[pp+1]=simp then squash(pp+1,1,math,0)(4)
 @y
 else if cat[pp+1]=simp then reduce(pp+1,0,math,0)(4)
 @z
- 
+
 @x
 squash(pp,1,intro,-3)(14)
 @y
@@ -39,7 +39,7 @@ else squash(pp,1,simp,-2)(25)
 @y
 else reduce(pp,0,simp,-2)(25)
 @z
- 
+
 @x
 else if cat[pp+1]=simp then squash(pp+1,1,math,0)(35)
 @y
@@ -51,7 +51,7 @@ squash(pp,1,terminator,-3)(42)
 @y
 reduce(pp,0,terminator,-3)(42)
 @z
- 
+
 @x
 if cat[pp+1]=close then squash(pp,1,stmt,-2)(43)
 @y
@@ -69,7 +69,7 @@ squash(pp,1,stmt,-2)(50)
 @y
 reduce(pp,0,stmt,-2)(50)
 @z
- 
+
 @x
 if cat[pp+1]=beginning then squash(pp,1,stmt,-2)(51)
 @y
@@ -82,7 +82,7 @@ scrap list.
 scrap list.  This procedure takes advantage of the simplification that
 occurs when |k=0|.
 @z
- 
+
 @x
 begin cat[j]:=c; trans[j]:=text_ptr; freeze_text;
 @y
@@ -100,7 +100,7 @@ procedure takes advantage of the simplification that occurs when |k=1|.
 @ Similarly, the `|squash|' macro invokes a procedure called `|sq|', which
 combines |app|${}_k$ and |red| for matching numbers~|k|.
 @z
- 
+
 @x
 var i:0..max_scraps; {index into scrap memory}
 begin if k=1 then
