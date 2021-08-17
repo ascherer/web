@@ -56,7 +56,25 @@
   \else Appendix~#1\fi}
 @z
 
-@x
+@x l.180
+\yskip\item{1)} A \TeX\ part, containing explanatory material about what
+@y
+\yskip\itemitem{1)} A \TeX\ part, containing explanatory material about what
+@z
+
+@x l.183
+\item{2)} A definition part, containing macro definitions that serve as
+@y
+\itemitem{2)} A definition part, containing macro definitions that serve as
+@z
+
+@x l.187
+\item{3)} A \PASCAL\ part, containing a piece of the program that
+@y
+\itemitem{3)} A \PASCAL\ part, containing a piece of the program that
+@z
+
+@x l.447
 program for \.{TANGLE}, in the appendix, gives precise details about this
 @y
 program for \.{TANGLE}, in \pdfURL{Appendix~E}{tangle.pdf},
@@ -359,6 +377,14 @@ Appendix~E. This listing will incorporate your changes.
 Appendix~D that incorporates your changes.
 @y
 \pdfURL{Appendix~D}{weave.pdf} that incorporates your changes.
+@z
+
+@x l.1632
+\def\substep(10.#1){\par\hangindent 4em\noindent
+  \hbox to 4em{\hfil(10.#1) }\ignorespaces}
+@y
+\def\substep(10.#1){\par\hangindent 3em\noindent
+  \hbox to 3em{\hfil(10.#1) }\ignorespaces}
 @z
 
 @x l.1666
