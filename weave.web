@@ -60,9 +60,9 @@ parsing method that is quite different from the present scheme.
 The code uses a few features of the local \PASCAL\ compiler that may need
 to be changed in other installations:
 
-\yskip\item{1)} Case statements have a default.
-\item{2)} Input-output routines may need to be adapted for use with a particular
-character set and/or for printing messages on the user's terminal.
+\yskip\hang{1)} Case statements have a default.
+\yskip\hang{2)} Input-output routines may need to be adapted for use with a
+particular character set and/or for printing messages on the user's terminal.
 
 \yskip\noindent
 These features are also present in the \PASCAL\ version of \TeX, where they
