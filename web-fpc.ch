@@ -49,17 +49,6 @@ Section 7.
 
 Section 12.
 
-Both TL tangle and FPC tangle, i.e., the "original" Knuthian tangle, fail to
-grok line 306 as the first line in a change:
-'at'x
-@<Types...@>=
-@!text_file=packed file of text_char;
-'at'y
-'at'z
-produces the error message '1 of the preceding lines failed to match'.
-
-With a little more context, the intended change succeeds:
-
 @x l.304 [309]
 @d last_text_char=255 {ordinal number of the largest element of |text_char|}
 
