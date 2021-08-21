@@ -239,7 +239,7 @@
   \message{*\modno} % progress report
   \def\stripprefix##1>{}\def\gtitletoks{#2}%
   \edef\gtitletoks{\expandafter\stripprefix\meaning\gtitletoks}%
-  \edef\next{\write\cont{\Z{#2}{\modno}% write to contents file
+  \edef\next{\write\cont{\Z{\gtitletoks}{\modno}% write to contents file
    {\noexpand\the\pageno}{\the\toksE}}}\next % \Z{title}{sec}{page}{ss}
   \ifpdf\special{pdf: outline 0 << /Title (\the\toksE) /Dest
     [ @thispage /FitH @ypos ] >>}\fi
