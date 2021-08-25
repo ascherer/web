@@ -74,6 +74,12 @@
 \itemitem{3)} A \PASCAL\ part, containing a piece of the program that
 @z
 
+@x l.358
+  \.{which is a \\\&\{packed\}{ }\\\&\{array\}{ }\$
+@y
+  \.{which is a \\\&\{packed\}{ }\\\&\{array\}{ }\$%
+@z
+
 @x l.447
 program for \.{TANGLE}, in the appendix, gives precise details about this
 @y
