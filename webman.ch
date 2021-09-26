@@ -80,6 +80,13 @@
   \.{which is a \\\&\{packed\}{ }\\\&\{array\}{ }\$%
 @z
 
+@x l.428
+(3)~The numeric value must be less than $2^{15}=32768$ in absolute value.
+@y
+(3)~The numeric value must be less than $2^{30}=1{,}073{,}741{,}824$
+in absolute value.
+@z
+
 @x l.447
 program for \.{TANGLE}, in the appendix, gives precise details about this
 @y
