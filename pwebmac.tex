@@ -243,7 +243,7 @@
    {\noexpand\the\pageno}{\the\toksE}}}\next % \Z{title}{sec}{page}{ss}
   \ifpdf\special{pdf: outline 0 << /Title (\the\toksE) /Dest
     [ @thispage /FitH @ypos ] >>}\fi
-  \ifon\startsection{\bf#2.\quad}\ignorespaces}
+  \ifon\startsection{\bf\ignorespaces#2.\quad}\ignorespaces}
 \def\MN#1.{\par % common code for \M, \N
   {\xdef\modstar{#1}\let\*=\empty\xdef\modno{#1}}% remove \* from section name
   \ifx\modno\modstar \onmaybe \else\ontrue \fi

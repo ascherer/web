@@ -13,13 +13,3 @@ Section 8.
 @y
 @!max_id_length=32; {long identifiers are chopped to this length, which must
 @z
-
-Section 70.
-
-@x l.1253
-Replacement texts, which represent \PASCAL\ code in a compressed format,
-appear in |tok_mem| as mentioned above. The codes in
-@y
-Replacement texts, which represent \PASCAL\ code in a compressed format,
-appear in the array |tok_mem| as mentioned above. The codes in
-@z
