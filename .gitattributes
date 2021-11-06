@@ -4,4 +4,9 @@ knuth-pdf.md export-ignore
 pdfwebmac.tex export-ignore
 webma?.tex export-ignore
 xewebmac.tex export-ignore
+Makefile export-ignore
+*.pas export-ignore
 *.web export-ignore
+tang-*.ch export-ignore
+weav-*.ch export-ignore
+web-*.ch export-ignore
