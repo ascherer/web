@@ -157,7 +157,7 @@ do
 				$SED_I -e "s/\(\\\\def\\\\title\)/\\\\datecontentspage\n\1/" $f.tex ;;
 
 			mf | tex | pdftex | xetex )
-				$SED_I -e "s/\(\\\\def\\\\botofcontents\)/\\\\datethis\n\\\\emergencystretch=.1\\\\hsize\1/" $f.tex
+				$SED_I -e "s/\(\\\\def\\\\topofcontents\)/\\\\datethis\n\\\\emergencystretch=.1\\\\hsize\n\1/" $f.tex
 
 				# amend '\N' redefinition for PDF outlines in
 				# Metafont and TeX (also pdfTeX and XeTeX)
