@@ -34,3 +34,11 @@ Section 16.
 @y
 @d update_terminal == flush(output) {empty the terminal output buffer}
 @z
+
+Section 17.
+
+@x
+begin update_terminal; reset(term_in);
+@y
+begin update_terminal; assign(term_in,''); reset(term_in);
+@z
