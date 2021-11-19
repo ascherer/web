@@ -47,7 +47,8 @@ SOURCES = weave.web tangle.web
 ALL =  tangle.web weave.web \
 	web-fpc.ch tang-patch.ch weav-patch.ch weav-squash.ch \
 	Makefile tangle.pas \
-	webman.tex webmac.tex
+	webman.tex webmac.tex \
+	gftodvi.web gftodvi.ch
 
 .SUFFIXES: .dvi .tex .w .pdf
 
@@ -100,6 +101,12 @@ weave.pas: weave.web $(WCHANGES)
 $(WCHANGES): weave.web web-fpc.ch weav-patch.ch weav-squash.ch
 	$(TIE) -c $@ $^
 
+gftodvi: gftodvi.pas
+	$(PC) gftodvi.pas
+
+gftodvi.pas: gftodvi.web gftodvi.ch
+	$(TANGLE) gftodvi.web gftodvi.ch gftodvi.pas $(EMPTY)
+
 doc: $(SOURCES:.web=.dvi)
 
 usermanual: webman.tex webmac.tex $(MCHANGES)
@@ -118,4 +125,5 @@ fullmanual: usermanual $(SOURCES) $(TCHANGES) $(WCHANGES)
 clean:
 	$(RM) -f -r *~ .*~ *.o weave.tex weave.pas tangle.tex CONTENTS.tex \
 	  *.log *.dvi *.toc *.idx *.scn *.pdf core weave tangle \
-	  $(TCHANGES) $(WCHANGES)
+	  $(TCHANGES) $(WCHANGES) \
+	  gftodvi gftodvi.pas gftodvi.tex
