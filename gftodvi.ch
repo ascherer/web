@@ -90,9 +90,7 @@ begin assign(gf_file,trim(name_of_file)); reset(gf_file);
 @x l.1655
 begin reset(tfm_file,name_of_file);
 @y
-begin assign(tfm_file,trim(name_of_file));
-write_ln('Looking for TFM file "', trim(name_of_file), '"');
-reset(tfm_file);
+begin assign(tfm_file,trim(name_of_file)); reset(tfm_file);
 @z
 
 @x l.1659
@@ -101,92 +99,25 @@ begin rewrite(dvi_file,name_of_file);
 begin assign(dvi_file,trim(name_of_file)); rewrite(dvi_file);
 @z
 
-@x
-@ After the following procedure has been performed, there will be no
-turning back; the fonts will have been firmly established in
-\.{GFtoDVI}'s memory.
+Section 88.
 
-@<Declare the procedure called |load_fonts|@>=
-procedure load_fonts;
-label done,continue,found,not_found;
-var @!f:internal_font_number;
-@!i:four_quarters; {font information word}
-@!j,@!k,@!v:integer; {registers for initializing font tables}
-@!m:title_font..slant_font+area_code; {keyword found}
-@!n1:0..longest_keyword; {buffered character being checked}
-@!n2:pool_pointer; {pool character being checked}
-begin if interaction then @<Get online special input@>;
-fonts_not_loaded:=false;
-for f:=title_font to logo_font do
- if (f<>slant_font)or(length(font_name[f])>0) then
-  begin if length(font_area[f])=0 then font_area[f]:=home_font_area;
-  pack_file_name(font_name[f],font_area[f],tfm_ext);
-  open_tfm_file; read_font_info(f,font_at[f]);
-  if font_area[f]=home_font_area then font_area[f]:=null_string;
-  dvi_font_def(f); {put the font name in the \.{DVI} file}
-  end;
-@<Initialize global variables that depend on the font data@>;
-end;
+@x l.2433
+to place. The program here sets it to `\.{TeXfonts:}'.
 @y
-@ After the following procedure has been performed, there will be no
-turning back; the fonts will have been firmly established in
-\.{GFtoDVI}'s memory.
-
-@<Declare the procedure called |load_fonts|@>=
-procedure load_fonts;
-label done,continue,found,not_found;
-var @!f:internal_font_number;
-@!i:four_quarters; {font information word}
-@!j,@!k,@!v:integer; {registers for initializing font tables}
-@!m:title_font..slant_font+area_code; {keyword found}
-@!n1:0..longest_keyword; {buffered character being checked}
-@!n2:pool_pointer; {pool character being checked}
-begin
- if interaction then @<Get online special input@>;
-fonts_not_loaded:=false;
-for f:=title_font to logo_font do
- if (f<>slant_font)or(length(font_name[f])>0) then
-  begin if length(font_area[f])=0 then font_area[f]:=home_font_area;
-  pack_file_name(font_name[f],font_area[f],tfm_ext);
-  open_tfm_file;
-@/jump_out; {we cool}
- read_font_info(f,font_at[f]);
-  if font_area[f]=home_font_area then font_area[f]:=null_string;
-  dvi_font_def(f); {put the font name in the \.{DVI} file}
-  end;
-@<Initialize global variables that depend on the font data@>;
-end;
+to place. The program here sets it to the empty string, i.e., font metric
+files are expected to be found in the `local directory'.
 @z
 
-@x
-@p begin initialize; {get all variables initialized}
-@<Initialize the strings@>;
-start_gf; {open the input and output files}
-@<Process the preamble@>;
-cur_gf:=get_byte; init_str_ptr:=str_ptr;
-loop@+  begin @<Initialize variables for the next character@>;
-  while (cur_gf>=xxx1)and(cur_gf<=no_op) do @<Process a no-op command@>;
-  if cur_gf=post then @<Finish the \.{DVI} file and |goto final_end|@>;
-  if cur_gf<>boc then if cur_gf<>boc1 then abort('Missing boc!');
-@.Missing boc@>
-  @<Process a character@>;
-  cur_gf:=get_byte; str_ptr:=init_str_ptr; pool_ptr:=str_start[str_ptr];
-  end;
+@x l.2438
+l:=9; init_str9("T")("e")("X")("f")("o")("n")("t")("s")(":")(home_font_area);@/
+@y
+l:=0; init_str0(home_font_area);@/
+@z
+
+Section 219.
+
+@x l.4341
 final_end:end.
 @y
-@p begin initialize; {get all variables initialized}
-@<Initialize the strings@>;
-start_gf; {open the input and output files}
-@<Process the preamble@>;
-cur_gf:=get_byte; init_str_ptr:=str_ptr;
-loop@+  begin @<Initialize variables for the next character@>;
-  while (cur_gf>=xxx1)and(cur_gf<=no_op) do @<Process a no-op command@>;
-  if cur_gf=post then @<Finish the \.{DVI} file and |goto final_end|@>;
-  if cur_gf<>boc then if cur_gf<>boc1 then abort('Missing boc!');
-@.Missing boc@>
-  @<Process a character@>;
-@/jump_out; {we crashed in the preceding line}
-  cur_gf:=get_byte; str_ptr:=init_str_ptr; pool_ptr:=str_start[str_ptr];
-  end;
-final_end:end.
+final_end:write_ln;end.
 @z
