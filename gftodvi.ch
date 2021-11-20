@@ -90,13 +90,72 @@ begin assign(gf_file,trim(name_of_file)); reset(gf_file);
 @x l.1655
 begin reset(tfm_file,name_of_file);
 @y
-begin assign(tfm_file,trim(name_of_file)); reset(tfm_file);
+begin assign(tfm_file,trim(name_of_file));
+write_ln('Looking for TFM file "', trim(name_of_file), '"');
+reset(tfm_file);
 @z
 
 @x l.1659
 begin rewrite(dvi_file,name_of_file);
 @y
 begin assign(dvi_file,trim(name_of_file)); rewrite(dvi_file);
+@z
+
+@x
+@ After the following procedure has been performed, there will be no
+turning back; the fonts will have been firmly established in
+\.{GFtoDVI}'s memory.
+
+@<Declare the procedure called |load_fonts|@>=
+procedure load_fonts;
+label done,continue,found,not_found;
+var @!f:internal_font_number;
+@!i:four_quarters; {font information word}
+@!j,@!k,@!v:integer; {registers for initializing font tables}
+@!m:title_font..slant_font+area_code; {keyword found}
+@!n1:0..longest_keyword; {buffered character being checked}
+@!n2:pool_pointer; {pool character being checked}
+begin if interaction then @<Get online special input@>;
+fonts_not_loaded:=false;
+for f:=title_font to logo_font do
+ if (f<>slant_font)or(length(font_name[f])>0) then
+  begin if length(font_area[f])=0 then font_area[f]:=home_font_area;
+  pack_file_name(font_name[f],font_area[f],tfm_ext);
+  open_tfm_file; read_font_info(f,font_at[f]);
+  if font_area[f]=home_font_area then font_area[f]:=null_string;
+  dvi_font_def(f); {put the font name in the \.{DVI} file}
+  end;
+@<Initialize global variables that depend on the font data@>;
+end;
+@y
+@ After the following procedure has been performed, there will be no
+turning back; the fonts will have been firmly established in
+\.{GFtoDVI}'s memory.
+
+@<Declare the procedure called |load_fonts|@>=
+procedure load_fonts;
+label done,continue,found,not_found;
+var @!f:internal_font_number;
+@!i:four_quarters; {font information word}
+@!j,@!k,@!v:integer; {registers for initializing font tables}
+@!m:title_font..slant_font+area_code; {keyword found}
+@!n1:0..longest_keyword; {buffered character being checked}
+@!n2:pool_pointer; {pool character being checked}
+begin
+ if interaction then @<Get online special input@>;
+fonts_not_loaded:=false;
+for f:=title_font to logo_font do
+ if (f<>slant_font)or(length(font_name[f])>0) then
+  begin if length(font_area[f])=0 then font_area[f]:=home_font_area;
+  pack_file_name(font_name[f],font_area[f],tfm_ext);
+  open_tfm_file;
+@/jump_out; {we cool}
+ read_font_info(f,font_at[f]);
+  if font_area[f]=home_font_area then font_area[f]:=null_string;
+  dvi_font_def(f); {put the font name in the \.{DVI} file}
+  end;
+@<Initialize global variables that depend on the font data@>;
+end;
 @z
 
 @x
