@@ -55,9 +55,10 @@ begin
   {see \.{https://www.freepascal.org/docs-html/rtl/system/reset.html}}
 @/@{@&$I+@}@/
   if (IoResult=0) then
-    writeln('GF file found')
-  else
-    writeln('GF file not found: ', name_of_file);
+    write_ln('GF file found')
+  else begin
+    write_ln('GF file not found: "', name_of_file, '"');
+  end;
 @/jump_out; {file not found?}
 @z
 
