@@ -43,78 +43,60 @@ begin update_terminal; reset(term_in);
 begin update_terminal; assign(term_in,''); reset(term_in);
 @z
 
+Section 45.
+
+@x l.1628
+@!byte_file=packed file of eight_bits; {files that contain binary data}
+@y
+@!byte_file=packed file of eight_bits; {files that contain binary data}
+@!string=packed array[1..file_name_size] of char;
+  {yet another \.{ISO} \PASCAL\ idiosynchracy}
+@z
+
 Section 47.
 
-@x l.1650
+@x .l1644
+known at compile time). The following code assumes that `|reset(f,s)|' and
+`|rewrite(f,s)|' do this, when |f| is a file variable and |s| is a string
+variable that specifies the file name.
+@y
+known at compile time). The following code assumes that `|assign(f,s)|'
+followed by `|reset(f)|' or `|rewrite(f)|' respectively does this,
+when |f| is a file variable and |s| is a string variable that specifies
+the file name.  Note that we must trim off the whitespace at the right
+that got appended by |pack_file_name|.  (Sadly enough, we can't simply
+`|use sysutils|' in \.{ISO} mode, which we have to use because of the
+non-local |goto| instruction.)
+@z
+
+@x l.1649
+@p procedure open_gf_file; {prepares to read packed bytes in |gf_file|}
 begin reset(gf_file,name_of_file);
 @y
+@p function trim(name_of_file: string): string;
+var
+  k: integer;
 begin
-@/@{@&$I-@}@/
-  assign(gf_file,name_of_file);
-  reset(gf_file);
-  {see \.{https://www.freepascal.org/docs-html/rtl/system/reset.html}}
-@/@{@&$I+@}@/
-  if (IoResult=0) then
-    write_ln('GF file found')
-  else begin
-    write_ln('GF file not found: "', name_of_file, '"');
-  end;
-@/jump_out; {file not found?}
+  trim:='';
+  for k:=1 to file_name_size do
+    if name_of_file[k]<>' ' then
+      trim[k]:=name_of_file[k];
+end;
+@#
+procedure open_gf_file; {prepares to read packed bytes in |gf_file|}
+begin assign(gf_file,trim(name_of_file)); reset(gf_file);
 @z
 
 @x l.1655
 begin reset(tfm_file,name_of_file);
 @y
-begin assign(tfm_file,name_of_file); reset(tfm_file);
+begin assign(tfm_file,trim(name_of_file)); reset(tfm_file);
 @z
 
 @x l.1659
 begin rewrite(dvi_file,name_of_file);
 @y
-begin assign(dvi_file,name_of_file); rewrite(dvi_file);
-@z
-
-@x
-@p procedure start_gf;
-label found,done;
-begin loop@+begin print_nl('GF file name: '); input_ln;
-@.GF file name@>
-  buf_ptr:=0; buffer[line_length]:="?";
-  while buffer[buf_ptr]=" " do incr(buf_ptr);
-  if buf_ptr<line_length then
-    begin @<Scan the file name in the buffer@>;
-    if cur_ext=null_string then cur_ext:=gf_ext;
-    pack_file_name(cur_name,cur_area,cur_ext); open_gf_file;
-    if not eof(gf_file) then goto found;
-    print_nl('Oops... I can''t find file '); print(name_of_file);
-@.Oops...@>
-@.I can't find...@>
-    end;
-  end;
-found:job_name:=cur_name; pack_file_name(job_name,null_string,dvi_ext);
-open_dvi_file;
-end;
-@y
-@p procedure start_gf;
-label found,done;
-begin loop@+begin print_nl('GF file name: '); input_ln;
-@.GF file name@>
-  buf_ptr:=0; buffer[line_length]:="?";
-  while buffer[buf_ptr]=" " do incr(buf_ptr);
-  if buf_ptr<line_length then
-    begin @<Scan the file name in the buffer@>;
-    if cur_ext=null_string then cur_ext:=gf_ext;
-    pack_file_name(cur_name,cur_area,cur_ext); open_gf_file;
-@/jump_out; {we crashed in |open_gf_file| already}
-    if not eof(gf_file) then goto found;
-    print_nl('Oops... I can''t find file '); print(name_of_file);
-@.Oops...@>
-@.I can't find...@>
-    end;
-  end;
-found:job_name:=cur_name; pack_file_name(job_name,null_string,dvi_ext);
-open_dvi_file;
-end;
+begin assign(dvi_file,trim(name_of_file)); rewrite(dvi_file);
 @z
 
 @x
@@ -136,7 +118,6 @@ final_end:end.
 @p begin initialize; {get all variables initialized}
 @<Initialize the strings@>;
 start_gf; {open the input and output files}
-@/jump_out; {we crashed in |start_gf| already}
 @<Process the preamble@>;
 cur_gf:=get_byte; init_str_ptr:=str_ptr;
 loop@+  begin @<Initialize variables for the next character@>;
@@ -145,6 +126,7 @@ loop@+  begin @<Initialize variables for the next character@>;
   if cur_gf<>boc then if cur_gf<>boc1 then abort('Missing boc!');
 @.Missing boc@>
   @<Process a character@>;
+@/jump_out; {we crashed in the preceding line}
   cur_gf:=get_byte; str_ptr:=init_str_ptr; pool_ptr:=str_start[str_ptr];
   end;
 final_end:end.
