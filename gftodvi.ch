@@ -1,3 +1,16 @@
+Changes for GFTODVI.WEB to compile it with Free Pascal.
+
+Public domain.  Originally written by Andreas Scherer, 2021.
+
+Limbo.
+
+x
+\pageno=\contentspagenumber \advance\pageno by 1
+y
+\pageno=\contentspagenumber \advance\pageno by 1
+\let\maybe=\iffalse
+z
+
 Section 2.
 
 @x l.88
