@@ -49,7 +49,7 @@ Section 45.
 @!byte_file=packed file of eight_bits; {files that contain binary data}
 @y
 @!byte_file=packed file of eight_bits; {files that contain binary data}
-@!string=packed array[1..file_name_size] of char;
+@!name_string=packed array[1..file_name_size] of char;
   {yet another \.{ISO} \PASCAL\ idiosynchracy}
 @z
 
@@ -73,7 +73,7 @@ non-local |goto| instruction.)
 @p procedure open_gf_file; {prepares to read packed bytes in |gf_file|}
 begin reset(gf_file,name_of_file);
 @y
-@p function trim(name_of_file: string): string;
+@p function trim(name_of_file: name_string): name_string;
 var
   k: integer;
 begin
@@ -97,6 +97,14 @@ begin assign(tfm_file,trim(name_of_file)); reset(tfm_file);
 begin rewrite(dvi_file,name_of_file);
 @y
 begin assign(dvi_file,trim(name_of_file)); rewrite(dvi_file);
+@z
+
+Section 48.
+
+@x l.1670
+@!name_of_file:packed array[1..file_name_size] of char; {external file name}
+@y
+@!name_of_file:name_string; {external file name}
 @z
 
 Section 88.
