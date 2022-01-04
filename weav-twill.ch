@@ -561,12 +561,6 @@ out_ptr:=1; out_line:=1; out_buf[1]:="c"; write(tex_file,'\input twima');
     end;
 @z
 
-@x 3245c3424
-    app1(pp+2); app("}"); reduce(pp+1,3,math,0)(33);
-@y
-    app1(pp+2); app("}"); reduce(pp+1,3,math,0)(31);
-@z
-
 @x 3522a3702
 @!p:name_pointer; {identifier designator}
 @y
