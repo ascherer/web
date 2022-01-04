@@ -682,7 +682,7 @@ safety:=guaranteed;
 if flag=0 then out("U")@+else out("A");
 @y
 if flag=0 then out("U")@+else out("A");
-out4(" ")("s")("e")("c"); out4("t")("i")("o")("n");
+out8(" ")("s")("e")("c")("t")("i")("o")("n");
 @z
 
 @x 4514,4515c4760
