@@ -3,6 +3,7 @@
 knuth-pdf.md export-ignore
 pdfwebmac.tex export-ignore
 webma?.tex export-ignore
+twimac.tex export-ignore
 xewebmac.tex export-ignore
 Makefile export-ignore
 *.pas export-ignore

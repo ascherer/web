@@ -1,6 +1,6 @@
 # This file is distributed WITHOUT ANY WARRANTY, express or implied.
 
-# Copyright (C) 2021 Andreas Scherer
+# Copyright (C) 2022 Andreas Scherer
 
 # Permission is granted to make and distribute verbatim copies of this
 # document provided that the copyright notice and this permission notice
@@ -16,6 +16,9 @@ TCHANGES=tangle.ch
 
 # Set WCHANGES to weav-foo.ch if you need changes to weave.web
 WCHANGES=weave.ch
+
+# Set TTCHANGES to weav-foo.ch if you need changes to weave.web
+TTCHANGES=twill.ch
 
 # Set MCHANGES to webman-foo.ch if you need changes to webman.tex
 MCHANGES=webman.ch
@@ -46,6 +49,7 @@ TANGLE = ./tangle
 SOURCES = weave.web tangle.web
 ALL =  tangle.web weave.web \
 	web-fpc.ch tang-patch.ch weav-patch.ch weav-squash.ch \
+	weav-twill.ch \
 	Makefile tangle.pas \
 	webman.tex webmac.tex \
 	gftodvi.web gftodvi.ch
@@ -76,7 +80,7 @@ ALL =  tangle.web weave.web \
 boot:
 	$(PC) tangle.pas
 
-all: tangle weave
+all: tangle weave twill
 
 cautiously: tangle
 	$(TANGLE) tangle.web $(TCHANGES) tangle.p $(EMPTY)
@@ -101,6 +105,16 @@ weave.pas: weave.web $(WCHANGES)
 $(WCHANGES): weave.web web-fpc.ch weav-patch.ch weav-squash.ch
 	$(TIE) -c $@ $^
 
+twill: twill.pas
+	$(PC) twill.pas
+
+twill.pas: weave.web $(TTCHANGES)
+	$(TANGLE) weave.web $(TTCHANGES) twill.pas $(EMPTY)
+
+$(TTCHANGES): weave.web web-fpc.ch weav-patch.ch weav-squash.ch \
+	weav-twill.ch
+	$(TIE) -c $@ $^
+
 gftodvi: gftodvi.pas
 	$(PC) gftodvi.pas
 
@@ -114,16 +128,19 @@ usermanual: webman.tex webmac.tex $(MCHANGES)
 	$(PDF)tex -jobname=webman webman-2021
 	$(RM) -f webman-2021.tex
 
-fullmanual: usermanual $(SOURCES) $(TCHANGES) $(WCHANGES)
+fullmanual: usermanual $(SOURCES) $(TCHANGES) $(WCHANGES) $(TTCHANGES)
 	make weave
 	$(WEAVE) tangle.web $(TCHANGES) tangle.tex
 	$(PDF)tex tangle.tex
 	$(WEAVE) weave.web $(WCHANGES) weave.tex
 	$(PDF)tex weave.tex
+	$(WEAVE) weave.web $(TTCHANGES) twill.tex
+	$(PDF)tex twill.tex
 
 # be sure to leave tangle.pas for bootstrapping
 clean:
 	$(RM) -f -r *~ .*~ *.o weave.tex weave.pas tangle.tex CONTENTS.tex \
-	  *.log *.dvi *.toc *.idx *.scn *.pdf core weave tangle \
-	  $(TCHANGES) $(WCHANGES) \
+	  twill.tex twill.pas twill.ref twill.sref \
+	  *.log *.dvi *.toc *.idx *.scn *.pdf core weave tangle twill \
+	  $(TCHANGES) $(WCHANGES) $(TTCHANGES) \
 	  gftodvi gftodvi.pas gftodvi.tex
