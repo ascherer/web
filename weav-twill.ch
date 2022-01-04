@@ -38,7 +38,7 @@ Public domain.  Originally written by Andreas Scherer, 2022.
 % But it is not polished either, so you probably shouldn't try....
 % Version 2.8 (based on WEAVE 2.8) was hacked together on 28 Sep 1985.
 % Version 2.9 fixed output for dtype_string (14 Jun 1987).
-% Version 4.5 (based on WEAVE 4.5) was hacked together on 04 Jan 2021.
+% Version 4.5 (based on WEAVE 4.5) was hacked together on 04 Jan 2022.
 @z
 
 @x 43c19
