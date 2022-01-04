@@ -1,3 +1,10 @@
+Changes for WEAVE.WEB to mogrify WEAVE into TWILL.
+
+See the 'git log' in https://github.com/ascherer/twill and
+https://github.com/ascherer/web for details.
+
+Public domain.  Originally written by Andreas Scherer, 2022.
+
 @x 2,29c2,5
 % Version 0 was released in December, 1981.
 % Version 1 was released in September, 1982, with version 0 of TeX.
