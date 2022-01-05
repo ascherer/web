@@ -466,6 +466,23 @@ Section 125.
 @d out12==@+begin oot12
 @z
 
+Section 130.
+
+@x 2273c...
+@ The number to be converted by |out_mod| is known to be less than
+|def_flag|, so it cannot have more than five decimal digits.  If
+the module is changed, we output `\.{\\*}' just after the number.
+@y
+@ The number to be converted by |out_mod| is known to be less than
+|def_flag|, so it cannot have more than five decimal digits.
+@z
+
+@x 2285d
+if changed_module[m] then out2("\")("*");
+@.\\*@>
+@y
+@z
+
 Section 133.
 
 @x 2333,2334c2510,2512
