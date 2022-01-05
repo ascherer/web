@@ -5,6 +5,8 @@ https://github.com/ascherer/web for details.
 
 Public domain.  Originally written by Andreas Scherer, 2022.
 
+Limbo.
+
 @x 2,29c2,5
 % Version 0 was released in December, 1981.
 % Version 1 was released in September, 1982, with version 0 of TeX.
@@ -53,6 +55,8 @@ Public domain.  Originally written by Andreas Scherer, 2022.
   \centerline{\titlefont The {\ttitlefont TWILL} processor}
 @z
 
+Section 1.
+
 @x 54a31,35
 @* Introduction.
 @y
@@ -70,6 +74,8 @@ or to make this code usable by anyone else but its author.]
 @d banner=='This is TWILL, Version 4.5'
 @z
 
+Section 8.
+
 @x 203a185
 @!stack_size=200; {number of simultaneous output levels}
 @y
@@ -77,12 +83,16 @@ or to make this code usable by anyone else but its author.]
 @!max_new_refs=200; {number of different references to other modules}
 @z
 
+Section 37.
+
 @x 742a725
 @!xref: array [0..max_names] of sixteen_bits; {heads of cross-reference lists}
 @y
 @!xref: array [0..max_names] of sixteen_bits; {heads of cross-reference lists}
 @!def_val: array [0..max_names] of integer; {values of numeric macros}
 @z
+
+Section 46.
 
 @x 889a873,876
 @d xlink(#)==xmem[#].xlink_field
@@ -93,6 +103,8 @@ or to make this code usable by anyone else but its author.]
 @d dback(#)==xmem[#].dback_field
 @d dlink(#)==xmem[#].dlink_field
 @z
+
+Section 48.
 
 @x 895c882,899
 @ @<Globals...@>=
@@ -136,11 +148,23 @@ or to make this code usable by anyone else but its author.]
 @!danger_zone:boolean;
 @z
 
+Section 49.
+
 @x 903a915
 @ @<Set init...@>=xref_ptr:=0; xref_switch:=0; mod_xref_switch:=0; num(0):=0;
 @y
 @ @<Set init...@>=xref_ptr:=0; xref_switch:=0; mod_xref_switch:=0; num(0):=0;
 danger_zone:=false;
+@z
+
+Section 50.
+
+@x 908a...
+to one-letter identifiers or \PASCAL's reserved words.
+@y
+to one-letter identifiers or \PASCAL's reserved words.
+
+The |new_blank_xref| is similar but it ignores the |xref_switch|.
 @z
 
 @x 911a924
@@ -161,8 +185,9 @@ danger_zone:=false;
       end;
 @z
 
-@x 928a945,952
+@x 928,929c945,952
 append_xref(m); xlink(xref_ptr):=q; xref[p]:=xref_ptr;
+exit: end;
 @y
 append_xref(m); xlink(xref_ptr):=q; xref[p]:=xref_ptr;
 if m>def_flag then
@@ -173,20 +198,15 @@ if m>def_flag then
     dname(xref_ptr):=def_subname;
     end;
   end;
-@z
-
-@x 930a955,961
-@ The cross reference lists for module names are slightly different. Suppose
-@y
-@ The |new_blank_xref| is similar but it ignores the |xref_switch|.
-
-@p procedure new_blank_xref(@!p:integer);
+exit: end;
+@#
+procedure new_blank_xref(@!p:integer);
 var xs:integer;
 begin xs:=xref_switch; xref_switch:=0; new_xref(p); xref_switch:=xs;
 end;
-
-@ The cross reference lists for module names are slightly different. Suppose
 @z
+
+Section 62.
 
 @x 1064a1096,1097
 @ When we begin the following segment of the program, |p=name_ptr|.
@@ -203,6 +223,8 @@ ilk[p]:=t; xref[p]:=0;
 ilk[p]:=t; xref[p]:=0; def_val[p]:=undef_val;
 @z
 
+Section 64.
+
 @x 1112c1145
 id5("c")("o")("n")("s")("t")(const_like);@/
 @y
@@ -215,11 +237,15 @@ id6("p")("a")("c")("k")("e")("d")(goto_like);@/
 id6("p")("a")("c")("k")("e")("d")(goto_like); packed_name:=cur_name;@/
 @z
 
+Section 71.
+
 @x 1278,1279d1310
 @!change_pending: boolean; {if |true|, the current change is not yet
   recorded in |changed_module[module_count]|}
 @y
 @z
+
+Section 79.
 
 @x 1371,1383d1401
 When a match is found, the current module is marked as changed unless
@@ -247,6 +273,8 @@ if not changed_module[module_count] then
 @y
 @z
 
+Section 82.
+
 @x 1450,1454c1463,1469
 begin restart:if changing then
   @<Read from |change_file| and maybe turn off |changing|@>;
@@ -263,6 +291,8 @@ if changing then
     end;
 @z
 
+Section 83.
+
 @x 1462c1477,1479
 else if change_limit>0 then check_change;
 @y
@@ -270,6 +300,8 @@ else if limit=change_limit then
   if buffer[0]=change_buffer[0] then
     if change_limit>0 then check_change;
 @z
+
+Section 84.
 
 @x 1472,1479c1489
 if limit>0 then {check if the change has ended}
@@ -289,6 +321,8 @@ if limit>1 then {check if the change has ended}
 @y
 @z
 
+Section 88.
+
 @x 1594a1604,1606
 "0","1","2": begin tracing:=c-"0"; control_code:=ignore;
 @y
@@ -298,71 +332,22 @@ if limit>1 then {check if the change has ended}
   end;
 @z
 
-@x 1934a1947,2001
-@* Phase one processing.
-@y
-@ Here's a new subroutine needed for \.{TWILL}. Assuming that |next_control|
-is the beginning of a numeric constant, and that string constants have
-length~1, the |scan_const| function returns the value of the constant
-and sets |next_control| to the following token.
-
-@p function scan_const:integer;
-label done;
-var radix,accum,p:integer;
-begin if next_control=string then
-  begin accum:=buffer[id_first+1]; next_control:=get_next; goto done;
-  end
-else if next_control=identifier then
-  begin p:=id_lookup(normal); new_blank_xref(p);
-  accum:=def_val[p]; next_control:=get_next; goto done;
-  end
-else  begin accum:=0;
-  if next_control=hex then radix:=16
-  else if next_control=octal then radix:=8
-  else  begin radix:=10; accum:=next_control-"0";
-    end;
-  loop  begin next_control :=get_next;
-    if next_control<"0" then goto done;
-    if radix=16 then
-      begin if (next_control>="A")and(next_control<="F") then
-        next_control:=next_control-"A"+"0"+10
-      else if next_control>"9" then goto done;
-      end
-    else if next_control>="0"+radix then goto done;
-    accum:=accum*radix+next_control-"0";
-    end;
-  end;
-done: scan_const:=accum;
-end;
-
-@ Simple linear arithmetic is handled by the following
-subroutine, which doesn't complain about certain syntactic errors.
-
-@d start_of_const(#)==(((#>="0")and(#<="9"))or(#=hex)or(#=octal)or(#=string)
-  or(#=identifier))
-@d sign(#)==(abs(#-",")=1)
-@d start_of_num(#)==(start_of_const(#)or sign(#))
-
-@p function scan_exp:integer;
-label done;
-var accum,s:integer;
-begin if sign(next_control) then accum:=0
-else accum:=scan_const;
-loop  begin if not sign(next_control) then goto done;
-  s:=","-next_control; next_control:=get_next;
-  if not start_of_const(next_control) then goto done;
-  accum:=accum+s*scan_const;
-  end;
-done:scan_exp:=accum;
-end;
-
-@* Phase one processing.
-@z
+Section 110.
 
 @x 1965c2032
 changed_module[module_count]:=changing;
 @y
 changed_module[module_count]:=false;
+@z
+
+Section 111.
+
+@x 1991c...
+@p procedure Pascal_xref; {makes cross references for \PASCAL\ identifiers}
+@y
+@p @<Functions |scan_const| and |scan_exp|@>
+@#
+procedure Pascal_xref; {makes cross references for \PASCAL\ identifiers}
 @z
 
 @x 1992c2059
@@ -407,9 +392,341 @@ var p:name_pointer; {a referenced name}
 done:  if (next_control="|")or(next_control="{") then return;
 @z
 
-@x 2005a2085,2152
-@ The |outer_xref| subroutine is like |Pascal_xref| but it begins
+Section 115.
+
+@x 2061c2208,2226
+  if next_control=definition then next_control:=get_next
 @y
+  if next_control=definition then
+    begin next_control:=get_next;
+    if next_control=identifier then
+      begin lhs:=id_lookup(normal);
+      next_control:=get_next;
+      if (next_control=equivalence_sign)or(next_control="(") then
+        begin def_type:=dtype_macro; new_xref(lhs);
+        end
+      else if next_control="=" then
+        begin xref_switch:=0; next_control:=get_next;
+        def_val[lhs]:=scan_exp;
+        def_name:=def_val[lhs]; def_type:=dtype_const;
+        xref_switch:=def_flag;
+        if abs(def_name)>=32768 then def_type:=dtype_macro
+        else if def_name<0 then def_name:=def_name+65536;
+        new_xref(lhs);
+        end;
+      end;
+    end
+@z
+
+Section 124.
+
+@x 2199,2201c2364
+`\.{\\input pwebmac}'.
+@.\\input pwebmac@>
+@.\\input webmac@>
+@.pwebmac@>
+@.webmac@>
+@y
+`\.{\\input twimac}'.
+@.\\input twimac@>
+@.twimac@>
+@z
+
+@x 2204c2367
+out_ptr:=1; out_line:=1; out_buf[1]:="c"; write(tex_file,'\input pwebma');
+@y
+out_ptr:=1; out_line:=1; out_buf[1]:="c"; write(tex_file,'\input twima');
+@z
+
+Section 125.
+
+@x 2219a2383,2389
+@d oot5(#)==oot(#)@,oot4
+@y
+@d oot5(#)==oot(#)@,oot4
+@d oot6(#)==oot(#)@,oot5
+@d oot7(#)==oot(#)@,oot6
+@d oot8(#)==oot(#)@,oot7
+@d oot9(#)==oot(#)@,oot8
+@d oot10(#)==oot(#)@,oot9
+@d oot11(#)==oot(#)@,oot10
+@d oot12(#)==oot(#)@,oot11
+@z
+
+@x 2224a2395,2401
+@d out5==@+begin oot5
+@y
+@d out5==@+begin oot5
+@d out6==@+begin oot6
+@d out7==@+begin oot7
+@d out8==@+begin oot8
+@d out9==@+begin oot9
+@d out10==@+begin oot10
+@d out11==@+begin oot11
+@d out12==@+begin oot12
+@z
+
+Section 133.
+
+@x 2333,2334c2510,2512
+  out("@@");
+  if c<>"@@" then err_print('! Double @@ required outside of sections');
+@.Double \AT! required...@>
+@y
+  if (c<>"z")and(c<>"Z") then
+    begin out("@@");
+    if c<>"@@" then err_print('! Double @@ required outside of sections');
+@.Double \AT! required...@>
+    end;
+@z
+
+Section 183.
+
+@x 3522a3702
+@!p:name_pointer; {identifier designator}
+@y
+@!p:name_pointer; {identifier designator}
+@!q,@!qq,@!r:integer; {registers for new reference insertion loop}
+@z
+
+Section 191.
+
+@x 3698a3879
+begin p:=id_lookup(normal);
+@y
+begin p:=id_lookup(normal);
+if ilk[p]=normal then @<Insert a new reference, if this is new@>;
+@z
+
+Section 197.
+
+@x 3816c...
+@p function Pascal_translate: text_pointer;
+@y
+@d flaky=1
+@d guaranteed=0
+
+@p function Pascal_translate: text_pointer;
+@z
+@x 3819c4033
+begin save_base:=scrap_base; scrap_base:=scrap_ptr+1;
+@y
+begin save_base:=scrap_base; scrap_base:=scrap_ptr+1; safety:=flaky;
+@z
+
+@x 3827c4041
+Pascal_translate:=p;
+@y
+safety:=guaranteed; Pascal_translate:=p;
+@z
+
+Section 218.
+
+@x 4226c4440
+module_count:=0;
+@y
+module_count:=0; xx:=0;
+@z
+
+@x 4228a4443
+finish_line; flush_buffer(0,false,false); {insert a blank line, it looks nice}
+@y
+finish_line; flush_buffer(0,false,false); {insert a blank line, it looks nice}
+@<Prepare high-speed access to definitions via |dlink| and |def_val|@>;
+@z
+
+Section 220.
+
+@x 4249a4492,4493
+begin incr(module_count);@/
+@y
+begin incr(module_count);@/
+mm:=module_count+def_flag; ref_link[0]:=0; ref_loc[0]:=0; new_ref_ptr:=0;
+safety:=guaranteed;
+@z
+
+Section 236.
+
+@x 4503a4749
+if flag=0 then out("U")@+else out("A");
+@y
+if flag=0 then out("U")@+else out("A");
+out8(" ")("s")("e")("c")("t")("i")("o")("n");
+@z
+
+@x 4514,4515c4760
+@.\\As@>
+@.\\Us@>
+@y
+out("~");
+@z
+
+Section 237.
+
+@x 4519,4524c4764,4767
+  if num(xlink(cur_xref))>flag then out2(",")(" ") {not the last}
+  else begin out3("\")("E")("T"); {the last}
+@.\\ET@>
+    if cur_xref<>xlink(q) then out("s"); {the last of more than two}
+@.\\ETs@>
+    end;
+@y
+  if (num(xlink(cur_xref))>flag)or(cur_xref<>xlink(q)) then out(",");
+    {not the last of two}
+  out(" ");
+  if num(xlink(cur_xref))<=flag then out4("a")("n")("d")("~"); {the last}
+@z
+
+Section 238.
+
+@x 4529c4772,4776
+out3("\")("f")("i"); finish_line;
+@y
+out6("\")("m")("i")("n")("i")("%");
+@.\\mini@>
+beta_out;
+flush_buffer(out_ptr,false,false);
+out4("}")("\")("F")("I"); finish_line;
+@z
+
+@x 4531c4778,4893
+@.\\fi@>
+@y
+@.\\FI@>
+@z
+
+Section 241.
+
+@x 4561a4924
+k_module:=1;
+@y
+k_module:=1;
+while not changed_module[k_module] do incr(k_module);
+@z
+
+@x 4563,4568d4925
+while k_module<module_count do
+  begin if changed_module[k_module] then
+    begin out_mod(k_module); out2(",")(" ");
+    end;
+  incr(k_module);
+  end;
+@y
+@z
+
+@x 4569a4927,4929
+out_mod(k_module);
+@y
+out_mod(k_module);
+repeat repeat incr(k_module)@+ until changed_module[k_module];
+  out2(",")(" "); out_mod(k_module);
+until k_module=module_count;
+@z
+
+Section 254.
+
+@x 4726c5086,5093
+if cur_val<def_flag then out_mod(cur_val)
+@y
+if cur_val<def_flag then
+  begin out_mod(cur_val);
+  if cur_val+1=num(xlink(cur_xref)) then
+    begin out2("-")("-");
+    repeat cur_xref:=xlink(cur_xref); incr(cur_val);
+    until cur_val+1<>num(xlink(cur_xref)); out_mod(cur_val);
+    end;
+  end
+@z
+
+Section 261.
+
+@x 4842c...
+@p procedure Phase_I;
+@y
+@p @<Functions |alpha_out|, |beta_out|, and helpers@>
+@#
+procedure Phase_I;
+@z
+
+@x 4846a5214
+procedure Phase_II;
+@y
+procedure Phase_II;
+var lhs:integer;
+@z
+
+Section 264.
+
+@x
+@* System-dependent changes.
+This module should be replaced, if necessary, by changes to the program
+that are necessary to make \.{WEAVE} work at a particular installation.
+It is usually best to design your change file so that all changes to
+previous modules preserve the module numbering; then everybody's version
+will be consistent with the printed program. More extensive changes,
+which introduce new modules, can be inserted here; then only the index
+itself will get a new module number.
+@^system dependencies@>
+
+@y
+@* New material for \.{TWILL}.
+Here's a new subroutine needed for \.{TWILL}. Assuming that |next_control|
+is the beginning of a numeric constant, and that string constants have
+length~1, the |scan_const| function returns the value of the constant
+and sets |next_control| to the following token.
+
+@<Functions |scan_const| and |scan_exp|@>=
+function scan_const:integer;
+label done;
+var radix,accum,p:integer;
+begin if next_control=string then
+  begin accum:=buffer[id_first+1]; next_control:=get_next; goto done;
+  end
+else if next_control=identifier then
+  begin p:=id_lookup(normal); new_blank_xref(p);
+  accum:=def_val[p]; next_control:=get_next; goto done;
+  end
+else  begin accum:=0;
+  if next_control=hex then radix:=16
+  else if next_control=octal then radix:=8
+  else  begin radix:=10; accum:=next_control-"0";
+    end;
+  loop  begin next_control :=get_next;
+    if next_control<"0" then goto done;
+    if radix=16 then
+      begin if (next_control>="A")and(next_control<="F") then
+        next_control:=next_control-"A"+"0"+10
+      else if next_control>"9" then goto done;
+      end
+    else if next_control>="0"+radix then goto done;
+    accum:=accum*radix+next_control-"0";
+    end;
+  end;
+done: scan_const:=accum;
+end;
+
+@ Simple linear arithmetic is handled by the following
+subroutine, which doesn't complain about certain syntactic errors.
+
+@d start_of_const(#)==(((#>="0")and(#<="9"))or(#=hex)or(#=octal)or(#=string)
+  or(#=identifier))
+@d sign(#)==(abs(#-",")=1)
+@d start_of_num(#)==(start_of_const(#)or sign(#))
+
+@<Functions |scan_const| and |scan_exp|@>=
+function scan_exp:integer;
+label done;
+var accum,s:integer;
+begin if sign(next_control) then accum:=0
+else accum:=scan_const;
+loop  begin if not sign(next_control) then goto done;
+  s:=","-next_control; next_control:=get_next;
+  if not start_of_const(next_control) then goto done;
+  accum:=accum+s*scan_const;
+  end;
+done:scan_exp:=accum;
+end;
+
 @ @d found_it(#)==begin def_type:=#; goto found; end
 
 @<Figure out the |def_type| and |def_name|, etc.@>=
@@ -478,112 +795,9 @@ if def_name<0 then def_name:=def_name+65536;
 def_type:=dtype_colon_const_dots+eq;
 end
 
-@ The |outer_xref| subroutine is like |Pascal_xref| but it begins
-@z
-
-@x 2061c2208,2226
-  if next_control=definition then next_control:=get_next
-@y
-  if next_control=definition then
-    begin next_control:=get_next;
-    if next_control=identifier then
-      begin lhs:=id_lookup(normal);
-      next_control:=get_next;
-      if (next_control=equivalence_sign)or(next_control="(") then
-        begin def_type:=dtype_macro; new_xref(lhs);
-        end
-      else if next_control="=" then
-        begin xref_switch:=0; next_control:=get_next;
-        def_val[lhs]:=scan_exp;
-        def_name:=def_val[lhs]; def_type:=dtype_const;
-        xref_switch:=def_flag;
-        if abs(def_name)>=32768 then def_type:=dtype_macro
-        else if def_name<0 then def_name:=def_name+65536;
-        new_xref(lhs);
-        end;
-      end;
-    end
-@z
-
-@x 2199,2201c2364
-`\.{\\input pwebmac}'.
-@.\\input pwebmac@>
-@.\\input webmac@>
-@.pwebmac@>
-@.webmac@>
-@y
-`\.{\\input twimac}'.
-@.\\input twimac@>
-@.twimac@>
-@z
-
-@x 2204c2367
-out_ptr:=1; out_line:=1; out_buf[1]:="c"; write(tex_file,'\input pwebma');
-@y
-out_ptr:=1; out_line:=1; out_buf[1]:="c"; write(tex_file,'\input twima');
-@z
-
-@x 2219a2383,2389
-@d oot5(#)==oot(#)@,oot4
-@y
-@d oot5(#)==oot(#)@,oot4
-@d oot6(#)==oot(#)@,oot5
-@d oot7(#)==oot(#)@,oot6
-@d oot8(#)==oot(#)@,oot7
-@d oot9(#)==oot(#)@,oot8
-@d oot10(#)==oot(#)@,oot9
-@d oot11(#)==oot(#)@,oot10
-@d oot12(#)==oot(#)@,oot11
-@z
-
-@x 2224a2395,2401
-@d out5==@+begin oot5
-@y
-@d out5==@+begin oot5
-@d out6==@+begin oot6
-@d out7==@+begin oot7
-@d out8==@+begin oot8
-@d out9==@+begin oot9
-@d out10==@+begin oot10
-@d out11==@+begin oot11
-@d out12==@+begin oot12
-@z
-
-@x 2333,2334c2510,2512
-  out("@@");
-  if c<>"@@" then err_print('! Double @@ required outside of sections');
-@.Double \AT! required...@>
-@y
-  if (c<>"z")and(c<>"Z") then
-    begin out("@@");
-    if c<>"@@" then err_print('! Double @@ required outside of sections');
-@.Double \AT! required...@>
-    end;
-@z
-
-@x 3522a3702
-@!p:name_pointer; {identifier designator}
-@y
-@!p:name_pointer; {identifier designator}
-@!q,@!qq,@!r:integer; {registers for new reference insertion loop}
-@z
-
-@x 3698a3879
-begin p:=id_lookup(normal);
-@y
-begin p:=id_lookup(normal);
-if ilk[p]=normal then @<Insert a new reference, if this is new@>;
-@z
-
-@x 3707a3889,3921
-@ The |sub_cases| also result in straightforward scraps.
-@y
 @ Some identifiers can be inserted during Phase II that weren't
 seen in Phase I (namely, if they appear only in module names);
 so we have to watch out that |def_val| might be |undef_val|.
-
-@d flaky=1
-@d guaranteed=0
 
 @<Insert a new reference, if this is new@>=
 begin q:=def_val[p];
@@ -610,37 +824,6 @@ if q<>0 then if q<>undef_val then if not phase_three then
   end;
 end
 
-@ The |sub_cases| also result in straightforward scraps.
-@z
-
-@x 3819c4033
-begin save_base:=scrap_base; scrap_base:=scrap_ptr+1;
-@y
-begin save_base:=scrap_base; scrap_base:=scrap_ptr+1; safety:=flaky;
-@z
-
-@x 3827c4041
-Pascal_translate:=p;
-@y
-safety:=guaranteed; Pascal_translate:=p;
-@z
-
-@x 4226c4440
-module_count:=0;
-@y
-module_count:=0; xx:=0;
-@z
-
-@x 4228a4443
-finish_line; flush_buffer(0,false,false); {insert a blank line, it looks nice}
-@y
-finish_line; flush_buffer(0,false,false); {insert a blank line, it looks nice}
-@<Prepare high-speed access to definitions via |dlink| and |def_val|@>;
-@z
-
-@x 4230a4446,4472
-@ The output file will contain the control sequence \.{\\Y} between non-null
-@y
 @ @<Prepare high-speed access to definitions via |dlink| and |def_val|@>=
 for lhs:=1 to name_ptr do if ilk[lhs]=normal then
   begin def_val[lhs]:=0; rhs:=xref[lhs];
@@ -667,64 +850,11 @@ identifier is multiply defined.
 @!safety:guaranteed..flaky;
 @!xx:xref_number;
 
-@ The output file will contain the control sequence \.{\\Y} between non-null
-@z
-
-@x 4249a4492,4493
-begin incr(module_count);@/
-@y
-begin incr(module_count);@/
-mm:=module_count+def_flag; ref_link[0]:=0; ref_loc[0]:=0; new_ref_ptr:=0;
-safety:=guaranteed;
-@z
-
-@x 4503a4749
-if flag=0 then out("U")@+else out("A");
-@y
-if flag=0 then out("U")@+else out("A");
-out8(" ")("s")("e")("c")("t")("i")("o")("n");
-@z
-
-@x 4514,4515c4760
-@.\\As@>
-@.\\Us@>
-@y
-out("~");
-@z
-
-@x 4519,4524c4764,4767
-  if num(xlink(cur_xref))>flag then out2(",")(" ") {not the last}
-  else begin out3("\")("E")("T"); {the last}
-@.\\ET@>
-    if cur_xref<>xlink(q) then out("s"); {the last of more than two}
-@.\\ETs@>
-    end;
-@y
-  if (num(xlink(cur_xref))>flag)or(cur_xref<>xlink(q)) then out(",");
-    {not the last of two}
-  out(" ");
-  if num(xlink(cur_xref))<=flag then out4("a")("n")("d")("~"); {the last}
-@z
-
-@x 4529c4772,4776
-out3("\")("f")("i"); finish_line;
-@y
-out6("\")("m")("i")("n")("i")("%");
-@.\\mini@>
-beta_out;
-flush_buffer(out_ptr,false,false);
-out4("}")("\")("F")("I"); finish_line;
-@z
-
-@x 4531c4778,4893
-@.\\fi@>
-@y
-@.\\FI@>
-
 @ The |alpha_out| procedure makes entries for all identifiers defined
 in the current module. (However, I no longer need these!)
 
-@p procedure alpha_out;
+@<Functions |alpha_out|, |beta_out|, and helpers@>=
+procedure alpha_out;
 label exit;
 var p,w,k:integer;
 begin loop begin
@@ -746,7 +876,8 @@ exit:end;
 
 @ Here's a procedure that's very much like |out_mod|.
 
-@p procedure out_const(@!n:sixteen_bits);
+@<Functions |alpha_out|, |beta_out|, and helpers@>=
+procedure out_const(@!n:sixteen_bits);
 var a,k:integer;
 begin a:=n; k:=0;
 if a>=32768 then
@@ -760,7 +891,8 @@ end;
 
 @ And here's something that could have been made a subroutine earlier.
 
-@p procedure out_id(@!p:integer);
+@<Functions |alpha_out|, |beta_out|, and helpers@>=
+procedure out_id(@!p:integer);
 begin out("\");
 if ilk[p]=normal then
   if length(p)=1 then out("|")
@@ -776,7 +908,8 @@ end;
 @ The |beta_out| procedure makes entries for all identifiers used
 but not defined in the current module.
 
-@p procedure beta_out;
+@<Functions |alpha_out|, |beta_out|, and helpers@>=
+procedure beta_out;
 label done,888,found;
 var k,p,q,w,xx,mmm:integer;
 begin p:=ref_link[0];
@@ -835,50 +968,4 @@ loop  begin if dtype(xx)<>dtype_comma then if num(xx)=mmm then goto done;
   incr(xx);
   end;
 done:
-@z
-
-@x 4561a4924
-k_module:=1;
-@y
-k_module:=1;
-while not changed_module[k_module] do incr(k_module);
-@z
-
-@x 4563,4568d4925
-while k_module<module_count do
-  begin if changed_module[k_module] then
-    begin out_mod(k_module); out2(",")(" ");
-    end;
-  incr(k_module);
-  end;
-@y
-@z
-
-@x 4569a4927,4929
-out_mod(k_module);
-@y
-out_mod(k_module);
-repeat repeat incr(k_module)@+ until changed_module[k_module];
-  out2(",")(" "); out_mod(k_module);
-until k_module=module_count;
-@z
-
-@x 4726c5086,5093
-if cur_val<def_flag then out_mod(cur_val)
-@y
-if cur_val<def_flag then
-  begin out_mod(cur_val);
-  if cur_val+1=num(xlink(cur_xref)) then
-    begin out2("-")("-");
-    repeat cur_xref:=xlink(cur_xref); incr(cur_val);
-    until cur_val+1<>num(xlink(cur_xref)); out_mod(cur_val);
-    end;
-  end
-@z
-
-@x 4846a5214
-procedure Phase_II;
-@y
-procedure Phase_II;
-var lhs:integer;
 @z
