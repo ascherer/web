@@ -44,9 +44,11 @@ Limbo.
 @z
 
 @x 43c19
-\def\title{WEAVE}
+\let\maybe=\iffalse
+\def\title{WEAVE changes for C}
 @y
-\def\title{TWILL}
+\let\maybe=\iftrue
+\def\title{TWILL for \TeX~Live}
 @z
 
 @x 48c24
@@ -69,17 +71,19 @@ or to make this code usable by anyone else but its author.]
 @z
 
 @x 77c58
+@d my_name=='weave'
 @d banner=='This is WEAVE, Version 4.5'
 @y
+@d my_name=='twill'
 @d banner=='This is TWILL, Version 4.5'
 @z
 
 Section 8.
 
 @x 203a185
-@!stack_size=200; {number of simultaneous output levels}
+@!stack_size=2000; {number of simultaneous output levels}
 @y
-@!stack_size=200; {number of simultaneous output levels}
+@!stack_size=2000; {number of simultaneous output levels}
 @!max_new_refs=200; {number of different references to other modules}
 @z
 
@@ -421,10 +425,8 @@ Section 115.
 Section 124.
 
 @x 2199,2201c2364
-`\.{\\input pwebmac}'.
-@.\\input pwebmac@>
+`\.{\\input webmac}'.
 @.\\input webmac@>
-@.pwebmac@>
 @.webmac@>
 @y
 `\.{\\input twimac}'.
@@ -433,7 +435,7 @@ Section 124.
 @z
 
 @x 2204c2367
-out_ptr:=1; out_line:=1; out_buf[1]:="c"; write(tex_file,'\input pwebma');
+out_ptr:=1; out_line:=1; out_buf[1]:="c"; write(tex_file,'\input webma');
 @y
 out_ptr:=1; out_line:=1; out_buf[1]:="c"; write(tex_file,'\input twima');
 @z
@@ -682,18 +684,17 @@ var lhs:integer;
 
 Section 264.
 
-@x
-@* System-dependent changes.
-This module should be replaced, if necessary, by changes to the program
-that are necessary to make \.{WEAVE} work at a particular installation.
-It is usually best to design your change file so that all changes to
-previous modules preserve the module numbering; then everybody's version
-will be consistent with the printed program. More extensive changes,
-which introduce new modules, can be inserted here; then only the index
-itself will get a new module number.
-@^system dependencies@>
-
+@x WEAVE.CH
+      usage_help (WEAVE_HELP, nil);
 @y
+      usage_help (TWILL_HELP, nil);
+@z
+
+@x
+@!web_name,@!chg_name,@!tex_name:const_c_string;
+@y
+@!web_name,@!chg_name,@!tex_name:const_c_string;
+
 @* New material for {\tentex TWILL}.
 Here's a new subroutine needed for \.{TWILL}. Assuming that |next_control|
 is the beginning of a numeric constant, and that string constants have
