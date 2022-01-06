@@ -41,7 +41,7 @@ then echo "$PROG: Can't locate the TeX Live source tree!" >&2; exit 1
 fi
 KNUTHWARE=$(dirname $KNUTHWHERE)
 
-FILES="$KNUTHWARE/*.web pdftex.web xetex.web"
+FILES="$KNUTHWARE/*.web pdftex.web xetex.web twill"
 WEBINPUTS=$KNUTHWARE//:
 
 FILES="$FILES common ctangle cweave ctwill refsort twinx ctie tie"
@@ -101,6 +101,11 @@ do
 		$CTWILL $f # prime the pump
 		$CTWILL $f # get decent answers
 
+	elif [ twill = $f ]
+	then
+		tie -m $f.web weave.web weave.ch weav-$f.ch
+		weave $f
+
 	elif [ glue = $f ]
 	then
 		weave $f # no 'glue.ch' at this time
@@ -120,6 +125,9 @@ do
 			tex | mf | pdftex | xetex )
 				WEBINPUTS=$KNUTHWARE/../../Work//:$WEBINPUTS: \
 				weave $f $f-final ;;
+
+			# TWILL is a change in and of itself
+			twill ) ;;
 
 			# all other WEB codes have singular changefiles
 			* ) weave $f $f ;;
@@ -352,7 +360,7 @@ then
 		$PAX "$OUTDIR/texware.tar.gz" -s ,^,texware/, \
 			dvitype.pdf pltotf.pdf pooltype.pdf tftopl.pdf
 		$PAX "$OUTDIR/web.tar.gz" -s ,^,web/, \
-			webman.pdf tangle.pdf weave.pdf
+			webman.pdf tangle.pdf weave.pdf twill.pdf
 		$PAX "$OUTDIR/bibtex.tar.gz" -s ,^,bibtex/, bibtex.pdf
 		$PAX "$OUTDIR/other.tar.gz" -s ,^,other/, \
 			dvicopy.pdf patgen.pdf pktogf.pdf pktype.pdf
@@ -369,7 +377,8 @@ then
 	# (1) Create a user-friendly central entrypoint with
 	#     (a) pandoc index.md -o index.pdf
 	#     (b) pandoc index.md -o index.tex;
-	#         pandoc index.tex -s -o index.html;
+	#         pandoc index.tex -s -o index.html \
+	#           --metadata title="C/WEB programs in “TeX Live 2022”";
 	#         rm index.tex
 	# (2) Prepare a super-tarball from all the contents of these
 	#     individual tarballs (27/31) with either of
