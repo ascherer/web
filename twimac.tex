@@ -249,7 +249,7 @@
     \global\advance\pageno 1
     \let\[=\makeref
     \ifsorted \let\readin=\readln \readrefs
-    \else \immediate\write\reffile{∀\the\pageno}\let\readin=\readrefs \fi
+    \else \immediate\write\reffile{!\the\pageno}\let\readin=\readrefs \fi
     \setbox0=\vbox{\eightpoint \hsize=11pc \catcode`\_=\active \let_=\_
       \rightskip=0pt plus 100pt minus 10pt
       \pretolerance 10000
