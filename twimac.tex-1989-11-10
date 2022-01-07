@@ -170,7 +170,7 @@
 \def\defin#1{\global\advance\ind by 2 \1\&{#1 }} % begin `define' or `format'
 \def\A{\note{See also}} % cross-reference for multiply defined section names
 \def\B{\mathopen{\.{@\{}}} % begin controlled comment
-\def\C#1{\ifmmode\gdef\XX{\null$\null}\else\gdef\XX{}\fi %$% Pascal comments
+\def\C#1{\ifmmode\gdef\XX{\null$\null}\else\gdef\XX{}\fi % Pascal comments
   \XX\hfil\penalty-1\hfilneg\quad$\{\,$#1$\,\}$\XX}
 \def\D{\defin{define}} % macro definition
 \def\E{\cdot10^} % exponent in floating point constant
@@ -182,11 +182,11 @@
 \let\K=\gets % left arrow
 \let\L=\le % less than or equal sign
 \outer\def\M#1.{\def\modno{#1}\startsection\ignorespaces}
-\outer\def\N#1. #2.{\def\modno{#1}\flushout % begin starred section
-  \gdef\rhead{\uppercase{#2}} % define running headline
+\outer\def\N#1. \[#2]#3.{\def\modno{#1}\flushout % begin starred section
+  \gdef\rhead{PART #2:\uppercase{#3}} % define running headline
   \global\let\rrhead=\rhead
   \message{*\modno} % progress report
-  \startsection{\bf\ignorespaces#2.\quad}\ignorespaces}
+  \startsection{\bf\ignorespaces#3.\quad}\ignorespaces}
 \outer\def\NN#1. \[#2]#3.{\def\modno{#1} % begin starred section on rh page
   \global\setbox\partialpage=\vbox{
     \vbox to 44pc{\box\partialpage\vfill}\break}
@@ -209,11 +209,11 @@
 \def\U{\note{This code is used in}} % cross-reference for uses of sections
 \let\V=\lor % logical or
 \let\W=\land % logical and
-\def\X#1:#2\X{\ifmmode\gdef\XX{\null$\null}\else\gdef\XX{}\fi %$% section name
+\def\X#1:#2\X{\ifmmode\gdef\XX{\null$\null}\else\gdef\XX{}\fi % section name
   \XX$\langle\,$#2{\sevenrm\kern.5em#1}$\,\rangle$\XX}
 \def\Y{\par\yskip}
 \let\Z=\let % now you can \send the control sequence \Z
-\def\){\hbox{\.{@\$}}} %$% sign for string pool check sum
+\def\){\hbox{\.{@\$}}} % sign for string pool check sum
 \def\]{\hbox{\.{@\\}}} % sign for forced line break
 \def\=#1{\kern2pt\hbox{\vrule\vtop{\vbox{\hrule
         \hbox{\strut\kern2pt\.{#1}\kern2pt}}
@@ -238,13 +238,12 @@
 \begingroup\catcode`\_=\active \globaldefs=1
 \def\flushout{\ifvoid\partialpage\else
     \setbox0=\vsplit\partialpage to 44pc
-    \setbox2=\vbox{
+    \shipout\vbox{
       \vbox to 3pc{
         \hbox to 35pc{\vbox to10pt{}\nineit\rhead\hfil\eightrm\folio}\vfill}
-      \nointerlineskip\box0}%
-    \shipout\box2
+      \nointerlineskip\box0}
     \global\advance\pageno 1
-    \let\[=\makeref
+    \let\=\makeref
     \ifsorted \let\readin=\readln \readrefs
     \else \immediate\write\reffile{!\the\pageno}\let\readin=\readrefs \fi
     \setbox0=\vbox{\eightpoint \hsize=11pc \catcode`\_=\active \let_=\_
@@ -253,12 +252,13 @@
       \hyphenpenalty 10000 \exhyphenpenalty 10000
       \noindent\vbox to1pt{}\par % 1pt = \topskip - \ninept
       \readin}
-    \setbox2=\vbox to47pc{
+    \shipout\vbox to47pc{
       \vbox to 3pc{
         \hbox to 35pc{\vbox to10pt{}\eightrm\folio\hfil\nineit\rrhead\/}\vfill}
       \unvbox\partialpage
       \vfill
-      \ifdim\ht0>1pt \kern11pt\hrule \hbox{% changed 8pt to 11pt Oct 87 by DEK!
+%     \ifdim\ht0>1pt \kern8pt\hrule \hbox{%
+      \ifdim\ht0>1pt \kern11pt\hrule \hbox{%    % changed Oct 87 by DEK!
           \nsize=\ht0 \advance\nsize-\topskip
           \divide\nsize by 3 \divide\nsize by\ninept
           \multiply\nsize by\ninept \advance\nsize\topskip
@@ -267,19 +267,18 @@
           \divide\msize by 2 \divide\msize by\ninept
           \multiply\msize by\ninept \advance\msize\topskip
           \vbox to\nsize{\vsplit0 to\msize\vss}\kern1pc
-          \vbox to\nsize{\box0\vss}} \fi}%
-    \shipout\box2
+          \vbox to\nsize{\box0\vss}} \fi}
     \global\advance\pageno 1 \global\let\rhead=\rrhead\fi
   {\globaldefs=1
     \nn=199 \loop \ifnum\nn<221 \toks\nn={} \count\nn=0 \advance\nn 1 \repeat
     \nrefs=0
     \baseno=\modno}}
 
-\def\mini{\begingroup \catcode`\_=\active \let_=\uline \globaldefs=1
+\def\{\begingroup \catcode`\_=\active \let_=\uline \globaldefs=1
   \newrefs=\bgroup}
 \def\FI{\nn=\modno \advance\nn-\baseno \advance\nn 200
   \advance\nrefs-\count\nn \nn=\nrefs
-  \let\[=\countnewref \the\newrefs \endgroup
+  \let\=\countnewref \the\newrefs \endgroup
   \nobreak\null\nobreak\vskip-\baselineskip\penalty-500\vfil\eject}
 \def\twillout{\setbox\newmod=\vbox{\unvbox255}
   \ifnum\nn=0 \nsize=0pt
@@ -290,7 +289,7 @@
   \message{\the\nsize} % show the page break decision amount
   \ifdim\nsize>88pc \flushout \message{\modno}\fi
   \addtopartialpage}
-\def\addtopartialpage{\let\[=\addnewref \catcode`\_=\active \let_=\uline
+\def\addtopartialpage{\let\=\addnewref \catcode`\_=\active \let_=\uline
   \globaldefs=1 \the\newrefs
   \nsize=\dp\partialpage
   \setbox\partialpage=\ifvoid\partialpage \box\newmod
@@ -312,18 +311,18 @@
 \def\an #1 #2 {\expandafter\anr\csname#1 #2\endcsname #1 #2 }
 \def\anr#1#2 #3 #4 {\ifx#1\relax
     \advance\nrefs1 \advance\count\nn 1
-    \def#1{\[#2 #3 #4 }\toks\nn=\expandafter{\the\toks\nn\lmda#1}\fi}
-\ifsorted \def\lmda#1{\global\let#1\relax}
-\else \def\lmda#1{#1\global\let#1\relax} \fi
+    \def#1{\#2 #3 #4 }\toks\nn=\expandafter{\the\toks\nn\#1}\fi}
+\ifsorted \def\#1{\global\let#1\relax}
+\else \def\#1{#1\global\let#1\relax} \fi
 \def\makeref #1 #2 #3#4 {\nn=#2 \hangindent=1em
   \ifsorted\else\toks0={#1 #2 #3#4}\immediate\write\reffile{+ \the\toks0}\fi
-  \noindent\\{#1}\ifx#3\none\else
+  \noindent\\{#1}\ifx#3\\else
   \if#3:: \else\unhcopy\eqbox \fi#4\fi, \section\number\nn.\par}
 \newbox\eqbox \setbox\eqbox=\hbox{\kern2pt\eightrm=\kern2pt}
 \def\section{\mathhexbox278}
-\def\none{\none}
+\def\{\}
 \def\readrefs{\the\prefs \mm=\modno \advance\mm-\baseno \advance\mm200
-  {\def\lmda##1{\global\let##1\relax}\pp=200 %  this patch made AFTER first edition
+  {\def\##1{\global\let##1\relax}\pp=200 % this patch made AFTER first edition
     \loop\ifnum\pp<\mm \the\toks\pp \advance\pp 1 \repeat}	% of Vol B!!
   \loop\ifnum\mm<221 \the\toks\mm \advance\mm 1 \repeat}
 \def\readln{\read\sreffile to\next \expandafter\next\space \readin}
@@ -339,15 +338,12 @@
 \def\lheader{\vbox to10pt{}\nineit\rhead\hfil\eightrm\folio}
 \def\rheader{\vbox to10pt{}\eightrm\folio\hfil\nineit\rhead\/}
 \def\page{\box255 }
-\def\normaloutput#1{\setbox2=\vbox{
+\def\normaloutput#1{\shipout\vbox{
       \vbox to 3pc{
         \hbox to 35pc{\ifodd\pageno\rheader\else\lheader\fi}\vfill}
-    \nointerlineskip#1}%
-  \shipout\box2
+    \nointerlineskip#1}
   \global\advance\pageno 1 }
 
-\def\ch{\note{The following sections were changed by the change file:}
-  \let\*=\relax}
 \newbox\sbox % saved box preceding the index
 \newbox\lbox % lefthand column in the index
 \def\inx{\box\partialpage
