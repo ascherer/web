@@ -429,15 +429,15 @@ Section 124.
 @.\\input webmac@>
 @.webmac@>
 @y
-`\.{\\input twimac}'.
-@.\\input twimac@>
-@.twimac@>
+`\.{\\input twimac-web}'.
+@.\\input twimac-web@>
+@.twimac-web@>
 @z
 
 @x 2204c2367
 out_ptr:=1; out_line:=1; out_buf[1]:="c"; write(tex_file,'\input webma');
 @y
-out_ptr:=1; out_line:=1; out_buf[1]:="c"; write(tex_file,'\input twima');
+out_ptr:=1; out_line:=1; out_buf[1]:="b"; write(tex_file,'\input twimac-we');
 @z
 
 Section 125.
