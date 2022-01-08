@@ -497,6 +497,14 @@ Section 133.
     end;
 @z
 
+Section 146.
+
+@x 2888c...
+@ Token lists in |@!tok_mem| are composed of the following kinds of
+@y
+@ Token lists in |tok_mem| are composed of the following kinds of
+@z
+
 Section 183.
 
 @x 3522a3702
@@ -695,7 +703,7 @@ and sets |next_control| to the following token.
 @<Functions |scan_const| and |scan_exp|@>=
 function scan_const:integer;
 label done;
-var radix,accum,p:integer;
+var radix,@!accum,p:integer;
 begin if next_control=string then
   begin accum:=buffer[id_first+1]; next_control:=get_next; goto done;
   end
@@ -733,7 +741,7 @@ subroutine, which doesn't complain about certain syntactic errors.
 @<Functions |scan_const| and |scan_exp|@>=
 function scan_exp:integer;
 label done;
-var accum,s:integer;
+var @!accum,s:integer;
 begin if sign(next_control) then accum:=0
 else accum:=scan_const;
 loop  begin if not sign(next_control) then goto done;
