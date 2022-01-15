@@ -71,7 +71,7 @@ directly.
   [`PKtoGF`](other/pktogf.pdf)\ ~[`chg`](other/pktogf-changes.pdf)~ \|
   [`PKtype`](other/pktype.pdf)\ ~[`chg`](other/pktype-changes.pdf)~ \]
 * `bibtex/` \[ [`BibTeX`](bibtex/bibtex.pdf)\ ~[`chg`](bibtex/bibtex-changes.pdf)~ \]
-* `pdftex/` \[ [`pdfTeX`](pdftex/pdftex.pdf)\ ~[`chg`](pdftex/pdftex-changes.pdf)~ \]
+* `pdftex/` \[ [`pdfTeX`](pdftex/pdftex.pdf) \]
 * `xetex/` \[ [`XeTeX`](xetex/xetex.pdf)\ ~[`chg`](xetex/xetex-changes.pdf)~ \]
 
 ## CWEB programs by Knuth _et\ al._
