@@ -122,13 +122,12 @@ do
 			tie ) $CWEAVE $f $f-w2c ;;
 
 			# main WEB programs have complex change files
-			tex | mf | xetex )
+			tex | mf | pdftex | xetex )
 				WEBINPUTS=$KNUTHWARE/../../Work//:$WEBINPUTS: \
 				weave $f $f-final ;;
 
 			# TWILL is a change in and of itself
-			# pdfTeX exceeds WEAVE's 'max_bytes=65335'
-			twill | pdftex ) continue ;;
+			twill ) ;;
 
 			# all other WEB codes have singular changefiles
 			* ) weave $f $f ;;
@@ -298,6 +297,8 @@ then
 		$PAX "$OUTDIR/other-changes.tar.gz" -s ,^,other/, \
 			dvicopy-changes.pdf patgen-changes.pdf \
 			pktogf-changes.pdf pktype-changes.pdf
+		$PAX "$OUTDIR/pdftex-changes.tar.gz" -s ,^,pdftex/, \
+			pdftex-changes.pdf
 		$PAX "$OUTDIR/xetex-changes.tar.gz" -s ,^,xetex/, \
 			xetex-changes.pdf
 		$PAX "$OUTDIR/ctie-changes.tar.gz" -s ,^,ctie/, \
