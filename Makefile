@@ -35,9 +35,11 @@ CP= /bin/cp
 
 # uncomment the second line if you use pdftex to bypass .dvi files
 # uncomment the third line if you use xetex to bypass .dvi files
+# uncomment the forth line if you use hitex for HINT output
 PDFTEX = dvipdfm
 #PDFTEX = pdftex
 #PDFTEX = xetex
+#PDFTEX = hitex
 
 # Empty input and output file(s)
 EMPTY = /dev/null
@@ -75,6 +77,7 @@ ALL =  tangle.web weave.web \
 	 dvipdfm ) tex "\let\pdf+ \input $*"; dvipdfm $* ;; \
 	 pdftex ) pdftex $* ;; \
 	 xetex ) xetex $* ;; \
+	 hitex ) hitex $* ;; \
 	esac
 
 boot:
@@ -141,6 +144,6 @@ fullmanual: usermanual $(SOURCES) $(TCHANGES) $(WCHANGES) $(TTCHANGES)
 clean:
 	$(RM) -f -r *~ .*~ *.o weave.tex weave.pas tangle.tex CONTENTS.tex \
 	  twill.tex twill.pas twill.ref twill.sref \
-	  *.log *.dvi *.toc *.idx *.scn *.pdf core weave tangle twill \
+	  *.log *.dvi *.toc *.idx *.scn *.pdf *.hnt core weave tangle twill \
 	  $(TCHANGES) $(WCHANGES) $(TTCHANGES) \
 	  gftodvi gftodvi.pas gftodvi.tex
