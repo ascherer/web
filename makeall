@@ -107,6 +107,11 @@ do
 		$CTWILL $f # prime the pump
 		$CTWILL $f # get decent answers
 
+		if [ hitex = $TEX ]
+		then
+			continue
+		fi
+
 	elif [ twill = $f ]
 	then
 		tie -m $f.web weave.web weave.ch weav-$f.ch
