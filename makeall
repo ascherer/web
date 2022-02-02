@@ -291,6 +291,11 @@ then
 			esac
 			mv $f $(basename $f .$PDF)-changes.$PDF
 		done
+		if [ hitex = $TEX ]
+		then
+			rm -f xetex-changes.pdf
+			mv xetex.pdf xetex-changes.pdf
+		fi
 		$PAX "$OUTDIR/etc-changes.tar.gz" -s ,^,etc/, \
 			vftovp-changes.$PDF vptovf-changes.$PDF
 		$PAX "$OUTDIR/mf-changes.tar.gz" -s ,^,mf/, \
@@ -313,7 +318,7 @@ then
 		$PAX "$OUTDIR/pdftex-changes.tar.gz" -s ,^,pdftex/, \
 			pdftex-changes.$PDF
 		$PAX "$OUTDIR/xetex-changes.tar.gz" -s ,^,xetex/, \
-			xetex-changes.$PDF
+			xetex-changes.pdf
 		$PAX "$OUTDIR/ctie-changes.tar.gz" -s ,^,ctie/, \
 			ctie-changes.$PDF
 		$PAX "$OUTDIR/tie-changes.tar.gz" -s ,^,tie/, \
@@ -378,7 +383,7 @@ then
 		$PAX "$OUTDIR/other.tar.gz" -s ,^,other/, \
 			dvicopy.$PDF patgen.$PDF pktogf.$PDF pktype.$PDF
 		$PAX "$OUTDIR/pdftex.tar.gz" -s ,^,pdftex/, pdftex.$PDF
-		$PAX "$OUTDIR/xetex.tar.gz" -s ,^,xetex/, xetex.$PDF
+		$PAX "$OUTDIR/xetex.tar.gz" -s ,^,xetex/, xetex.pdf
 		$PAX "$OUTDIR/ctie.tar.gz" -s ,^,ctie/, ctie.$PDF
 		$PAX "$OUTDIR/tie.tar.gz" -s ,^,tie/, tie.$PDF
 		$PAX "$OUTDIR/cweb.tar.gz" -s ,^,cweb/, \
