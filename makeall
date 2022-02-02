@@ -87,11 +87,13 @@ CWEAVE="cweave -f +lX"
 CTWILL="ctwill -f +lpdf"
 PAX="pax -wvzf"
 SED_I="sed -i" # non-GNU-sed requires an extra '' argument for '-i' option.
+PDF=pdf
 
 # HINT format
 if [ hitex = $TEX ]
 then
 	$TEX -ini -jobname=hitex tex.ini
+	PDF=hnt
 fi
 
 # WEB and CWEB programs we want to get formatted
@@ -277,49 +279,49 @@ FI
 	fi
 done
 
-if $PDFTOCFRONT && ! $FILESELECT
+if ( $PDFTOCFRONT && ! $FILESELECT ) || [ hitex = $TEX ]
 then
 	# create tarballs w/o changes for publication
 	if $CHANGES
 	then
-		for f in *.pdf
+		for f in *.$PDF
 		do
 			case $f in
-				*-changes.pdf ) rm -f $f; continue ;;
+				*-changes.$PDF ) rm -f $f; continue ;;
 			esac
-			mv $f $(basename $f .pdf)-changes.pdf
+			mv $f $(basename $f .$PDF)-changes.$PDF
 		done
 		$PAX "$OUTDIR/etc-changes.tar.gz" -s ,^,etc/, \
-			vftovp-changes.pdf vptovf-changes.pdf
+			vftovp-changes.$PDF vptovf-changes.$PDF
 		$PAX "$OUTDIR/mf-changes.tar.gz" -s ,^,mf/, \
-			mf-changes.pdf
+			mf-changes.$PDF
 		$PAX "$OUTDIR/mfware-changes.tar.gz" -s ,^,mfware/, \
-			gftodvi-changes.pdf gftopk-changes.pdf \
-			gftype-changes.pdf mft-changes.pdf
+			gftodvi-changes.$PDF gftopk-changes.$PDF \
+			gftype-changes.$PDF mft-changes.$PDF
 		$PAX "$OUTDIR/tex-changes.tar.gz" -s ,^,tex/, \
-			tex-changes.pdf
+			tex-changes.$PDF
 		$PAX "$OUTDIR/texware-changes.tar.gz" -s ,^,texware/, \
-			dvitype-changes.pdf pltotf-changes.pdf \
-			pooltype-changes.pdf tftopl-changes.pdf
+			dvitype-changes.$PDF pltotf-changes.$PDF \
+			pooltype-changes.$PDF tftopl-changes.$PDF
 		$PAX "$OUTDIR/web-changes.tar.gz" -s ,^,web/, \
-			tangle-changes.pdf weave-changes.pdf
+			tangle-changes.$PDF weave-changes.$PDF
 		$PAX "$OUTDIR/bibtex-changes.tar.gz" -s ,^,bibtex/, \
-			bibtex-changes.pdf
+			bibtex-changes.$PDF
 		$PAX "$OUTDIR/other-changes.tar.gz" -s ,^,other/, \
-			dvicopy-changes.pdf patgen-changes.pdf \
-			pktogf-changes.pdf pktype-changes.pdf
+			dvicopy-changes.$PDF patgen-changes.$PDF \
+			pktogf-changes.$PDF pktype-changes.$PDF
 		$PAX "$OUTDIR/pdftex-changes.tar.gz" -s ,^,pdftex/, \
-			pdftex-changes.pdf
+			pdftex-changes.$PDF
 		$PAX "$OUTDIR/xetex-changes.tar.gz" -s ,^,xetex/, \
-			xetex-changes.pdf
+			xetex-changes.$PDF
 		$PAX "$OUTDIR/ctie-changes.tar.gz" -s ,^,ctie/, \
-			ctie-changes.pdf
+			ctie-changes.$PDF
 		$PAX "$OUTDIR/tie-changes.tar.gz" -s ,^,tie/, \
-			tie-changes.pdf
+			tie-changes.$PDF
 		$PAX "$OUTDIR/cweb-changes.tar.gz" -s ,^,cweb/, \
-			common-changes.pdf ctangle-changes.pdf \
-			cweave-changes.pdf refsort-changes.pdf \
-			twinx-changes.pdf
+			common-changes.$PDF ctangle-changes.$PDF \
+			cweave-changes.$PDF refsort-changes.$PDF \
+			twinx-changes.$PDF
 	else
 		# Finally, build the remaining documents
 		# * TeX and Metafont test routines
@@ -355,33 +357,33 @@ then
 			eleven twelve
 		do
 			$TEX errata.$f
-			mv errata.pdf errata.$f.pdf
+			mv errata.$PDF errata.$f.$PDF
 		done
 
 		$TEX errata
 
 		$PAX "$OUTDIR/errata.tar.gz" -s ,^,errata/, \
-			errorlog.pdf errata.*.pdf errata.pdf
-		$PAX "$OUTDIR/etc.tar.gz" -s ,^,etc/, vftovp.pdf vptovf.pdf
-		$PAX "$OUTDIR/mf.tar.gz" -s ,^,mf/, mf.pdf trapman.pdf
+			errorlog.$PDF errata.*.$PDF errata.$PDF
+		$PAX "$OUTDIR/etc.tar.gz" -s ,^,etc/, vftovp.$PDF vptovf.$PDF
+		$PAX "$OUTDIR/mf.tar.gz" -s ,^,mf/, mf.$PDF trapman.$PDF
 		$PAX "$OUTDIR/mfware.tar.gz" -s ,^,mfware/, \
-			gftodvi.pdf gftopk.pdf gftype.pdf mft.pdf
+			gftodvi.$PDF gftopk.$PDF gftype.$PDF mft.$PDF
 		$PAX "$OUTDIR/tex.tar.gz" -s ,^,tex/, \
-			glue.pdf tex.pdf tripman.pdf
+			glue.$PDF tex.$PDF tripman.$PDF
 		$PAX "$OUTDIR/texware.tar.gz" -s ,^,texware/, \
-			dvitype.pdf pltotf.pdf pooltype.pdf tftopl.pdf
+			dvitype.$PDF pltotf.$PDF pooltype.$PDF tftopl.$PDF
 		$PAX "$OUTDIR/web.tar.gz" -s ,^,web/, \
-			webman.pdf tangle.pdf weave.pdf twill.pdf
-		$PAX "$OUTDIR/bibtex.tar.gz" -s ,^,bibtex/, bibtex.pdf
+			webman.$PDF tangle.$PDF weave.$PDF twill.$PDF
+		$PAX "$OUTDIR/bibtex.tar.gz" -s ,^,bibtex/, bibtex.$PDF
 		$PAX "$OUTDIR/other.tar.gz" -s ,^,other/, \
-			dvicopy.pdf patgen.pdf pktogf.pdf pktype.pdf
-		$PAX "$OUTDIR/pdftex.tar.gz" -s ,^,pdftex/, pdftex.pdf
-		$PAX "$OUTDIR/xetex.tar.gz" -s ,^,xetex/, xetex.pdf
-		$PAX "$OUTDIR/ctie.tar.gz" -s ,^,ctie/, ctie.pdf
-		$PAX "$OUTDIR/tie.tar.gz" -s ,^,tie/, tie.pdf
+			dvicopy.$PDF patgen.$PDF pktogf.$PDF pktype.$PDF
+		$PAX "$OUTDIR/pdftex.tar.gz" -s ,^,pdftex/, pdftex.$PDF
+		$PAX "$OUTDIR/xetex.tar.gz" -s ,^,xetex/, xetex.$PDF
+		$PAX "$OUTDIR/ctie.tar.gz" -s ,^,ctie/, ctie.$PDF
+		$PAX "$OUTDIR/tie.tar.gz" -s ,^,tie/, tie.$PDF
 		$PAX "$OUTDIR/cweb.tar.gz" -s ,^,cweb/, \
-			cwebman.pdf common.pdf ctangle.pdf cweave.pdf \
-			ctwill.pdf refsort.pdf twinx.pdf
+			cwebman.$PDF common.$PDF ctangle.$PDF cweave.$PDF \
+			ctwill.$PDF refsort.$PDF twinx.$PDF
 	fi
 
 	# Notes to self:
