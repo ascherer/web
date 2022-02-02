@@ -109,11 +109,6 @@ do
 		$CTWILL $f # prime the pump
 		$CTWILL $f # get decent answers
 
-		if [ hitex = $TEX ]
-		then
-			continue
-		fi
-
 	elif [ twill = $f ]
 	then
 		tie -m $f.web weave.web weave.ch weav-$f.ch
@@ -266,20 +261,25 @@ FI
 	# only XeTeX can process XETEX.WEB
 	if [ xetex = $f ]
 	then $f $f
+	elif [ ctwill = $f ]
+	then
+		if [ hitex = $TEX ]
+		then
+			CTWILLTEX=pdftex
+		else
+			CTWILLTEX=$TEX
+		fi
+		$CTWILLTEX $f
+		# sort mini-indexes
+		ctwill-refsort < $f.ref > $f.sref
+		$CTWILLTEX $f
 	elif [ refsort = $f ]
 	then $TEX -interaction nonstopmode $f
 	else $TEX $f
 	fi
-
-	if [ ctwill = $f ]
-	then
-		# sort mini-indexes
-		ctwill-refsort < $f.ref > $f.sref
-		$TEX $f
-	fi
 done
 
-if ( $PDFTOCFRONT && ! $FILESELECT ) || [ hitex = $TEX ]
+if ( $PDFTOCFRONT || [ hitex = $TEX ] ) && ! $FILESELECT
 then
 	# create tarballs w/o changes for publication
 	if $CHANGES
@@ -388,7 +388,7 @@ then
 		$PAX "$OUTDIR/tie.tar.gz" -s ,^,tie/, tie.$PDF
 		$PAX "$OUTDIR/cweb.tar.gz" -s ,^,cweb/, \
 			cwebman.$PDF common.$PDF ctangle.$PDF cweave.$PDF \
-			ctwill.$PDF refsort.$PDF twinx.$PDF
+			ctwill.pdf refsort.$PDF twinx.$PDF
 	fi
 
 	# Notes to self:
