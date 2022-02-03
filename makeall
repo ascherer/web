@@ -231,7 +231,7 @@ FI
 		# FIX: pdfTeX uses '\pdfTeX' in section names; these should
 		# appear correctly in the bookmarks, too.
 		pdftex )
-			if $NEW && [ tex != $TEX ] && [[ $TEX =~ hitex ]]
+			if $NEW && [ tex != "$TEX" ] && [[ ! $TEX =~ hitex ]]
 			then
 				$SED_I -e "s/\(\\\\def\\\\pdfTeX{pdf\\\\TeX}\)/\1 \\\\sanitizecommand\\\\pdfTeX{pdfTeX}\\\\sanitizecommand\\\\eTeX{e-TeX}/" \
 					$f.tex
