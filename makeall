@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 PROG=$(basename $0)
 
@@ -93,6 +93,7 @@ PDF=pdf
 if [ hitex = $TEX ]
 then
 	$TEX -ini -jobname=hitex tex.ini
+	TEX="hitex --compress"
 	PDF=hnt
 fi
 
@@ -230,7 +231,7 @@ FI
 		# FIX: pdfTeX uses '\pdfTeX' in section names; these should
 		# appear correctly in the bookmarks, too.
 		pdftex )
-			if $NEW && [ tex != $TEX ] && [ hitex != $TEX ]
+			if $NEW && [ tex != $TEX ] && [[ $TEX =~ hitex ]]
 			then
 				$SED_I -e "s/\(\\\\def\\\\pdfTeX{pdf\\\\TeX}\)/\1 \\\\sanitizecommand\\\\pdfTeX{pdfTeX}\\\\sanitizecommand\\\\eTeX{e-TeX}/" \
 					$f.tex
@@ -263,11 +264,11 @@ FI
 	then $f $f
 	elif [ ctwill = $f ]
 	then
-		if [ hitex = $TEX ]
+		if [[ $TEX =~ hitex ]]
 		then
 			CTWILLTEX=pdftex
 		else
-			CTWILLTEX=$TEX
+			CTWILLTEX="$TEX"
 		fi
 		$CTWILLTEX $f
 		# sort mini-indexes
@@ -279,7 +280,7 @@ FI
 	fi
 done
 
-if ( $PDFTOCFRONT || [ hitex = $TEX ] ) && ! $FILESELECT
+if ( $PDFTOCFRONT || [[ $TEX =~ hitex ]] ) && ! $FILESELECT
 then
 	# create tarballs w/o changes for publication
 	if $CHANGES
@@ -291,7 +292,7 @@ then
 			esac
 			mv $f $(basename $f .$PDF)-changes.$PDF
 		done
-		if [ hitex = $TEX ]
+		if [[ $TEX =~ hitex ]]
 		then
 			rm -f xetex-changes.pdf
 			mv xetex.pdf xetex-changes.pdf
