@@ -397,12 +397,14 @@ then
 	#     (a) pandoc index.md -o index.pdf
 	#     (b) pandoc index.md -o index.tex;
 	#         pandoc index.tex -s -o index.html \
-	#           --metadata title="C/WEB programs in “TeX Live 2022”";
+	#           --metadata title="C/WEB programs in TeX Live 2022";
 	#         rm index.tex
 	# (2) Prepare a super-tarball from all the contents of these
-	#     individual tarballs (27/31) with either of
+	#     individual tarballs (42/53 and 34/54) with either of
 	#     (a) pax -wzf knuth-pdf.tar.gz knuth-pdf
+	#     (a') pax -wzf knuth-hint.tar.gz knuth-hint
 	#     (b) zip -r knuth-pdf.zip knuth-pdf
+	#     (b') zip -r knuth-hint.zip knuth-hint
 fi
 
 exit 0
