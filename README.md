@@ -21,7 +21,7 @@ WEB programs for “TeX and friends” as distributed in
 [TeX Live](https://www.tug.org/texlive).  For this purpose, the shell script
 `makeall` was whipped together; it provides various commandline options and
 works around several “quirks” in the WEB sources.  The resulting collection
-of PDF documents can be browsed in the `knuth-pdf` package amd the collection
+of PDF documents can be browsed in the `knuth-pdf` package and the collection
 of HINT documents are available in the `knuth-hint` package.
 
 WEB programmers who want to use `pwebmac.tex` instead of the default
