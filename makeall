@@ -87,14 +87,14 @@ CWEAVE="cweave -f +lX"
 CTWILL="ctwill -f +lpdf"
 PAX="pax -wvzf"
 SED_I="sed -i" # non-GNU-sed requires an extra '' argument for '-i' option.
-PDF=pdf
+PDF=pdf # default extension for 'knuth-pdf'
 
 # HINT format
 if [ hitex = $TEX ]
 then
-	$TEX -ini -jobname=hitex tex.ini
+	$TEX -ini -jobname=hitex tex.ini # FIX: local hitex.fmt
 	TEX="hitex --compress"
-	PDF=hnt
+	PDF=hnt # default extension for 'knuth-hint'
 fi
 
 # WEB and CWEB programs we want to get formatted
@@ -265,10 +265,8 @@ FI
 	elif [ ctwill = $f ]
 	then
 		if [[ $TEX =~ hitex ]]
-		then
-			CTWILLTEX=pdftex
-		else
-			CTWILLTEX="$TEX"
+		then CTWILLTEX=pdftex
+		else CTWILLTEX="$TEX"
 		fi
 		$CTWILLTEX $f
 		# sort mini-indexes
