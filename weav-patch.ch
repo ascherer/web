@@ -37,6 +37,22 @@ out_ptr:=1; out_line:=1; out_buf[1]:="c"; write(tex_file,'\input webma');
 out_ptr:=1; out_line:=1; out_buf[1]:="c"; write(tex_file,'\input pwebma');
 @z
 
+Section 172.
+
+@x l.3337
+@<Change |pp| to $\max(|scrap_base|,|pp+d|)$@>;
+@y
+@<Change |pp| to $\max(|scrap_base|,\,|pp+d|)$@>;
+@z
+
+Section 173.
+
+@x
+@ @<Change |pp| to $\max(|scrap_base|,|pp+d|)$@>=
+@y
+@ @<Change |pp| to $\max(|scrap_base|,\,|pp+d|)$@>=
+@z
+
 Section 249.
 
 @x l.4663
