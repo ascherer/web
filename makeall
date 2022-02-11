@@ -237,6 +237,15 @@ FI
 					$f.tex
 			fi ;;
 
+		# FIX: weave uses '\max' in name of module 173; this should
+		# appear correctly in the bookmarks, too.
+		weave )
+			if $NEW && [ tex != "$TEX" ] && [[ ! $TEX =~ hitex ]]
+			then
+				$SED_I -e "s/\(\\\\def\\\\({}\)/\\\\sanitizecommand\\\\max{max}\n\1/" \
+					$f.tex
+			fi ;;
+
 		# FIX: purge obsolete macros from XeTeX.
 		xetex ) $SED_I -e "/\\\\input xewebmac/d" $f.tex ;;
 	esac
