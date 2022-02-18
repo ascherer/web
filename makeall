@@ -93,7 +93,7 @@ PDF=pdf # default extension for 'knuth-pdf'
 if [ hitex = $TEX ]
 then
 	$TEX -ini -jobname=hitex tex.ini # FIX: local hitex.fmt
-	cp /opt/github/Extern/texlive-sources/texk/web2c/hitexdir/tex/hiplainpage.tex . # FIX: macros will be in texmf-dist
+	cp /opt/github/Extern/texlive-source/texk/web2c/hitexdir/tex/hiplainpage.tex . # FIX: macros will be in texmf-dist
 	TEX="hitex --compress"
 	PDF=hnt # default extension for 'knuth-hint'
 fi
