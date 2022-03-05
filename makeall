@@ -46,7 +46,7 @@ KNUTHWARE=$(dirname $KNUTHWHERE)
 FILES="$KNUTHWARE/*.web pdftex.web xetex.web twill"
 WEBINPUTS=$KNUTHWARE//:
 
-FILES="$FILES common ctangle cweave ctwill refsort twinx ctie tie"
+FILES="$FILES common ctangle cweave ctwill refsort twinx ctie tie hitex"
 CWEBINPUTS=$KNUTHWARE//:
 
 KNUTHWHERE=$(locate /glue.web)
@@ -145,8 +145,9 @@ do
 				WEBINPUTS=$KNUTHWARE/../../Work//:$WEBINPUTS: \
 				weave $f $f-final ;;
 
+			# HiTeX has no change file
 			# TWILL is a change in and of itself
-			twill ) ;;
+			hitex | twill ) ;;
 
 			# all other WEB codes have singular changefiles
 			* ) weave $f $f ;;
@@ -165,7 +166,7 @@ do
 			$f.tex
 	else
 		case $f in
-			c* | refsort | twinx | tie ) $CWEAVE $f ;;
+			c* | refsort | twinx | tie | hitex ) $CWEAVE $f ;;
 			* ) weave $f ;;
 		esac
 	fi
@@ -179,6 +180,8 @@ do
 		case $f in
 			# do nothing for CWEB programs
 			c* | refsort | twinx | tie ) ;;
+			hitex )
+				$SED_I -e "s/\(\\\\def\\\\topofcontents\)/\\\\datethis\n\\\\emergencystretch=.1\\\\hsize\n\1/" $f.tex ;;
 
 			bibtex | patgen | tangle | weave )
 				$SED_I -e "s/\(\\\\def\\\\title\)/\\\\datecontentspage\n\1/" $f.tex ;;
@@ -406,6 +409,7 @@ then
 		$PAX "$OUTDIR/bibtex.tar.gz" -s ,^,bibtex/, bibtex.$PDF
 		$PAX "$OUTDIR/other.tar.gz" -s ,^,other/, \
 			dvicopy.$PDF patgen.$PDF pktogf.$PDF pktype.$PDF
+		$PAX "$OUTDIR/hitex.tar.gz" -s ,^,hitex/, hitex.$PDF
 		$PAX "$OUTDIR/pdftex.tar.gz" -s ,^,pdftex/, pdftex.$PDF
 		$PAX "$OUTDIR/xetex.tar.gz" -s ,^,xetex/, xetex.pdf
 		$PAX "$OUTDIR/ctie.tar.gz" -s ,^,ctie/, ctie.$PDF
