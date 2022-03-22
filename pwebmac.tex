@@ -18,10 +18,10 @@
   \def\Black{\pdfliteral{0 g 0 G}}  % use rgb colors for direct PDF output too
   \def\PDFlinkcolor{\pdfliteral{\pdflinkcolor\space rg \pdflinkcolor\space RG}}
 \fi\fi
-\newif\ifHINT
-\ifx\HINTversion\undefined \HINTfalse \else \HINTtrue \fi
+\newif\ifhint
+\ifx\HINTversion\undefined \hintfalse \else \hinttrue \fi
 \newif\ifacro \ifpdf\acrotrue\fi \ifpdftex\acrotrue\fi
-\newif\ifacroHINT \ifacro\acroHINTtrue\fi \ifHINT\acroHINTtrue\fi
+\newif\ifacrohint \ifacro\acrohinttrue\fi \ifhint\acrohinttrue\fi
 
 \parskip 0pt % no stretch between paragraphs
 \parindent 1em % for paragraphs and for the first line of Pascal text
@@ -85,7 +85,7 @@
 \let\yskip=\smallskip
 \def\to{\mathrel{.\,.}} % double dot, used only in math mode
 \def\note#1#2.{\Y\noindent{\hangindent2em\baselineskip10pt%
-    \eightrm#1~\ifacroHINT{\pdfnote#2.}\else#2\fi.\par}}
+    \eightrm#1~\ifacrohint{\pdfnote#2.}\else#2\fi.\par}}
 
 \newtoks\toksA \newtoks\toksB \newtoks\toksC \newtoks\toksD
 \newtoks\toksE \newtoks\toksF \newtoks\usersanitizer
@@ -175,7 +175,7 @@
   \outlinest\let\outlinedone=\relax}
 \fi % End of pdf macros
 
-\ifHINT
+\ifhint
 % The following uses HINT primitives to implement:
 % \HINThome to mark the position of the home page
 % \HINTlabel to attach a label to the top of a section
@@ -191,14 +191,14 @@
 \let\pdflink=\HINTlink
 \fi % End of HINT macros
 
-% Common macros for \ifacro and \ifHINT
-\ifacroHINT
+% Common macros for \ifacro and \ifhint
+\ifacrohint
 \def\pdfnote#1.{\setbox0=\hbox{\toksA={#1.}\toksB={}\maketoks}\the\toksA}
 \def\firstsecno#1.{\setbox0=\hbox{\toksA={#1.}\toksB={}%
     \def\makenote{\addtokens\toksB{\the\toksC}\def\makenote{\toksD={}
       \toksC={}\let\space\empty}\makenote}\maketoks}}
 \def\addtokens#1#2{\edef\addtoks{\noexpand#1={\the#1#2}}\addtoks}
-\ifHINT\else\sanitizecommand\to{..}\fi % a trivial example; requires \addtokens
+\ifhint\else\sanitizecommand\to{..}\fi % a trivial example; requires \addtokens
 \def\poptoks#1#2|ENDTOKS|{\let\first=#1\toksD={#1}%
   \ifcat\noexpand\first0\countB=`#1\else\countB=0\fi\toksA={#2}}
 \def\maketoks{\expandafter\poptoks\the\toksA|ENDTOKS|%
@@ -233,7 +233,7 @@
 \def\lapstar{\rlap{*}}
 \def\stsec{\rightskip=0pt % get out of Pascal mode (cf. \P)
   \sfcode`;=1500 \pretolerance 200 \hyphenpenalty 50 \exhyphenpenalty 50
-  \ifHINT\HINTlabel\fi% Start page before section
+  \ifhint\HINTlabel\fi% Start page before section
   \noindent{\let\*=\lapstar\bf\modstar.\quad}%
   \ifacro \smash{\raise\baselineskip\hbox to0pt{\let\*=\empty
     \ifpdftex \pdfdest num \modstar fith%
@@ -291,7 +291,7 @@
 \let\W=\land % logical and
 \def\X#1:#2\X{\ifmmode\gdef\XX{\null$\null}\else\gdef\XX{}\fi %$% section name
   \XX$\langle\,$#2{\eightrm\kern.5em
-    \ifacroHINT{\pdfnote#1.}\else#1\fi}$\,\rangle$\XX}
+    \ifacrohint{\pdfnote#1.}\else#1\fi}$\,\rangle$\XX}
 \def\Y{\par\yskip}
 \let\Z=\let % now you can \send the control sequence \Z
 \def\){\hbox{\.{@\$}}} % sign for string pool check sum
@@ -371,7 +371,7 @@
   \vsize=\pageheight \advance\vsize by -\ht\sbox % the remaining height
   \hsize=.5\pagewidth \advance\hsize by -10pt
     % column width for the index (20pt between cols)
-  \ifHINT\else
+  \ifhint\else
   \parfillskip 0pt plus .6\hsize % try to avoid almost empty lines
   \fi
   \def\lr{L} % this tells whether the left or right column is next
@@ -382,7 +382,7 @@
   \message{Index:}
   \parskip 0pt plus .5pt
   \outer\def\:##1, ##2.{\par\hangindent2em\noindent##1:\kern1em
-    \ifacroHINT\pdfnote##2.\else##2\fi.} % index entry
+    \ifacrohint\pdfnote##2.\else##2\fi.} % index entry
   \let\ttentry=\. \def\.##1{\ttentry{##1\kern.2em}} % give \tt a little room
   \def\[##1]{$\underline{##1}$} % underlined index item
   \rm \rightskip0pt plus 2.5em \tolerance 10000 \let\*=\lapstar
@@ -397,7 +397,7 @@
   \message{Section names:}
   \output={\normaloutput\page\lheader\rheader}
   \setpage
-  \def\note##1##2.{\quad{\eightrm##1~\ifacroHINT{\pdfnote##2.}\else{##2}\fi.}}
+  \def\note##1##2.{\quad{\eightrm##1~\ifacrohint{\pdfnote##2.}\else{##2}\fi.}}
   \linepenalty=10 % try to conserve lines
   \def\U{\note{Used in section}} % crossref for use of a section
   \def\Us{\note{Used in sections}} % crossref for uses of a section
@@ -432,16 +432,16 @@
   \pageno=\contentspagenumber
   \def\grouptitle{TABLE OF CONTENTS}
   \message{Table of contents:}
-  \ifHINT\HINThome\fi% Mark the Table of contents as home page
+  \ifhint\HINThome\fi% Mark the Table of contents as home page
   \topofcontents \startpdf
-  \line{\hfil Section\ifHINT\else\hbox to3em{\hss Page}\fi}% No Page in HINT
+  \line{\hfil Section\ifhint\else\hbox to3em{\hss Page}\fi}% No Page in HINT
   \let\Z=\contentsline
   \readcontents\relax % read the contents info
   \botofcontents \end} % print the contents page(s) and terminate
 \def\contentsline#1#2#3#4{%
     \line{\ignorespaces#1
       \rm\leaders\hbox to .5em{.\hfil}\hfil
-      \ \ifHINT
+      \ \ifhint
           \HINTlink{#2}{\romannumeral#2}% No page numbers in HINT
           \HINTcontents{#1}{#2}{#3}%
         \else\ifacro\pdflink{#2}{\romannumeral#2}\else#2\fi
