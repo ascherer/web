@@ -1,6 +1,6 @@
-# knuth-pdf – PDF collection of typeset C/WEB sources in TeX Live
+# knuth-hint – HINT collection of typeset C/WEB sources in TeX Live
 
-Here you find a large collection of PDF documents for many C/WEB programs in
+Here you find a large collection of HINT documents for many C/WEB programs in
 TeX\ Live, both in their original form as written by their respective authors,
 and in the changed form as they are actually used in the TeX Live system.  Care
 has been taken to keep the section numbering intact, so that you can study the
@@ -17,10 +17,8 @@ If you believe to have found anything that remains technically, historically,
 typographically, or politically incorrect in any of these files, please feel
 free to [report bugs in \TeX\ and friends](https://tug.org/texmfbug/).
 
-The “License” of the `knuth-pdf` package is “Public Domain” and it covers only
+The “License” of the `knuth-hint` package is “Public Domain” and it covers only
 the contents of this package, _not_ the various (and varying) “free software”
 licenses of the presented software codes.
 
-In part `knuth-pdf` is an update and replacement for the `latex-tds` package.
-
-This is version “2.4” of the `knuth-pdf` package — 2024-07-10, Andreas Scherer.
+This is version “2.4” of the `knuth-hint` package — 2024-07-10, Andreas Scherer.
