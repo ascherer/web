@@ -18,7 +18,7 @@ Options are (--long options only with GNU getopt):
 	-n, --new		Use 'pwebmac' instead of 'webmac'
 	-o, --outdir ARG	Create tarballs in path ARG
 	-p, --pdftocfront	Place TOC page at the front (PDF only)
-	-t, --tex ARG		Use TeX variant ARG={tex,{hi,pdf,xe}tex}
+	-t, --tex ARG		Use TeX variant ARG=[(hi|pdf|xe)]tex
 
 Public domain.  Originally written by Andreas Scherer, 2020.
 HELP
