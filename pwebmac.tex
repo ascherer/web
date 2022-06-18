@@ -5,22 +5,18 @@
 % macro integration \`a la CWEB by Andreas Scherer <andreas_tex@freenet.de>.
 % This file is not copyrighted and can be used freely.
 \ifx\renewenvironment\undefined\else\endinput\fi % LaTeX will use other macros
-\xdef\fmtversion{\fmtversion+WEBMAC4.7}
-\newif\ifpdf
+\xdef\fmtversion{\fmtversion+WEBMAC4.8}
+\input iftex.sty % TeX engine tests
 \ifx\pdf+\pdftrue\fi
 % Uncomment the following line if you want PDF goodies to be the default
 %\ifx\pdf-\else\pdftrue\fi
 \def\pdflinkcolor{0 0 1} % the RGB values for hyperlink color
-\ifx\undefined\XeTeXrevision\else\pdftrue\fi % XeTeX produces PDF output
-\newif\ifpdftex
-\ifx\pdfoutput\undefined \pdftexfalse \else\ifnum\pdfoutput=0 \pdftexfalse
-\else \pdftextrue \pdfoutput=1
+\ifxetex\pdftrue\fi % XeTeX produces PDF output
+\ifpdftex % pdfTeX produces PDF output if \pdfoutput>0
   \def\Black{\pdfliteral{0 g 0 G}}  % use rgb colors for direct PDF output too
   \def\PDFlinkcolor{\pdfliteral{\pdflinkcolor\space rg \pdflinkcolor\space RG}}
-\fi\fi
-\newif\ifhint
-\ifx\HINTversion\undefined \hintfalse \else \hinttrue \fi
-\newif\ifacro \ifpdf\acrotrue\fi \ifpdftex\acrotrue\fi
+\fi
+\newif\ifacro \ifpdf\acrotrue\fi
 \newif\ifacrohint \ifacro\acrohinttrue\fi \ifhint\acrohinttrue\fi
 
 \parskip 0pt % no stretch between paragraphs
@@ -100,7 +96,7 @@
 \def\thedepth{\the\dp\strutbox\space}
 \ifpdftex
   \ifx\pdfannotlink\undefined\let\pdfannotlink\pdfstartlink\fi% for pdfTeX 0.14
-  \def\pdflink#1#2{\hbox{\pdfannotlink height\ht\strutbox depth\dp\strutbox
+  \def\pdflink#1#2{\hbox{\pdfannotlink height \theheight depth \thedepth
     attr{/Border [0 0 0]} goto num #1 \PDFlinkcolor #1\Black\pdfendlink}}
 \else\def\pdflink#1#2{\setbox0=\hbox{\special{pdf: bc [ \pdflinkcolor ]}{#1}%
     \special{pdf: ec}}\special{pdf: ann width \thewidth height \theheight
@@ -219,12 +215,12 @@
 \def\maketoksdone{\edef\st{\global\noexpand\toksA={\the\toksB}}\st}
 \fi % End of common macros
 
-\def\pdfURL#1#2{\ifpdftex\pdfannotlink height\ht\strutbox depth\dp\strutbox
+\def\pdfURL#1#2{\ifpdftex\pdfannotlink height \theheight depth \thedepth
   attr {/Border [0 0 0]} user { /Type /Action /Subtype /Link /A
       << /S /URI /URI (#2) >> }\PDFlinkcolor #1\Black \pdfendlink
   \else\ifpdf{\setbox0=\hbox{\special{pdf: bc [ \pdflinkcolor ]}{#1}%
-    \special{pdf: ec}}\special{pdf: ann width \thewidth\space height \theheight
-      \space depth \thedepth\space << /Border [0 0 0]
+    \special{pdf: ec}}\special{pdf: ann width \thewidth height \theheight
+      depth \thedepth << /Border [0 0 0]
       /Type /Action /Subtype /Link /A << /S /URI /URI (#2) >> >>}\box0\relax}%
   \else #1 ({\tt#2})\fi\fi}
 {\catcode`\~=12 \gdef\TILDE/{~}} % ~ in a URL
@@ -267,8 +263,9 @@
   \edef\gtitletoks{\expandafter\stripprefix\meaning\gtitletoks}%
   \edef\next{\write\cont{\Z{\gtitletoks}{\modno}% write to contents file
    {\noexpand\the\pageno}{\the\toksE}}}\next % \Z{title}{sec}{page}{ss}
+  \ifpdftex\relax\else
   \ifpdf\special{pdf: outline 0 << /Title (\the\toksE) /Dest
-    [ @thispage /FitH @ypos ] >>}\fi
+    [ @thispage /FitH @ypos ] >>}\fi\fi
   \ifon\startsection{\bf\ignorespaces#2.\quad}\ignorespaces}
 \def\MN#1.{\par % common code for \M, \N
   {\xdef\modstar{#1}\let\*=\empty\xdef\modno{#1}}% remove \* from section name
