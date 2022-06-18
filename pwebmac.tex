@@ -86,7 +86,9 @@
 \newtoks\toksA \newtoks\toksB \newtoks\toksC \newtoks\toksD
 \newtoks\toksE \newtoks\toksF \newtoks\usersanitizer
 \newcount\countA \countA=0 \newcount\countB \countB=0
-\newcount\countC \countC=0
+\newcount\countC \countC=0 \newcount\countD \countD=0
+\ifpdftex \ifnum\pdfshellescape=1
+  \countD=\input{|"countmodules \jobname.tex"} \fi\fi
 \newif\iftokprocessed \newif\ifTnum \newif\ifinstr
 {\def\\{\global\let\spacechar= }\\ }
 
@@ -401,6 +403,7 @@
   \def\:{\par\hangindent 2em}\let\*=*\let\.=\ttentry
   \ifacro \def\outsecname{Names of the sections} \let\Xpdf\X
   \ifpdftex \pdfdest name {NOS} fith
+    \ifnum \the\countD>0 \xdef\modno{\the\countD} \fi
     \pdfoutline goto name {NOS} count -\modno {\outsecname}
     \def\X##1:##2\X{\Xpdf##1:##2\X \firstsecno##1.%
       {\toksF={}\makeoutlinetoks##2\outlinedone\outlinedone}%

@@ -19,13 +19,14 @@ Options are (--long options only with GNU getopt):
 	-o, --outdir ARG	Create tarballs in path ARG
 	-p, --pdftocfront	Place TOC page at the front (PDF only)
 	-t, --tex ARG		Use TeX variant ARG=[(hi|pdf|xe)]tex
+	-v, --validpdf		Use correct number of entries in NOS node
 
 Public domain.  Originally written by Andreas Scherer, 2020.
 HELP
 }
 
-LONGOPTS=changes,files:,help,new,outdir:,pdftocfront,tex:
-SHRTOPTS=cf:hno:pt:
+LONGOPTS=changes,files:,help,new,outdir:,pdftocfront,tex:,validpdf
+SHRTOPTS=cf:hno:pt:v
 
 CHANGES=false # apply changefile to C/WEB source
 FILESELECT=false # user-defined '--files' selection
@@ -33,6 +34,7 @@ NEW=false # '\input pwebmac' instead of '\input webmac' for PDF et al.
 OUTDIR=. # path where the resulting tarballs are placed
 PDFTOCFRONT=false # push table-of-contents to front of PDF output
 TEX=tex # or 'pdftex' or 'xetex' or 'hitex'
+VALID=false # give 'pdftex' a chance to produce valid output
 
 # Initial list of C/WEB sources to process, overridable with option '-f':
 KNUTHWHERE=$(locate /bibtex.web)
@@ -78,6 +80,7 @@ do
 		-o | --outdir ) OUTDIR="$2"; shift 2 ;;
 		-p | --pdftocfront ) PDFTOCFRONT=true; shift ;;
 		-t | --tex ) TEX=$2; shift 2 ;;
+		-v | --validpdf ) VALID=true; shift ;;
 		-- ) shift; break ;;
 		* ) usage; exit 1 ;;
 	esac
@@ -95,6 +98,13 @@ if [ hitex = $TEX ]
 then
 	TEX="$HITEX"
 	PDF=hnt # default extension for 'knuth-hint'
+fi
+
+# Valid PDF output from 'pdftex': Invoke 'countmodules' in 'pwebmac.tex'
+# to set '\countD' to the number of @<named modules@>.
+if ( [ pdftex = $TEX ] && $VALID )
+then
+	TEX="$TEX --shell-escape"
 fi
 
 # WEB and CWEB programs we want to get formatted

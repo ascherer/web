@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# This script counts all occurrences of the macro sequence '\:\X' at the end of
+# a TeX file created by WEAVE from a WEB source. This value represents the
+# number of @<named modules@> and is returned to the command line.
+#
+# The associated 'pwebmac.tex' -- when used with 'pdftex --shell-escape' --
+# reads this number with '\input{|"countmodules ..."}' and uses it as the
+# correct value for 'count -\modno' in the 'NOS' node of the resulting PDF
+# output for the sake of various online PDF validators.
+#
+# Public domain.  Originally written by Andreas Scherer, 2022.
+#
+if [ $# -gt 0 ]
+then grep \\\\:\\\\X $1 | wc -l
+else echo "$0 FILE.tex"
+fi
