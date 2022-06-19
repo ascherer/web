@@ -15,7 +15,7 @@ Limbo.
 \def\({} % kludge for alphabetizing certain module names
 @y
 \def\({} % kludge for alphabetizing certain module names
-\ifhint\else\ifacro\sanitizecommand\max{max}\fi\fi
+\ifhint\else\ifpdf\sanitizecommand\max{max}\fi\fi
 @z
 
 Section 21.

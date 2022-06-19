@@ -2,7 +2,7 @@
 \input webmac
 @y
 \input pwebmac
-\ifacro
+\ifpdf
   \pdfpagewidth=\pagewidth \advance\pdfpagewidth by 2cm
   \pdfpageheight=\pageheight \advance\pdfpageheight by 3cm
   \ifpdftex \pdfhorigin=1cm \pdfvorigin=1cm
@@ -19,7 +19,7 @@
 
 \def\bkminfo{}
 \outer\def\section #1.{\penalty-50\vskip 12pt plus 3pt minus 3pt
-  \noindent\ifacro\vbox to 0pt{\kern-2.5ex\relax
+  \noindent\ifpdf\vbox to 0pt{\kern-2.5ex\relax
     \ifpdftex\pdfdest num \destcount fitbh\relax
     \else\special{pdf: dest (\the\destcount) [ @thispage /FitBH @ypos ]}\fi
     \def\.##1{##1}%
@@ -43,7 +43,7 @@
 
 \def\Appendix#1{\leavevmode
   \ifnum\csname app#1\endcsname>0 %
-    \ifacro\ifpdftex
+    \ifpdf\ifpdftex
       \pdfstartlink attr{/Border[0 0 0]} goto num\csname app#1\endcsname\relax
       \PDFlinkcolor\hbox{Appendix}~#1\Black
       \pdfendlink

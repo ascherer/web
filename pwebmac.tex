@@ -16,8 +16,7 @@
   \def\Black{\pdfliteral{0 g 0 G}}  % use rgb colors for direct PDF output too
   \def\PDFlinkcolor{\pdfliteral{\pdflinkcolor\space rg \pdflinkcolor\space RG}}
 \fi
-\newif\ifacro \ifpdf\acrotrue\fi
-\newif\ifacrohint \ifacro\acrohinttrue\fi \ifhint\acrohinttrue\fi
+\newif\ifacrohint \ifpdf\acrohinttrue\fi \ifhint\acrohinttrue\fi
 
 \parskip 0pt % no stretch between paragraphs
 \parindent 1em % for paragraphs and for the first line of Pascal text
@@ -92,7 +91,7 @@
 \newif\iftokprocessed \newif\ifTnum \newif\ifinstr
 {\def\\{\global\let\spacechar= }\\ }
 
-\ifacro % The following are pdf macros from 'cwebmac.tex 3.70'
+\ifpdf % The following are pdf macros from 'cwebmac.tex 3.70'
 \def\thewidth{\the\wd0 \space}
 \def\theheight{\the\ht\strutbox\space}
 \def\thedepth{\the\dp\strutbox\space}
@@ -189,7 +188,7 @@
 \let\pdflink=\HINTlink
 \fi % End of HINT macros
 
-% Common macros for \ifacro and \ifhint
+% Common macros for \ifpdf and \ifhint
 \ifacrohint
 \def\pdfnote#1.{\setbox0=\hbox{\toksA={#1.}\toksB={}\maketoks}\the\toksA}
 \def\firstsecno#1.{\setbox0=\hbox{\toksA={#1.}\toksB={}%
@@ -217,14 +216,14 @@
 \def\maketoksdone{\edef\st{\global\noexpand\toksA={\the\toksB}}\st}
 \fi % End of common macros
 
-\def\pdfURL#1#2{\ifpdftex\pdfannotlink height \theheight depth \thedepth
-  attr {/Border [0 0 0]} user { /Type /Annot /Subtype /Link /A
+\def\pdfURL#1#2{\ifpdf \ifpdftex\pdfannotlink height \theheight depth \thedepth
+    attr {/Border [0 0 0]} user { /Type /Annot /Subtype /Link /A
       << /S /URI /URI (#2) >> }\PDFlinkcolor #1\Black \pdfendlink
-  \else\ifpdf{\setbox0=\hbox{\special{pdf: bc [ \pdflinkcolor ]}{#1}%
+  \else {\setbox0=\hbox{\special{pdf: bc [ \pdflinkcolor ]}{#1}%
     \special{pdf: ec}}\special{pdf: ann width \thewidth height \theheight
-      depth \thedepth << /Border [0 0 0]
-      /Type /Annot /Subtype /Link /A << /S /URI /URI (#2) >> >>}\box0\relax}%
-  \else #1 ({\tt#2})\fi\fi}
+      depth \thedepth << /Border [0 0 0] /Type /Annot /Subtype /Link /A
+      << /S /URI /URI (#2) >> >>}\box0\relax}\fi
+  \else #1 ({\tt#2})\fi}
 {\catcode`\~=12 \gdef\TILDE/{~}} % ~ in a URL
 {\catcode`\_=12 \gdef\UNDER/{_}} % _ in a URL
 
@@ -233,7 +232,7 @@
   \sfcode`;=1500 \pretolerance 200 \hyphenpenalty 50 \exhyphenpenalty 50
   \ifhint\HINTlabel\fi% Start page before section
   \noindent{\let\*=\lapstar\bf\modstar.\quad}%
-  \ifacro \smash{\raise\baselineskip\hbox to0pt{\let\*=\empty
+  \ifpdf \smash{\raise\baselineskip\hbox to0pt{\let\*=\empty
     \ifpdftex \pdfdest num \modstar fith%
     \else \special{pdf: dest (\romannumeral\modstar)
       [ @thispage /FitH @ypos ]}\fi}}\fi}
@@ -258,7 +257,7 @@
 \outer\def\M#1.{\MN#1.\ifon\vfil\penalty-100\vfilneg % beginning of section
   \vskip\intersecskip\startsection\ignorespaces}
 \outer\def\N#1.#2.{% beginning of starred section
-  \ifacro{\toksF={}\makeoutlinetoks#2\outlinedone\outlinedone}\fi
+  \ifpdf{\toksF={}\makeoutlinetoks#2\outlinedone\outlinedone}\fi
   \gtitle={#2}\MN#1.\vfil\eject % define running headline
   \message{*\modno} % progress report
   \def\stripprefix##1>{}\def\gtitletoks{#2}%
@@ -329,8 +328,8 @@
 \def\title{\expandafter\uppercase\expandafter{\jobname}}
 \def\topofcontents{\centerline{\titlefont\title}\vskip.7in
   \vfill} % this material will start the table of contents page
-\def\startpdf{\ifpdftex\pdfcatalog{/PageMode /UseOutlines}\else
-    \ifpdf{\special{pdf: docview << /PageMode /UseOutlines >>}}\fi\fi}
+\def\startpdf{\ifpdf \ifpdftex\pdfcatalog{/PageMode /UseOutlines}
+  \else {\special{pdf: docview << /PageMode /UseOutlines >>}}\fi\fi}
 \def\botofcontents{\vfill
   \centerline{\covernote}} % this material will end the table of contents page
 \def\covernote{}
@@ -401,7 +400,7 @@
   \def\U{\note{Used in section}} % crossref for use of a section
   \def\Us{\note{Used in sections}} % crossref for uses of a section
   \def\:{\par\hangindent 2em}\let\*=*\let\.=\ttentry
-  \ifacro \def\outsecname{Names of the sections} \let\Xpdf\X
+  \ifpdf \def\outsecname{Names of the sections} \let\Xpdf\X
   \ifpdftex \pdfdest name {NOS} fith
     \ifnum \the\countD>0 \xdef\modno{\the\countD} \fi
     \pdfoutline goto name {NOS} count -\modno {\outsecname}
@@ -444,7 +443,7 @@
       \ \ifhint
           \HINTlink{#2}{\romannumeral#2}% No page numbers in HINT
           \HINTcontents{#1}{#2}{#3}%
-        \else\ifacro\pdflink{#2}{\romannumeral#2}\else#2\fi
+        \else\ifpdf\pdflink{#2}{\romannumeral#2}\else#2\fi
           \hbox to3em{\hss#3}\fi}}
 \def\today{\ifcase\month\or
   January\or February\or March\or April\or May\or June\or

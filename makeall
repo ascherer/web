@@ -195,7 +195,7 @@ do
 
 				# active links in PDF outlines/bookmarks
 				cat > texmf-pdf.patch << FI
-  \ifacro{\toksF={}\makeoutlinetoks{[#2] #3}\outlinedone\outlinedone}\fi
+  \ifpdf{\toksF={}\makeoutlinetoks{[#2] #3}\outlinedone\outlinedone}\fi
 FI
 				$SED_I -e "/\\\\outer\\\\def\\\\N/ {
 					r texmf-pdf.patch
