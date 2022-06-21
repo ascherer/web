@@ -86,8 +86,8 @@
 \newtoks\toksE \newtoks\toksF \newtoks\usersanitizer
 \newcount\countA \countA=0 \newcount\countB \countB=0
 \newcount\countC \countC=0 \newcount\countD \countD=0
-\ifpdftex \ifnum\pdfshellescape=1
-  \countD=\input{|"countmodules \jobname.tex"} \fi\fi
+\ifpdftex \ifnum\pdfshellescape=1 {\let\\=\BS
+  \global\countD=\input{|grep -c -e '\\:\\X' \jobname.tex}} \fi\fi
 \newif\iftokprocessed \newif\ifTnum \newif\ifinstr
 {\def\\{\global\let\spacechar= }\\ }
 

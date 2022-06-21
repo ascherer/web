@@ -100,8 +100,8 @@ then
 	PDF=hnt # default extension for 'knuth-hint'
 fi
 
-# Valid PDF output from 'pdftex': Invoke 'countmodules' in 'pwebmac.tex'
-# to set '\countD' to the number of @<named modules@>.
+# Valid PDF output from 'pdftex': In 'pwebmac.tex' set '\countD' to the actual
+# number of @<named modules@>, not the number of all sections.
 if ( [ pdftex = $TEX ] && $VALID )
 then
 	TEX="$TEX --shell-escape"
