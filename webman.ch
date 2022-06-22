@@ -56,6 +56,14 @@
   \else Appendix~#1\fi}
 @z
 
+@x l.34
+\vskip 15pt plus 3pt minus 3pt
+\noindent This memo describes how to write programs in the
+@y
+\section Introduction.
+This memo describes how to write programs in the
+@z
+
 @x l.180
 \yskip\item{1)} A \TeX\ part, containing explanatory material about what
 @y
