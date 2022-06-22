@@ -134,11 +134,11 @@ usermanual: webman.tex webmac.tex $(MCHANGES)
 fullmanual: usermanual $(SOURCES) $(TCHANGES) $(WCHANGES) $(TTCHANGES)
 	make weave
 	$(WEAVE) tangle.web $(TCHANGES) tangle.tex
-	$(PDF)tex tangle.tex
+	$(PDF)tex --shell-escape tangle.tex
 	$(WEAVE) weave.web $(WCHANGES) weave.tex
-	$(PDF)tex weave.tex
+	$(PDF)tex --shell-escape weave.tex
 	$(WEAVE) weave.web $(TTCHANGES) twill.tex
-	$(PDF)tex twill.tex
+	$(PDF)tex --shell-escape twill.tex
 
 # be sure to leave tangle.pas for bootstrapping
 clean:
