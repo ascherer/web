@@ -34,4 +34,4 @@ creates HINT output that can be viewed with the `hintview` program.
 
 The `pwebmac` package is free software and may be used without constraints.
 
-This is version “4.8” of the `pwebmac` package — 2022-06-05, Andreas Scherer.
+This is version “4.8.1” of the `pwebmac` package — 2022-06-25, Andreas Scherer.
