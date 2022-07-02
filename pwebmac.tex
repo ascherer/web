@@ -264,8 +264,8 @@
   \edef\gtitletoks{\expandafter\stripprefix\meaning\gtitletoks}%
   \edef\next{\write\cont{\Z{\gtitletoks}{\modno}% write to contents file
    {\noexpand\the\pageno}{\the\toksE}}}\next % \Z{title}{sec}{page}{ss}
-  \ifpdftex\relax\else
-  \ifpdf\special{pdf: outline 0 << /Title (\the\toksE) /Dest
+  \ifpdf \ifpdftex\relax
+  \else \special{pdf: outline 0 << /Title (\the\toksE) /Dest
     [ @thispage /FitH @ypos ] >>}\fi\fi
   \ifon\startsection{\bf\ignorespaces#2.\quad}\ignorespaces}
 \def\MN#1.{\par % common code for \M, \N
