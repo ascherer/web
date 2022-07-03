@@ -32,14 +32,14 @@
     \kern2.5ex\relax
   }\fi{\bf #1.}\quad\ignorespaces}
 
-\def\appA{7}
-\def\appB{8}
-\def\appC{9}
+\def\appA{8}
+\def\appB{9}
+\def\appC{10}
 \def\appD{0}
 \def\appE{0}
-\def\appF{10}
-\def\appG{11}
-\def\appH{12}
+\def\appF{11}
+\def\appG{12}
+\def\appH{13}
 
 \def\Appendix#1{\leavevmode
   \ifnum\csname app#1\endcsname>0 %
