@@ -13,3 +13,11 @@ Section 8.
 @y
 @!max_id_length=32; {long identifiers are chopped to this length, which must
 @z
+
+Section 31.
+
+@x l.640
+procedure error; {prints '\..' and location of error message}
+@y
+procedure error; {prints `\..' and location of error message}
+@z
