@@ -135,6 +135,14 @@ l:=9; init_str9("T")("e")("X")("f")("o")("n")("t")("s")(":")(home_font_area);@/
 l:=0; init_str0(home_font_area);@/
 @z
 
+Section 160.
+
+@x l.3523
+@d lab_typ==prev {the type of a stored label (|"/"..."8"|)}
+@y
+@d lab_typ==prev {the type of a stored label (|"/".."8"|)}
+@z
+
 Section 219.
 
 @x l.4341
