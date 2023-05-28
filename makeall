@@ -420,7 +420,7 @@ then
 	#     (a) pandoc index.md -o index.pdf
 	#     (b) pandoc index.md -o index.tex;
 	#         pandoc index.tex -s -o index.html \
-	#           --metadata title="C/WEB programs in TeX Live 2022";
+	#           --metadata title="C/WEB programs in TeX Live 2023";
 	#         rm index.tex
 	# (2) Prepare a super-tarball from all the contents of these
 	#     individual tarballs (42/53 and 34/54) with either of
