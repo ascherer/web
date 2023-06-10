@@ -10,8 +10,8 @@ sources and their changes in parallel.  Also included is the collection of
 Although not all the texts here are written or maintained by Donald Knuth, it
 is more convenient for everything to be collected in one place for reading and
 searching.  They all stem from the system that Knuth created.  The central
-entry point is the ‘index’ file, with links to the individual documents, either
-in HTML or in PDF format.
+entry point is the ‘index’ file, with links to the individual HINT documents,
+either in HTML or in PDF format.
 
 If you believe to have found anything that remains technically, historically,
 typographically, or politically incorrect in any of these files, please feel
