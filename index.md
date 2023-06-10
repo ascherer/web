@@ -17,7 +17,7 @@ Welcome to “All Things `WEB`” in \TeX\ Live.
 Here you find the documented source code of all major `WEB` and `CWEB` programs
 in readable format.  With the exceptions of `XeTeX` and `CTWILL`, all
 documents are in the `HINT` format and can be viewed with the `hintview`
-program.
+program; see https://github.com/ruckertm/HINT for the latest version.
 
 The `NAMED` entries represent the unmodified base sources
 as written by their respective authors, the attached `chg` links point to
