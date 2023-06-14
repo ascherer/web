@@ -94,15 +94,16 @@ PDF=pdf # default extension for 'knuth-pdf'
 HITEX="hitex --compress"
 
 # HINT format
-if [ hitex = $TEX ]
+if [ hitex = "$TEX" ]
 then
+	CTWILL="$CTWILL +P"
 	TEX="$HITEX"
 	PDF=hnt # default extension for 'knuth-hint'
 fi
 
 # Valid PDF output from 'pdftex': In 'pwebmac.tex' set '\countD' to the actual
 # number of @<named modules@>, not the number of all sections.
-if ( [ pdftex = $TEX ] && $VALID )
+if ( [ pdftex = "$TEX" ] && $VALID )
 then
 	TEX="$TEX --shell-escape"
 fi
@@ -115,7 +116,10 @@ do
 	if [ ctwill = $f ]
 	then
 		# apply tons of editorial changes to 'ctwill.w'
-		ctie -m $f.w cweave.w $f-w2c.ch $f-mini.ch
+		if [ "$HITEX" = "$TEX" ]
+		then ctie -m $f.w cweave.w $f-w2c.ch $f-mini.ch $f-hint.ch
+		else ctie -m $f.w cweave.w $f-w2c.ch $f-mini.ch
+		fi
 		cp -an $KNUTHWARE/cwebdir/*.bux .
 		$CTWILL $f # prime the pump
 		$CTWILL $f # get decent answers
@@ -284,14 +288,14 @@ FI
 	then $f $f
 	elif [ ctwill = $f ]
 	then
-		if [ "$HITEX" = "$TEX" ]
-		then CTWILLTEX=pdftex
-		else CTWILLTEX="$TEX"
-		fi
-		$CTWILLTEX $f
+		$TEX $f
 		# sort mini-indexes
-		ctwill-refsort < $f.ref > $f.sref
-		$CTWILLTEX $f
+		if [ "$HITEX" = "$TEX" ]
+		then proofsort $f.tex > $f-sorted.tex
+			mv $f-sorted.tex $f.tex
+		else ctwill-refsort < $f.ref > $f.sref
+		fi
+		$TEX $f
 	elif [ refsort = $f ]
 	then $TEX -interaction nonstopmode $f
 	else $TEX $f
@@ -412,7 +416,7 @@ then
 		$PAX "$OUTDIR/tie.tar.gz" -s ,^,tie/, tie.$PDF
 		$PAX "$OUTDIR/cweb.tar.gz" -s ,^,cweb/, \
 			cwebman.$PDF common.$PDF ctangle.$PDF cweave.$PDF \
-			ctwill.pdf refsort.$PDF twinx.$PDF
+			ctwill.$PDF refsort.$PDF twinx.$PDF
 	fi
 
 	# Notes to self:
