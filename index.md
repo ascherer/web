@@ -15,9 +15,9 @@ urlcolor: blue
 Welcome to “All Things `WEB`” in \TeX\ Live.
 
 Here you find the documented source code of all major `WEB` and `CWEB` programs
-in readable format.  With the exceptions of `XeTeX` and `CTWILL`, all
-documents are in the `HINT` format and can be viewed with the `hintview`
-program; see https://github.com/ruckertm/HINT for the latest version.
+in readable format.  With the exception of `XeTeX`, all documents are in the
+`HINT` format and can be viewed with the `hintview` program, available from
+[the HINT homepage](https://github.com/ruckertm/HINT).
 
 The `NAMED` entries represent the unmodified base sources
 as written by their respective authors, the attached `chg` links point to
@@ -90,7 +90,7 @@ directly.
   [`COMMON`](cweb/common.hnt)+[`chg`](cweb/common-changes.hnt) \|
   [`CTANGLE`](cweb/ctangle.hnt)+[`chg`](cweb/ctangle-changes.hnt) \|
   [`CWEAVE`](cweb/cweave.hnt)+[`chg`](cweb/cweave-changes.hnt) \|\
-  [`CTWILL`](cweb/ctwill.pdf)[^2] \|
+  [`CTWILL`](cweb/ctwill.hnt)[^2] \|
   [`REFSORT`](cweb/refsort.hnt)+[`chg`](cweb/refsort-changes.hnt) \|
   [`TWINX`](cweb/twinx.hnt)+[`chg`](cweb/twinx-changes.hnt) \]
 * `ctie/` \[ [`CTIE`](ctie/ctie.hnt)+[`chg`](ctie/ctie-changes.hnt) \]
@@ -98,8 +98,8 @@ directly.
 * `hitex/` \[ [`HiTeX`](hitex/hitex.hnt)[^3] \]
 * `mp/` \[ [`MP`](mp/mp.hnt) \| [`MPOST`](mp/mpost.hnt) \][^4]
 
-[^2]: `CTWILL` is presented here in its own format with “mini-indexes” for
-  every two consecutive pages.
+[^2]: `CTWILL` is presented here in its own format with a “mini-index” for
+  every single code section.
 
 [^3]: `HiTeX` has received quite a few changes “behind the scenes” in
   order to present it in this collection; see project
