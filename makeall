@@ -283,17 +283,18 @@ FI
 		fi
 	fi
 
-	# only XeTeX can process XETEX.WEB
-	if [ xetex = $f ]
+	if [ xetex = $f ] # only XeTeX can process XETEX.WEB
 	then $f $f
-	elif [ ctwill = $f ]
+	elif [ ctwill = $f ] # gives two different outcomes
 	then
-		$TEX $f
 		# sort mini-indexes
 		if [ "$HITEX" = "$TEX" ]
-		then proofsort $f.tex > $f-sorted.tex
+		then # directly in the TeX file
+			proofsort $f.tex > $f-sorted.tex
 			mv $f-sorted.tex $f.tex
-		else ctwill-refsort < $f.ref > $f.sref
+		else # in the TeX-created .ref file
+			$TEX $f
+			ctwill-refsort < $f.ref > $f.sref
 		fi
 		$TEX $f
 	elif [ refsort = $f ]
