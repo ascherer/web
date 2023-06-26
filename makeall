@@ -117,7 +117,7 @@ do
 	then
 		# apply tons of editorial changes to 'ctwill.w'
 		if [ "$HITEX" = "$TEX" ]
-		then ctie -m $f.w cweave.w $f-w2c.ch $f-mini.ch $f-hint.ch
+		then ctie -m $f.w cweave.w $f-w2c.ch $f-hint.ch
 		else ctie -m $f.w cweave.w $f-w2c.ch $f-mini.ch
 		fi
 		cp -an $KNUTHWARE/cwebdir/*.bux .
