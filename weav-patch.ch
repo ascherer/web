@@ -46,6 +46,23 @@ out_ptr:=1; out_line:=1; out_buf[1]:="c"; write(tex_file,'\input webma');
 out_ptr:=1; out_line:=1; out_buf[1]:="c"; write(tex_file,'\input pwebma');
 @z
 
+Section 127.
+
+@x l.2234
+preceded by another backslash. In the latter case, a |"%"| is output at
+the break.
+@y
+preceded by another backslash or a \TeX\ comment marker. In the latter case, a
+|'%'| is output at the break.
+@z
+
+@x l.2248
+  if (d="\")and(out_buf[k-1]<>"\") then {in this case |k>1|}
+@y
+  if (d="\")and(out_buf[k-1]<>"\")and(out_buf[k-1]<>"%") then
+    {in this case |k>1|}
+@z
+
 Section 172.
 
 @x l.3337
