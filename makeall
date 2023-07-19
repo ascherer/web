@@ -46,7 +46,7 @@ KNUTHWARE=$(dirname $KNUTHWHERE)
 FILES="$KNUTHWARE/*.web pdftex.web xetex.web twill"
 WEBINPUTS=$KNUTHWARE//:
 
-FILES="$FILES common ctangle cweave ctwill refsort twinx ctie tie"
+FILES="$FILES common ctangle cweave ctwill refsort twinx ctie tie hitex"
 CWEBINPUTS=$KNUTHWARE//:
 
 KNUTHWHERE=$(locate /glue.web)
@@ -152,6 +152,9 @@ do
 			# TWILL is a change in and of itself
 			twill ) ;;
 
+			# HiTeX is a stand-alone version of TeX
+			hitex ) ;;
+
 			# all other WEB codes have singular changefiles
 			* ) weave $f $f ;;
 		esac
@@ -169,7 +172,7 @@ do
 			$f.tex
 	else
 		case $f in
-			c* | refsort | twinx | tie ) $CWEAVE $f ;;
+			c* | refsort | twinx | tie | hitex ) $CWEAVE $f ;;
 			* ) weave $f ;;
 		esac
 	fi
@@ -182,7 +185,7 @@ do
 		# timestamp on table-of-contents page or the first page
 		case $f in
 			# do nothing for CWEB programs
-			c* | refsort | twinx | tie ) ;;
+			c* | refsort | twinx | tie | hitex ) ;;
 
 			bibtex | patgen | tangle | weave )
 				$SED_I -e "s/\(\\\\def\\\\title\)/\\\\datecontentspage\n\1/" $f.tex ;;
@@ -266,7 +269,7 @@ FI
 	esac
 
 	# shift table-of-contents pages to the front in PDF
-	if $PDFTOCFRONT && [ ctwill != $f ]
+	if $PDFTOCFRONT && [ ctwill != $f ] && [ hitex != $f ]
 	then
 		$SED_I -e "0,/\\\\N[1{]/s/\(\\\\N[1{]\)/\\\\input pdfwebtocfront\n\n\1/" \
 			$f.tex
@@ -411,6 +414,7 @@ then
 		$PAX "$OUTDIR/bibtex.tar.gz" -s ,^,bibtex/, bibtex.$PDF
 		$PAX "$OUTDIR/other.tar.gz" -s ,^,other/, \
 			dvicopy.$PDF patgen.$PDF pktogf.$PDF pktype.$PDF
+		$PAX "$OUTDIR/hitex.tar.gz" -s ,^,hitex/, hitex.$PDF
 		$PAX "$OUTDIR/pdftex.tar.gz" -s ,^,pdftex/, pdftex.$PDF
 		$PAX "$OUTDIR/xetex.tar.gz" -s ,^,xetex/, xetex.pdf
 		$PAX "$OUTDIR/ctie.tar.gz" -s ,^,ctie/, ctie.$PDF
