@@ -133,6 +133,10 @@ do
 	then
 		weave $f # no 'glue.ch' at this time
 
+	elif [ hitex = $f ]
+	then
+		cweave $f # no 'hitex.ch' at this time
+
 	elif $CHANGES
 	then
 		case $f in
