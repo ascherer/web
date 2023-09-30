@@ -5,7 +5,7 @@
 \ifpdf
   \pdfpagewidth=\pagewidth \advance\pdfpagewidth by 2cm
   \pdfpageheight=\pageheight \advance\pdfpageheight by 3cm
-  \ifpdftex \pdfhorigin=1cm \pdfvorigin=1cm
+  \ifpdflua \pdfhorigin=1cm \pdfvorigin=1cm
   \else \advance\pdfpageheight by 1cm \global\pageshift=-1.54cm
     \global\hoffset=-1.54cm \global\voffset=-1.54cm \fi
 \else\pageno=1\fi
@@ -20,11 +20,11 @@
 \def\bkminfo{}
 \outer\def\section #1.{\penalty-50\vskip 12pt plus 3pt minus 3pt
   \noindent\ifpdf\vbox to 0pt{\kern-2.5ex\relax
-    \ifpdftex\pdfdest num \destcount fitbh\relax
+    \ifpdflua\pdfdest num \destcount fitbh\relax
     \else\special{pdf: dest (\the\destcount) [ @thispage /FitBH @ypos ]}\fi
     \def\.##1{##1}%
     \ifx\bkminfo\empty\def\sectitle{#1}\else\def\sectitle{#1 (\bkminfo)}\fi
-    \ifpdftex\pdfoutline goto num \destcount {\sectitle}\relax
+    \ifpdflua\pdfoutline goto num \destcount {\sectitle}\relax
     \else\special{pdf: outline 0 << /Title (\sectitle)
       /A << /S /GoTo /D (\the\destcount) >> >>}\fi
     \gdef\bkminfo{}%
@@ -43,7 +43,7 @@
 
 \def\Appendix#1{\leavevmode
   \ifnum\csname app#1\endcsname>0 %
-    \ifpdf\ifpdftex
+    \ifpdf\ifpdflua
       \pdfstartlink attr{/Border[0 0 0]} goto num\csname app#1\endcsname\relax
       \Blue\hbox{Appendix}~#1\Black
       \pdfendlink
