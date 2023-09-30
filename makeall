@@ -33,7 +33,7 @@ FILESELECT=false # user-defined '--files' selection
 NEW=false # '\input pwebmac' instead of '\input webmac' for PDF et al.
 OUTDIR=. # path where the resulting tarballs are placed
 PDFTOCFRONT=false # push table-of-contents to front of PDF output
-TEX=tex # or 'pdftex' or 'xetex' or 'hitex'
+TEX=tex # or 'pdftex' or 'xetex' or 'hitex' or 'luatex'
 VALID=false # give 'pdftex' a chance to produce valid output
 
 # Initial list of C/WEB sources to process, overridable with option '-f':
