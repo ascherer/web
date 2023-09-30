@@ -45,7 +45,7 @@
   \ifnum\csname app#1\endcsname>0 %
     \ifpdf\ifpdftex
       \pdfstartlink attr{/Border[0 0 0]} goto num\csname app#1\endcsname\relax
-      \PDFlinkcolor\hbox{Appendix}~#1\Black
+      \Blue\hbox{Appendix}~#1\Black
       \pdfendlink
     \else
       \setbox0=\hbox{\special{pdf: bc [ \pdflinkcolor ]}{\hbox{Appendix}~#1}%

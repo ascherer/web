@@ -40,6 +40,7 @@ PDFTEX = dvipdfm
 #PDFTEX = pdftex
 #PDFTEX = xetex
 #PDFTEX = hitex
+#PDFTEX = luatex
 
 # Empty input and output file(s)
 EMPTY = /dev/null
@@ -78,6 +79,7 @@ ALL =  tangle.web weave.web \
 	 pdftex ) pdftex $* ;; \
 	 xetex ) xetex $* ;; \
 	 hitex ) hitex $* ;; \
+	 luatex ) luatex $* ;; \
 	esac
 
 boot:
