@@ -13,7 +13,7 @@
 \def\pdflinkcolor{0 0 1} % the RGB values for hyperlink color
 \ifxetex\pdftrue\fi % XeTeX produces PDF output
 \newif\ifacrohint \ifpdf\acrohinttrue\fi \ifhint\acrohinttrue\fi
-\newif\ifpdflua \ifpdf\pdfluatrue\fi \ifhint\pdfluatrue\fi
+\newif\ifpdflua \ifluatex\pdfluatrue\fi \ifpdftex\pdfluatrue\fi
 \ifpdflua % pdfTeX produces PDF output if \pdfoutput>0
   \def\Black{\pdfliteral{0 g 0 G}}  % use rgb colors for direct PDF output too
   \def\Blue{\pdfliteral{\pdflinkcolor\space rg \pdflinkcolor\space RG}}
