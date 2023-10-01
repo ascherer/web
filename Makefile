@@ -57,7 +57,7 @@ ALL =  tangle.web weave.web \
 	webman.tex webmac.tex \
 	gftodvi.web gftodvi.ch
 
-.SUFFIXES: .dvi .tex .w .pdf
+.SUFFIXES: .dvi .tex .w .pdf .hnt
 
 .web.tex:
 	$(WEAVE) $*.web $*.ch $*.tex
@@ -78,8 +78,13 @@ ALL =  tangle.web weave.web \
 	 dvipdfm ) tex "\let\pdf+ \input $*"; dvipdfm $* ;; \
 	 pdftex ) pdftex $* ;; \
 	 xetex ) xetex $* ;; \
-	 hitex ) hitex $* ;; \
 	 luatex ) luatex $* ;; \
+	esac
+
+.web.hnt:
+	make $*.tex
+	case "$(PDFTEX)" in \
+	 hitex ) hitex $* ;; \
 	esac
 
 boot:
