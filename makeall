@@ -99,6 +99,7 @@ then
 	CTWILL="$CTWILL +P"
 	TEX="$HITEX"
 	PDF=hnt # default extension for 'knuth-hint'
+	PDFTOCFRONT=false # use 'hintview -h' to start with TOC page
 fi
 
 # Valid PDF output from 'pdftex': In 'pwebmac.tex' set '\countD' to the actual
@@ -218,7 +219,7 @@ FI
 				$SED_I -e "s/{\\\\the\\\\pageno}}}\\\\next/{\\\\the\\\\pageno}{\\\\the\\\\toksE}}}\\\\next/" $f.tex
 
 				cat > texmf-pdf.patch << FI
-  \ifpdftex\relax\else
+  \ifpdflua\relax\else
   \ifpdf\special{pdf: outline 0 << /Title (\the\toksE) /Dest
     [ @thispage /FitH @ypos ] >>}\fi\fi
 FI
