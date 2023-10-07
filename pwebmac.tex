@@ -87,10 +87,6 @@
 \newtoks\toksE \newtoks\toksF \newtoks\usersanitizer
 \newcount\countA \countA=0 \newcount\countB \countB=0
 \newcount\countC \countC=0 \newcount\countD \countD=0
-\ifluatex {\let\\=\BS
-  \global\countD=\input{|grep -c -e '\\:\\X' \jobname.tex}} \else
-\ifpdftex \ifnum\pdfshellescape=1 {\let\\=\BS
-  \global\countD=\input{|grep -c -e '\\:\\X' \jobname.tex}} \fi\fi \fi
 \newif\iftokprocessed \newif\ifTnum \newif\ifinstr
 {\def\\{\global\let\spacechar= }\\ }
 
@@ -101,6 +97,8 @@
 \protected\def\pdfoutline   {\pdfextension outline\space}
 \protected\def\pdfdest      {\pdfextension dest\space}
 \protected\def\pdfcatalog   {\pdfextension catalog}
+\chardef\pdfshellescape
+  \directlua{tex.sprint((status.shell_escape or os.execute()) .. " ")}
 \edef\pdfhorigin {\pdfvariable horigin}
 \edef\pdfvorigin {\pdfvariable vorigin}
 \let\pdfpagewidth=\pagewidth
@@ -410,7 +408,9 @@
 \def\fin{\par\vfill\eject % this is done when we are ending the index
   \ifpagesaved\null\vfill\eject\fi % output a null index column
   \if L\lr\else\null\vfill\eject\fi % finish the current page
-  \ifpdflua \makebookmarks \fi % added in Version 4.5
+  \ifpdflua \makebookmarks % added in Version 4.5
+    \ifnum\pdfshellescape=1 {\let\\=\BS % count the @<named sections@>
+      \global\countD=\input{|grep -c -e '\\:\\X' \jobname.tex}} \fi\fi
   \parfillskip 0pt plus 1fil
   \def\grouptitle{NAMES OF THE SECTIONS}
   \let\topsecno=\nullsec
