@@ -36,4 +36,4 @@ creates HINT output that can be viewed with the
 
 The `pwebmac` package is free software and may be used without constraints.
 
-This is version **4.9** of the `pwebmac` package — 2023-10-01, Andreas Scherer.
+This is version **4.10** of the `pwebmac` package — 2023-10-07, Andreas Scherer.
