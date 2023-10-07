@@ -100,11 +100,12 @@ then
 	TEX="$HITEX"
 	PDF=hnt # default extension for 'knuth-hint'
 	PDFTOCFRONT=false # use 'hintview -h' to start with TOC page
+	VALID=false # HiTeX has no command-line option '--shell-escape'
 fi
 
-# Valid PDF output from 'pdftex': In 'pwebmac.tex' set '\countD' to the actual
-# number of @<named modules@>, not the number of all sections.
-if ( [ pdftex = "$TEX" ] && $VALID )
+# Valid PDF output from 'pdftex' and 'luatex': In 'pwebmac.tex' set '\countD'
+# to the actual number of @<named modules@>, not the number of all sections.
+if ( $VALID )
 then
 	TEX="$TEX --shell-escape"
 fi
