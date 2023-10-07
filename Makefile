@@ -135,17 +135,17 @@ doc: $(SOURCES:.web=.dvi)
 
 usermanual: webman.tex webmac.tex $(MCHANGES)
 	$(TIE) -m webman-2021.tex webman.tex $(MCHANGES)
-	$(PDF)tex -jobname=webman webman-2021
+	$(PDF)tex $(SHELLESCAPE) -jobname=webman webman-2021
 	$(RM) -f webman-2021.tex
 
 fullmanual: usermanual $(SOURCES) $(TCHANGES) $(WCHANGES) $(TTCHANGES)
 	make weave
 	$(WEAVE) tangle.web $(TCHANGES) tangle.tex
-	$(PDF)tex --shell-escape tangle.tex
+	$(PDF)tex $(SHELLESCAPE) tangle.tex
 	$(WEAVE) weave.web $(WCHANGES) weave.tex
-	$(PDF)tex --shell-escape weave.tex
+	$(PDF)tex $(SHELLESCAPE) weave.tex
 	$(WEAVE) weave.web $(TTCHANGES) twill.tex
-	$(PDF)tex --shell-escape twill.tex
+	$(PDF)tex $(SHELLESCAPE) twill.tex
 
 # be sure to leave tangle.pas for bootstrapping
 clean:
