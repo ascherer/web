@@ -135,7 +135,7 @@ doc: $(SOURCES:.web=.dvi)
 
 usermanual: webman.tex webmac.tex $(MCHANGES)
 	$(TIE) -m webman-2021.tex webman.tex $(MCHANGES)
-	$(PDF)tex $(SHELLESCAPE) -jobname=webman webman-2021
+	$(PDF)tex -jobname=webman webman-2021
 	$(RM) -f webman-2021.tex
 
 fullmanual: usermanual $(SOURCES) $(TCHANGES) $(WCHANGES) $(TTCHANGES)
