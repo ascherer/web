@@ -206,7 +206,7 @@
   \HINToutline goto name {HINT.home} depth 1 {Table of Contents}}
 \def\HINTlabel{{\let\*=\empty\HINTdest num \modstar top}}
 \def\HINTlink#1#2{\HINTstartlink goto num #1 {#1}\HINTendlink}% #2 not used ???
-\def\HINTcontents#1#2#3{\HINToutline goto num #3 depth #2 {#1}}
+\def\HINTcontents#1#2{\HINToutline goto num #2 depth 1 {#1}}
 \let\pdflink=\HINTlink
 \fi % End of HINT macros
 
@@ -464,7 +464,7 @@
       \rm\leaders\hbox to .5em{.\hfil}\hfil
       \ \ifhint
           \HINTlink{#2}{\romannumeral#2}% No page numbers in HINT
-          \HINTcontents{#1}{#2}{#3}%
+          \HINTcontents{#1}{#2}%
         \else\ifpdf\pdflink{#2}{\romannumeral#2}\else#2\fi
           \hbox to3em{\hss#3}\fi}}
 \def\today{\ifcase\month\or
