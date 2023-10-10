@@ -115,31 +115,10 @@ for f in $FILES
 do
 	f=$(basename $f .web)
 
-	if [ ctwill = $f ]
-	then
-		# apply tons of editorial changes to 'ctwill.w'
-		if [ "$HITEX" = "$TEX" ]
-		then ctie -m $f.w cweave.w $f-w2c.ch $f-hint.ch
-		else ctie -m $f.w cweave.w $f-w2c.ch $f-mini.ch
-		fi
-		cp -an $KNUTHWARE/cwebdir/*.bux .
-		$CTWILL $f # prime the pump
-		$CTWILL $f # get decent answers
-
-	elif [ twill = $f ]
-	then
-		tie -m $f.web weave.web weave.ch weav-$f.ch
-		weave $f
-
-	elif [ glue = $f ]
-	then
-		weave $f # no 'glue.ch' at this time
-
-	elif [ hitex = $f ]
-	then
-		cweave $f # no 'hitex.ch' at this time
-
-	elif $CHANGES
+	if $CHANGES \
+		&& [ ctwill != $f ] && [ twill != $f ] \
+		&& [ glue != $f ] && [ hitex != $f ]
+		# These are changes in and of themselves
 	then
 		case $f in
 			# CWEB programs have individual changefiles
@@ -153,31 +132,41 @@ do
 			# main WEB programs have complex change files
 			tex | mf | pdftex | xetex )
 				WEBINPUTS=$KNUTHWARE/../../Work//:$WEBINPUTS: \
-				weave $f $f-final ;;
+				weave $f $f-final
 
-			# TWILL is a change in and of itself
-			twill ) ;;
-
-			# HiTeX is a stand-alone version of TeX
-			hitex ) ;;
+				# FIX: XeTeX uses '\pdfTeX' from section 114,
+				# which is not changed and thus 'disappears';
+				# repeat in preamble.
+				if [ xetex = $f ]
+				then
+					$SED_I -e "s/\(\\\\let\\\\maybe\)/\\\\def\\\\pdfTeX{pdf\\\\TeX}\n\1/" \
+						$f.tex
+				fi ;;
 
 			# all other WEB codes have singular changefiles
 			* ) weave $f $f ;;
 		esac
-
-		# FIX: XeTeX uses '\pdfTeX' from section 114, which is not
-		# changed and thus 'disappears'; repeat in preamble.
-		if [ xetex = $f ]
-		then
-			$SED_I -e "s/\(\\\\let\\\\maybe\)/\\\\def\\\\pdfTeX{pdf\\\\TeX}\n\1/" \
-				$f.tex
-		fi
 
 		# only document changed modules/sections
 		$SED_I -e "s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse/" \
 			$f.tex
 	else
 		case $f in
+			ctwill )
+				# apply tons of editorial changes to 'ctwill.w'
+				if [ "$HITEX" = "$TEX" ]
+				then ctie -m $f.w cweave.w $f-w2c.ch $f-hint.ch
+				else ctie -m $f.w cweave.w $f-w2c.ch $f-mini.ch
+				fi
+				cp -an $KNUTHWARE/cwebdir/*.bux .
+				$CTWILL $f # prime the pump
+				$CTWILL $f # get decent answers
+				;;
+
+			twill )
+				tie -m $f.web weave.web weave.ch weav-$f.ch
+				weave $f ;;
+
 			c* | refsort | twinx | tie | hitex ) $CWEAVE $f ;;
 			* ) weave $f ;;
 		esac
