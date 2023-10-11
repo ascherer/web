@@ -169,16 +169,14 @@ do
 		esac
 	fi
 
-	if $NEW
+	# 'pwebmac' is for WEB only; do nothing for CWEB programs
+	if $NEW && echo $f | grep -v -E '^c|refsort|twinx|tie|hitex'
 	then
 		# use extended WEB macros for TeX Live PDF documentation
 		$SED_I -e "1 s/\\\\input webmac/\\\\input pwebmac/" $f.tex
 
 		# timestamp on table-of-contents page or the first page
 		case $f in
-			# do nothing for CWEB programs
-			c* | refsort | twinx | tie | hitex ) ;;
-
 			bibtex | patgen | tangle | weave )
 				$SED_I -e "s/\(\\\\def\\\\title\)/\\\\datecontentspage\n\1/" $f.tex ;;
 
