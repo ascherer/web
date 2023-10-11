@@ -86,8 +86,8 @@ do
 	esac
 done
 
-CWEAVE="cweave -f +lX"
-CTWILL="ctwill -f +lpdf"
+CWEAVE="cweave -f +lX +bph"
+CTWILL="ctwill -f +lpdf +bph"
 PAX="pax -wvzf"
 SED_I="sed -i" # non-GNU-sed requires an extra '' argument for '-i' option.
 PDF=pdf # default extension for 'knuth-pdf'
@@ -158,16 +158,16 @@ do
 				then ctie -m $f.w cweave.w $f-w2c.ch $f-hint.ch
 				else ctie -m $f.w cweave.w $f-w2c.ch $f-mini.ch
 				fi
-				cp -an $KNUTHWARE/cwebdir/*.bux .
 				$CTWILL $f # prime the pump
 				$CTWILL $f # get decent answers
 				;;
+
+			c* | refsort | twinx | tie | hitex ) $CWEAVE $f ;;
 
 			twill )
 				tie -m $f.web weave.web weave.ch weav-$f.ch
 				weave $f ;;
 
-			c* | refsort | twinx | tie | hitex ) $CWEAVE $f ;;
 			* ) weave $f ;;
 		esac
 	fi
