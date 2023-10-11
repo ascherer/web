@@ -177,10 +177,7 @@ do
 		# timestamp on table-of-contents page or the first page
 		case $f in
 			# do nothing for CWEB programs
-			c* | refsort | twinx | tie ) ;;
-
-			hitex )
-				$SED_I -e "s/\(\\\\def\\\\topofcontents\)/\\\\datethis\n\\\\emergencystretch=.1\\\\hsize\n\1/" $f.tex ;;
+			c* | refsort | twinx | tie | hitex ) ;;
 
 			bibtex | patgen | tangle | weave )
 				$SED_I -e "s/\(\\\\def\\\\title\)/\\\\datecontentspage\n\1/" $f.tex ;;
@@ -256,6 +253,9 @@ FI
 
 		# FIX: purge obsolete macros from XeTeX.
 		xetex ) $SED_I -e "/\\\\input xewebmac/d" $f.tex ;;
+
+		# timestamp on table-of-contents page or the first page
+		hitex ) $SED_I -e "s/\(\\\\def\\\\topofcontents\)/\\\\datethis\n\\\\emergencystretch=.1\\\\hsize\n\1/" $f.tex ;;
 	esac
 
 	# shift table-of-contents pages to the front in PDF
