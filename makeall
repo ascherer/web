@@ -114,9 +114,7 @@ for f in $FILES
 do
 	f=$(basename $f .web)
 
-	if $CHANGES \
-		&& [ ctwill != $f ] && [ twill != $f ] \
-		&& [ glue != $f ] && [ hitex != $f ]
+	if $CHANGES && echo $f | grep -v -E 'twill|glue|hitex'
 		# These are changes in and of themselves
 	then
 		case $f in
@@ -257,7 +255,7 @@ FI
 	esac
 
 	# shift table-of-contents pages to the front in PDF
-	if $PDFTOCFRONT && [ ctwill != $f ] && [ hitex != $f ]
+	if $PDFTOCFRONT && echo $f | grep -v -E 'ctwill|hitex'
 	then
 		$SED_I -e "0,/\\\\N[1{]/s/\(\\\\N[1{]\)/\\\\input pdfwebtocfront\n\n\1/" $f.tex
 
