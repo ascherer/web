@@ -106,8 +106,7 @@ fi
 # Valid PDF output from 'pdftex' and 'luatex': In 'pwebmac.tex' set '\countD'
 # to the actual number of @<named modules@>, not the number of all sections.
 if ( $VALID )
-then
-	TEX="$TEX --shell-escape"
+then TEX="$TEX --shell-escape"
 fi
 
 # WEB and CWEB programs we want to get formatted
@@ -138,9 +137,7 @@ do
 				# which is not changed and thus 'disappears';
 				# repeat in preamble.
 				if [ xetex = $f ]
-				then
-					$SED_I -e "s/\(\\\\let\\\\maybe\)/\\\\def\\\\pdfTeX{pdf\\\\TeX}\n\1/" \
-						$f.tex
+				then $SED_I -e "s/\(\\\\let\\\\maybe\)/\\\\def\\\\pdfTeX{pdf\\\\TeX}\n\1/" $f.tex
 				fi ;;
 
 			# all other WEB codes have singular changefiles
@@ -236,8 +233,7 @@ FI
 		# FIX: don't wait for Oren Patashnik.
 		bibtex ) $SED_I -e "s/\\\\def\\\\titlepage{F}/\\\\titletrue/" $f.tex
 			if ! $CHANGES
-			then
-				$SED_I -e "71,78d" $f.tex
+			then $SED_I -e "71,78d" $f.tex
 			fi ;;
 
 		# FIX: 'glue.web' obviously uses an old 'webmac.tex'.
@@ -248,18 +244,14 @@ FI
 		# appear correctly in the bookmarks, too.
 		pdftex )
 			if $NEW && [ tex != "$TEX" ] && [ "$HITEX" != "$TEX" ]
-			then
-				$SED_I -e "s/\(\\\\def\\\\pdfTeX{pdf\\\\TeX}\)/\1 \\\\sanitizecommand\\\\pdfTeX{pdfTeX}\\\\sanitizecommand\\\\eTeX{e-TeX}/" \
-					$f.tex
+			then $SED_I -e "s/\(\\\\def\\\\pdfTeX{pdf\\\\TeX}\)/\1 \\\\sanitizecommand\\\\pdfTeX{pdfTeX}\\\\sanitizecommand\\\\eTeX{e-TeX}/" $f.tex
 			fi ;;
 
 		# FIX: weave uses '\max' in name of module 173; this should
 		# appear correctly in the bookmarks, too.
 		weave )
 			if $NEW && [ tex != "$TEX" ] && [ "$HITEX" != "$TEX" ]
-			then
-				$SED_I -e "s/\(\\\\def\\\\({}\)/\\\\sanitizecommand\\\\max{max}\n\1/" \
-					$f.tex
+			then $SED_I -e "s/\(\\\\def\\\\({}\)/\\\\sanitizecommand\\\\max{max}\n\1/" $f.tex
 			fi ;;
 
 		# FIX: purge obsolete macros from XeTeX.
@@ -269,8 +261,7 @@ FI
 	# shift table-of-contents pages to the front in PDF
 	if $PDFTOCFRONT && [ ctwill != $f ] && [ hitex != $f ]
 	then
-		$SED_I -e "0,/\\\\N[1{]/s/\(\\\\N[1{]\)/\\\\input pdfwebtocfront\n\n\1/" \
-			$f.tex
+		$SED_I -e "0,/\\\\N[1{]/s/\(\\\\N[1{]\)/\\\\input pdfwebtocfront\n\n\1/" $f.tex
 
 		# only XeTeX can process XETEX.WEB
 		if [ xetex = $f ]
@@ -374,9 +365,7 @@ then
 		f=$(kpsewhich -engine tex cwebman)
 		tie -m $(basename $f) $f $(basename $f .tex)-w2c.ch
 		if [ "$HITEX" = "$TEX" ]
-		then
-			$SED_I -e "s/\(\\\\input cwebmac\)/\1\n\\\\input hiplainpage/" \
-				cwebman.tex
+		then $SED_I -e "s/\(\\\\input cwebmac\)/\1\n\\\\input hiplainpage/" cwebman.tex
 		fi
 
 		touch pages.tex # let 'manmac' produce output at all
