@@ -88,10 +88,11 @@ done
 
 CWEAVE="cweave -f +lX +bph"
 CTWILL="ctwill -f +lpdf +bph"
-PAX="pax -wvzf"
-SED_I="sed -i" # non-GNU-sed requires an extra '' argument for '-i' option.
-PDF=pdf # default extension for 'knuth-pdf'
 HITEX="hitex --compress"
+PAX="pax -wvzf"
+PDF=pdf # default extension for 'knuth-pdf'
+SED_I="sed -i" # non-GNU-sed requires an extra '' argument for '-i' option.
+WEAVE="weave"
 
 # HINT format
 if [ hitex = "$TEX" ]
@@ -103,9 +104,14 @@ then
 	VALID=false # HiTeX has no command-line option '--shell-escape'
 fi
 
+# Use alternative TeX macros more suited for PDF output.
+if $NEW
+then WEAVE="$WEAVE -p"
+fi
+
 # Valid PDF output from 'pdftex' and 'luatex': In 'pwebmac.tex' set '\countD'
 # to the actual number of @<named modules@>, not the number of all sections.
-if ( $VALID )
+if $VALID
 then TEX="$TEX --shell-escape"
 fi
 
@@ -129,7 +135,7 @@ do
 			# main WEB programs have complex change files
 			tex | mf | pdftex | xetex )
 				WEBINPUTS=$KNUTHWARE/../../Work//:$WEBINPUTS: \
-				weave $f $f-final
+				$WEAVE $f $f-final
 
 				# FIX: XeTeX uses '\pdfTeX' from section 114,
 				# which is not changed and thus 'disappears';
@@ -139,7 +145,7 @@ do
 				fi ;;
 
 			# all other WEB codes have singular changefiles
-			* ) weave $f $f ;;
+			* ) $WEAVE $f $f ;;
 		esac
 
 		# only document changed modules/sections
@@ -161,18 +167,15 @@ do
 
 			twill )
 				tie -m $f.web weave.web weave.ch weav-$f.ch
-				weave $f ;;
+				$WEAVE $f ;;
 
-			* ) weave $f ;;
+			* ) $WEAVE $f ;;
 		esac
 	fi
 
 	# 'pwebmac' is for WEB only; do nothing for CWEB programs
 	if $NEW && echo $f | grep -v -E '^c|refsort|twinx|tie|hitex'
 	then
-		# use extended WEB macros for TeX Live PDF documentation
-		$SED_I -e "1 s/\\\\input webmac/\\\\input pwebmac/" $f.tex
-
 		# timestamp on table-of-contents page or the first page
 		case $f in
 			bibtex | patgen | tangle | weave )
