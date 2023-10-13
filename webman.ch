@@ -82,6 +82,13 @@ This memo describes how to write programs in the
 \itemitem{3)} A \PASCAL\ part, containing a piece of the program that
 @z
 
+@x l.304
+`\.{\\input webmac}'; this will cause \TeX\ to read in the macros that
+@y
+`\.{\\input webmac}'---or, if you invoke `\.{weave -p}',
+`\.{\\input pwebmac}'---; this will cause \TeX\ to read in the macros that
+@z
+
 @x l.358
   \.{which is a \\\&\{packed\}{ }\\\&\{array\}{ }\$
 @y
@@ -131,8 +138,10 @@ Finally, Appendix F is the `\.{webmac}' file that sets \TeX\ up to accept
 the output of \.{WEAVE}; Appendix~G discusses how to use some of its macros
 to vary the output formats; and Appendix~H discusses what needs to be done
 @y
-Finally, \Appendix F is the `\.{webmac}' file that sets \TeX\ up to accept
-the output of \.{WEAVE}; \Appendix G discusses how to use some of its macros
+Finally, \Appendix F shows the `\.{webmac.tex}' file that sets \TeX\ up to
+accept the output of \.{WEAVE}; it also shows the `\.{pwebmac.tex}' file that
+provides alternative macros more suited for {\mc PDF} output with modern \TeX\
+engines; \Appendix G discusses how to use some of its macros
 to vary the output formats; and \Appendix H discusses what needs to be done
 @z
 
@@ -261,77 +270,270 @@ XREF[P]:=0;END{:62};IDLOOKUP:=P;END;
 {:58}{66:}FUNCTION MODLOOKUP(L:SIXTEENBITS):NAMEPOINTER;LABEL 31;
 @z
 
+@x l.1203
+\section Appendix F: The \.{webmac.tex} file.
+This is the file that extends ``plain \TeX'' format in order to support the
+@y
+\section Appendix F: Macros for formatting.
+The \.{webmac.tex} file extends ``plain \TeX'' format in order to support the
+@z
+
 @x l.1208
 \verbatim
-@y
-\begingroup \def\tt{\ninett} \baselineskip10pt
-\verbatim
-@z
-
-@x l.1210
+% standard macros for WEB listings (in addition to PLAIN.TEX)
 \xdef\fmtversion{\fmtversion+WEBMAC4.0} % identifies current set of macros
-@y
-\xdef\fmtversion{\fmtversion+WEBMAC4.2} % identifies current set of macros
-@z
+\parskip 0pt % no stretch between paragraphs
+\parindent 1em % for paragraphs and for the first line of Pascal text
 
-@x l.1218
+\font\eightrm=cmr8 \let\sc=\eightrm % NOT a caps-and-small-caps font!
+\let\mainfont=\tenrm
+\font\titlefont=cmr7 scaled\magstep4 % title on the contents page
+\font\ttitlefont=cmtt10 scaled\magstep2 % typewriter type in title
 \font\tentex=cmtex10 % TeX extended character set (used in strings)
-@y
-\font\tentex=cmtex10 % TeX extended character set (used in strings)
-\fontdimen7\tentex=0pt % no extra space after punctuation
-@z
 
-@x l.1294
+\def\\#1{\hbox{\it#1\/\kern.05em}} % italic type for identifiers
+\def\|#1{\hbox{$#1$}} % one-letter identifiers look a bit better this way
+\def\&#1{\hbox{\bf#1\/}} % boldface type for reserved words
+\def\.#1{\hbox{\tentex % typewriter type for strings
+  \let\\=\BS % backslash in a string
+  \let\'=\RQ % right quote in a string
+  \let\`=\LQ % left quote in a string
+  \let\{=\LB % left brace in a string
+  \let\}=\RB % right brace in a string
+  \let\~=\TL % tilde in a string
+  \let\ =\SP % space in a string
+  \let\_=\UL % underline in a string
+  \let\&=\AM % ampersand in a string
+  #1}}
+\def\#{\hbox{\tt\char`\#}} % parameter sign
+\def\${\hbox{\tt\char`\$}} % dollar sign
+\def\%{\hbox{\tt\char`\%}} % percent sign
+\def\^{\ifmmode\mathchar"222 \else\char`^ \fi} % pointer or hat
+% circumflex accents can be obtained from \^^D instead of \^
+\def\AT!{@} % at sign for control text
+
+\chardef\AM=`\& % ampersand character in a string
+\chardef\BS=`\\ % backslash in a string
+\chardef\LB=`\{ % left brace in a string
+\def\LQ{{\tt\char'22}} % left quote in a string
+\chardef\RB=`\} % right brace in a string
+\def\RQ{{\tt\char'23}} % right quote in a string
+\def\SP{{\tt\char`\ }} % (visible) space in a string
+\chardef\TL=`\~ % tilde in a string
+\chardef\UL=`\_ % underline character in a string
+
+\newbox\bak \setbox\bak=\hbox to -1em{} % backspace one em
+\newbox\bakk\setbox\bakk=\hbox to -2em{} % backspace two ems
+
+\newcount\ind % current indentation in ems
+\def\1{\global\advance\ind by1\hangindent\ind em} % indent one more notch
+\def\2{\global\advance\ind by-1} % indent one less notch
+\def\3#1{\hfil\penalty#10\hfilneg} % optional break within a statement
+\def\4{\copy\bak} % backspace one notch
+\def\5{\hfil\penalty-1\hfilneg\kern2.5em\copy\bakk\ignorespaces}% optional break
+\def\6{\ifmmode\else\par % forced break
+  \hangindent\ind em\noindent\kern\ind em\copy\bakk\ignorespaces\fi}
+\def\7{\Y\6} % forced break and a little extra space
+
+\let\yskip=\smallskip
+\def\to{\mathrel{.\,.}} % double dot, used only in math mode
+\def\note#1#2.{\Y\noindent{\hangindent2em\baselineskip10pt\eightrm#1~#2.\par}}
+\def\lapstar{\rlap{*}}
+\def\startsection{\Q\noindent{\let\*=\lapstar\bf\modstar.\quad}}
+\def\defin#1{\global\advance\ind by 2 \1\&{#1 }} % begin `define' or `format'
+\def\A{\note{See also section}} % crossref for doubly defined section name
+\def\As{\note{See also sections}} % crossref for multiply defined section name
+\def\B{\mathopen{\.{@\{}}} % begin controlled comment
+\def\C#1{\ifmmode\gdef\XX{\null$\null}\else\gdef\XX{}\fi % Pascal comments
+  \XX\hfil\penalty-1\hfilneg\quad$\{\,$#1$\,\}$\XX}
+\def\D{\defin{define}} % macro definition
+\def\E{\cdot10^} % exponent in floating point constant
+\def\ET{ and~} % conjunction between two section numbers
+\def\ETs{, and~} % conjunction between the last two of several section numbers
+\def\F{\defin{format}} % format definition
+\let\G=\ge % greater than or equal sign
+\def\H#1{\hbox{\rm\char"7D\tt#1}} % hexadecimal constant
+\let\I=\ne % unequal sign
+\def\J{\.{@\&}} % TANGLE's join operation
+\let\K=\gets % left arrow
+\let\L=\le % less than or equal sign
+\outer\def\M#1.{\MN#1.\ifon\vfil\penalty-100\vfilneg % beginning of section
+  \vskip12ptminus3pt\startsection\ignorespaces}
+\outer\def\N#1.#2.{\MN#1.\vfil\eject % beginning of starred section
+  \def\rhead{\uppercase{\ignorespaces#2}} % define running headline
+  \message{*\modno} % progress report
+  \edef\next{\write\cont{\Z{#2}{\modno}{\the\pageno}}}\next % to contents file
+  \ifon\startsection{\bf\ignorespaces#2.\quad}\ignorespaces}
+\def\MN#1.{\par % common code for \M, \N
   {\xdef\modstar{#1}\let\*=\empty\xdef\modno{#1}}
   \ifx\modno\modstar \onmaybe \else\ontrue \fi \mark{\modno}}
-@y
-  {\xdef\modstar{#1}\let\*=\empty\xdef\modno{#1}}% remove \* from section name
-  \ifx\modno\modstar \onmaybe \else\ontrue \fi
-  \mark{{{\tensy x}\modno}{\rhead}}}
-  % each \mark is {section reference or null}{group title}
-@z
+\def\O#1{\hbox{\rm\char'23\kern-.2em\it#1\/\kern.05em}} % octal constant
+\def\P{\rightskip=0pt plus 100pt minus 10pt % go into Pascal mode
+  \sfcode`;=3000
+  \pretolerance 10000
+  \hyphenpenalty 10000 \exhyphenpenalty 10000
+  \global\ind=2 \1\ \unskip}
+\def\Q{\rightskip=0pt % get out of Pascal mode
+  \sfcode`;=1500 \pretolerance 200 \hyphenpenalty 50 \exhyphenpenalty 50 }
+\let\R=\lnot % logical not
+\let\S=\equiv % equivalence sign
+\def\T{\mathclose{\.{@\}}}} % terminate controlled comment
+\def\U{\note{This code is used in section}} % crossref for use of a section
+\def\Us{\note{This code is used in sections}} % crossref for uses of a section
+\let\V=\lor % logical or
+\let\W=\land % logical and
+\def\X#1:#2\X{\ifmmode\gdef\XX{\null$\null}\else\gdef\XX{}\fi % section name
+  \XX$\langle\,$#2{\eightrm\kern.5em#1}$\,\rangle$\XX}
+\def\Y{\par\yskip}
+\let\Z=\let % now you can \send the control sequence \Z
+\def\){\hbox{\.{@\$}}} % sign for string pool check sum
+\def\]{\hbox{\.{@\\}}} % sign for forced line break
+\def\=#1{\kern2pt\hbox{\vrule\vtop{\vbox{\hrule
+        \hbox{\strut\kern2pt\.{#1}\kern2pt}}
+      \hrule}\vrule}\kern2pt} % verbatim string
+\let\~=\ignorespaces
+\let\*=*
 
-@x l.1325
+\def\onmaybe{\let\ifon=\maybe} \let\maybe=\iftrue
+\newif\ifon \newif\iftitle \newif\ifpagesaved
 \def\lheader{\mainfont\the\pageno\eightrm\qquad\rhead\hfill\title\qquad
   \tensy x\mainfont\topmark} % top line on left-hand pages
 \def\rheader{\tensy x\mainfont\topmark\eightrm\qquad\title\hfill\rhead
   \qquad\mainfont\the\pageno} % top line on right-hand pages
-@y
-\def\lheader{\mainfont\the\pageno\eightrm\qquad\rhead
-  \hfill\title\qquad\mainfont\topsecno} % top line on left-hand pages
-\def\rheader{\mainfont\topsecno\eightrm\qquad\title\hfill
-  \rhead\qquad\mainfont\the\pageno} % top line on right-hand pages
-\def\topsecno{\expandafter\takeone\topmark}
-\def\takeone#1#2{#1}
-\def\taketwo#1#2{#2}
-\def\nullsec{\eightrm\kern-2em} % the \kern-2em cancels \qquad in headers
-@z
+\def\page{\box255 }
+\def\normaloutput#1#2#3{\ifodd\pageno\hoffset=\pageshift\fi
+  \shipout\vbox{
+    \vbox to\fullpageheight{
+      \iftitle\global\titlefalse
+      \else\hbox to\pagewidth{\vbox to10pt{}\ifodd\pageno #3\else#2\fi}\fi
+      \vfill#1}} % parameter #1 is the page itself
+  \global\advance\pageno by1}
 
-@x l.1336
 \def\rhead{\.{WEB} OUTPUT} % this running head is reset by starred sections
-@y
-\def\rhead{\.{WEB} OUTPUT} % this running head is reset by starred sections
-\mark{\noexpand\nullsec{\rhead}}
-@z
+\def\title{} % an optional title can be set by the user
+\def\topofcontents{\centerline{\titlefont\title}
+  \vfill} % this material will start the table of contents page
+\def\botofcontents{\vfill} % this material will end the table of contents page
+\def\contentspagenumber{0} % default page number for table of contents
+\newdimen\pagewidth \pagewidth=6.5in % the width of each page
+\newdimen\pageheight \pageheight=8.7in % the height of each page
+\newdimen\fullpageheight \fullpageheight=9in % page height including headlines
+\newdimen\pageshift \pageshift=0in % shift righthand pages wrt lefthand ones
+\def\magnify#1{\mag=#1\pagewidth=6.5truein\pageheight=8.7truein
+  \fullpageheight=9truein\setpage}
+\def\setpage{\hsize\pagewidth\vsize\pageheight} % use after changing page size
+\def\contentsfile{CONTENTS} % file that gets table of contents info
+\def\readcontents{\input CONTENTS}
 
-@x l.1392
-  \def\rhead{NAMES OF THE SECTIONS}
-@y
-  \def\rhead{NAMES OF THE SECTIONS}
-  \let\topsecno=\nullsec
-@z
+\newwrite\cont
+\output{\setbox0=\page % the first page is garbage
+  \openout\cont=\contentsfile
+  \global\output{\normaloutput\page\lheader\rheader}}
+\setpage
+\vbox to \vsize{} % the first \topmark won't be null
 
-@x l.1395
+\def\ch{\note{The following sections were changed by the change file:}
+  \let\*=\relax}
+\newbox\sbox % saved box preceding the index
+\newbox\lbox % lefthand column in the index
+\def\inx{\par\vskip6pt plus 1fil % we are beginning the index
+  \write\cont{} % ensure that the contents file isn't empty
+  \closeout\cont % the contents information has been fully gathered
+  \output{\ifpagesaved\normaloutput{\box\sbox}\lheader\rheader\fi
+    \global\setbox\sbox=\page \global\pagesavedtrue}
+  \pagesavedfalse \eject % eject the page-so-far and predecessors
+  \setbox\sbox\vbox{\unvbox\sbox} % take it out of its box
+  \vsize=\pageheight \advance\vsize by -\ht\sbox % the remaining height
+  \hsize=.5\pagewidth \advance\hsize by -10pt
+    % column width for the index (20pt between cols)
+  \parfillskip 0pt plus .6\hsize % try to avoid almost empty lines
+  \def\lr{L} % this tells whether the left or right column is next
+  \output{\if L\lr\global\setbox\lbox=\page \gdef\lr{R}
+    \else\normaloutput{\vbox to\pageheight{\box\sbox\vss
+        \hbox to\pagewidth{\box\lbox\hfil\page}}}\lheader\rheader
+    \global\vsize\pageheight\gdef\lr{L}\global\pagesavedfalse\fi}
+  \message{Index:}
+  \parskip 0pt plus .5pt
+  \outer\def\:##1, {\par\hangindent2em\noindent##1:\kern1em} % index entry
+  \let\ttentry=\. \def\.##1{\ttentry{##1\kern.2em}} % give \tt a little room
+  \def\[##1]{$\underline{##1}$} % underlined index item
+  \rm \rightskip0pt plus 2.5em \tolerance 10000 \let\*=\lapstar
+  \hyphenpenalty 10000 \parindent0pt}
+\def\fin{\par\vfill\eject % this is done when we are ending the index
+  \ifpagesaved\null\vfill\eject\fi % output a null index column
+  \if L\lr\else\null\vfill\eject\fi % finish the current page
+  \parfillskip 0pt plus 1fil
+  \def\rhead{NAMES OF THE SECTIONS}
+  \message{Section names:}
+  \output{\normaloutput\page\lheader\rheader}
+  \setpage
   \def\note##1##2.{\hfil\penalty-1\hfilneg\quad{\eightrm##1 ##2.}}
+  \linepenalty=10 % try to conserve lines
+  \def\U{\note{Used in section}} % crossref for use of a section
+  \def\Us{\note{Used in sections}} % crossref for uses of a section
+  \def\:{\par\hangindent 2em}\let\*=*\let\.=\ttentry}
+\def\con{\par\vfill\eject % finish the section names
+  \rightskip 0pt \hyphenpenalty 50 \tolerance 200
+  \setpage
+  \output{\normaloutput\page\lheader\rheader}
+  \titletrue % prepare to output the table of contents
+  \pageno=\contentspagenumber \def\rhead{TABLE OF CONTENTS}
+  \message{Table of contents:}
+  \topofcontents
+  \line{\hfil Section\hbox to3em{\hss Page}}
+  \def\Z##1##2##3{\line{\ignorespaces##1
+    \leaders\hbox to .5em{.\hfil}\hfil\ ##2\hbox to3em{\hss##3}}}
+  \readcontents\relax % read the contents info
+  \botofcontents \end} % print the contents page(s) and terminate
+?endgroup
 @y
-  \def\note##1##2.{\hfil\penalty-1\hfilneg\quad{\eightrm##1~##2.}}
+\begingroup \def\tt{\eighttt} \baselineskip9pt
+\def\printmacs#1{\begingroup
+  \def\do##1{\catcode`##1=12 } \dospecials
+  \parskip 0pt \parindent 0pt
+  \catcode`\ =13 \catcode`\^^M=13
+  \tt \verbatimdefs \input #1 \endgroup}
+\printmacs{webmac}
+\vskip6pt \baselineskip12pt
+\section Hypertext and hyperdocumentation.
+Many people have of course noticed analogies between \.{WEB} and the
+World Wide Web. The following \.{WEB} macros \.{pwebmac.tex} are in fact
+set up so that the output of \.{WEAVE} can be converted easily into
+Portable Document Format, with clickable hyperlinks that can be read
+with your favorite {\mc PDF} viewer.
+After using \.{WEAVE} with command line option \.{-p} to convert \.{cob.w}
+into \.{cob.tex}, you can prepare and view a hypertext version of the program
+by giving the commands
+$$\vbox{\halign{\.{#}\hfil\cr
+tex "\\let\\pdf+ \\input cob"\cr
+dvipdfm cob\cr}}$$
+instead of invoking \TeX\ in the normal way.
+Alternatively you can generate \.{cob.pdf} in one step by simply saying
+`\.{pdftex}~\.{cob}' or `\.{xetex}~\.{cob}' or `\.{luatex}~\.{cob}'.
+
+Similar output for ``smart'' devices can be created with Martin Ruckert's
+Hi\TeX\ and its dynamic \.{HINT} format; just say `\.{hitex}~\.{cob}'.
+\.{HINT} files can be viewed with the \.{hintview} program, which is available
+from \.{https://hint.userweb.mwn.de/hint/hintview.html}.
+
+A more elaborate system called \.{TWILL}, which extends the usual cross
+references of \.{WEAVE} by preparing links from the uses of identifiers
+to their definitions, is also available---provided that you are willing
+to work a bit harder in cases where an identifier is multiply defined.
+\.{TWILL} is intended primarily for hardcopy output, but its principles
+could be used for hypertext as well.
+
+\vskip6pt \baselineskip9pt
+\printmacs{pwebmac}
+\endgroup
+\vfill\eject
 @z
 
-@x l.1414
-?endgroup
+@x l.1418
+The macros in \.{webmac} make it possible to produce a variety of formats
 @y
-?endgroup
-\endgroup
+The macros in \.{webmac} and \.{pwebmac} make it possible to produce
+a variety of formats
 @z
 
 @x l.1425
