@@ -141,7 +141,7 @@ to vary the output formats; and Appendix~H discusses what needs to be done
 Finally, \Appendix F shows the `\.{webmac.tex}' file that sets \TeX\ up to
 accept the output of \.{WEAVE}; it also shows the `\.{pwebmac.tex}' file that
 provides alternative macros more suited for {\mc PDF} output with modern \TeX\
-engines; \Appendix G discusses how to use some of its macros
+engines; \Appendix G discusses how to use some of these macros
 to vary the output formats; and \Appendix H discusses what needs to be done
 @z
 
@@ -501,7 +501,7 @@ World Wide Web. The following \.{WEB} macros \.{pwebmac.tex} are in fact
 set up so that the output of \.{WEAVE} can be converted easily into
 Portable Document Format, with clickable hyperlinks that can be read
 with your favorite {\mc PDF} viewer.
-After using \.{WEAVE} with command line option \.{-p} to convert \.{cob.w}
+After using \.{WEAVE} with command line option `\.{-p}' to convert \.{cob.w}
 into \.{cob.tex}, you can prepare and view a hypertext version of the program
 by giving the commands
 $$\vbox{\halign{\.{#}\hfil\cr
@@ -510,18 +510,24 @@ dvipdfm cob\cr}}$$
 instead of invoking \TeX\ in the normal way.
 Alternatively you can generate \.{cob.pdf} in one step by simply saying
 `\.{pdftex}~\.{cob}' or `\.{xetex}~\.{cob}' or `\.{luatex}~\.{cob}'.
+(You are advised to use the command line option `\.{--shell-escape}' with
+\.{pdftex} and \.{luatex} in order to receive ``valid'' PDF output;
+otherwise, the internal counter for the ``Names of Sections'' part in the
+PDF ``bookmarks'' will be incorrect.)
 
 Similar output for ``smart'' devices can be created with Martin Ruckert's
 Hi\TeX\ and its dynamic \.{HINT} format; just say `\.{hitex}~\.{cob}'.
 \.{HINT} files can be viewed with the \.{hintview} program, which is available
-from \.{https://hint.userweb.mwn.de/hint/hintview.html}.
+\pdfURL{\.{https://hint.userweb.mwn.de/hint/hintview.html}}%
+          {https://hint.userweb.mwn.de/hint/hintview.html}.%
 
 A more elaborate system called \.{TWILL}, which extends the usual cross
 references of \.{WEAVE} by preparing links from the uses of identifiers
 to their definitions, is also available---provided that you are willing
 to work a bit harder in cases where an identifier is multiply defined.
 \.{TWILL} is intended primarily for hardcopy output, but its principles
-could be used for hypertext as well.
+could be used for hypertext as well. It uses its own set of macros
+`\.{twimac-web.tex}'.
 
 \vskip6pt \baselineskip9pt
 \printmacs{pwebmac}
