@@ -20,7 +20,7 @@
 \def\bkminfo{}
 \outer\def\section #1.{\penalty-50\vskip 12pt plus 3pt minus 3pt
   \noindent\ifpdf\vbox to 0pt{\kern-2.5ex\relax
-    \ifpdflua\pdfdest num \destcount fitbh\relax
+    \ifpdflua\pdfdest num \destcount fith\relax
     \else\special{pdf: dest (\the\destcount) [ @thispage /FitBH @ypos ]}\fi
     \def\.##1{##1}%
     \ifx\bkminfo\empty\def\sectitle{#1}\else\def\sectitle{#1 (\bkminfo)}\fi
