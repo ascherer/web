@@ -570,6 +570,17 @@ for every starred module. For example, when \pdfURL{Appendix~D}{weave.pdf}
 was being generated,
 @z
 
+@x l.569
+\.{\\ch}, \.{\\fin}, and \.{\\con}. \.{WEAVE} itself need not be changed.
+@y
+\.{\\ch}, \.{\\fin}, and \.{\\con}. \.{WEAVE} itself need not be changed.
+
+\point 15. In conjunction with `\.{weave -p}' and the \.{pwebmac} macros you
+can say `\.{\\input pdfwebtocfront}' as the last command in limbo and run \TeX\
+\\{twice} on your woven document, in order to shift the table-of-contents to
+the front of the {\mc PDF} output.
+@z
+
 @x l.1583
 dependencies'' in the index of Appendix~E above, and figure out what changes
 @y
