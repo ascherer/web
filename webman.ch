@@ -501,7 +501,7 @@ World Wide Web. The following \.{WEB} macros \.{pwebmac.tex} are in fact
 set up so that the output of \.{WEAVE} can be converted easily into
 Portable Document Format, with clickable hyperlinks that can be read
 with your favorite {\mc PDF} viewer.
-After using \.{WEAVE} with command line option `\.{-p}' to convert \.{cob.w}
+After using \.{WEAVE} with command line option `\.{-p}' to convert \.{cob.web}
 into \.{cob.tex}, you can prepare and view a hypertext version of the program
 by giving the commands
 $$\vbox{\halign{\.{#}\hfil\cr
@@ -517,7 +517,8 @@ in the PDF ``bookmarks'' will be incorrect.)
 
 Similar output for ``smart'' devices can be created with Martin Ruckert's
 Hi\TeX\ and its dynamic \.{HINT} format; just say `\.{hitex}~\.{cob}'.
-\.{HINT} files can be viewed with the \.{hintview} program, which is available
+\.{HINT} files can be viewed with the \.{hintview} program, which is
+available from
 \pdfURL{\.{https://hint.userweb.mwn.de/hint/hintview.html}}%
           {https://hint.userweb.mwn.de/hint/hintview.html}.%
 
