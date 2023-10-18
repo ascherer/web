@@ -94,15 +94,20 @@ PDF=pdf # default extension for 'knuth-pdf'
 SED_I="sed -i" # non-GNU-sed requires an extra '' argument for '-i' option.
 WEAVE="weave"
 
-# HINT format
-if [ hitex = "$TEX" ]
-then
-	CTWILL="$CTWILL +P"
-	TEX="$HITEX"
-	PDF=hnt # default extension for 'knuth-hint'
-	PDFTOCFRONT=false # use 'hintview -h' to start with TOC page
-	VALID=false # HiTeX has no command-line option '--shell-escape'
-fi
+case "$TEX" in
+	hitex ) # HINT format
+		CTWILL="$CTWILL +P"
+		TEX="$HITEX"
+		PDF=hnt # default extension for 'knuth-hint'
+		PDFTOCFRONT=false # use 'hintview -h' to start with TOC page
+		VALID=false # HiTeX has no command-line option '--shell-escape'
+		;;
+
+	pdftex | luatex ) # actually only necessary for 'pwebmac.tex'
+		VALID=true ;;
+
+	* ) VALID=false ;; # plain TeX and XeTeX use different approach
+esac
 
 # Use alternative TeX macros more suited for PDF output.
 if $NEW
