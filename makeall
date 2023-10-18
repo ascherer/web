@@ -125,7 +125,7 @@ for f in $FILES
 do
 	f=$(basename $f .web)
 
-	if $CHANGES && echo $f | grep -v -E 'twill|glue|hitex'
+	if $CHANGES && echo $f | grep -v -q -E 'twill|glue|hitex'
 		# These are changes in and of themselves
 	then
 		case $f in
@@ -179,7 +179,7 @@ do
 	fi
 
 	# 'pwebmac' is for WEB only; do nothing for CWEB programs
-	if $NEW && echo $f | grep -v -E '^c|refsort|twinx|tie|hitex'
+	if $NEW && echo $f | grep -v -q -E '^c|refsort|twinx|tie|hitex'
 	then
 		# timestamp on table-of-contents page or the first page
 		case $f in
@@ -263,7 +263,7 @@ FI
 	esac
 
 	# shift table-of-contents pages to the front in PDF
-	if $PDFTOCFRONT && echo $f | grep -v -E 'ctwill|hitex'
+	if $PDFTOCFRONT && echo $f | grep -v -q -E 'ctwill|hitex'
 	then
 		$SED_I -e "0,/\\\\N[1{]/s/\(\\\\N[1{]\)/\\\\input pdfwebtocfront\n\n\1/" $f.tex
 
