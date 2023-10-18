@@ -511,9 +511,9 @@ instead of invoking \TeX\ in the normal way.
 Alternatively you can generate \.{cob.pdf} in one step by simply saying
 `\.{pdftex}~\.{cob}' or `\.{xetex}~\.{cob}' or `\.{luatex}~\.{cob}'.
 (You are advised to use the command line option `\.{--shell-escape}' with
-\.{pdftex} and \.{luatex} in order to receive ``valid'' PDF output;
+\.{pdftex} and \.{luatex} in order to receive ``valid'' {\mc PDF} output;
 otherwise, the internal counter for the ``Names of the sections'' part
-in the PDF ``bookmarks'' will be incorrect.)
+in the {\mc PDF} ``bookmarks'' will be incorrect.)
 
 Similar output for ``smart'' devices can be created with Martin Ruckert's
 Hi\TeX\ and its dynamic \.{HINT} format; just say `\.{hitex}~\.{cob}'.
