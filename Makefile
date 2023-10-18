@@ -76,9 +76,9 @@ ALL =  tangle.web weave.web \
 	make $*.tex
 	case "$(PDFTEX)" in \
 	 dvipdfm ) tex "\let\pdf+ \input $*"; dvipdfm $* ;; \
-	 pdftex ) pdftex $* ;; \
+	 pdftex ) pdftex $(SHELLESCAPE) $* ;; \
 	 xetex ) xetex $* ;; \
-	 luatex ) luatex $* ;; \
+	 luatex ) luatex $(SHELLESCAPE) $* ;; \
 	esac
 
 .web.hnt:
