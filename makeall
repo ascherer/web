@@ -100,8 +100,7 @@ case "$TEX" in
 		TEX="$HITEX"
 		PDF=hnt # default extension for 'knuth-hint'
 		PDFTOCFRONT=false # use 'hintview -h' to start with TOC page
-		VALID=false # HiTeX has no command-line option '--shell-escape'
-		;;
+		VALID=false ;; # HiTeX has no command-line option '--shell-escape'
 
 	pdftex | luatex ) # actually only necessary for 'pwebmac.tex'
 		VALID=true ;;
@@ -165,8 +164,7 @@ do
 				else ctie -m $f.w cweave.w $f-w2c.ch $f-mini.ch
 				fi
 				$CTWILL $f # prime the pump
-				$CTWILL $f # get decent answers
-				;;
+				$CTWILL $f ;; # get decent answers
 
 			c* | refsort | twinx | tie | hitex ) $CWEAVE $f ;;
 
