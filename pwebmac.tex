@@ -6,18 +6,6 @@
 % This file is not copyrighted and can be used freely.
 \ifx\renewenvironment\undefined\else\endinput\fi % LaTeX will use other macros
 \xdef\fmtversion{\fmtversion+PWEBMAC4.11}
-\input iftex.sty % TeX engine tests
-\ifx\pdf+\pdftrue\fi % for plain TeX in combination with dvipdfm
-% Uncomment the following line if you want PDF goodies to be the default
-%\ifx\pdf-\else\pdftrue\fi
-\ifxetex\pdftrue\fi % XeTeX produces PDF output
-\ifpdf \def\pdflinkcolor{0 0 1} \fi % the RGB values for hyperlink color
-\newif\ifacrohint \ifpdf\acrohinttrue\fi \ifhint\acrohinttrue\fi
-\newif\ifpdflua \ifluatex\pdfluatrue\fi \ifpdftex\pdfluatrue\fi
-\ifpdflua % pdfTeX and luaTeX produce PDF output if \pdfoutput>0 (default)
-  \def\Black{\pdfliteral{0 g 0 G}}  % use rgb colors for direct PDF output too
-  \def\Blue{\pdfliteral{\pdflinkcolor\space rg \pdflinkcolor\space RG}}
-\fi
 
 \parskip 0pt % no stretch between paragraphs
 \parindent 1em % for paragraphs and for the first line of Pascal text
@@ -89,6 +77,20 @@
 \newcount\countC \countC=0 \newcount\countD \countD=0
 \newif\iftokprocessed \newif\ifTnum \newif\ifinstr
 {\def\\{\global\let\spacechar= }\\ }
+
+% Here we decide the output format, depending on the TeX engine in use:
+\input iftex.sty % TeX engine tests
+\ifx\pdf+\pdftrue\fi % for plain TeX in combination with dvipdfm
+% Uncomment the following line if you want PDF goodies to be the default
+%\ifx\pdf-\else\pdftrue\fi
+\ifxetex\pdftrue\fi % XeTeX produces PDF output
+\ifpdf \def\pdflinkcolor{0 0 1} \fi % the RGB values for hyperlink color
+\newif\ifacrohint \ifpdf\acrohinttrue\fi \ifhint\acrohinttrue\fi
+\newif\ifpdflua \ifluatex\pdfluatrue\fi \ifpdftex\pdfluatrue\fi
+\ifpdflua % pdfTeX and luaTeX produce PDF output if \pdfoutput>0 (default)
+  \def\Black{\pdfliteral{0 g 0 G}}  % use rgb colors for direct PDF output too
+  \def\Blue{\pdfliteral{\pdflinkcolor\space rg \pdflinkcolor\space RG}}
+\fi
 
 \ifluatex % LuaTeX is almost like pdfTeX
 \protected\def\pdfliteral   {\pdfextension literal}
