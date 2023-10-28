@@ -1,0 +1,118 @@
+#!/usr/bin/env perl
+# Public domain.  Originally written by Andreas Scherer, 2023.
+
+use strict;
+use warnings;
+
+use File::Basename;
+use Getopt::Long qw(:config no_ignore_case bundling);
+use Pod::Usage;
+
+my $progname;
+my $collator;
+
+BEGIN {
+  $progname = basename $0;
+  # Unicode::Collate has been around a long time,
+  # but it's not part of core Perl.
+  eval {
+    require Unicode::Collate;
+    $collator = Unicode::Collate->new();
+  };
+}
+
+# We expect a TeX file as the single command-line parameter.
+my $usage = "Usage: $progname input_file\n";
+if (@ARGV > 1) {
+  my $first = shift @ARGV;
+  $usage .= "extra file argument(s): @ARGV\n";
+  unshift @ARGV, $first;
+}
+$usage .= "try --help if you need it.\n";
+
+die $usage unless scalar @ARGV == 1;
+
+Getopt::Long::GetOptions(
+  'help|?'  => \&help_handler,
+  'version' => sub { print version(); exit 0; }
+) or die $usage;
+## help_handler()
+sub help_handler {
+  open(my $pipe, '|-', $ENV{PAGER} || 'less -e') or exit 1;
+  pod2usage(-message => version(), -output => $pipe,
+    -verbose => 99, -sections => "SHORT DESCRIPTION|COPYRIGHT");
+  close $pipe;
+  exit 0;
+}
+## version()
+sub version {
+  return "This is $progname (2023).\n";
+}
+
+my $ref = $ARGV[0];
+
+open(REF, $ref) or die "$0: Could not open input file $ref.\n";
+
+my %mini_index; # storage for index entries of a section
+
+# Scroll through the input file and look for lines like
+# !127
+# and sort the lines collected up to this pont alphabetically by the KEYs.
+#
+# Every KEY contains a single PASCAL identifier (variable, type, function,
+# etc.) after an initial '+'.
+foreach my $line (<REF>)
+{
+	if ($line =~ m/\!\d+/) { # start of a new section
+		foreach my $key ($collator ?
+			$collator->sort(keys %mini_index) :
+			sort {"\L$a" cmp "\L$b"} keys %mini_index) {
+			print $mini_index{$key};
+		}
+		%mini_index = (); # reset mini-index storage
+		print $line;
+	} else { # mini-index entry
+		my (undef,$key) = split / /, $line; # 2nd column is the key
+		$mini_index{$key} = $line; # store index entry
+		next; # print later
+	}
+}
+
+close(REF);
+
+exit 0;
+
+=pod
+
+=encoding utf8
+
+=head1 NAME
+
+proofsort - Sort mini-indexes alphabetically
+
+=head1 SHORT DESCRIPTION
+
+This small Perl script 'refsort' sorts the mini-indexes for each section
+in the '.ref' file created by 'twill foo' (twice) and 'tex foo'.
+
+=over
+
+=item Run TWILL twice on your 'input_file'.w, creating 'input_file'.tex
+
+=item Invoke "tex 'input_file'.tex", creating 'input_file'.ref
+
+=item Invoke "$prognane 'input_file'.ref > 'input_file'.sref"
+
+=item Run TeX on 'input_file'.tex a second time
+
+=back
+
+See also "man twill" for more information on how to use the TWILL system.
+
+=head1 COPYRIGHT
+
+Public domain.  Originally written by Andreas Scherer, 2023.
+
+Contemporary development on https://github.com/ascherer/cwebbin.
+
+=cut
