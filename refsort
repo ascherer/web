@@ -55,7 +55,7 @@ my $donewithpage; # recto page number of a two-page spread
 foreach my $line (<STDIN>)
 {
   if ($line =~ m/\!(\d+)/) { # start of a new two-page spread
-    if (scalar keys %mini_index) { # skip over first indicator line
+    if ($donewithpage) { # skip over first indicator line
       foreach my $key ($collator ?
         $collator->sort(keys %mini_index) :
         sort {"\L$a" cmp "\L$b"} keys %mini_index) {
@@ -72,6 +72,8 @@ foreach my $line (<STDIN>)
     next; # print later
   }
 }
+
+print "\\donewithpage$donewithpage\n"; # done with current spread
 
 exit 0;
 
