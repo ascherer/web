@@ -21,17 +21,9 @@ BEGIN {
   };
 }
 
-# We expect a TeX file as the single command-line parameter.
 my $usage = "Usage: $progname input_file\n";
-if (@ARGV > 1) {
-  my $first = shift @ARGV;
-  $usage .= "extra file argument(s): @ARGV\n";
-  unshift @ARGV, $first;
-}
-$usage .= "try --help if you need it.\n";
 
-die $usage unless scalar @ARGV == 1;
-
+# Standard options for TeX Live.
 Getopt::Long::GetOptions(
   'help|?'  => \&help_handler,
   'version' => sub { print version(); exit 0; }
@@ -49,36 +41,37 @@ sub version {
   return "This is $progname (2023).\n";
 }
 
-my $ref = $ARGV[0];
-
-open(REF, $ref) or die "$0: Could not open input file $ref.\n";
-
-my %mini_index; # storage for index entries of a section
-
-# Scroll through the input file and look for lines like
+# Read input lines from the console and look for indicator lines like
 # !127
-# and sort the lines collected up to this pont alphabetically by the KEYs.
+# From there until the next '!\d+' line, collect all index entries.
+# When the next indicator line appears, sort the index lines alphabetically
+# by the KEYs.
 #
-# Every KEY contains a single PASCAL identifier (variable, type, function,
-# etc.) after an initial '+'.
-foreach my $line (<REF>)
+# Every KEY contains of a single PASCAL identifier (variable, type, function,
+# etc.) after an initial '+ ' marker. This marker is replaced with the '\['
+# macro (i.e., '\makeref') to help TeX format the mini-index.
+my %mini_index; # storage for index entries of a two-page spread
+my $donewithpage; # recto page number of a two-page spread
+foreach my $line (<STDIN>)
 {
-	if ($line =~ m/\!\d+/) { # start of a new section
-		foreach my $key ($collator ?
-			$collator->sort(keys %mini_index) :
-			sort {"\L$a" cmp "\L$b"} keys %mini_index) {
-			print $mini_index{$key};
-		}
-		%mini_index = (); # reset mini-index storage
-		print $line;
-	} else { # mini-index entry
-		my (undef,$key) = split / /, $line; # 2nd column is the key
-		$mini_index{$key} = $line; # store index entry
-		next; # print later
-	}
+  if ($line =~ m/\!(\d+)/) { # start of a new two-page spread
+    if (scalar keys %mini_index) { # skip over first indicator line
+      foreach my $key ($collator ?
+        $collator->sort(keys %mini_index) :
+        sort {"\L$a" cmp "\L$b"} keys %mini_index) {
+        print $mini_index{$key};
+      }
+      %mini_index = (); # reset mini-index storage
+      print "\\donewithpage$donewithpage\n"; # done with current spread
+    }
+    $donewithpage = $1; # start of next spread
+  } else { # mini-index entry
+    my (undef,$key) = split / /, $line; # 2nd column is the key
+    $line =~ s/^\+ /\\\[/; # add \makeref macro
+    $mini_index{$key} = $line; # store index entry
+    next; # print later
+  }
 }
-
-close(REF);
 
 exit 0;
 
@@ -94,6 +87,7 @@ proofsort - Sort mini-indexes alphabetically
 
 This small Perl script 'refsort' sorts the mini-indexes for each section
 in the '.ref' file created by 'twill foo' (twice) and 'tex foo'.
+It reads its input from STDIN and writes its output to STDOUT.
 
 =over
 
@@ -101,7 +95,7 @@ in the '.ref' file created by 'twill foo' (twice) and 'tex foo'.
 
 =item Invoke "tex 'input_file'.tex", creating 'input_file'.ref
 
-=item Invoke "$prognane 'input_file'.ref > 'input_file'.sref"
+=item Invoke "$prognane < 'input_file'.ref > 'input_file'.sref"
 
 =item Run TeX on 'input_file'.tex a second time
 
