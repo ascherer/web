@@ -45,9 +45,9 @@ sub version {
 # !127
 # From there until the next '!\d+' line, collect all index entries.
 # When the next indicator line appears, sort the index lines alphabetically
-# by the KEYs.
+# according to the KEYs.
 #
-# Every KEY contains of a single PASCAL identifier (variable, type, function,
+# Every KEY consists of a single PASCAL identifier (variable, type, function,
 # etc.) after an initial '+ ' marker. This marker is replaced with the '\['
 # macro (i.e., '\makeref') to help TeX format the mini-index.
 my %mini_index; # storage for index entries of a two-page spread
@@ -86,7 +86,7 @@ proofsort - Sort mini-indexes alphabetically
 =head1 SHORT DESCRIPTION
 
 This small Perl script 'refsort' sorts the mini-indexes for each section
-in the '.ref' file created by 'twill foo' (twice) and 'tex foo'.
+in the '.ref' file created by 'twill foo' (twice) and 'tex foo' (first run).
 It reads its input from STDIN and writes its output to STDOUT.
 
 =over
@@ -95,7 +95,7 @@ It reads its input from STDIN and writes its output to STDOUT.
 
 =item Invoke "tex 'foo'.tex", creating 'foo'.ref
 
-=item Invoke "$prognane < 'foo'.ref > 'foo'.sref"
+=item Invoke "$progname < 'foo'.ref > 'foo'.sref"
 
 =item Run TeX on 'foo'.tex a second time
 
