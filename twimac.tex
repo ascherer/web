@@ -7,8 +7,8 @@
 \newif\ifsorted
 \newread\sreffile \openin\sreffile=\jobname.sref
 \newwrite\reffile
-\ifeof\sreffile \immediate\openout\reffile=\jobname.ref \sortedfalse
-  \message{This is the first pass!}
+\ifeof\sreffile \immediate\openout\reffile=\jobname.ref
+     \sortedfalse \message{This is the first pass!}
 \else \sortedtrue \message{This is the second pass!} \fi
 
 \newdimen\em \em=10pt
@@ -325,9 +325,9 @@
 \def\section{\mathhexbox278}
 \def\none{\none}
 \def\readrefs{\the\prefs \mm=\modno \advance\mm-\baseno \advance\mm200
-  {\def\lmda##1{\global\let##1\relax}\pp=200 %  this patch made AFTER first edition
-    \loop\ifnum\pp<\mm \the\toks\pp \advance\pp 1 \repeat}	% of Vol B!!
-  \loop\ifnum\mm<221 \the\toks\mm \advance\mm 1 \repeat}
+  {\def\lmda##1{\global\let##1\relax}\pp=200 % this patch made AFTER first
+    \loop\ifnum\pp<\mm \the\toks\pp \advance\pp 1 \repeat} % edition of Vol B!!
+  \loop\ifnum\mm<222 \the\toks\mm \advance\mm 1 \repeat}
 \def\readln{\read\sreffile to\next \expandafter\next\space \readin}
 \def\donewithpage#1 {%\ifnum\pageno=#1 \else\message{page #1??}\fi
   \let\readin=\relax}
