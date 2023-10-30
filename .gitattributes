@@ -12,3 +12,4 @@ tang-*.ch export-ignore
 weav-*.ch export-ignore
 web-*.ch export-ignore
 gftodvi.* export-ignore
+refsort export-ignore
