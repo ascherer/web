@@ -41,15 +41,17 @@ sub version {
   return "This is $progname (2023).\n";
 }
 
-# Read input lines from the console and look for indicator lines like
+# Read input lines from the console and look for blocks like
 # !127
-# From there until the next '!\d+' line, collect all index entries.
-# When the next indicator line appears, sort the index lines alphabetically
-# according to the KEYs.
+# [+ KEY LOCATION TEXPART]*
+# and sort them alphabetically by the KEYs.
 #
 # Every KEY consists of a single PASCAL identifier (variable, type, function,
 # etc.) after an initial '+ ' marker. This marker is replaced with the '\['
 # macro (i.e., '\makeref') to help TeX format the mini-index.
+#
+# The page number in the '!\d+' indicator is appended as argument of the
+# '\donewithpage' macro.
 my %mini_index; # storage for index entries of a two-page spread
 my $donewithpage; # recto page number of a two-page spread
 foreach my $line (<STDIN>)
@@ -83,7 +85,7 @@ exit 0;
 
 =head1 NAME
 
-proofsort - Sort mini-indexes alphabetically
+refsort - Sort mini-indexes alphabetically
 
 =head1 SHORT DESCRIPTION
 
