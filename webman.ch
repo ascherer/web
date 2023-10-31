@@ -501,9 +501,9 @@ World Wide Web. The following \.{WEB} macros \.{pwebmac.tex} are in fact
 set up so that the output of \.{WEAVE} can be converted easily into
 Portable Document Format, with clickable hyperlinks that can be read
 with your favorite {\mc PDF} viewer.
-After using \.{WEAVE} with command line option `\.{-p}' to convert \.{cob.web}
-into \.{cob.tex}, you can prepare and view a hypertext version of the program
-by giving the commands
+After using \.{WEAVE} with command line option `\.{-p}' to convert
+\.{cob.web} into \.{cob.tex}, you can prepare a hypertext version of
+the program by giving the commands
 $$\vbox{\halign{\.{#}\hfil\cr
 tex "\\let\\pdf+ \\input cob"\cr
 dvipdfm cob\cr}}$$
