@@ -579,8 +579,7 @@ was being generated,
 \point 15. In conjunction with `\.{weave -p}' and the \.{pwebmac} macros you
 can say `\.{\\input pdfwebtocfront}' as the last command in the limbo section
 and run \TeX\ \\{twice} on your woven \.{WEB} document, in order to shift the
-table-of-contents to
-the front of the {\mc PDF} output.
+table-of-contents to the front of the {\mc PDF} output.
 @z
 
 @x l.1583
