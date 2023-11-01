@@ -13,3 +13,4 @@ weav-*.ch export-ignore
 web-*.ch export-ignore
 gftodvi.* export-ignore
 refsort export-ignore
+weave.sed export-ignore
