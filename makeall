@@ -277,24 +277,24 @@ FI
 		fi
 	fi
 
-	if [ xetex = $f ] # only XeTeX can process XETEX.WEB
-	then $f $f
-	elif [ ctwill = $f ] # gives two different outcomes
-	then
-		# sort mini-indexes
-		if [ "$HITEX" = "$TEX" ]
-		then # directly in the TeX file
-			ctwill-proofsort < $f.tex > $f-sorted.tex
-			mv $f-sorted.tex $f.tex
-		else # in the TeX-created .ref file
-			$TEX $f
-			ctwill-refsort < $f.ref > $f.sref
-		fi
-		$TEX $f
-	elif [ refsort = $f ]
-	then $TEX -interaction nonstopmode $f
-	else $TEX $f
-	fi
+	case $f in
+		xetex ) $f $f ;; # only XeTeX can process XETEX.WEB
+
+		ctwill ) # gives two different outcomes
+			if [ "$HITEX" = "$TEX" ] # sort mini-indexes
+			then # directly in the TeX file
+				ctwill-proofsort < $f.tex > $f-sorted.tex
+				mv $f-sorted.tex $f.tex
+			else # in the TeX-created .ref file
+				$TEX $f
+				ctwill-refsort < $f.ref > $f.sref
+			fi
+			$TEX $f ;;
+
+		refsort ) $TEX -interaction nonstopmode $f ;;
+
+		* ) $TEX $f ;;
+	esac
 done
 
 if ( $PDFTOCFRONT || [ "$HITEX" = "$TEX" ] ) && ! $FILESELECT
