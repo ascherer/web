@@ -108,15 +108,17 @@ case "$TEX" in
 	* ) VALID=false ;; # plain TeX and XeTeX use different approach
 esac
 
-# Use alternative TeX macros more suited for PDF output.
-if $NEW
-then WEAVE="$WEAVE -p"
-fi
-
 # Valid PDF output from 'pdftex' and 'luatex': In 'pwebmac.tex' set '\countD'
 # to the actual number of @<named modules@>, not the number of all sections.
 if $VALID
-then TEX="$TEX --shell-escape"
+then
+	NEW=true # PDF output requires 'pwebmac.tex'
+	TEX="$TEX --shell-escape"
+fi
+
+# Use alternative TeX macros more suited for PDF output.
+if $NEW
+then WEAVE="$WEAVE -p"
 fi
 
 # WEB and CWEB programs we want to get formatted
