@@ -285,8 +285,7 @@ FI
 		ctwill ) # gives two different outcomes
 			if [ "$HITEX" = "$TEX" ] # sort mini-indexes
 			then # directly in the TeX file
-				ctwill-proofsort < $f.tex > $f-sorted.tex
-				mv $f-sorted.tex $f.tex
+				ctwill-proofsort < $f.tex 1<> $f.tex
 			else # in the TeX-created .ref file
 				$TEX $f
 				ctwill-refsort < $f.ref > $f.sref
@@ -384,8 +383,7 @@ then
 		for f in one two three four five six seven eight nine ten \
 			eleven twelve
 		do
-			$TEX errata.$f
-			mv errata.$PDF errata.$f.$PDF
+			$TEX -jobname errata.$f errata.$f
 		done
 
 		$TEX errata
