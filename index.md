@@ -1,5 +1,5 @@
 ---
-title: C/WEB programs in \TeX\ Live 2023
+title: C/WEB programs in \TeX\ Live
 colorlinks: true
 filecolor: blue
 urlcolor: blue
@@ -108,4 +108,4 @@ directly.
 
 ## Happy C/WEB Programming!
 
-2023-12-03 Andreas Scherer
+2024-02-07 Andreas Scherer
