@@ -168,7 +168,11 @@ do
 				$CTWILL $f # prime the pump
 				$CTWILL $f ;; # get decent answers
 
-			c* | refsort | twinx | tie | hitex ) $CWEAVE $f ;;
+			c* | refsort | twinx | tie ) $CWEAVE $f ;;
+
+			hitex )
+				tie -m $f.w $f.w /opt/github/web/$f.ch
+				CWEBINPUTS=.: $CWEAVE $f ;;
 
 			twill )
 				tie -m $f.web weave.web weave.ch weav-$f.ch
