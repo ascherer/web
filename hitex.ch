@@ -344,10 +344,8 @@ case shorthand_def: {@+n=cur_chr;get_r_token();p=cur_cs;g_define(p, relax, 256);
 
 @x [1246] l.24140
 if (c==0) dead_cycles=cur_val
-@/@<Cases for |alter_integer|@>@;@/
 @y
 if (c==0) dead_cycles=cur_val@;
-@/@<Cases for |alter_integer|@>@;@;@/
 @z
 
 @x [1248] l.23179
