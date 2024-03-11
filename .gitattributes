@@ -11,6 +11,7 @@ Makefile export-ignore
 tang-*.ch export-ignore
 weav-*.ch export-ignore
 web-*.ch export-ignore
+hitex.ch export-ignore
 gftodvi.* export-ignore
 refsort export-ignore
 none.sed export-ignore
