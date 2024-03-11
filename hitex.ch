@@ -255,7 +255,7 @@ static void hyphenate_word(void)
 @x [1209] l.23494
   else if (chr_code==2) print_esc("outer")
 @y
-  else if (chr_code==2) print_esc("outer");
+  else if (chr_code==2) print_esc("outer")@;
 @z
 
 @x [1214] l.23605
