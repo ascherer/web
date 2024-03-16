@@ -13,5 +13,6 @@ weav-*.ch export-ignore
 web-*.ch export-ignore
 hitex.ch export-ignore
 gftodvi.* export-ignore
+pdftex.ch export-ignore
 refsort export-ignore
 none.sed export-ignore

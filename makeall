@@ -126,6 +126,11 @@ for f in $FILES
 do
 	f=$(basename $f .web)
 
+	if [ pdftex = $f ] # Fix several 'Overfull \hbox'es
+	then
+		tie -m $f.web $f.web /opt/github/web/$f.ch
+	fi
+
 	if $CHANGES && echo $f | grep -v -q -E 'twill|glue|hitex'
 		# These are changes in and of themselves
 	then
@@ -140,7 +145,7 @@ do
 
 			# main WEB programs have complex change files
 			tex | mf | pdftex | xetex )
-				WEBINPUTS=$KNUTHWARE/../../Work//:$WEBINPUTS: \
+				WEBINPUTS=.:$KNUTHWARE/../../Work//:$WEBINPUTS: \
 				$WEAVE $f $f-final
 
 				# FIX: XeTeX uses '\pdfTeX' from section 114,
@@ -173,6 +178,9 @@ do
 			hitex )
 				tie -m $f.w $f.w /opt/github/web/$f.ch
 				CWEBINPUTS=.: $CWEAVE $f ;;
+
+			pdftex )
+				WEBINPUTS=.: $WEAVE $f ;;
 
 			twill )
 				tie -m $f.web weave.web weave.ch weav-$f.ch
