@@ -126,10 +126,17 @@ for f in $FILES
 do
 	f=$(basename $f .web)
 
-	if [ pdftex = $f ] # Fix several 'Overfull \hbox'es
-	then
-		tie -m $f.web $f.web /opt/github/web/$f.ch
-	fi
+	case $f in
+		pdftex ) # Fix several 'Overfull \hbox'es
+			tie -m $f.web $f.web /opt/github/web/$f.ch ;;
+
+		weave | twill )
+			cp $KNUTHWARE/weave.web .
+			if [ "$HITEX" = "$TEX" ] # Fix non-constant factor
+			then
+				$SED_I -e "s/\\\\the\\\\hsize/460pt/" weave.web
+			fi ;;
+	esac
 
 	if $CHANGES && echo $f | grep -v -q -E 'twill|glue|hitex'
 		# These are changes in and of themselves
@@ -179,12 +186,12 @@ do
 				tie -m $f.w $f.w /opt/github/web/$f.ch
 				CWEBINPUTS=.: $CWEAVE $f ;;
 
-			pdftex )
+			twill )
+				WEBINPUTS=.:$WEBINPUTS tie -m $f.web weave.web weave.ch weav-$f.ch
 				WEBINPUTS=.: $WEAVE $f ;;
 
-			twill )
-				tie -m $f.web weave.web weave.ch weav-$f.ch
-				$WEAVE $f ;;
+			pdftex | weave )
+				WEBINPUTS=.:$WEBINPUTS $WEAVE $f ;;
 
 			* ) $WEAVE $f ;;
 		esac
