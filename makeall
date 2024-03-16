@@ -92,7 +92,7 @@ HITEX="hitex --compress"
 PAX="pax -wvzf"
 PDF=pdf # default extension for 'knuth-pdf'
 SED_I="sed -i" # non-GNU-sed requires an extra '' argument for '-i' option.
-WEAVE="weave"
+WEAVE=weave
 
 case "$TEX" in
 	hitex ) # HINT format
@@ -133,8 +133,7 @@ do
 		weave | twill )
 			cp $KNUTHWARE/weave.web .
 			if [ "$HITEX" = "$TEX" ] # Fix non-constant factor
-			then
-				$SED_I -e "s/\\\\the\\\\hsize/460pt/" weave.web
+			then $SED_I -e "s/\\\\the\\\\hsize/460pt/" weave.web
 			fi ;;
 	esac
 
@@ -187,11 +186,11 @@ do
 				CWEBINPUTS=.: $CWEAVE $f ;;
 
 			twill )
-				WEBINPUTS=.:$WEBINPUTS tie -m $f.web weave.web weave.ch weav-$f.ch
+				WEBINPUTS=.:$WEBINPUTS \
+				tie -m $f.web weave.web weave.ch weav-$f.ch
 				WEBINPUTS=.: $WEAVE $f ;;
 
-			pdftex | weave )
-				WEBINPUTS=.:$WEBINPUTS $WEAVE $f ;;
+			pdftex | weave ) WEBINPUTS=.: $WEAVE $f ;;
 
 			* ) $WEAVE $f ;;
 		esac
@@ -324,8 +323,7 @@ then
 	then
 		for f in *.$PDF
 		do
-			case $f in
-				*-changes.$PDF ) rm -f $f; continue ;;
+			case $f in *-changes.$PDF ) rm -f $f; continue ;;
 			esac
 			mv $f $(basename $f .$PDF)-changes.$PDF
 		done
@@ -393,16 +391,14 @@ then
 		touch pages.tex # let 'manmac' produce output at all
 
 		for f in tripman trapman webman cwebman
-		do
-			$TEX $f
+		do $TEX $f
 		done
 
 		$TEX -jobname=errorlog /opt/github/web/Xerrorlog.tex
 
 		for f in one two three four five six seven eight nine ten \
 			eleven twelve
-		do
-			$TEX -jobname errata.$f errata.$f
+		do $TEX -jobname errata.$f errata.$f
 		done
 
 		$TEX errata
@@ -437,7 +433,7 @@ then
 	#     (a) pandoc index.md -o index.pdf
 	#     (b) pandoc index.md -o index.tex;
 	#         pandoc index.tex -s -o index.html \
-	#           --metadata title="C/WEB programs in TeX Live 2023";
+	#           --metadata title="C/WEB programs in TeX Live";
 	#         rm index.tex
 	# (2) Prepare a super-tarball from all the contents of these
 	#     individual tarballs (42/53 and 34/54) with either of
