@@ -130,6 +130,9 @@ do
 		pdftex ) # Fix several 'Overfull \hbox'es
 			tie -m $f.web $f.web /opt/github/web/$f.ch ;;
 
+		hitex ) # Beautifications for 'hitex.w'
+			tie -m $f.w $f.w /opt/github/web/$f.ch ;;
+
 		weave | twill )
 			cp $KNUTHWARE/weave.web .
 			if [ "$HITEX" = "$TEX" ] # Fix non-constant factor
@@ -181,9 +184,7 @@ do
 
 			c* | refsort | twinx | tie ) $CWEAVE $f ;;
 
-			hitex )
-				tie -m $f.w $f.w /opt/github/web/$f.ch
-				CWEBINPUTS=.: $CWEAVE $f ;;
+			hitex ) CWEBINPUTS=.: $CWEAVE $f ;;
 
 			twill )
 				WEBINPUTS=.:$WEBINPUTS \
