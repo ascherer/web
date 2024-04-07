@@ -5,12 +5,24 @@
 @s uint8_t int
 @z
 
+@x [1] l.254
+using \eTeX and \Prote, and adding functions common to other engines from
+@y
+using \eTeX\ and \Prote, and adding functions common to other engines from
+@z
+
 @x [2] l.378
 @d banner "This is HiTeX, Version 3.141592653"
           eTeX_version_string"-"HINT_VERSION_STRING" "TL_VERSION
 @y
 @d banner "This is HiTeX, Version 3.141592653"@|
           eTeX_version_string"-"HINT_VERSION_STRING" "TL_VERSION
+@z
+
+@x [4] l.434
+uses identifiers that \TeX will declare as macros.
+@y
+uses identifiers that \TeX\ will declare as macros.
 @z
 
 @x [16] l.632
@@ -365,7 +377,6 @@ common_ending: define(u, set_font, f);eqtb[font_id_base+f]=eqtb[u];font_id_text(
 common_ending: g_define(u, set_font, f);eqtb[font_id_base+f]=eqtb[u];font_id_text(f)=t;
 @z
 
-
 @x [1346] l.25791
   @/@<Cases of |extension| for |print_cmd_chr|@>@/
 @y
@@ -406,6 +417,18 @@ switch (s) {@t\4@>@<Cases for evaluation of the current term@>@;
   @<Cases for |do_marks|@>@;
 @y
   @t\4@>@<Cases for |do_marks|@>@;
+@z
+
+@x [1543] l.28985
+be enabled, the engine is still compatible with \TeX with no added
+@y
+be enabled, the engine is still compatible with \TeX\ with no added
+@z
+
+@x [1630] l.29822
+standard \PASCAL does not provide. So we do not bother to try. The
+@y
+standard \PASCAL\ does not provide. So we do not bother to try. The
 @z
 
 @x [1887] l.35105
