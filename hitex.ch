@@ -37,6 +37,14 @@ uses identifiers that \TeX\ will declare as macros.
 @#@<Declare \Prote\ procedures for strings@>@;
 @z
 
+@x [52/53] l.1471
+static int s_no(const char *str);
+@y
+static int s_no(const char *str);
+
+@ (Empty section to keep numbering intact.)
+@z
+
 @x [71] l.1798
 |error;|\cr}}$$
 @y
@@ -248,6 +256,38 @@ case the: if (chr_code==0) print_esc("the")
 @p @t\4@>@<Declare the procedure called |init_span|@>@t@>@/
 @y
 @p @<Declare the procedure called |init_span|@>@;@/
+@z
+
+@x [800] l.16399
+{ @<Handle an alignment that depends on |hsize| or |vsize|@>@;
+@y
+{ /*Handle an alignment that depends on |hsize| or |vsize|*/
+ pointer r=get_node(align_node_size);
+ save_ptr=save_ptr-2;pack_begin_line=-mode_line;
+
+ type(r)=whatsit_node; subtype(r)=align_node;
+ align_preamble(r)=preamble;
+ align_list(r)=link(head);
+ align_extent(r)=new_xdimen(saved(1),saved_hfactor(1),saved_vfactor(1));
+ align_m(r)= saved(0);
+ align_v(r)= (mode!=-vmode);
+ link(head)=r; tail=r;
+ pack_begin_line=0;
+@z
+@x l.16411
+@ @<Handle an alignment that depends on |hsize| or |vsize|@>=
+ pointer r=get_node(align_node_size);
+ save_ptr=save_ptr-2;pack_begin_line=-mode_line;
+
+ type(r)=whatsit_node; subtype(r)=align_node;
+ align_preamble(r)=preamble;
+ align_list(r)=link(head);
+ align_extent(r)=new_xdimen(saved(1),saved_hfactor(1),saved_vfactor(1));
+ align_m(r)= saved(0);
+ align_v(r)= (mode!=-vmode);
+ link(head)=r; tail=r;
+ pack_begin_line=0;
+@y
 @z
 
 @x [894] l.18245
