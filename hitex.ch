@@ -45,25 +45,25 @@ static int s_no(const char *str);
 @ (Empty section to keep numbering intact.)
 @z
 
-@x [71] l.1798
+@x [72] l.1798
 |error;|\cr}}$$
 @y
 |error();|\cr}}$$
 @z
 
-@x [100] l.2267
+@x [101] l.2267
 typedef int32_t nonnegative_integer; /*$0\le x<2^{31}$*/
 @y
 typedef uint32_t nonnegative_integer; /*$0\le x<2^{31}$*/
 @z
 
-@x [107] l.2424
+@x [108] l.2424
 @p @<Declare \Prote\ arithmetic routines@>@/
 @y
 @p @<Declare \Prote\ arithmetic routines@>@;
 @z
 
-@x [108] l.2458
+@x [109] l.2458
 @d float_constant(A) ((double)(A)) /*convert |int| constant to |double|*/
 @y
 @d float_constant(A) ((double)(A)) /*convert |int| constant to |double|*/
@@ -75,16 +75,16 @@ typedef uint32_t nonnegative_integer; /*$0\le x<2^{31}$*/
 @x l.2464
 #error  @=float type must have size 4@>
 @y
-#perror  @=float type must have size 4@>
+#perror @=float type must have size 4@>
 @z
 
-@x [151] l.3321
+@x [152] l.3321
 q=@<Current |mem| equivalent of glue parameter number |n|@>@t@>;
 @y
 q=@[@<Current |mem| equivalent of glue parameter number |n|@>@];
 @z
 
-@x [154] l.3361
+@x [155] l.3361
 @d kern_node 11 /*|type| of a kern node*/
 @d explicit 1 /*|subtype| of kern nodes from \.{\\kern} and \.{\\/}*/
 @y
@@ -94,66 +94,71 @@ q=@[@<Current |mem| equivalent of glue parameter number |n|@>@];
 @d explicit 1 /*|subtype| of kern nodes from \.{\\kern} and \.{\\/}*/
 @z
 
-@x [200] l.4066
+@x [201] l.4066
 fast_delete_glue_ref(p)
 @y
 fast_delete_glue_ref(p)@;
 @z
 
-@x [230] l.5007
+@x [231] l.5007
   @/@<Cases of |assign_toks| for |print_cmd_chr|@>@/
 @y
-  @/@t\4@>@<Cases of |assign_toks| for |print_cmd_chr|@>@;@/
+  @/@t\4@>@<Cases of |assign_toks| for |print_cmd_chr|@>@;
 @z
 
-@x [236] l.5335
+@x [237] l.5335
 @/@<Cases for |print_param|@>@/
 @y
-@/@t\4@>@<Cases for |print_param|@>@;@/
+@/@t\4@>@<Cases for |print_param|@>@;
 @z
 
-@x [240] l.5488
+@x [241] l.5488
 @p static void fix_date_and_time(void)
 @y
 @s tm int
 @p static void fix_date_and_time(void)
 @z
 
-@x [265] l.6038
+@x [266] l.6038
 @/@<Cases of |expandafter| for |print_cmd_chr|@>@/
 @y
-@/@t\4@>@<Cases of |expandafter| for |print_cmd_chr|@>@;@/
+@/@t\4@>@<Cases of |expandafter| for |print_cmd_chr|@>@;
+@z
+@x l.6058
+case read_to_cs: if (chr_code==0) print_esc("read")
+@y
+case read_to_cs: if (chr_code==0) print_esc("read")@;
 @z
 @x l.6065
   @<Cases of |set_shape| for |print_cmd_chr|@>@;@/
 @y
-  @/@t\4@>@<Cases of |set_shape| for |print_cmd_chr|@>@;@/
+  @/@t\4@>@<Cases of |set_shape| for |print_cmd_chr|@>@;
 @z
-@x l.6068
+@x l.6067
 case the: if (chr_code==0) print_esc("the")
 @y
-@t\4@>case the: if (chr_code==0) print_esc("the")
+case the: if (chr_code==0) print_esc("the")@;
 @z
 
-@x [274] l.6274
+@x [275] l.6274
 @/@<Cases for |eq_destroy|@>@/
 @y
-@/@t\4@>@<Cases for |eq_destroy|@>@;@/
+@/@t\4@>@<Cases for |eq_destroy|@>@;
 @z
 
-@x [297] l.6817
+@x [298] l.6817
 @t\4@>@<Cases of |print_cmd_chr| for symbolic printing of primitives@>@/
 @y
-@/@t\4@>@<Cases of |print_cmd_chr| for symbolic printing of primitives@>@;@/
+@/@t\4@>@<Cases of |print_cmd_chr| for symbolic printing of primitives@>@;
 @z
 
-@x [366] l.8171
+@x [367] l.8171
 @/@<Cases for |expandafter|@>@/
 @y
-@/@t\4@>@<Cases for |expandafter|@>@;@/
+@/@t\4@>@<Cases for |expandafter|@>@;
 @z
 
-@x [408] l.8794
+@x [409] l.8794
 @t\4\4@>@<Declare procedures that scan restricted classes of integers@>@;
 @t\4\4@>@<Declare \eTeX\ procedures for scanning@>@;
 @t\4\4@>@<Declare procedures that scan font-related stuff@>@;
@@ -163,65 +168,74 @@ case the: if (chr_code==0) print_esc("the")
 @<Declare procedures that scan font-related stuff@>@;
 @z
 
-@x [416] l.9005
+@x [417] l.8994
+case set_page_int: if (chr_code==0) print_esc("deadcycles")
+@/@<Cases of |set_page_int| for |print_cmd_chr|@>;@/
+@+else print_esc("insertpenalties");@+break;
+@y
+case set_page_int: if (chr_code==0) print_esc("deadcycles")@;
+@<Cases of |set_page_int| for |print_cmd_chr|@>;
+else print_esc("insertpenalties");@+break;
+@z
+@x l.9005
   @/@<Cases of |last_item| for |print_cmd_chr|@>@/
 @y
-  @/@t\4@>@<Cases of |last_item| for |print_cmd_chr|@>@;@/
+  @/@t\4@>@<Cases of |last_item| for |print_cmd_chr|@>@;
 @z
 
-@x [418] l.9027
+@x [419] l.9027
 {@+if (m==0) cur_val=dead_cycles
 @y
 {@+if (m==0) cur_val=dead_cycles@;
 @z
 
-@x [423] l.9079
+@x [424] l.9079
   @/@<Cases for fetching a dimension value@>@/
 @y
-  @/@t\4@>@<Cases for fetching a dimension value@>@;@/
+  @/@t\4@>@<Cases for fetching a dimension value@>@;
 @z
 @x l.9086
   @/@<Cases for fetching an integer value@>@/
 @y
-  @/@t\4@>@<Cases for fetching an integer value@>@;@/
+  @/@t\4@>@<Cases for fetching an integer value@>@;
 @z
 
-@x [468] l.9855
+@x [469] l.9855
   @/@<Cases of |convert| for |print_cmd_chr|@>@/
 @y
-  @/@t\4@>@<Cases of |convert| for |print_cmd_chr|@>@;@/
+  @/@t\4@>@<Cases of |convert| for |print_cmd_chr|@>@;
 @z
 
-@x [470] l.9886
+@x [471] l.9886
 @/@<Cases of `Scan the argument for command |c|'@>@/
 @y
-@/@t\4@>@<Cases of `Scan the argument for command |c|'@>@;@/
+@/@t\4@>@<Cases of `Scan the argument for command |c|'@>@;
 @z
 
-@x [471] l.9904
+@x [472] l.9904
 @/@<Cases of `Print the result of command |c|'@>@/
 @y
-@/@t\4@>@<Cases of `Print the result of command |c|'@>@;@/
+@/@t\4@>@<Cases of `Print the result of command |c|'@>@;
 @z
 
 @x [487] l.10222
   @/@<Cases of |if_test| for |print_cmd_chr|@>@/
 @y
-  @/@t\4@>@<Cases of |if_test| for |print_cmd_chr|@>@;@/
+  @/@t\4@>@<Cases of |if_test| for |print_cmd_chr|@>@;
 @z
 
-@x [500] l.10403
+@x [501] l.10403
 @/@<Cases for |conditional|@>@/
 @y
-@/@t\4@>@<Cases for |conditional|@>@;@/
+@/@t\4@>@<Cases for |conditional|@>@;
 @z
 
-@x [678] l.13905
+@x [679] l.13905
 @p static void append_to_vlist(pointer @!b)@t\2\2@>@/
 { bool height_known;@t\1@>@/
 @y
 @p static void append_to_vlist(pointer @!b)
-{ bool height_known;
+{ @+bool height_known;
 @z
 @x l.13910
   {@+scaled d;@t\1@> /*deficiency of space between baselines*/
@@ -240,22 +254,22 @@ case the: if (chr_code==0) print_esc("the")
 } @+  else @+if (prev_depth<=unknown_depth || prev_depth>ignore_depth ) @/
 @z
 
-@x [727] l.14956
+@x [728] l.14956
 @t\4@>@<Cases for noads that can follow a |bin_noad|@>@;
 @y
 @/@t\4@>@<Cases for noads that can follow a |bin_noad|@>@;
 @z
 
-@x [773] l.15943
+@x [774] l.15943
 @p @t\4@>@<Declare the procedure called |get_preamble_token|@>@t@>@/
 @y
-@p @<Declare the procedure called |get_preamble_token|@>@;@/
+@p @<Declare the procedure called |get_preamble_token|@>@;
 @z
 
-@x [785] l.16151
+@x [786] l.16151
 @p @t\4@>@<Declare the procedure called |init_span|@>@t@>@/
 @y
-@p @<Declare the procedure called |init_span|@>@;@/
+@p @<Declare the procedure called |init_span|@>@;
 @z
 
 @x [800] l.16399
@@ -295,7 +309,7 @@ static void hyphenate_word(void)@t\2\2@>@/
 { pointer @!q, @!s, @!prev_s;@t\1@> /*miscellaneous nodes of temporary interest*/
 @y
 static void hyphenate_word(void)
-{ pointer @!q, @!s, @!prev_s; /*miscellaneous nodes of temporary interest*/
+{ @+pointer @!q, @!s, @!prev_s; /*miscellaneous nodes of temporary interest*/
 @z
 
 @x [1045] l.21133
@@ -420,31 +434,31 @@ common_ending: g_define(u, set_font, f);eqtb[font_id_base+f]=eqtb[u];font_id_tex
 @x [1346] l.25791
   @/@<Cases of |extension| for |print_cmd_chr|@>@/
 @y
-  @/@t\4@>@<Cases of |extension| for |print_cmd_chr|@>@;@/
+  @/@t\4@>@<Cases of |extension| for |print_cmd_chr|@>@;
 @z
 
 @x [1348] l.25982
 @/@<Cases for |do_extension|@>@/
 @y
-@/@t\4@>@<Cases for |do_extension|@>@;@/
+@/@t\4@>@<Cases for |do_extension|@>@;
 @z
 
-@x [1356] l.26113
+@x [1357] l.26113
 @/@<Cases for displaying the |whatsit| node@>@/
 @y
-@/@t\4@>@<Cases for displaying the |whatsit| node@>@;@/
+@/@t\4@>@<Cases for displaying the |whatsit| node@>@;
 @z
 
-@x [1357] l.26254
+@x [1358] l.26254
 @/@<Cases for making a partial copy of the whatsit node@>@/
 @y
-@/@t\4@>@<Cases for making a partial copy of the whatsit node@>@;@/
+@/@t\4@>@<Cases for making a partial copy of the whatsit node@>@;
 @z
 
-@x [1358] l.26437
+@x [1359] l.26437
 @/@<Cases for wiping out the whatsit node@>@/
 @y
-@/@t\4@>@<Cases for wiping out the whatsit node@>@;@/
+@/@t\4@>@<Cases for wiping out the whatsit node@>@;
 @z
 
 @x [1467] l.27754
