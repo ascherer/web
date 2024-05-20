@@ -16,3 +16,4 @@ gftodvi.* export-ignore
 pdftex.ch export-ignore
 refsort export-ignore
 none.sed export-ignore
+mp.ch export-ignore

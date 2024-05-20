@@ -130,7 +130,7 @@ do
 		pdftex ) # Fix several 'Overfull \hbox'es
 			tie -m $f.web $f.web /opt/github/web/$f.ch ;;
 
-		hitex ) # Beautifications for 'hitex.w'
+		hitex | mp ) # Beautifications for 'hitex.w' and 'mp.w'
 			tie -m $f.w $f.w /opt/github/web/$f.ch ;;
 
 		weave | twill )
@@ -138,11 +138,6 @@ do
 			if [ "$HITEX" = "$TEX" ] # Fix non-constant factor
 			then $SED_I -e "s/\\\\the\\\\hsize/460pt/" weave.web
 			fi ;;
-
-		mp )
-			case "$TEX" in
-				tex | xetex | hint ) continue ;;
-			esac ;;
 	esac
 
 	if $CHANGES && echo $f | grep -v -q -E 'twill|glue|hitex|mp'
@@ -187,9 +182,9 @@ do
 				$CTWILL $f # prime the pump
 				$CTWILL $f ;; # get decent answers
 
-			c* | refsort | twinx | tie | mp ) $CWEAVE $f ;;
+			c* | refsort | twinx | tie ) $CWEAVE $f ;;
 
-			hitex ) CWEBINPUTS=.: $CWEAVE $f ;;
+			hitex | mp ) CWEBINPUTS=.: $CWEAVE $f ;;
 
 			twill )
 				WEBINPUTS=.:$WEBINPUTS \
@@ -283,7 +278,7 @@ FI
 		xetex ) $SED_I -e "/\\\\input xewebmac/d" $f.tex ;;
 
 		# timestamp on table-of-contents page or the first page
-		hitex ) $SED_I -e "s/\(\\\\def\\\\topofcontents\)/\\\\datethis\n\\\\emergencystretch=.1\\\\hsize\n\1/" $f.tex ;;
+		hitex | mp ) $SED_I -e "s/\(\\\\def\\\\topofcontents\)/\\\\datethis\n\\\\emergencystretch=.1\\\\hsize\n\1/" $f.tex ;;
 	esac
 
 	# shift table-of-contents pages to the front in PDF
