@@ -420,6 +420,7 @@ then
 		$PAX "$OUTDIR/other.tar.gz" -s ,^,other/, \
 			dvicopy.$PDF patgen.$PDF pktogf.$PDF pktype.$PDF
 		$PAX "$OUTDIR/hitex.tar.gz" -s ,^,hitex/, hitex.$PDF
+		$PAX "$OUTDIR/mp.tar.gz" -s ,^,mp/, mp.$PDF
 		$PAX "$OUTDIR/pdftex.tar.gz" -s ,^,pdftex/, pdftex.$PDF
 		$PAX "$OUTDIR/xetex.tar.gz" -s ,^,xetex/, xetex.pdf
 		$PAX "$OUTDIR/ctie.tar.gz" -s ,^,ctie/, ctie.$PDF
