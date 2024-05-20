@@ -46,7 +46,7 @@ KNUTHWARE=$(dirname $KNUTHWHERE)
 FILES="$KNUTHWARE/*.web pdftex.web xetex.web twill"
 WEBINPUTS=$KNUTHWARE//:
 
-FILES="$FILES common ctangle cweave ctwill refsort twinx ctie tie hitex"
+FILES="$FILES common ctangle cweave ctwill refsort twinx ctie tie hitex mp"
 CWEBINPUTS=$KNUTHWARE//:
 
 KNUTHWHERE=$(locate /glue.web)
@@ -138,9 +138,14 @@ do
 			if [ "$HITEX" = "$TEX" ] # Fix non-constant factor
 			then $SED_I -e "s/\\\\the\\\\hsize/460pt/" weave.web
 			fi ;;
+
+		mp )
+			case "$TEX" in
+				tex | xetex | hint ) continue ;;
+			esac ;;
 	esac
 
-	if $CHANGES && echo $f | grep -v -q -E 'twill|glue|hitex'
+	if $CHANGES && echo $f | grep -v -q -E 'twill|glue|hitex|mp'
 		# These are changes in and of themselves
 	then
 		case $f in
@@ -182,7 +187,7 @@ do
 				$CTWILL $f # prime the pump
 				$CTWILL $f ;; # get decent answers
 
-			c* | refsort | twinx | tie ) $CWEAVE $f ;;
+			c* | refsort | twinx | tie | mp ) $CWEAVE $f ;;
 
 			hitex ) CWEBINPUTS=.: $CWEAVE $f ;;
 
@@ -198,7 +203,7 @@ do
 	fi
 
 	# 'pwebmac' is for WEB only; do nothing for CWEB programs
-	if $NEW && echo $f | grep -v -q -E '^c|refsort|twinx|tie|hitex'
+	if $NEW && echo $f | grep -v -q -E '^c|refsort|twinx|tie|hitex|mp'
 	then
 		# timestamp on table-of-contents page or the first page
 		case $f in
