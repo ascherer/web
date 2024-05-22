@@ -52,6 +52,8 @@
     Publishing Company.}}}
 \pageno=\contentspagenumber \advance\pageno by 1
 
+\input pdfwebtocfront
+
 @* Introduction.
 The \.{GFtoDVI} utility program reads binary generic font (``\.{GF}'')
 files that are produced by font compilers such as \MF, and converts them

@@ -461,7 +461,7 @@
   \line{\hfil Section\ifhint\else\hbox to3em{\hss Page}\fi}% No Page in HINT
   \let\Z=\contentsline
   \readcontents\relax % read the contents info
-  \botofcontents \end} % print the contents page(s) and terminate
+  \botofcontents \makepagelabels \end} % print the contents page(s) and terminate
 \def\contentsline#1#2#3#4{%
     \line{\ignorespaces#1
       \rm\leaders\hbox to .5em{.\hfil}\hfil
@@ -470,6 +470,27 @@
           \HINTcontents{#1}{#2}%
         \else\ifpdf\pdflink{#2}{\romannumeral#2}\else#2\fi
           \hbox to3em{\hss#3}\fi}}
+
+% Adding PDF page labels
+\def\makepagelabels{%
+  \ifnum\contentspagenumber=1 %
+  \else
+    \ifnum\contentspagenumber=0 %
+      \pdfcatalog{%
+        /PageLabels<<%
+          /Nums[0<</P(0)>>1<</S/D/St 1>>]%
+        >>%
+      }%
+    \else
+      \pdfcatalog{%
+        /PageLabels<<%
+          /Nums[0<</S/D/St \contentspagenumber>>]%
+        >>%
+      }%
+    \fi
+  \fi
+}
+
 \def\today{\ifcase\month\or
   January\or February\or March\or April\or May\or June\or
   July\or August\or September\or October\or November\or December\fi
