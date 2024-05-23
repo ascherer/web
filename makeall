@@ -93,6 +93,7 @@ PAX="pax -wvzf"
 PDF=pdf # default extension for 'knuth-pdf'
 SED_I="sed -i" # non-GNU-sed requires an extra '' argument for '-i' option.
 WEAVE=weave
+XETEX=xetex
 
 case "$TEX" in
 	hitex ) # HINT format
@@ -104,6 +105,10 @@ case "$TEX" in
 
 	pdftex | luatex ) # actually only necessary for 'pwebmac.tex'
 		VALID=true ;;
+
+	tex ) # plain TeX
+		XETEX="$XETEX --no-pdf" # XeTeX's extended DVI format
+		VALID=false ;;
 
 	* ) VALID=false ;; # plain TeX and XeTeX use different approach
 esac
@@ -288,7 +293,7 @@ FI
 
 		# only XeTeX can process XETEX.WEB
 		if [ xetex = $f ]
-		then $f $f # run TeX twice
+		then $XETEX $f # run XeTeX twice
 		else $TEX $f # run TeX twice
 		fi
 
@@ -299,7 +304,7 @@ FI
 	fi
 
 	case $f in
-		xetex ) $f $f ;; # only XeTeX can process XETEX.WEB
+		xetex ) $XETEX $f ;; # only XeTeX can process XETEX.WEB
 
 		ctwill ) # gives two different outcomes
 			if [ "$HITEX" = "$TEX" ] # sort mini-indexes
