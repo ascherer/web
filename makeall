@@ -145,10 +145,12 @@ do
 			fi ;;
 	esac
 
-	if $CHANGES && echo $f | grep -v -q -E 'twill|glue|hitex|mp'
-		# These are changes in and of themselves
+	if $CHANGES
 	then
 		case $f in
+			# These are changes in and of themselves
+			ctwill | twill | glue | hitex | mp ) continue ;;
+
 			# CWEB programs have individual changefiles
 			common ) $CWEAVE $f comm-w2c ;;
 			ctangle ) $CWEAVE $f ctang-w2c ;;
