@@ -5,7 +5,7 @@
 \def\title{\MP}
 \def\topofcontents{\centerline{\titlefont\title}%\vskip.7in
   \vfill} % this material will start the table of contents page
-\ifacrohint
+\ifpdf
 \sanitizecommand\MP{MetaPost}
 \sanitizecommand\theta{theta}
 \sanitizecommand\psi{psi}
