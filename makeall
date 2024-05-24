@@ -209,7 +209,7 @@ do
 	then
 		# timestamp on table-of-contents page or the first page
 		case $f in
-			bibtex | patgen | tangle | weave )
+			bibtex | patgen | tangle | weave | twill )
 				$SED_I -e "s/\(\\\\def\\\\title\)/\\\\datecontentspage\n\1/" $f.tex ;;
 
 			mf | tex | pdftex | xetex )
