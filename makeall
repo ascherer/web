@@ -296,7 +296,8 @@ FI
 		if $CHANGES # TeX and XeTeX grow significantly for TeX Live
 		then
 			case $f in
-				tex | xetex ) $SED_I -e "0,/\\\\N[1{]/s/\(\\\\N[1{]\)/\\\\def\\\\tocpages{2}\n\n\1/" $f.tex
+				tex ) $SED_I -e "0,/\\\\N[1{]/s/\(\\\\N[1{]\)/\\\\def\\\\tocpages{2}\n\\\\def\\\\tocstart{1}\n\1/" $f.tex ;;
+				xetex ) $SED_I -e "0,/\\\\N[1{]/s/\(\\\\N[1{]\)/\\\\def\\\\tocpages{2}\n\n\1/" $f.tex ;;
 			esac
 		fi
 
