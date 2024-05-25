@@ -293,15 +293,17 @@ FI
 	then
 		$SED_I -e "0,/\\\\N[1{]/s/\(\\\\N[1{]\)/\\\\input pdfwebtocfront\n\n\1/" $f.tex
 
+		if $CHANGES # TeX and XeTeX grow significantly for TeX Live
+		then
+			case $f in
+				tex | xetex ) $SED_I -e "0,/\\\\N[1{]/s/\(\\\\N[1{]\)/\\\\def\\\\tocpages{2}\n\n\1/" $f.tex
+			esac
+		fi
+
 		# only XeTeX can process XETEX.WEB
 		if [ xetex = $f ]
 		then $XETEX $f # run XeTeX twice
 		else $TEX $f # run TeX twice
-		fi
-
-		# run TEX.WEB three times to fix table-of-contents
-		if [ tex = $f ]
-		then $TEX $f
 		fi
 	fi
 
