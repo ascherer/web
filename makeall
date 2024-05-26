@@ -115,7 +115,7 @@ esac
 
 # Valid PDF output from 'pdftex' and 'luatex': In 'pwebmac.tex' set '\countD'
 # to the actual number of @<named modules@>, not the number of all sections.
-if $VALID
+if $VALID && { [ pdftex = "$TEX" ] || [ luatex = "$TEX" ]; }
 then
 	NEW=true # PDF output requires 'pwebmac.tex'
 	TEX="$TEX --shell-escape"
@@ -139,9 +139,10 @@ do
 			tie -m $f.w $f.w /opt/github/web/$f.ch ;;
 
 		weave | twill )
-			cp $KNUTHWARE/weave.web .
 			if [ "$HITEX" = "$TEX" ] # Fix non-constant factor
-			then $SED_I -e "s/\\\\the\\\\hsize/460pt/" weave.web
+			then
+				cp $KNUTHWARE/weave.web .
+				$SED_I -e "s/\\\\the\\\\hsize/460pt/" weave.web
 			fi ;;
 	esac
 
@@ -198,7 +199,7 @@ do
 				tie -m $f.web weave.web weave.ch weav-$f.ch
 				WEBINPUTS=.: $WEAVE $f ;;
 
-			pdftex | weave ) WEBINPUTS=.: $WEAVE $f ;;
+			pdftex | weave ) WEBINPUTS=.:$WEBINPUTS $WEAVE $f ;;
 
 			* ) $WEAVE $f ;;
 		esac
@@ -271,7 +272,7 @@ FI
 		# appear correctly in the bookmarks, too.
 		pdftex )
 			if $NEW && [ tex != "$TEX" ] && [ "$HITEX" != "$TEX" ]
-			then $SED_I -e "s/\(\\\\def\\\\pdfTeX{pdf\\\\TeX}\)/\1 \\\\sanitizecommand\\\\pdfTeX{pdfTeX}\\\\sanitizecommand\\\\eTeX{e-TeX}/" $f.tex
+			then $SED_I -e "s/\(\\\\def\\\\pdfeTeX{pdf\\\\eTeX}\)/\1\n\\\\sanitizecommand\\\\pdfTeX{pdfTeX}\n\\\\sanitizecommand\\\\eTeX{e-TeX}/" $f.tex
 			fi ;;
 
 		# FIX: weave uses '\max' in name of module 173; this should
@@ -296,7 +297,7 @@ FI
 		if $CHANGES # TeX and XeTeX grow significantly for TeX Live
 		then
 			case $f in
-				tex ) $SED_I -e "0,/\\\\N[1{]/s/\(\\\\N[1{]\)/\\\\def\\\\tocpages{2}\n\\\\def\\\\tocstart{1}\n\1/" $f.tex ;;
+				tex ) $SED_I -e "0,/\\\\N[1{]/s/\(\\\\N[1{]\)/\\\\def\\\\tocpages{2}\n\\\\def\\\\tocstart{1}\n\n\1/" $f.tex ;;
 				xetex ) $SED_I -e "0,/\\\\N[1{]/s/\(\\\\N[1{]\)/\\\\def\\\\tocpages{2}\n\n\1/" $f.tex ;;
 			esac
 		fi
