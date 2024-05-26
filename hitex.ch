@@ -5,6 +5,25 @@
 @s uint8_t int
 @z
 
+@x [0] l.250
+@s to   do
+@y
+@s to   do
+
+% Used in cwebmac.tex, pdfctwimac.tex, pdfproofmac.tex
+% HiTeX has three pages table-of-contents!
+\def\startpdf{\def\pagemode{/PageMode /UseOutlines}
+  \ifnum\contentspagenumber=0 \advance \pageno by -3
+    \def\pagelabels{/PageLabels << /Nums [ 0 << /S/D/St 3 >>
+      \the\pageno << /P(Contents) >> ] >>}
+  \else \twodigits=\pageno \pageno=\contentspagenumber
+    \advance \pageno by 1 \advance \twodigits by -\pageno
+    \def\pagelabels{/PageLabels << /Nums [ 0 << /S/D/St \the\pageno >>
+      \the\twodigits << /S/D/St \contentspagenumber >> ] >>} \fi
+  \ifpdflua\pdfcatalog{\pagemode\space\pagelabels}
+  \else \special{pdf: docview << \pagemode\space\pagelabels >>}\fi}
+@z
+
 @x [1] l.254
 using \eTeX and \Prote, and adding functions common to other engines from
 @y
