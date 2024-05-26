@@ -10,18 +10,9 @@
 @y
 @s to   do
 
-% Used in cwebmac.tex, pdfctwimac.tex, pdfproofmac.tex
-% HiTeX has three pages table-of-contents!
-\def\startpdf{\def\pagemode{/PageMode /UseOutlines}
-  \ifnum\contentspagenumber=0 \advance \pageno by -3
-    \def\pagelabels{/PageLabels << /Nums [ 0 << /S/D/St 3 >>
-      \the\pageno << /P(Contents) >> ] >>}
-  \else \twodigits=\pageno \pageno=\contentspagenumber
-    \advance \pageno by 1 \advance \twodigits by -\pageno
-    \def\pagelabels{/PageLabels << /Nums [ 0 << /S/D/St \the\pageno >>
-      \the\twodigits << /S/D/St \contentspagenumber >> ] >>} \fi
-  \ifpdflua\pdfcatalog{\pagemode\space\pagelabels}
-  \else \special{pdf: docview << \pagemode\space\pagelabels >>}\fi}
+\def\contentspagenumber{0}
+\def\tocpages{3} % HiTeX has a long ToC
+\pageno=\contentspagenumber \advance \pageno by \tocpages
 @z
 
 @x [1] l.254
