@@ -17,3 +17,6 @@ pdftex.ch export-ignore
 refsort export-ignore
 none.sed export-ignore
 mp.ch export-ignore
+mpost.ch export-ignore
+mpstrings.ch export-ignore
+tfmin.ch export-ignore

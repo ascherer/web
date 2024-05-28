@@ -1,0 +1,1 @@
+../mplibdir/mpost.ch
