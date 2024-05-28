@@ -286,7 +286,9 @@ FI
 		xetex ) $SED_I -e "/\\\\input xewebmac/d" $f.tex ;;
 
 		# timestamp on table-of-contents page or the first page
-		hitex | mp | mpost ) $SED_I -e "s/\(\\\\def\\\\topofcontents\)/\\\\datethis\n\\\\emergencystretch=.1\\\\hsize\n\1/" $f.tex ;;
+		hitex | mp ) $SED_I -e "s/\(\\\\def\\\\topofcontents\)/\\\\datethis\n\\\\emergencystretch=.1\\\\hsize\n\1/" $f.tex ;;
+
+		mpost ) $SED_I -e "s/\(\\\\def\\\\title\)/\\\\datethis\n\n\1/" $f.tex ;;
 	esac
 
 	# shift table-of-contents pages to the front in PDF
