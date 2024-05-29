@@ -46,7 +46,8 @@ KNUTHWARE=$(dirname $KNUTHWHERE)
 FILES="$KNUTHWARE/*.web pdftex.web xetex.web twill"
 WEBINPUTS=$KNUTHWARE//:
 
-FILES="$FILES common ctangle cweave ctwill refsort twinx ctie tie hitex mp mpost"
+FILES="$FILES common ctangle cweave ctwill refsort twinx ctie tie hitex \
+	mp mpost mpmath"
 CWEBINPUTS=$KNUTHWARE//:
 
 KNUTHWHERE=$(locate /glue.web)
@@ -135,7 +136,7 @@ do
 		pdftex ) # Fix several 'Overfull \hbox'es
 			tie -m $f.web $f.web /opt/github/web/$f.ch ;;
 
-		hitex | mp | mpost ) # Beautifications for HiTeX and MetaPost
+		hitex | mp | mpost | mpmath ) # Beautifications for HiTeX and MetaPost
 			tie -m $f.w $f.w /opt/github/web/$f.ch ;;
 
 		weave | twill )
@@ -150,7 +151,7 @@ do
 	then
 		case $f in
 			# These are changes in and of themselves
-			ctwill | twill | glue | hitex | mp | mpost ) continue ;;
+			ctwill | twill | glue | hitex | mp | mpost | mpmath ) continue ;;
 
 			# CWEB programs have individual changefiles
 			common ) $CWEAVE $f comm-w2c ;;
@@ -192,7 +193,8 @@ do
 
 			c* | refsort | twinx | tie ) $CWEAVE $f ;;
 
-			hitex | mp | mpost ) CWEBINPUTS=.: $CWEAVE $f ;;
+			hitex | mp | mpost | mpmath )
+				CWEBINPUTS=.: $CWEAVE $f ;;
 
 			twill )
 				WEBINPUTS=.:$WEBINPUTS \
@@ -206,7 +208,7 @@ do
 	fi
 
 	# 'pwebmac' is for WEB only; do nothing for CWEB programs
-	if $NEW && echo $f | grep -v -q -E '^c|refsort|twinx|tie|hitex|mp|mpost'
+	if $NEW && echo $f | grep -v -q -E '^c|refsort|twinx|tie|hitex|mp|mpost|mpmath'
 	then
 		# timestamp on table-of-contents page or the first page
 		case $f in
@@ -288,7 +290,7 @@ FI
 		# timestamp on table-of-contents page or the first page
 		hitex | mp ) $SED_I -e "s/\(\\\\def\\\\topofcontents\)/\\\\datethis\n\\\\emergencystretch=.1\\\\hsize\n\1/" $f.tex ;;
 
-		mpost ) $SED_I -e "s/\(\\\\def\\\\title\)/\\\\datethis\n\n\1/" $f.tex ;;
+		mpost | mpmath ) $SED_I -e "s/\(\\\\def\\\\title\)/\\\\datecontentspage\n\n\1/" $f.tex ;;
 	esac
 
 	# shift table-of-contents pages to the front in PDF
@@ -433,7 +435,8 @@ then
 		$PAX "$OUTDIR/other.tar.gz" -s ,^,other/, \
 			dvicopy.$PDF patgen.$PDF pktogf.$PDF pktype.$PDF
 		$PAX "$OUTDIR/hitex.tar.gz" -s ,^,hitex/, hitex.$PDF
-		$PAX "$OUTDIR/mp.tar.gz" -s ,^,mp/, mp.$PDF mpost.$PDF
+		$PAX "$OUTDIR/mp.tar.gz" -s ,^,mp/, \
+			mp.$PDF mpost.$PDF mpmath.$PDF
 		$PAX "$OUTDIR/pdftex.tar.gz" -s ,^,pdftex/, pdftex.$PDF
 		$PAX "$OUTDIR/xetex.tar.gz" -s ,^,xetex/, xetex.pdf
 		$PAX "$OUTDIR/ctie.tar.gz" -s ,^,ctie/, ctie.$PDF

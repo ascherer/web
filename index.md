@@ -87,7 +87,8 @@ directly.
 * `ctie/` \[ [`CTIE`](ctie/ctie.pdf)+[`chg`](ctie/ctie-changes.pdf) \]
 * `tie/` \[ [`TIE`](tie/tie.pdf)+[`chg`](tie/tie-changes.pdf) \]
 * `hitex/` \[ [`HiTeX`](hitex/hitex.pdf) \]
-* `mp/` \[ [`MP`](mp/mp.pdf) \| [`MPOST`](mp/mpost.pdf) \]
+* `mp/` \[ [`MP`](mp/mp.pdf) \| [`MPOST`](mp/mpost.pdf) \|
+  [`MPMATH`](mp/mpmath.pdf) \]
 
 ## Errata for “Computers & Typesetting” by Donald E.\ Knuth
 
