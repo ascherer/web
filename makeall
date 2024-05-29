@@ -47,7 +47,7 @@ FILES="$KNUTHWARE/*.web pdftex.web xetex.web twill"
 WEBINPUTS=$KNUTHWARE//:
 
 FILES="$FILES common ctangle cweave ctwill refsort twinx ctie tie hitex \
-	mp mpost mpmath"
+	mp mpost mpmath mpstrings tfmin"
 CWEBINPUTS=$KNUTHWARE//:
 
 KNUTHWHERE=$(locate /glue.web)
@@ -136,7 +136,8 @@ do
 		pdftex ) # Fix several 'Overfull \hbox'es
 			tie -m $f.web $f.web /opt/github/web/$f.ch ;;
 
-		hitex | mp | mpost | mpmath ) # Beautifications for HiTeX and MetaPost
+		hitex | mp | mpost | mpmath | mpstrings | tfmin )
+			# Beautifications for HiTeX and MetaPost
 			tie -m $f.w $f.w /opt/github/web/$f.ch ;;
 
 		weave | twill )
@@ -151,7 +152,8 @@ do
 	then
 		case $f in
 			# These are changes in and of themselves
-			ctwill | twill | glue | hitex | mp | mpost | mpmath ) continue ;;
+			ctwill | twill | glue | hitex | mp | mpost | \
+				mpmath | mpstrings | tfmin ) continue ;;
 
 			# CWEB programs have individual changefiles
 			common ) $CWEAVE $f comm-w2c ;;
@@ -193,7 +195,7 @@ do
 
 			c* | refsort | twinx | tie ) $CWEAVE $f ;;
 
-			hitex | mp | mpost | mpmath )
+			hitex | mp | mpost | mpmath | mpstrings | tfmin )
 				CWEBINPUTS=.: $CWEAVE $f ;;
 
 			twill )
@@ -208,7 +210,8 @@ do
 	fi
 
 	# 'pwebmac' is for WEB only; do nothing for CWEB programs
-	if $NEW && echo $f | grep -v -q -E '^c|refsort|twinx|tie|hitex|mp|mpost|mpmath'
+	if $NEW && echo $f | grep -v -q -E \
+		'^c|refsort|twinx|tie|hitex|mp|mpost|mpmath|mpstrings|tfmin'
 	then
 		# timestamp on table-of-contents page or the first page
 		case $f in
@@ -290,7 +293,7 @@ FI
 		# timestamp on table-of-contents page or the first page
 		hitex | mp ) $SED_I -e "s/\(\\\\def\\\\topofcontents\)/\\\\datethis\n\\\\emergencystretch=.1\\\\hsize\n\1/" $f.tex ;;
 
-		mpost | mpmath ) $SED_I -e "s/\(\\\\def\\\\title\)/\\\\datecontentspage\n\n\1/" $f.tex ;;
+		mpost | mpmath | mpstrings | tfmin ) $SED_I -e "s/\(\\\\def\\\\title\)/\\\\datecontentspage\n\n\1/" $f.tex ;;
 	esac
 
 	# shift table-of-contents pages to the front in PDF
