@@ -1,3 +1,13 @@
+Old:
+  @x
+New:
+  @x [54.1419] l.27171
+
+Old:
+  @x
+New:
+  @x [65.1617] l.29642
+
 @x [0.0] l.227
 @s uint8_t int
 @y
@@ -35,6 +45,12 @@ uses identifiers that \TeX will declare as macros.
 uses identifiers that \TeX\ will declare as macros.
 @z
 
+@x [1.4] l.445
+  @<Initialize whatever \TeX\ might access@>;
+@y
+  @<Initialize whatever \TeX\ might access@>@;
+@z
+
 @x [1.16] l.632
    /*\.{WEB}'s |else| acts like `\ignorespaces|while true do|\unskip'*/
 @y
@@ -53,6 +69,12 @@ static int s_no(const char *str);
 static int s_no(const char *str);
 
 @ (Empty section to keep numbering intact.)
+@z
+
+@x [5.55] l.1495
+#define @[put(F)@]    @[fwrite(&((F).d)@],@[sizeof((F).d),1,(F).f)@]@;
+@y
+#define @[put(F)@]    @[fwrite(&((F).d),sizeof((F).d),1,(F).f)@]
 @z
 
 @x [6.71] l.1798
@@ -104,6 +126,24 @@ q=@[@<Current |mem| equivalent of glue parameter number |n|@>@];
 @d explicit 1 /*|subtype| of kern nodes from \.{\\kern} and \.{\\/}*/
 @z
 
+@x [12.173] l.3688
+        else@<Print the font identifier for |font(p)|@>;
+@y
+        else@<Print the font identifier for |font(p)|@>@;
+@z
+
+@x [12.173] l.3694
+  else@<Print a short indication of the contents of node |p|@>;
+@y
+  else@<Print a short indication of the contents of node |p|@>@;
+@z
+
+@x [12.175] l.3727
+  else@<Print the font identifier for |font(p)|@>;
+@y
+  else@<Print the font identifier for |font(p)|@>@;
+@z
+
 @x [13.200] l.4066
 fast_delete_glue_ref(p)
 @y
@@ -136,8 +176,10 @@ fast_delete_glue_ref(p)@;
 @z
 @x [18.265] l.6058
 case read_to_cs: if (chr_code==0) print_esc("read")
+  @<Cases of |read| for |print_cmd_chr|@>;@+break;
 @y
-case read_to_cs: if (chr_code==0) print_esc("read")@;
+case read_to_cs: if (chr_code==0) print_esc("read");
+  else @<Cases of |read| for |print_cmd_chr|@>;@+break;
 @z
 @x [18.265] l.6065
   @<Cases of |set_shape| for |print_cmd_chr|@>@;@/
@@ -146,8 +188,16 @@ case read_to_cs: if (chr_code==0) print_esc("read")@;
 @z
 @x [18.265] l.6067
 case the: if (chr_code==0) print_esc("the")
+  @<Cases of |the| for |print_cmd_chr|@>;@+break;
 @y
-case the: if (chr_code==0) print_esc("the")@;
+case the: if (chr_code==0) print_esc("the");
+  else @<Cases of |the| for |print_cmd_chr|@>;@+break;
+@z
+
+@x [18.266] l.6089
+printn_esc(font_id_text(font(p)))
+@y
+printn_esc(font_id_text(font(p)));
 @z
 
 @x [19.274] l.6274
@@ -168,6 +218,26 @@ case the: if (chr_code==0) print_esc("the")@;
 @/@t\4@>@<Cases for |expandafter|@>@;
 @z
 
+@x [25.376] l.8295
+case input: if (chr_code==0) print_esc("input")
+  @/@<Cases of |input| for |print_cmd_chr|@>;@/
+@y
+case input: if (chr_code==0) print_esc("input");
+  else @<Cases of |input| for |print_cmd_chr|@>@;
+@z
+
+@x [25.377] l.8300
+if (cur_chr==1) force_eof=true
+@/@<Cases for |input|@>;@/
+else if (name_in_progress) insert_relax();
+else start_input()
+@y
+if (cur_chr==1) force_eof=true;
+else @<Cases for |input|@>@;
+else if (name_in_progress) insert_relax();
+else start_input();
+@z
+
 @x [26.408] l.8794
 @t\4\4@>@<Declare procedures that scan restricted classes of integers@>@;
 @t\4\4@>@<Declare \eTeX\ procedures for scanning@>@;
@@ -183,8 +253,8 @@ case set_page_int: if (chr_code==0) print_esc("deadcycles")
 @/@<Cases of |set_page_int| for |print_cmd_chr|@>;@/
 @+else print_esc("insertpenalties");@+break;
 @y
-case set_page_int: if (chr_code==0) print_esc("deadcycles")@;
-@<Cases of |set_page_int| for |print_cmd_chr|@>;
+case set_page_int: if (chr_code==0) print_esc("deadcycles");
+else @<Cases of |set_page_int| for |print_cmd_chr|@>@;
 else print_esc("insertpenalties");@+break;
 @z
 @x [26.416] l.9005
@@ -195,8 +265,10 @@ else print_esc("insertpenalties");@+break;
 
 @x [26.418] l.9027
 {@+if (m==0) cur_val=dead_cycles
+@/@<Cases for `Fetch the |dead_cycles| or the |insert_penalties|'@>;@/
 @y
-{@+if (m==0) cur_val=dead_cycles@;
+{@+if (m==0) cur_val=dead_cycles;
+else @<Cases for `Fetch the |dead_cycles| or the |insert_penalties|'@>@;
 @z
 
 @x [26.423] l.9079
@@ -238,6 +310,12 @@ else print_esc("insertpenalties");@+break;
 @/@<Cases for |conditional|@>@/
 @y
 @/@t\4@>@<Cases for |conditional|@>@;
+@z
+
+@x [32.618] l.12986
+@p @t\4@>@<Declare procedures needed in |hlist_out|, |vlist_out|@>@t@>@/
+@y
+@p @<Declare procedures needed in |hlist_out|, |vlist_out|@>@t@>@;
 @z
 
 @x [33.678] l.13905
@@ -314,6 +392,12 @@ else print_esc("insertpenalties");@+break;
 @y
 @z
 
+@x [38.823] l.16888
+@d do_all_six(A) A(1);A(2);A(3);A(4);A(5);A(6)
+@y
+@d do_all_six(A) A(1);A(2);A(3);A(4);A(5);A(6)@;
+@z
+
 @x [40.894] l.18245
 static void hyphenate_word(void)@t\2\2@>@/
 { pointer @!q, @!s, @!prev_s;@t\1@> /*miscellaneous nodes of temporary interest*/
@@ -322,16 +406,52 @@ static void hyphenate_word(void)
 { @+pointer @!q, @!s, @!prev_s; /*miscellaneous nodes of temporary interest*/
 @z
 
+@x [46.1043] l.21109
+  @<Modify the glue specification in |main_p| according to the space factor@>;
+@y
+  @<Modify the glue specification in |main_p| according to the space factor@>@;
+@z
+
+@x [46.1044] l.21118
+shrink(main_p)=xn_over_d(shrink(main_p), 1000, space_factor)
+@y
+shrink(main_p)=xn_over_d(shrink(main_p), 1000, space_factor);
+@z
+
 @x [46.1045] l.21133
 @t\4@>@<Forbidden cases detected in |main_control|@>@+@, any_mode(mac_param):
 @y
 @<Forbidden cases detected in |main_control|@>@+@, any_mode(mac_param):
 @z
 
+@x [47.1077] l.21682
+if (cur_val < 256) define(box_base+cur_val, box_ref, cur_box);
+@y
+if (cur_val < 256) @[g_define(box_base+cur_val, box_ref, cur_box)@];
+@z
+
+@x [47.1108] l.22114
+case un_vbox: if (chr_code==copy_code) print_esc("unvcopy")
+  @<Cases of |un_vbox| for |print_cmd_chr|@>;@/
+@y
+case un_vbox: if (chr_code==copy_code) print_esc("unvcopy");
+  else @<Cases of |un_vbox| for |print_cmd_chr|@>@;
+@z
+
+@x [48.1189] l.23156
+case left_right: if (chr_code==left_noad) print_esc("left")
+@/@<Cases of |left_right| for |print_cmd_chr|@>;@/
+@y
+case left_right: if (chr_code==left_noad) print_esc("left");
+else @<Cases of |left_right| for |print_cmd_chr|@>@;
+@z
+
 @x [49.1209] l.23494
   else if (chr_code==2) print_esc("outer")
+  @/@<Cases of |prefix| for |print_cmd_chr|@>;@/
 @y
-  else if (chr_code==2) print_esc("outer")@;
+  else if (chr_code==2) print_esc("outer");
+  else @<Cases of |prefix| for |print_cmd_chr|@>@;
 @z
 
 @x [49.1214] l.23605
@@ -420,8 +540,10 @@ case shorthand_def: {@+n=cur_chr;get_r_token();p=cur_cs;g_define(p, relax, 256);
 
 @x [49.1246] l.24140
 if (c==0) dead_cycles=cur_val
+@/@<Cases for |alter_integer|@>@;@/
 @y
-if (c==0) dead_cycles=cur_val@;
+if (c==0) dead_cycles=cur_val;
+else @<Cases for |alter_integer|@>@;
 @z
 
 @x [49.1248] l.24179
@@ -439,6 +561,12 @@ g_define(u, set_font, null_font);scan_optional_equals();scan_file_name();
 common_ending: define(u, set_font, f);eqtb[font_id_base+f]=eqtb[u];font_id_text(f)=t;
 @y
 common_ending: g_define(u, set_font, f);eqtb[font_id_base+f]=eqtb[u];font_id_text(f)=t;
+@z
+
+@x [50.1299] l.24654
+for example, `\.{ (preloaded format=plain 1982.11.19)}', showing the year,
+@y
+for example, `\.{(preloaded format=plain 1982.11.19)}', showing the year,
 @z
 
 @x [53.1346] l.25791
@@ -471,6 +599,76 @@ common_ending: g_define(u, set_font, f);eqtb[font_id_base+f]=eqtb[u];font_id_tex
 @/@t\4@>@<Cases for wiping out the whatsit node@>@;
 @z
 
+@x [54.1419] l.27171
+@ @<Cases of |the| for |print_cmd_chr|@>=;
+else if (chr_code==1) print_esc("unexpanded");
+else print_esc("detokenize")
+@y
+@ @<Cases of |the| for |print_cmd_chr|@>=
+if (chr_code==1) print_esc("unexpanded");
+else print_esc("detokenize");
+@z
+
+@x [54.1425] l.27226
+@ @<Cases of |set_page_int| for |print_cmd_chr|@>=;
+else if (chr_code==2) print_esc("interactionmode")
+
+@ @<Cases for `Fetch the |dead_cycles| or the |insert_penalties|'@>=;
+else if (m==2) cur_val=interaction
+@y
+@ @<Cases of |set_page_int| for |print_cmd_chr|@>=
+if (chr_code==2) print_esc("interactionmode");
+
+@ @<Cases for `Fetch the |dead_cycles| or the |insert_penalties|'@>=
+if (m==2) cur_val=interaction;
+@z
+
+@x [54.1428] l.27235
+@ @<Cases for |alter_integer|@>=;
+else if (c==2)
+@y
+@ @<Cases for |alter_integer|@>=
+if (c==2)
+@z
+
+@x [54.1430] l.27255
+@ @<Cases of |left_right| for |print_cmd_chr|@>=;
+else if (chr_code==middle_noad) print_esc("middle")
+@y
+@ @<Cases of |left_right| for |print_cmd_chr|@>=
+if (chr_code==middle_noad) print_esc("middle");
+@z
+
+@x [54.1432] l.27265
+@ @<Cases of |input| for |print_cmd_chr|@>=;
+else if (chr_code==2) print_esc("scantokens")
+
+@ @<Cases for |input|@>=;
+else if (cur_chr==2) pseudo_start()
+@y
+@ @<Cases of |input| for |print_cmd_chr|@>=
+if (chr_code==2) print_esc("scantokens");
+
+@ @<Cases for |input|@>=
+if (cur_chr==2) pseudo_start();
+@z
+
+@x [54.1444] l.27395
+@ @<Cases of |read| for |print_cmd_chr|@>=;
+else print_esc("readline")
+@y
+@ @<Cases of |read| for |print_cmd_chr|@>=
+print_esc("readline");
+@z
+
+@x [54.1455] l.27515
+@ @<Cases of |prefix| for |print_cmd_chr|@>=;
+else if (chr_code==8) print_esc("protected")
+@y
+@ @<Cases of |prefix| for |print_cmd_chr|@>=
+if (chr_code==8) print_esc("protected");
+@z
+
 @x [54.1467] l.27754
 switch (s) {@<Cases for evaluation of the current term@>@;
 @y
@@ -483,10 +681,26 @@ switch (s) {@t\4@>@<Cases for evaluation of the current term@>@;
   @t\4@>@<Cases for |do_marks|@>@;
 @z
 
+@x [54.1534] l.28923
+@ @<Cases of |un_vbox| for |print_cmd_chr|@>=;
+else if (chr_code==last_box_code) print_esc("pagediscards");
+else if (chr_code==vsplit_code) print_esc("splitdiscards")
+@y
+@ @<Cases of |un_vbox| for |print_cmd_chr|@>=
+if (chr_code==last_box_code) print_esc("pagediscards");
+else if (chr_code==vsplit_code) print_esc("splitdiscards");
+@z
+
 @x [55.1543] l.28985
 be enabled, the engine is still compatible with \TeX with no added
 @y
 be enabled, the engine is still compatible with \TeX\ with no added
+@z
+
+@x [65.1617] l.29642
+simply setting |xchg_buffer_length| to $0$.
+@y
+simply setting |xchg_buffer_length| to~$0$.
 @z
 
 @x [65.1630] l.29822
