@@ -699,6 +699,55 @@ standard \PASCAL does not provide. So we do not bother to try. The
 standard \PASCAL\ does not provide. So we do not bother to try. The
 @z
 
+@x [81.1753] l.32319
+static const int hmap_int[] ={@/
+@y
+static const int hmap_int[] ={@t\1\1@>@/
+@z
+
+@x [81.1753] l.32362
+floating_penalty_no  /* |floating_penalty_code|	42*/
+@y
+@t\2\2@> floating_penalty_no  /* |floating_penalty_code|	42*/
+@z
+
+@x [82.1759] l.32417
+static const int hmap_dimen[] ={@/
+@y
+static const int hmap_dimen[] ={@t\1\1@>@/
+@z
+
+@x [82.1759] l.32438
+  emergency_stretch_no /* |emergency_stretch_code| 20 */
+@y
+  @t\2\2@> emergency_stretch_no /* |emergency_stretch_code| 20 */
+@z
+@x [84.1769] l.32544
+static int hmap_glue[] ={
+
+@y
+static int hmap_glue[] ={@t\1\1@>@/
+@z
+
+@x [84.1769] l.32560
+par_fill_skip_no  /* |par_fill_skip_code| 14 */
+@y
+@t\2\2@> par_fill_skip_no  /* |par_fill_skip_code| 14 */
+@z
+
+@x [121.1852] l.34391
+static struct option long_options[] = {@/
+@y
+static struct option long_options[] = {@t\1\1@>@/
+@z
+
+@x [121.1852] l.34422
+      { 0, 0, 0, 0 }@+}@+;
+@y
+@t\2\2@> { 0, 0, 0, 0 } @/
+};
+@z
+
 @x [128.1887] l.35105
 @+ }
 @y
