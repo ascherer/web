@@ -196,6 +196,12 @@ printn_esc(font_id_text(font(p)));
 @/@t\4@>@<Cases for |eq_destroy|@>@;
 @z
 
+@x [19.276] l.6312
+#define  assign_trace(A, B)
+@y
+#define  assign_trace(A, B) @[@]
+@z
+
 @x [21.297] l.6817
 @t\4@>@<Cases of |print_cmd_chr| for symbolic printing of primitives@>@/
 @y
@@ -233,7 +239,7 @@ else start_input();
 @t\4\4@>@<Declare \eTeX\ procedures for scanning@>@;
 @t\4\4@>@<Declare procedures that scan font-related stuff@>@;
 @y
-@<Declare procedures that scan restricted classes of integers@>@;
+@#@<Declare procedures that scan restricted classes of integers@>@;
 @<Declare \eTeX\ procedures for scanning@>@;
 @<Declare procedures that scan font-related stuff@>@;
 @z
@@ -302,10 +308,24 @@ else @<Cases for `Fetch the |dead_cycles| or the |insert_penalties|'@>@;
 @/@t\4@>@<Cases for |conditional|@>@;
 @z
 
+@x [30.557] l.11533
+@d param_end(A) param_base[A]].sc
+@d param(A) font_info[A+param_end
+@y
+@d param_end(A) @[param_base[A]].sc@]
+@d param(A) @[font_info[A+param_end@]
+@z
+
 @x [32.618] l.12986
 @p @t\4@>@<Declare procedures needed in |hlist_out|, |vlist_out|@>@t@>@/
 @y
 @p @<Declare procedures needed in |hlist_out|, |vlist_out|@>@t@>@;
+@z
+
+@x [32.637] l.13339
+flush_node_list(p);
+@y
+@<Flush the box from memory...@>@;
 @z
 
 @x [33.678] l.13905
@@ -589,6 +609,18 @@ for example, `\.{(preloaded format=plain 1982.11.19)}', showing the year,
 @/@t\4@>@<Cases for wiping out the whatsit node@>@;
 @z
 
+@x [53.1363] l.26450
+@ @d adv_past(A) @+if (subtype(A)==language_node)
+@y
+@ @d adv_past(A) if (subtype(A)==language_node)
+@z
+
+@x [54.1416] l.27148
+@d show_tokens 5 /* \.{\\showtokens} , must be odd! */
+@y
+@d show_tokens 5 /* \.{\\showtokens}, must be odd! */
+@z
+
 @x [54.1419] l.27171
 @ @<Cases of |the| for |print_cmd_chr|@>=;
 else if (chr_code==1) print_esc("unexpanded");
@@ -699,6 +731,19 @@ standard \PASCAL does not provide. So we do not bother to try. The
 standard \PASCAL\ does not provide. So we do not bother to try. The
 @z
 
+@x [77.1734] l.32009
+    @<allocate a new |setpage_node| |p|@>@;
+@y
+    @<Allocate a new |setpage_node| |p|@>@;
+@z
+
+@x [77.1734] l.32016
+@
+@<allocate a new |setpage_node| |p|@>=
+@y
+@ @<Allocate a new |setpage_node| |p|@>=
+@z
+
 @x [81.1753] l.32319
 static const int hmap_int[] ={@/
 @y
@@ -709,6 +754,12 @@ static const int hmap_int[] ={@t\1\1@>@/
 floating_penalty_no  /* |floating_penalty_code|	42*/
 @y
 @t\2\2@> floating_penalty_no  /* |floating_penalty_code|	42*/
+@z
+
+@x [81.1755] l.32374
+if not successful, it returns $-1$.
+@y
+if not successful, it returns~$-1$.
 @z
 
 @x [82.1759] l.32417
@@ -748,6 +799,12 @@ static struct option long_options[] = {@t\1\1@>@/
 };
 @z
 
+@x [121.1856] l.34482
+#define ARGUMENT_IS(S) argument_is(long_options+option_index,S)
+@y
+#define ARGUMENT_IS(S) @[argument_is(long_options+option_index,S)@]
+@z
+
 @x [128.1887] l.35105
 @+ }
 @y
@@ -761,4 +818,26 @@ the \TeX\ Live distribution and slightly modified.
 
 @s md5_byte_t int
 @s md5_state_t int
+@z
+
+@x [131.1896] l.35411
+/* static structure for file status set by |find_input_file| */
+#ifdef WIN32
+@y
+@#
+#ifdef WIN32
+/* static structure for file status set by |find_input_file| */
+@+@t}\6{@>
+@z
+
+@x [131.1896] l.35414
+#define GET_FILE_STAT _stat(fname,&file_stat)
+@y
+#define GET_FILE_STAT @[_stat(fname,&file_stat)@]
+@Z
+
+@x [131.1896] l.35417
+#define GET_FILE_STAT stat(fname,&file_stat)
+@y
+#define GET_FILE_STAT @[stat(fname,&file_stat)@]
 @z
