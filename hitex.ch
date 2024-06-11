@@ -408,6 +408,12 @@ flush_node_list(p);
 @d do_all_six(A) A(1);A(2);A(3);A(4);A(5);A(6)@;
 @z
 
+@x [38.829] l.17046
+feasible breaks in that class; then |return| if |r=last_active|, otherwise
+@y
+feasible breaks in that class; then |return| if |r==last_active|, otherwise
+@z
+
 @x [40.894] l.18245
 static void hyphenate_word(void)@t\2\2@>@/
 { pointer @!q, @!s, @!prev_s;@t\1@> /*miscellaneous nodes of temporary interest*/
