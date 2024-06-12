@@ -136,7 +136,7 @@ do
 		pdftex ) # Fix several 'Overfull \hbox'es
 			tie -m $f.web $f.web /opt/github/web/$f.ch ;;
 
-		hitex | mp | mpost | mpmath* | mpstrings | tfmin )
+		mp | mpost | mpmath* | mpstrings | tfmin )
 			# Beautifications for HiTeX and MetaPost
 			tie -m $f.w $f.w /opt/github/web/$f.ch ;;
 
@@ -193,9 +193,9 @@ do
 				$CTWILL $f # prime the pump
 				$CTWILL $f ;; # get decent answers
 
-			c* | refsort | twinx | tie ) $CWEAVE $f ;;
+			c* | refsort | twinx | tie | hitex ) $CWEAVE $f ;;
 
-			hitex | mp | mpost | mpmath* | mpstrings | tfmin )
+			mp | mpost | mpmath* | mpstrings | tfmin )
 				CWEBINPUTS=.: $CWEAVE $f ;;
 
 			twill )
