@@ -102,14 +102,14 @@ program for \.{TANGLE}, in \pdfURL{Appendix~E}{tangle.pdf},
 gives precise details about this
 @z
 
-@x l.626
+@x l.628
 outputs of \.{WEAVE} and \.{TANGLE} (see Appendix~C\null). Meta-comments
 @y
 outputs of \.{WEAVE} (see \Appendix B\null) and \.{TANGLE}
 (see \Appendix C\null). Meta-comments
 @z
 
-@x l.893
+@x l.895
 examples of ``real'' programs. Appendix~A shows the \.{WEB} input that
 generated modules 55--59 of the \.{WEAVE} program; Appendix~B shows the
 corresponding \TeX\ code output by \.{WEAVE}; and Appendix~C shows excerpts
@@ -119,7 +119,7 @@ generated modules 55--59 of the \.{WEAVE} program; \Appendix B shows the
 corresponding \TeX\ code output by \.{WEAVE}; and \Appendix C shows excerpts
 @z
 
-@x l.900
+@x l.901
 report, in Appendices D and~E. The reader should first compare Appendix~A
 to the corresponding portion of Appendix~D; then the same material should
 be compared to Appendices B and~C. Finally, if time permits, the reader may
@@ -133,7 +133,7 @@ studying the complete programs in Appendices \pdfURL{D}{weave.pdf}
 and~\pdfURL{E}{tangle.pdf}, since \.{WEAVE}
 @z
 
-@x l.908
+@x l.909
 Finally, Appendix F is the `\.{webmac}' file that sets \TeX\ up to accept
 the output of \.{WEAVE}; Appendix~G discusses how to use some of its macros
 to vary the output formats; and Appendix~H discusses what needs to be done
@@ -145,14 +145,14 @@ engines; \Appendix G discusses how to use some of these macros
 to vary the output formats; and \Appendix H discusses what needs to be done
 @z
 
-@x l.913
+@x l.914
 The programs in Appendices D and E will optionally keep statistics on
 @y
 The programs in Appendices \pdfURL{D}{weave.pdf} and \pdfURL{E}{tangle.pdf}
 will optionally keep statistics on
 @z
 
-@x l.989
+@x l.990
 \section Appendix A.
 This excerpt from \.{WEAVE.WEB} produced modules 55--59 in Appendix~D.
 @y
@@ -168,7 +168,7 @@ ASCII codes is $c_1c_2\ldots c_m$, its hash value will be
 ASCII codes is $c_1c_2\ldots c_n$, its hash value will be
 @z
 
-@x l.1061
+@x l.1062
 \section Appendix B.
 This excerpt from \.{WEAVE.TEX} corresponds to Appendix A.
 @y
@@ -189,7 +189,7 @@ ASCII codes is $c_1c_2\ldots c_n$, its hash value will be
 \U58.\fi
 @z
 
-@x l.1143
+@x l.1144
 \section Appendix C.
 @y
 \def\bkminfo{Translation by TANGLE}
@@ -543,35 +543,35 @@ The macros in \.{webmac} and \.{pwebmac} make it possible to produce
 a variety of formats
 @z
 
-@x l.1425
+@x l.1463
 in small caps. For example, Appendix~D was produced after saying
 @y
 in small caps. For example, \pdfURL{Appendix~D}{weave.pdf} was produced
 after saying
 @z
 
-@x l.1468
+@x l.1469
 \.{\\pageno=\\contentspagenumber} \.{\\advance\\pageno by 1}'. (Appendix~D
 @y
 \.{\\pageno=\\contentspagenumber} \.{\\advance\\pageno by 1}'.
 (\pdfURL{Appendix~D}{weave.pdf}
 @z
 
-@x l.1479
+@x l.1480
 For example, Appendix~D was produced with the following definitions:
 @y
 For example, \pdfURL{Appendix~D}{weave.pdf} was produced with the following
 definitions:
 @z
 
-@x l.1491
+@x l.1492
 for every starred module. For example, when Appendix~D was being generated,
 @y
 for every starred module. For example, when \pdfURL{Appendix~D}{weave.pdf}
 was being generated,
 @z
 
-@x l.569
+@x l.1569
 \.{\\ch}, \.{\\fin}, and \.{\\con}. \.{WEAVE} itself need not be changed.
 @y
 \.{\\ch}, \.{\\fin}, and \.{\\con}. \.{WEAVE} itself need not be changed.
@@ -582,7 +582,7 @@ and run \TeX\ \\{twice} on your woven \.{WEB} document, in order to shift the
 table-of-contents to the front of the {\mc PDF} output.
 @z
 
-@x l.1583
+@x l.1584
 dependencies'' in the index of Appendix~E above, and figure out what changes
 @y
 dependencies'' in the index of \pdfURL{Appendix~E}{tangle.pdf} above,
@@ -595,25 +595,25 @@ first change files; then you can sure that your compiler will handle
 first change files; then you can be sure that your compiler will handle
 @z
 
-@x l.1609
+@x l.1610
 the index to Appendix~D.
 @y
 the index to \pdfURL{Appendix~D}{weave.pdf}.
 @z
 
-@x l.1616
+@x l.1617
 Appendix~E. This listing will incorporate your changes.
 @y
 \pdfURL{Appendix~E}{tangle.pdf}. This listing will incorporate your changes.
 @z
 
-@x l.1620
+@x l.1621
 Appendix~D that incorporates your changes.
 @y
 \pdfURL{Appendix~D}{weave.pdf} that incorporates your changes.
 @z
 
-@x l.1632
+@x l.1631
 \def\substep(10.#1){\par\hangindent 4em\noindent
   \hbox to 4em{\hfil(10.#1) }\ignorespaces}
 @y
@@ -621,7 +621,7 @@ Appendix~D that incorporates your changes.
   \hbox to 3em{\hfil(10.#1) }\ignorespaces}
 @z
 
-@x l.1666
+@x l.1667
 computer by following Appendices D and E. Then you have to simulate the
 @y
 computer by following Appendices \pdfURL{D}{weave.pdf}
