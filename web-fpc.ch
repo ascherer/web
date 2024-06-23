@@ -84,7 +84,7 @@ Section 22.
 
 Section 180 [259].
 
-@x l.3206 [4903]
+@x l.3206 [4798]
 reset(term_in,'TTY:','/I'); {open |term_in| as the terminal, don't do a |get|}
 @y
 assign(term_in,''); reset(term_in);
