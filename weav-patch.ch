@@ -40,7 +40,7 @@ Section 124.
 @.webmac@>
 @z
 
-@x
+@x l.2204
 out_ptr:=1; out_line:=1; out_buf[1]:="c"; write(tex_file,'\input webma');
 @y
 out_ptr:=1; out_line:=1; out_buf[1]:="c"; write(tex_file,'\input pwebma');
@@ -73,7 +73,7 @@ Section 172.
 
 Section 173.
 
-@x
+@x l.3340
 @ @<Change |pp| to $\max(|scrap_base|,|pp+d|)$@>=
 @y
 @ @<Change |pp| to $\max(|scrap_base|,\,|pp+d|)$@>=
