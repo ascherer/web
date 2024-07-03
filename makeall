@@ -331,6 +331,10 @@ FI
 				refsort | twinx ) $SED_I -e "s/\\\\datethis/\\\\input editorsnote.tex\n\\\\def\\\\covernote{\\\\vbox{\\\\noindent\\\\editorsnote\\\\smallskip\\\\readchanges\\\\par}}\n\\\\datecontentspage/" \
 					$f.tex ;;
 
+				common | ctangle | cweave ) $SED_I -e "s/\(\\\\def\\\\covernote.*\)/\\\\input editorsnote.tex\n\1/" \
+					-e "s/\(}}\\\\datecontentspage\)/\n\\\\bigskip\\\\noindent\n\\\\editorsnote\\\\readchanges\\\\par\1/" \
+					$f.tex ;;
+
 				* ) $SED_I -e "s/\(%\\\\def\\\\botofcontents.*\)/\\\\input editorsnote.tex/" \
 				-e "s/\(\\\vbox{\\\\ninerm.*\)/\1\n\\\\editorsnote\\\\hfill\\\\readchanges\\\\bigskip\\\\noindent/" $f.tex ;;
 			esac
