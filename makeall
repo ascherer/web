@@ -323,16 +323,14 @@ FI
 					-e "s/\(\\\\def\\\\botofcontents.*\)/\\\\def\\\\botofcontents{\\\\hsize6.5in\\\\vskip 0pt plus 1filll\n\\\\noindent\\\\editorsnote\\\\readchanges\\\\bigskip\\\\noindent\\\\sc\\\\today\\\\ at \\\\hours}/" \
 					$f.tex ;;
 
-				ctie ) $SED_I -e "s/\(\\\\def\\\covernote.*\)/\\\\input editorsnote.tex\n\1\n\\\\editorsnote\\\\smallskip\\\\readchanges\\\\bigskip\\\\noindent/" $f.tex ;;
-
 				bibtex | patgen | tangle | weave ) $SED_I -e "s/\(\\\\datecontentspage\)/\\\\input editorsnote\n\\\\def\\\\covernote{\\\\vbox{\\\\noindent\\\\editorsnote\\\\smallskip\\\\readchanges\\\\par}}\n\1/" \
 					$f.tex ;;
 
 				refsort | twinx ) $SED_I -e "s/\\\\datethis/\\\\input editorsnote.tex\n\\\\def\\\\covernote{\\\\vbox{\\\\noindent\\\\editorsnote\\\\smallskip\\\\readchanges\\\\par}}\n\\\\datecontentspage/" \
 					$f.tex ;;
 
-				common | ctangle | cweave ) $SED_I -e "s/\(\\\\def\\\\covernote.*\)/\\\\input editorsnote.tex\n\1/" \
-					-e "s/\(}}\\\\datecontentspage\)/\n\\\\bigskip\\\\noindent\n\\\\editorsnote\\\\readchanges\\\\par\1/" \
+				common | ctangle | cweave | ctie | tie ) $SED_I -e "s/\(\\\\def\\\\covernote.*\)/\\\\input editorsnote.tex\n\1/" \
+					-e "s/^\(}}\)/\n\\\\bigskip\\\\noindent\n\\\\editorsnote\\\\readchanges\\\\par\1/" \
 					$f.tex ;;
 
 				* ) $SED_I -e "s/\(%\\\\def\\\\botofcontents.*\)/\\\\input editorsnote.tex/" \
