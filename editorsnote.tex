@@ -1,0 +1,20 @@
+\font\ninett=cmtt9
+
+\def\editorsnote{Editor's Note: The prsent variant of this {\ninett C/WEB}
+  source file has been modified for use in the \TeX~Live system.}
+
+\def\changedsections{\jobname.chs}
+\def\readchanges{\input \changedsections}
+\newread\testread \newwrite\writechanges
+\openin\testread=\changedsections\relax
+\ifeof\testread % First run
+  \let\readchanges=\relax
+  \let\CH=\ch
+  \def\ch#1.{\begingroup
+    \let\\=\BS \let\*=\let \let\ch=\relax
+    \immediate\openout\writechanges=\changedsections
+    \immediate\write\writechanges{\par\noindent\ch#1.}
+    \immediate\closeout\writechanges
+    \let\ch=\CH \ch#1.
+    \endgroup}
+\fi

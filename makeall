@@ -301,11 +301,20 @@ FI
 	then
 		$SED_I -e "0,/\\\\N[1{]/s/\(\\\\N[1{]\)/\\\\input pdfwebtocfront\n\n\1/" $f.tex
 
-		if $CHANGES # TeX and XeTeX grow significantly for TeX Live
+		if $CHANGES
 		then
+			# We add an Editor's Note and the list of changed
+			# sections on the ToC page.
+			cp /opt/github/web/editorsnote.tex .
+
+			# TeX and XeTeX grow significantly for TeX Live
+			# so there's enough room on the last ToC page.
 			case $f in
 				tex ) $SED_I -e "0,/\\\\N[1{]/s/\(\\\\N[1{]\)/\\\\def\\\\tocpages{2}\n\\\\def\\\\tocstart{1}\n\n\1/" $f.tex ;;
 				xetex ) $SED_I -e "0,/\\\\N[1{]/s/\(\\\\N[1{]\)/\\\\def\\\\tocpages{2}\n\n\1/" $f.tex ;;
+				ctie ) $SED_I -e "s/\(\\\\def\\\covernote.*\)/\\\\input editorsnote.tex\n\1\n\\\\editorsnote\\\\smallskip\\\\readchanges\\\\bigskip\\\\noindent/" $f.tex ;;
+				* ) $SED_I -e "s/\(%\\\\def\\\\botofcontents.*\)/\\\\input editorsnote.tex/" \
+				-e "s/\(\\\vbox{\\\\ninerm.*\)/\1\n\\\\editorsnote\\\\hfill\\\\readchanges\\\\bigskip\\\\noindent/" $f.tex ;;
 			esac
 		fi
 
