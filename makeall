@@ -328,6 +328,9 @@ FI
 				bibtex | patgen | tangle | weave ) $SED_I -e "s/\(\\\\datecontentspage\)/\\\\input editorsnote\n\\\\def\\\\covernote{\\\\vbox{\\\\noindent\\\\editorsnote\\\\smallskip\\\\readchanges\\\\par}}\n\1/" \
 					$f.tex ;;
 
+				refsort | twinx ) $SED_I -e "s/\\\\datethis/\\\\input editorsnote.tex\n\\\\def\\\\covernote{\\\\vbox{\\\\noindent\\\\editorsnote\\\\smallskip\\\\readchanges\\\\par}}\n\\\\datecontentspage/" \
+					$f.tex ;;
+
 				* ) $SED_I -e "s/\(%\\\\def\\\\botofcontents.*\)/\\\\input editorsnote.tex/" \
 				-e "s/\(\\\vbox{\\\\ninerm.*\)/\1\n\\\\editorsnote\\\\hfill\\\\readchanges\\\\bigskip\\\\noindent/" $f.tex ;;
 			esac
