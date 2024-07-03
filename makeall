@@ -211,7 +211,7 @@ do
 
 	# 'pwebmac' is for WEB only; do nothing for CWEB programs
 	if $NEW && echo $f | grep -v -q -E \
-		'^c|refsort|twinx|tie|hitex|mp|mpost|mpmath|mpmathbinary|mpmathdecimal|mpmathdouble|mpstrings|tfmin'
+		'^c|refsort|twinx|tie|hitex|^mp|tfmin'
 	then
 		# timestamp on table-of-contents page or the first page
 		case $f in
@@ -329,7 +329,8 @@ FI
 				refsort | twinx ) $SED_I -e "s/\\\\datethis/\\\\input editorsnote.tex\n\\\\def\\\\covernote{\\\\vbox{\\\\noindent\\\\editorsnote\\\\smallskip\\\\readchanges\\\\par}}\n\\\\datecontentspage/" \
 					$f.tex ;;
 
-				common | ctangle | cweave | ctie | tie ) $SED_I -e "s/\(\\\\def\\\\covernote.*\)/\\\\input editorsnote.tex\n\1/" \
+				common | ctangle | cweave | ctie | tie ) $SED_I \
+					-e "s/\(\\\\def\\\\covernote.*\)/\\\\input editorsnote.tex\n\1/" \
 					-e "s/^\(}}\)/\n\\\\bigskip\\\\noindent\n\\\\editorsnote\\\\readchanges\\\\par\1/" \
 					$f.tex ;;
 
