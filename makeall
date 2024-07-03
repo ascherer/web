@@ -216,7 +216,7 @@ do
 		# timestamp on table-of-contents page or the first page
 		case $f in
 			bibtex | patgen | tangle | weave | twill )
-				$SED_I -e "s/\(\\\\def\\\\title\)/\\\\datecontentspage\n\1/" $f.tex ;;
+				$SED_I -e "s/\(\\\\def\\\\title{\)/\\\\datecontentspage\n\1/" $f.tex ;;
 
 			mf | tex | pdftex | xetex )
 				$SED_I -e "s/\(\\\\def\\\\topofcontents\)/\\\\datethis\n\\\\emergencystretch=.1\\\\hsize\n\1/" $f.tex
@@ -324,6 +324,9 @@ FI
 					$f.tex ;;
 
 				ctie ) $SED_I -e "s/\(\\\\def\\\covernote.*\)/\\\\input editorsnote.tex\n\1\n\\\\editorsnote\\\\smallskip\\\\readchanges\\\\bigskip\\\\noindent/" $f.tex ;;
+
+				bibtex | patgen | tangle | weave ) $SED_I -e "s/\(\\\\datecontentspage\)/\\\\input editorsnote\n\\\\def\\\\covernote{\\\\vbox{\\\\noindent\\\\editorsnote\\\\smallskip\\\\readchanges\\\\par}}\n\1/" \
+					$f.tex ;;
 
 				* ) $SED_I -e "s/\(%\\\\def\\\\botofcontents.*\)/\\\\input editorsnote.tex/" \
 				-e "s/\(\\\vbox{\\\\ninerm.*\)/\1\n\\\\editorsnote\\\\hfill\\\\readchanges\\\\bigskip\\\\noindent/" $f.tex ;;
