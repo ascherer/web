@@ -137,7 +137,7 @@ do
 			tie -m $f.web $f.web /opt/github/web/$f.ch ;;
 
 		mp | mpost | mpmath* | mpstrings | tfmin )
-			# Beautifications for HiTeX and MetaPost
+			# Beautifications for MetaPost
 			tie -m $f.w $f.w /opt/github/web/$f.ch ;;
 
 		weave | twill )
@@ -166,14 +166,7 @@ do
 			# main WEB programs have complex change files
 			tex | mf | pdftex | xetex )
 				WEBINPUTS=.:$KNUTHWARE/../../Work//:$WEBINPUTS: \
-				$WEAVE $f $f-final
-
-				# FIX: XeTeX uses '\pdfTeX' from section 114,
-				# which is not changed and thus 'disappears';
-				# repeat in preamble.
-				if [ xetex = $f ]
-				then $SED_I -e "s/\(\\\\let\\\\maybe\)/\\\\def\\\\pdfTeX{pdf\\\\TeX}\n\1/" $f.tex
-				fi ;;
+				$WEAVE $f $f-final ;;
 
 			# all other WEB codes have singular changefiles
 			* ) $WEAVE $f $f ;;
@@ -182,10 +175,9 @@ do
 		# only document changed modules/sections
 		$SED_I -e "s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse/" \
 			$f.tex
-	else
+	else # ! $CHANGES
 		case $f in
-			ctwill )
-				# apply tons of editorial changes to 'ctwill.w'
+			ctwill ) # apply tons of editorial changes to 'ctwill.w'
 				if [ "$HITEX" = "$TEX" ]
 				then ctie -m $f.w cweave.w $f-w2c.ch $f-hint.ch
 				else ctie -m $f.w cweave.w $f-w2c.ch $f-mini.ch
@@ -198,8 +190,7 @@ do
 			mp | mpost | mpmath* | mpstrings | tfmin )
 				CWEBINPUTS=.: $CWEAVE $f ;;
 
-			twill )
-				WEBINPUTS=.:$WEBINPUTS \
+			twill ) WEBINPUTS=.:$WEBINPUTS \
 				tie -m $f.web weave.web weave.ch weav-$f.ch
 				WEBINPUTS=.: $WEAVE $f ;;
 
@@ -207,7 +198,7 @@ do
 
 			* ) $WEAVE $f ;;
 		esac
-	fi
+	fi # $CHANGES
 
 	# 'pwebmac' is for WEB only; do nothing for CWEB programs
 	if $NEW && echo $f | grep -v -q -E \
@@ -254,7 +245,7 @@ FI
 				-e "s/\(trademark of the American Mathematical Society.}}\)}/\1\n\\\\datecontentspage/" \
 				$f.tex ;;
 		esac
-	fi
+	fi # $NEW
 
 	# special treatment for individual C/WEB programs
 	case $f in
@@ -275,20 +266,23 @@ FI
 
 		# FIX: pdfTeX uses '\pdfTeX' in section names; these should
 		# appear correctly in the bookmarks, too.
-		pdftex )
-			if $NEW && [ tex != "$TEX" ] && [ "$HITEX" != "$TEX" ]
+		pdftex ) if $NEW && [ tex != "$TEX" ] && [ "$HITEX" != "$TEX" ]
 			then $SED_I -e "s/\(\\\\def\\\\pdfeTeX{pdf\\\\eTeX}\)/\1\n\\\\sanitizecommand\\\\pdfTeX{pdfTeX}\n\\\\sanitizecommand\\\\eTeX{e-TeX}/" $f.tex
 			fi ;;
 
 		# FIX: weave uses '\max' in name of module 173; this should
 		# appear correctly in the bookmarks, too.
-		weave )
-			if $NEW && [ tex != "$TEX" ] && [ "$HITEX" != "$TEX" ]
+		weave ) if $NEW && [ tex != "$TEX" ] && [ "$HITEX" != "$TEX" ]
 			then $SED_I -e "s/\(\\\\def\\\\({}\)/\\\\sanitizecommand\\\\max{max}\n\1/" $f.tex # )
 			fi ;;
 
 		# FIX: purge obsolete macros from XeTeX.
-		xetex ) $SED_I -e "/\\\\input xewebmac/d" $f.tex ;;
+		# FIX: XeTeX uses '\pdfTeX' from section 114, which is not
+		# changed and thus 'disappears'; repeat in preamble.
+		xetex ) $SED_I -e "/\\\\input xewebmac/d" \
+			-e "s/\(\\\\let\\\\maybe\)/\\\\def\\\\pdfTeX{pdf\\\\TeX}\n\1/" \
+			$f.tex ;;
+
 
 		# timestamp on table-of-contents page or the first page
 		hitex | mp ) $SED_I -e "s/\(\\\\def\\\\topofcontents\)/\\\\datethis\n\\\\emergencystretch=.1\\\\hsize\n\1/" $f.tex ;;
@@ -319,10 +313,7 @@ FI
 					-e "s/\\\\def\\\\botofcontents.*/\\\\def\\\\botofcontents{\\\\hsize6.5in\\\\vskip 0pt plus 1filll\n\\\\noindent\\\\editorsnote\\\\readchanges\\\\bigskip\\\\noindent\\\\sc\\\\today\\\\ at \\\\hours}/" \
 					$f.tex ;;
 
-				bibtex | patgen | tangle | weave ) $SED_I -e "s/\(\\\\datecontentspage\)/\\\\input editorsnote\n\\\\def\\\\covernote{\\\\vbox{\\\\noindent\\\\editorsnote\\\\smallskip\\\\readchanges\\\\par}}\n\1/" \
-					$f.tex ;;
-
-				refsort | twinx ) $SED_I -e "s/\\\\datethis/\\\\input editorsnote.tex\n\\\\def\\\\covernote{\\\\vbox{\\\\noindent\\\\editorsnote\\\\smallskip\\\\readchanges\\\\par}}\n\\\\datecontentspage/" \
+				bibtex | patgen | tangle | weave | refsort | twinx ) $SED_I -e "s/\\\\date.*/\\\\input editorsnote\n\\\\def\\\\covernote{\\\\vbox{\\\\noindent\\\\editorsnote\\\\readchanges\\\\par}}\n\\\\datecontentspage/" \
 					$f.tex ;;
 
 				common | ctangle | cweave | ctie | tie ) $SED_I \
@@ -331,17 +322,18 @@ FI
 					$f.tex ;;
 
 				* ) $SED_I \
-					-e "s/\(%\\\\def\\\\botofcontents.*\)/\\\\input editorsnote.tex/" \
-					-e "s/\(\\\vbox{\\\\ninerm.*\)/\1\n\\\\editorsnote\\\\hfill\\\\readchanges\\\\bigskip\\\\noindent/" $f.tex ;;
+					-e "s/%\\\\def\\\\botofcontents.*/\\\\input editorsnote.tex/" \
+					-e "s/\(\\\vbox{\\\\ninerm.*\)/\1\n\\\\editorsnote\\\\readchanges\\\\bigskip\\\\noindent/" \
+					$f.tex ;;
 			esac
-		fi
+		fi # $CHANGES
 
 		# only XeTeX can process XETEX.WEB
 		if [ xetex = $f ]
 		then $XETEX $f # run XeTeX twice
 		else $TEX $f # run TeX twice
 		fi
-	fi
+	fi # $PDFTOCFRONT
 
 	case $f in
 		xetex ) $XETEX $f ;; # only XeTeX can process XETEX.WEB
@@ -362,9 +354,9 @@ FI
 	esac
 done
 
+# create tarballs w/o changes for publication
 if ( $PDFTOCFRONT || [ "$HITEX" = "$TEX" ] ) && ! $FILESELECT
 then
-	# create tarballs w/o changes for publication
 	if $CHANGES
 	then
 		for f in *.$PDF
@@ -409,7 +401,7 @@ then
 			common-changes.$PDF ctangle-changes.$PDF \
 			cweave-changes.$PDF refsort-changes.$PDF \
 			twinx-changes.$PDF
-	else
+	else # ! $CHANGES
 		# Finally, build the remaining documents
 		# * TeX and Metafont test routines
 		# * WEB and CWEB manuals
@@ -473,7 +465,7 @@ then
 		$PAX "$OUTDIR/cweb.tar.gz" -s ,^,cweb/, \
 			cwebman.$PDF common.$PDF ctangle.$PDF cweave.$PDF \
 			ctwill.$PDF refsort.$PDF twinx.$PDF
-	fi
+	fi # $CHANGES
 
 	# Notes to self:
 	# (1) Create a user-friendly central entrypoint with
