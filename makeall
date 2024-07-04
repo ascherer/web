@@ -36,6 +36,9 @@ PDFTOCFRONT=false # push table-of-contents to front of PDF output
 TEX=tex # or 'pdftex' or 'xetex' or 'hitex' or 'luatex'
 VALID=false # give 'pdftex' a chance to produce valid output
 
+# Extra material -- unpublished
+LOCALSTUFF=/opt/github/web
+
 # Initial list of C/WEB sources to process, overridable with option '-f':
 KNUTHWHERE=$(locate /bibtex.web)
 if [ -z "$KNUTHWHERE" ]
@@ -127,18 +130,18 @@ if $NEW
 then WEAVE="$WEAVE -p"
 fi
 
-# WEB and CWEB programs we want to get formatted
+# Loop over WEB and CWEB programs we want to get formatted
 for f in $FILES
 do
 	f=$(basename $f .web)
 
 	case $f in
 		pdftex ) # Fix several 'Overfull \hbox'es
-			tie -m $f.web $f.web /opt/github/web/$f.ch ;;
+			tie -m $f.web $f.web $LOCALSTUFF/$f.ch ;;
 
 		mp | mpost | mpmath* | mpstrings | tfmin )
 			# Beautifications for MetaPost
-			tie -m $f.w $f.w /opt/github/web/$f.ch ;;
+			tie -m $f.w $f.w $LOCALSTUFF/$f.ch ;;
 
 		weave | twill )
 			if [ "$HITEX" = "$TEX" ] # Fix non-constant factor
@@ -287,7 +290,7 @@ FI
 		# timestamp on table-of-contents page or the first page
 		hitex | mp ) $SED_I -e "s/\(\\\\def\\\\topofcontents\)/\\\\datethis\n\\\\emergencystretch=.1\\\\hsize\n\1/" $f.tex ;;
 
-		ctie | tie ) $SED_I -e "s/\(\\\\def\\\\bot\)/\\\\datethis\n\1/" $f.tex ;;
+		ctie | tie ) $SED_I -e "s/\(\\\\def\\\\botofcontents\)/\\\\datethis\n\1/" $f.tex ;;
 
 		mpost | mpmath* | mpstrings | tfmin ) $SED_I -e "s/\(\\\\def\\\\title\)/\\\\datecontentspage\n\n\1/" $f.tex ;;
 	esac
@@ -301,14 +304,14 @@ FI
 		then
 			# We add an Editor's Note and the list of changed
 			# sections on the ToC page.
-			cp /opt/github/web/editorsnote.tex .
+			cp $LOCALSTUFF/editorsnote.tex .
 
-			# TeX and XeTeX grow significantly for TeX Live
-			# so there's enough room on the last ToC page.
 			case $f in
 				mf ) $SED_I -e "s/\(\\\\datethis\)/\\\\input editorsnote.tex\n\\\\def\1{\\\\def\\\\startsection{\\\\leftline{\\\\sc\\\\today\\\\ at \\\\hours}\n  \\\\smallskip\\\\readchanges\\\bigskip\n  \\\\let\\\\startsection=\\\\stsec\\\\stsec}}\n\1/" \
 					$f.tex ;;
 
+				# TeX and XeTeX grow significantly for TeX Live
+				# so there's enough room on the last ToC page.
 				pdftex | tex | xetex ) $SED_I \
 					-e "s/\(\\\\input pdfwebtocfront\)/\1\n\n\\\\def\\\\tocpages{2}/" \
 					-e "s/\\\\datethis/\\\\input editorsnote.tex/" \
@@ -415,11 +418,11 @@ then
 		# input files are renamed in TeX Live (in fact, there are
 		# additional files for MetaPost).
 		f=$(kpsewhich -engine tex trapman)
-		tie -m $(basename $f) $f /opt/github/web/$(basename $f .tex).ch
+		tie -m $(basename $f) $f $LOCALSTUFF/$(basename $f .tex).ch
 
 		# Prepare 'webman' with section links and bookmarks.
 		f=$(kpsewhich -engine tex webman)
-		tie -m $(basename $f) $f /opt/github/web/$(basename $f .tex).ch
+		tie -m $(basename $f) $f $LOCALSTUFF/$(basename $f .tex).ch
 
 		# Prepare 'cwebman' with footnotes describing the extended CWEB.
 		f=$(kpsewhich -engine tex cwebman)
@@ -434,7 +437,7 @@ then
 		do $TEX $f
 		done
 
-		$TEX -jobname=errorlog /opt/github/web/Xerrorlog.tex
+		$TEX -jobname=errorlog $LOCALSTUFF/Xerrorlog.tex
 
 		for f in one two three four five six seven eight nine ten \
 			eleven twelve
