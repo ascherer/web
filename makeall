@@ -287,6 +287,8 @@ FI
 		# timestamp on table-of-contents page or the first page
 		hitex | mp ) $SED_I -e "s/\(\\\\def\\\\topofcontents\)/\\\\datethis\n\\\\emergencystretch=.1\\\\hsize\n\1/" $f.tex ;;
 
+		ctie | tie ) $SED_I -e "s/\(\\\\def\\\\bot\)/\\\\datethis\n\1/" $f.tex ;;
+
 		mpost | mpmath* | mpstrings | tfmin ) $SED_I -e "s/\(\\\\def\\\\title\)/\\\\datecontentspage\n\n\1/" $f.tex ;;
 	esac
 
