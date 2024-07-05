@@ -147,7 +147,7 @@ do
 			if [ "$HITEX" = "$TEX" ] # Fix non-constant factor
 			then
 				cp $KNUTHWARE/weave.web .
-				$SED_I -e "s/\\\\the\\\\hsize/460pt/" weave.web
+				$SED_I weave.web -e "s/\\\\the\\\\hsize/460pt/"
 			fi ;;
 	esac
 
@@ -176,8 +176,7 @@ do
 		esac
 
 		# only document changed modules/sections
-		$SED_I -e "s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse/" \
-			$f.tex
+		$SED_I $f.tex -e "s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse/"
 	else # ! $CHANGES
 		case $f in
 			ctwill ) # apply tons of editorial changes to 'ctwill.w'
@@ -210,41 +209,44 @@ do
 		# timestamp on table-of-contents page or the first page
 		case $f in
 			bibtex | patgen | tangle | weave | twill )
-				$SED_I -e "s/\(\\\\def\\\\title{\)/\\\\datecontentspage\n\1/" $f.tex ;;
+				$SED_I $f.tex -e "s/\(\\\\def\\\\title{\)/\\\\datecontentspage\n\1/" ;;
 
 			mf | tex | pdftex | xetex )
-				$SED_I -e "s/\(\\\\def\\\\topofcontents\)/\\\\datethis\n\\\\emergencystretch=.1\\\\hsize\n\1/" $f.tex
-
 				# amend '\N' redefinition for PDF outlines in
 				# Metafont and TeX (also pdfTeX and XeTeX)
 				# 'pwebmac' defines headers differently
-				$SED_I -e "s/\(\\\\outer\\\\def\\\\N.*{\)/\1%/" \
-					 -e "s/\\\\def\\\\rhead\(.*}\)/\\\\gtitle=\1\\\\MN#1.\\\\vfill\\\\eject/" $f.tex
-
+				cat > texmf-pdf.sed << FI
+s/\(\\\\def\\\\topofcontents\)/\\\\datethis\n\\\\emergencystretch=.1\\\\hsize\n\1/
+s/\(\\\\outer\\\\def\\\\N.*{\)/\1%/
+s/\\\\def\\\\rhead\(.*}\)/\\\\gtitle=\1\\\\MN#1.\\\\vfill\\\\eject/
+FI
 				# active links in PDF outlines/bookmarks
-				cat > texmf-pdf.patch << FI
+				cat > texmf-pdf.patch1 << FI
   \ifpdf{\toksF={}\makeoutlinetoks{[#2] #3}\outlinedone\outlinedone}\fi
 FI
-				$SED_I -e "/\\\\outer\\\\def\\\\N/ {
-					r texmf-pdf.patch
-					}" $f.tex
-
-				$SED_I -e "s/\({\\\\the\\\\pageno}\)\(}}\\\\next\)/\1{\\\\the\\\\toksE}\2/" $f.tex
-
-				cat > texmf-pdf.patch << FI
+				cat >> texmf-pdf.sed << FI
+/\\\\outer\\\\def\\\\N/ {
+  r texmf-pdf.patch1
+}
+s/\({\\\\the\\\\pageno}\)\(}}\\\\next\)/\1{\\\\the\\\\toksE}\2/
+FI
+				cat > texmf-pdf.patch2 << FI
   \ifpdflua\relax\else
   \ifpdf\special{pdf: outline 0 << /Title (\the\toksE) /Dest
     [ @thispage /FitH @ypos ] >>}\fi\fi
 FI
-				$SED_I -e "/  \\\\edef\\\\next/ {
-					r texmf-pdf.patch
-					}" $f.tex
-				rm texmf-pdf.patch ;;
+				cat >> texmf-pdf.sed << FI
+/  \\\\edef\\\\next/ {
+  r texmf-pdf.patch2
+}
+FI
+				$SED_I $f.tex -f texmf-pdf.sed
+				rm texmf-pdf.* ;;
 
-			* ) $SED_I -e "/\\\\def\\\\botofcontents/d" \
+			* ) $SED_I $f.tex -e "/\\\\def\\\\botofcontents/d" \
 				-e "s/  \\\\centerline{\(\\\\hsize\)/\\\\def\\\\covernote{\1/" \
 				-e "s/\(Publishing Company.}}\)}/\1\n\\\\datecontentspage/" \
-				-e "s/\(trademark of the American Mathematical Society.}}\)}/\1\n\\\\datecontentspage/" $f.tex ;;
+				-e "s/\(trademark of the American Mathematical Society.}}\)}/\1\n\\\\datecontentspage/" ;;
 		esac
 	fi # $NEW
 
@@ -256,45 +258,45 @@ FI
 		# 'E' no longer free to be active character
 		# fix table-of-contents page for bibtex
 		# FIX: don't wait for Oren Patashnik.
-		bibtex ) $SED_I -e "s/\\\\def\\\\titlepage{F}/\\\\titletrue/" $f.tex
+		bibtex ) $SED_I $f.tex -e "s/\\\\def\\\\titlepage{F}/\\\\titletrue/"
 			if [ "" = "$CHANGES" ]
-			then $SED_I -e "71,78d" $f.tex
+			then $SED_I $f.tex -e "71,78d"
 			fi ;;
 
 		# FIX: 'glue.web' obviously uses an old 'webmac.tex'.
-		glue ) $SED_I -e "s/\(\\\\def\\\\title{GLUE}\)/\1\n\\\\pageno=\\\\contentspagenumber \\\\advance\\\\pageno by1\\\\relax/" \
-			-e "s/titlefalse/titletrue/" $f.tex ;;
+		glue ) $SED_I $f.tex -e "s/titlefalse/titletrue/" \
+			-e "s/\(\\\\def\\\\title{GLUE}\)/\1\n\\\\pageno=\\\\contentspagenumber \\\\advance\\\\pageno by1\\\\relax/" ;;
 
 		# FIX: pdfTeX uses '\pdfTeX' in section names; these should
 		# appear correctly in the bookmarks, too.
 		pdftex ) if $NEW && [ tex != "$TEX" ] && [ "$HITEX" != "$TEX" ]
-			then $SED_I -e "s/\(\\\\def\\\\pdfeTeX{pdf\\\\eTeX}\)/\1\n\\\\sanitizecommand\\\\pdfTeX{pdfTeX}\n\\\\sanitizecommand\\\\eTeX{e-TeX}/" $f.tex
+			then $SED_I $f.tex -e "s/\(\\\\def\\\\pdfeTeX{pdf\\\\eTeX}\)/\1\n\\\\sanitizecommand\\\\pdfTeX{pdfTeX}\n\\\\sanitizecommand\\\\eTeX{e-TeX}/"
 			fi ;;
 
 		# FIX: weave uses '\max' in name of module 173; this should
 		# appear correctly in the bookmarks, too.
 		weave ) if $NEW && [ tex != "$TEX" ] && [ "$HITEX" != "$TEX" ]
-			then $SED_I -e "s/\(\\\\def\\\\({}\)/\\\\sanitizecommand\\\\max{max}\n\1/" $f.tex # )
+			then $SED_I $f.tex -e "s/\(\\\\def\\\\({}\)/\\\\sanitizecommand\\\\max{max}\n\1/" # )
 			fi ;;
 
 		# FIX: purge obsolete macros from XeTeX.
 		# FIX: XeTeX uses '\pdfTeX' from section 114, which is not
 		# changed and thus 'disappears'; repeat in preamble.
-		xetex ) $SED_I -e "/\\\\input xewebmac/d" \
-			-e "s/\(\\\\let\\\\maybe\)/\\\\def\\\\pdfTeX{pdf\\\\TeX}\n\1/" $f.tex ;;
+		xetex ) $SED_I $f.tex -e "/\\\\input xewebmac/d" \
+			-e "s/\(\\\\let\\\\maybe\)/\\\\def\\\\pdfTeX{pdf\\\\TeX}\n\1/" ;;
 
 		# timestamp on table-of-contents page or the first page
-		hitex | mp ) $SED_I -e "s/\(\\\\def\\\\topofcontents\)/\\\\datethis\n\\\\emergencystretch=.1\\\\hsize\n\1/" $f.tex ;;
+		hitex | mp ) $SED_I $f.tex -e "s/\(\\\\def\\\\topofcontents\)/\\\\datethis\n\\\\emergencystretch=.1\\\\hsize\n\1/" ;;
 
-		common | ctangle | cweave | ctie | tie ) $SED_I -e "s/\(\\\\def\\\\botofcontents\)/\\\\datethis\n\1/" $f.tex ;;
+		common | ctangle | cweave | ctie | tie ) $SED_I $f.tex -e "s/\(\\\\def\\\\botofcontents\)/\\\\datethis\n\1/" ;;
 
-		mpost | mpmath* | mpstrings | tfmin ) $SED_I -e "s/\(\\\\def\\\\title\)/\\\\datecontentspage\n\n\1/" $f.tex ;;
+		mpost | mpmath* | mpstrings | tfmin ) $SED_I $f.tex -e "s/\(\\\\def\\\\title\)/\\\\datecontentspage\n\n\1/" ;;
 	esac
 
 	# shift table-of-contents pages to the front in PDF
 	if $PDFTOCFRONT && echo $f | grep -v -q -E 'ctwill|hitex'
 	then
-		$SED_I -e "0,/\\\\N[1{]/s/\(\\\\N[1{]\)/\\\\input pdfwebtocfront\n\n\1/" $f.tex
+		$SED_I $f.tex -e "0,/\\\\N[1{]/s/\(\\\\N[1{]\)/\\\\input pdfwebtocfront\n\n\1/"
 
 		if [ "-changes" = "$CHANGES" ]
 		then
@@ -303,24 +305,24 @@ FI
 			cp $LOCALSTUFF/editorsnote.tex .
 
 			case $f in
-				mf ) $SED_I -e "s/\(\\\\datethis\)/\\\\input editorsnote.tex\n\\\\def\1{\\\\def\\\\startsection{\\\\leftline{\\\\sc\\\\today\\\\ at \\\\hours}\n  \\\\smallskip\\\\readchanges\\\bigskip\n  \\\\let\\\\startsection=\\\\stsec\\\\stsec}}\n\1/" $f.tex ;;
+				mf ) $SED_I $f.tex -e "s/\(\\\\datethis\)/\\\\input editorsnote.tex\n\\\\def\1{\\\\def\\\\startsection{\\\\leftline{\\\\sc\\\\today\\\\ at \\\\hours}\n  \\\\smallskip\\\\readchanges\\\bigskip\n  \\\\let\\\\startsection=\\\\stsec\\\\stsec}}\n\1/" ;;
 
 				# TeX and XeTeX grow significantly for TeX Live
 				# so there's enough room on the last ToC page.
-				pdftex | tex | xetex ) $SED_I \
+				pdftex | tex | xetex ) $SED_I $f.tex \
 					-e "s/\(\\\\input pdfwebtocfront\)/\1\n\n\\\\def\\\\tocpages{2}/" \
 					-e "s/\\\\datethis/\\\\input editorsnote.tex/" \
-					-e "s/\\\\def\\\\botofcontents.*/\\\\def\\\\botofcontents{\\\\hsize6.5in\\\\vskip 0pt plus 1filll\n  \\\\editorsnote\\\\readchanges\\\\bigskip\\\\noindent\\\\sc\\\\today\\\\ at \\\\hours}/" $f.tex ;;
+					-e "s/\\\\def\\\\botofcontents.*/\\\\def\\\\botofcontents{\\\\hsize6.5in\\\\vskip 0pt plus 1filll\n  \\\\editorsnote\\\\readchanges\\\\bigskip\\\\noindent\\\\sc\\\\today\\\\ at \\\\hours}/" ;;
 
-				bibtex | patgen | tangle | weave | refsort | twinx ) $SED_I -e "s/\\\\date.*/\\\\input editorsnote\n\\\\def\\\\covernote{\\\\vbox{\\\\editorsnote\\\\readchanges\\\\par}}\n\\\\datecontentspage/" $f.tex ;;
+				bibtex | patgen | tangle | weave | refsort | twinx ) $SED_I $f.tex -e "s/\\\\date.*/\\\\input editorsnote\n\\\\def\\\\covernote{\\\\vbox{\\\\editorsnote\\\\readchanges\\\\par}}\n\\\\datecontentspage/" ;;
 
-				common | ctangle | cweave | ctie | tie ) $SED_I \
+				common | ctangle | cweave | ctie | tie ) $SED_I $f.tex \
 					-e "s/\(\\\\def\\\\covernote.*\)/\\\\input editorsnote.tex\n\1/" \
-					-e "s/^\(}}\)/\\\\bigskip\\\\editorsnote\\\\readchanges\\\\par\1/" $f.tex ;;
+					-e "s/^\(}}\)/\\\\bigskip\\\\editorsnote\\\\readchanges\\\\par\1/" ;;
 
-				* ) $SED_I \
+				* ) $SED_I $f.tex \
 					-e "s/\(\\\\def\\\\title{\)/\\\\input editorsnote.tex\n\1/" \
-					-e "s/\(\\\vbox{\\\\ninerm.*\)\\\\noindent/\1\\\\editorsnote\\\\readchanges\\\\bigskip\\\\noindent/" $f.tex ;;
+					-e "s/\(\\\vbox{\\\\ninerm.*\)\\\\noindent/\1\\\\editorsnote\\\\readchanges\\\\bigskip\\\\noindent/" ;;
 			esac
 		fi # $CHANGES
 
@@ -388,7 +390,7 @@ then
 		f=$(kpsewhich -engine tex cwebman)
 		tie -m $(basename $f) $f $(basename $f .tex)-w2c.ch
 		if [ "$HITEX" = "$TEX" ]
-		then $SED_I -e "s/\(\\\\input cwebmac\)/\1\n\\\\input hiplainpage/" cwebman.tex
+		then $SED_I cwebman.tex -e "s/\(\\\\input cwebmac\)/\1\n\\\\input hiplainpage/"
 		fi
 
 		for f in tripman trapman webman cwebman
@@ -410,9 +412,7 @@ then
 			mv $f $(basename $f .$PDF)-changes.$PDF
 		done
 		if [ "$HITEX" = "$TEX" ]
-		then
-			rm -f xetex-changes.pdf
-			mv xetex.pdf xetex-changes.pdf
+		then mv -f xetex.pdf xetex-changes.pdf
 		fi
 		$PAX "$OUTDIR/mf-changes.tar.gz" -s ,^,mf/, mf-changes.$PDF
 		$PAX "$OUTDIR/tex-changes.tar.gz" -s ,^,tex/, tex-changes.$PDF
