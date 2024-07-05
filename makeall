@@ -28,7 +28,7 @@ HELP
 LONGOPTS=changes,files:,help,new,outdir:,pdftocfront,tex:,validpdf
 SHRTOPTS=cf:hno:pt:v
 
-CHANGES=false # apply changefile to C/WEB source
+CHANGES="" # apply changefile to C/WEB source
 FILESELECT=false # user-defined '--files' selection
 NEW=false # '\input pwebmac' instead of '\input webmac' for PDF et al.
 OUTDIR=. # path where the resulting tarballs are placed
@@ -77,7 +77,7 @@ fi
 while true
 do
 	case "$1" in
-		-c | --changes ) CHANGES=true; shift ;;
+		-c | --changes ) CHANGES="-changes"; shift ;;
 		-f | --files ) FILES="$2"; FILESELECT=true; shift 2 ;;
 		-h | --help ) usage; exit 0 ;;
 		-n | --new ) NEW=true; shift ;;
@@ -151,7 +151,7 @@ do
 			fi ;;
 	esac
 
-	if $CHANGES
+	if [ "-changes" = "$CHANGES" ]
 	then
 		case $f in
 			# These are changes in and of themselves
@@ -259,7 +259,7 @@ FI
 		# fix table-of-contents page for bibtex
 		# FIX: don't wait for Oren Patashnik.
 		bibtex ) $SED_I -e "s/\\\\def\\\\titlepage{F}/\\\\titletrue/" $f.tex
-			if ! $CHANGES
+			if [ "" = "$CHANGES" ]
 			then $SED_I -e "71,78d" $f.tex
 			fi ;;
 
@@ -300,7 +300,7 @@ FI
 	then
 		$SED_I -e "0,/\\\\N[1{]/s/\(\\\\N[1{]\)/\\\\input pdfwebtocfront\n\n\1/" $f.tex
 
-		if $CHANGES
+		if [ "-changes" = "$CHANGES" ]
 		then
 			# We add an Editor's Note and the list of changed
 			# sections on the ToC page.
@@ -362,56 +362,25 @@ done
 # create tarballs w/o changes for publication
 if ( $PDFTOCFRONT || [ "$HITEX" = "$TEX" ] ) && ! $FILESELECT
 then
-	if $CHANGES
+	if [ "" = "$CHANGES" ]
 	then
-		for f in *.$PDF
-		do
-			case $f in *-changes.$PDF ) rm -f $f; continue ;;
-			esac
-			mv $f $(basename $f .$PDF)-changes.$PDF
+		export TEXINPUTS=.:$(kpsewhich --var-value=TEXMFDIST)//:$KNUTHWARE//
+		touch pages.tex # let 'manmac' produce output at all
+
+		$TEX -jobname=errorlog $LOCALSTUFF/Xerrorlog.tex
+		for f in one two three four five six seven eight nine ten \
+			eleven twelve
+		do $TEX -jobname errata.$f errata.$f
 		done
-		if [ "$HITEX" = "$TEX" ]
-		then
-			rm -f xetex-changes.pdf
-			mv xetex.pdf xetex-changes.pdf
-		fi
-		$PAX "$OUTDIR/etc-changes.tar.gz" -s ,^,etc/, \
-			vftovp-changes.$PDF vptovf-changes.$PDF
-		$PAX "$OUTDIR/mf-changes.tar.gz" -s ,^,mf/, \
-			mf-changes.$PDF
-		$PAX "$OUTDIR/mfware-changes.tar.gz" -s ,^,mfware/, \
-			gftodvi-changes.$PDF gftopk-changes.$PDF \
-			gftype-changes.$PDF mft-changes.$PDF
-		$PAX "$OUTDIR/tex-changes.tar.gz" -s ,^,tex/, \
-			tex-changes.$PDF
-		$PAX "$OUTDIR/texware-changes.tar.gz" -s ,^,texware/, \
-			dvitype-changes.$PDF pltotf-changes.$PDF \
-			pooltype-changes.$PDF tftopl-changes.$PDF
-		$PAX "$OUTDIR/web-changes.tar.gz" -s ,^,web/, \
-			tangle-changes.$PDF weave-changes.$PDF
-		$PAX "$OUTDIR/bibtex-changes.tar.gz" -s ,^,bibtex/, \
-			bibtex-changes.$PDF
-		$PAX "$OUTDIR/other-changes.tar.gz" -s ,^,other/, \
-			dvicopy-changes.$PDF patgen-changes.$PDF \
-			pktogf-changes.$PDF pktype-changes.$PDF
-		$PAX "$OUTDIR/pdftex-changes.tar.gz" -s ,^,pdftex/, \
-			pdftex-changes.$PDF
-		$PAX "$OUTDIR/xetex-changes.tar.gz" -s ,^,xetex/, \
-			xetex-changes.pdf
-		$PAX "$OUTDIR/ctie-changes.tar.gz" -s ,^,ctie/, \
-			ctie-changes.$PDF
-		$PAX "$OUTDIR/tie-changes.tar.gz" -s ,^,tie/, \
-			tie-changes.$PDF
-		$PAX "$OUTDIR/cweb-changes.tar.gz" -s ,^,cweb/, \
-			common-changes.$PDF ctangle-changes.$PDF \
-			cweave-changes.$PDF refsort-changes.$PDF \
-			twinx-changes.$PDF
-	else # ! $CHANGES
+		$TEX errata
+		$PAX "$OUTDIR/errata.tar.gz" -s ,^,errata/, err*.$PDF
+
+		$PAX "$OUTDIR/hitex.tar.gz" -s ,^,hitex/, hitex.$PDF
+		$PAX "$OUTDIR/mp.tar.gz" -s ,^,mp/, mp.$PDF mpost.$PDF
+
 		# Finally, build the remaining documents
 		# * TeX and Metafont test routines
 		# * WEB and CWEB manuals
-		export TEXINPUTS=.:$(kpsewhich --var-value=TEXMFDIST)//:$KNUTHWARE//
-
 		rm -f trapman.tex webman.tex cwebman.tex
 
 		# FIX: Prepare 'trapman' for automatic processing; several
@@ -431,46 +400,60 @@ then
 		then $SED_I -e "s/\(\\\\input cwebmac\)/\1\n\\\\input hiplainpage/" cwebman.tex
 		fi
 
-		touch pages.tex # let 'manmac' produce output at all
-
 		for f in tripman trapman webman cwebman
 		do $TEX $f
 		done
 
-		$TEX -jobname=errorlog $LOCALSTUFF/Xerrorlog.tex
-
-		for f in one two three four five six seven eight nine ten \
-			eleven twelve
-		do $TEX -jobname errata.$f errata.$f
-		done
-
-		$TEX errata
-
-		$PAX "$OUTDIR/errata.tar.gz" -s ,^,errata/, \
-			errorlog.$PDF errata.*.$PDF errata.$PDF
-		$PAX "$OUTDIR/etc.tar.gz" -s ,^,etc/, vftovp.$PDF vptovf.$PDF
 		$PAX "$OUTDIR/mf.tar.gz" -s ,^,mf/, mf.$PDF trapman.$PDF
-		$PAX "$OUTDIR/mfware.tar.gz" -s ,^,mfware/, \
-			gftodvi.$PDF gftopk.$PDF gftype.$PDF mft.$PDF
 		$PAX "$OUTDIR/tex.tar.gz" -s ,^,tex/, \
 			glue.$PDF tex.$PDF tripman.$PDF
-		$PAX "$OUTDIR/texware.tar.gz" -s ,^,texware/, \
-			dvitype.$PDF pltotf.$PDF pooltype.$PDF tftopl.$PDF
 		$PAX "$OUTDIR/web.tar.gz" -s ,^,web/, \
 			webman.$PDF tangle.$PDF weave.$PDF twill.$PDF
-		$PAX "$OUTDIR/bibtex.tar.gz" -s ,^,bibtex/, bibtex.$PDF
-		$PAX "$OUTDIR/other.tar.gz" -s ,^,other/, \
-			dvicopy.$PDF patgen.$PDF pktogf.$PDF pktype.$PDF
-		$PAX "$OUTDIR/hitex.tar.gz" -s ,^,hitex/, hitex.$PDF
-		$PAX "$OUTDIR/mp.tar.gz" -s ,^,mp/, mp.$PDF mpost.$PDF
-		$PAX "$OUTDIR/pdftex.tar.gz" -s ,^,pdftex/, pdftex.$PDF
-		$PAX "$OUTDIR/xetex.tar.gz" -s ,^,xetex/, xetex.pdf
-		$PAX "$OUTDIR/ctie.tar.gz" -s ,^,ctie/, ctie.$PDF
-		$PAX "$OUTDIR/tie.tar.gz" -s ,^,tie/, tie.$PDF
 		$PAX "$OUTDIR/cweb.tar.gz" -s ,^,cweb/, \
 			cwebman.$PDF common.$PDF ctangle.$PDF cweave.$PDF \
 			ctwill.$PDF refsort.$PDF twinx.$PDF
+	else # ! $CHANGES
+		for f in *.$PDF
+		do
+			case $f in *-changes.$PDF ) rm -f $f; continue ;; esac
+			mv $f $(basename $f .$PDF)-changes.$PDF
+		done
+		if [ "$HITEX" = "$TEX" ]
+		then
+			rm -f xetex-changes.pdf
+			mv xetex.pdf xetex-changes.pdf
+		fi
+		$PAX "$OUTDIR/mf-changes.tar.gz" -s ,^,mf/, mf-changes.$PDF
+		$PAX "$OUTDIR/tex-changes.tar.gz" -s ,^,tex/, tex-changes.$PDF
+		$PAX "$OUTDIR/web-changes.tar.gz" -s ,^,web/, \
+			tangle-changes.$PDF weave-changes.$PDF
+		$PAX "$OUTDIR/cweb-changes.tar.gz" -s ,^,cweb/, \
+			common-changes.$PDF ctangle-changes.$PDF \
+			cweave-changes.$PDF refsort-changes.$PDF \
+			twinx-changes.$PDF
 	fi # $CHANGES
+
+	$PAX "$OUTDIR/etc$CHANGES.tar.gz" -s ,^,etc/, \
+		vftovp$CHANGES.$PDF vptovf$CHANGES.$PDF
+	$PAX "$OUTDIR/mfware$CHANGES.tar.gz" -s ,^,mfware/, \
+		gftodvi$CHANGES.$PDF gftopk$CHANGES.$PDF \
+		gftype$CHANGES.$PDF mft$CHANGES.$PDF
+	$PAX "$OUTDIR/texware$CHANGES.tar.gz" -s ,^,texware/, \
+		dvitype$CHANGES.$PDF pltotf$CHANGES.$PDF \
+		pooltype$CHANGES.$PDF tftopl$CHANGES.$PDF
+	$PAX "$OUTDIR/bibtex$CHANGES.tar.gz" -s ,^,bibtex/, \
+		bibtex$CHANGES.$PDF
+	$PAX "$OUTDIR/other$CHANGES.tar.gz" -s ,^,other/, \
+		dvicopy$CHANGES.$PDF patgen$CHANGES.$PDF \
+		pktogf$CHANGES.$PDF pktype$CHANGES.$PDF
+	$PAX "$OUTDIR/pdftex$CHANGES.tar.gz" -s ,^,pdftex/, \
+		pdftex$CHANGES.$PDF
+	$PAX "$OUTDIR/xetex$CHANGES.tar.gz" -s ,^,xetex/, \
+		xetex$CHANGES.pdf
+	$PAX "$OUTDIR/ctie$CHANGES.tar.gz" -s ,^,ctie/, \
+		ctie$CHANGES.$PDF
+	$PAX "$OUTDIR/tie$CHANGES.tar.gz" -s ,^,tie/, \
+		tie$CHANGES.$PDF
 
 	# Notes to self:
 	# (1) Create a user-friendly central entrypoint with
