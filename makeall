@@ -242,7 +242,7 @@ FI
 					}" $f.tex
 				rm texmf-pdf.patch ;;
 
-			* ) $SED_I -e "s/\(\\\\def\\\\botofcontents\)/%\1/" \
+			* ) $SED_I -e "/\\\\def\\\\botofcontents/d" \
 				-e "s/  \\\\centerline{\(\\\\hsize\)/\\\\def\\\\covernote{\1/" \
 				-e "s/\(Publishing Company.}}\)}/\1\n\\\\datecontentspage/" \
 				-e "s/\(trademark of the American Mathematical Society.}}\)}/\1\n\\\\datecontentspage/" \
@@ -327,7 +327,7 @@ FI
 					$f.tex ;;
 
 				* ) $SED_I \
-					-e "s/%\\\\def\\\\botofcontents.*/\\\\input editorsnote.tex/" \
+					-e "s/\(\\\\def\\\\title{\)/\\\\input editorsnote.tex\n\1/" \
 					-e "s/\(\\\vbox{\\\\ninerm.*\)\\\\noindent/\1\\\\editorsnote\\\\readchanges\\\\bigskip\\\\noindent/" \
 					$f.tex ;;
 			esac
