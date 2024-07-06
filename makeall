@@ -28,7 +28,7 @@ HELP
 LONGOPTS=changes,files:,help,new,outdir:,pdftocfront,tex:,validpdf
 SHRTOPTS=cf:hno:pt:v
 
-CHANGES="" # apply changefile to C/WEB source
+CHANGES= # apply changefile to C/WEB source
 FILESELECT=false # user-defined '--files' selection
 NEW=false # '\input pwebmac' instead of '\input webmac' for PDF et al.
 OUTDIR=. # path where the resulting tarballs are placed
@@ -151,7 +151,7 @@ do
 			fi ;;
 	esac
 
-	if [ "-changes" = "$CHANGES" ]
+	if [ -n "$CHANGES" ]
 	then
 		case $f in
 			# These are changes in and of themselves
@@ -177,7 +177,7 @@ do
 
 		# only document changed modules/sections
 		$SED_I $f.tex -e "s/\(\\\\let\\\\maybe=\)\\\\iftrue/\1\\\\iffalse/"
-	else # ! $CHANGES
+	else # -z $CHANGES
 		case $f in
 			ctwill ) # apply tons of editorial changes to 'ctwill.w'
 				if [ "$HITEX" = "$TEX" ]
@@ -259,7 +259,7 @@ FI
 		# fix table-of-contents page for bibtex
 		# FIX: don't wait for Oren Patashnik.
 		bibtex ) $SED_I $f.tex -e "s/\\\\def\\\\titlepage{F}/\\\\titletrue/"
-			if [ "" = "$CHANGES" ]
+			if [ -z "$CHANGES" ]
 			then $SED_I $f.tex -e "71,78d"
 			fi ;;
 
@@ -298,7 +298,7 @@ FI
 	then
 		$SED_I $f.tex -e "0,/\\\\N[1{]/s/\(\\\\N[1{]\)/\\\\input pdfwebtocfront\n\n\1/"
 
-		if [ "-changes" = "$CHANGES" ]
+		if [ -n "$CHANGES" ]
 		then
 			# We add an Editor's Note and the list of changed
 			# sections on the ToC page.
@@ -355,7 +355,7 @@ done
 # create tarballs w/o changes for publication
 if ( $PDFTOCFRONT || [ "$HITEX" = "$TEX" ] ) && ! $FILESELECT
 then
-	if [ "" = "$CHANGES" ]
+	if [ -z "$CHANGES" ]
 	then
 		export TEXINPUTS=.:$(kpsewhich --var-value=TEXMFDIST)//:$KNUTHWARE//
 		touch pages.tex # let 'manmac' produce output at all
@@ -405,23 +405,23 @@ then
 		$PAX "$OUTDIR/cweb.tar.gz" -s ,^,cweb/, \
 			cwebman.$PDF common.$PDF ctangle.$PDF cweave.$PDF \
 			ctwill.$PDF refsort.$PDF twinx.$PDF
-	else # ! $CHANGES
+	else # -n $CHANGES
 		for f in *.$PDF
 		do
-			case $f in *-changes.$PDF ) rm -f $f; continue ;; esac
-			mv $f $(basename $f .$PDF)-changes.$PDF
+			case $f in *$CHANGES.$PDF ) rm -f $f; continue ;; esac
+			mv $f $(basename $f .$PDF)$CHANGES.$PDF
 		done
 		if [ "$HITEX" = "$TEX" ]
-		then mv -f xetex.pdf xetex-changes.pdf
+		then mv -f xetex.pdf xetex$CHANGES.pdf
 		fi
-		$PAX "$OUTDIR/mf-changes.tar.gz" -s ,^,mf/, mf-changes.$PDF
-		$PAX "$OUTDIR/tex-changes.tar.gz" -s ,^,tex/, tex-changes.$PDF
-		$PAX "$OUTDIR/web-changes.tar.gz" -s ,^,web/, \
-			tangle-changes.$PDF weave-changes.$PDF
-		$PAX "$OUTDIR/cweb-changes.tar.gz" -s ,^,cweb/, \
-			common-changes.$PDF ctangle-changes.$PDF \
-			cweave-changes.$PDF refsort-changes.$PDF \
-			twinx-changes.$PDF
+		$PAX "$OUTDIR/mf$CHANGES.tar.gz" -s ,^,mf/, mf$CHANGES.$PDF
+		$PAX "$OUTDIR/tex$CHANGES.tar.gz" -s ,^,tex/, tex$CHANGES.$PDF
+		$PAX "$OUTDIR/web$CHANGES.tar.gz" -s ,^,web/, \
+			tangle$CHANGES.$PDF weave$CHANGES.$PDF
+		$PAX "$OUTDIR/cweb$CHANGES.tar.gz" -s ,^,cweb/, \
+			common$CHANGES.$PDF ctangle$CHANGES.$PDF \
+			cweave$CHANGES.$PDF refsort$CHANGES.$PDF \
+			twinx$CHANGES.$PDF
 	fi # $CHANGES
 
 	$PAX "$OUTDIR/etc$CHANGES.tar.gz" -s ,^,etc/, \
