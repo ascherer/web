@@ -379,12 +379,12 @@ then
 		# FIX: Prepare 'trapman' for automatic processing; several
 		# input files are renamed in TeX Live (in fact, there are
 		# additional files for MetaPost).
-		f=$(kpsewhich -engine tex trapman)
-		tie -m $(basename $f) $f $LOCALSTUFF/$(basename $f .tex).ch
-
 		# Prepare 'webman' with section links and bookmarks.
-		f=$(kpsewhich -engine tex webman)
-		tie -m $(basename $f) $f $LOCALSTUFF/$(basename $f .tex).ch
+		for f in trapman webman
+		do
+			f=$(kpsewhich -engine tex $f)
+			tie -m $(basename $f) $f $LOCALSTUFF/$(basename $f .tex).ch
+		done
 
 		# Prepare 'cwebman' with footnotes describing the extended CWEB.
 		f=$(kpsewhich -engine tex cwebman)
@@ -432,19 +432,12 @@ then
 	$PAX "$OUTDIR/texware$CHANGES.tar.gz" -s ,^,texware/, \
 		dvitype$CHANGES.$PDF pltotf$CHANGES.$PDF \
 		pooltype$CHANGES.$PDF tftopl$CHANGES.$PDF
-	$PAX "$OUTDIR/bibtex$CHANGES.tar.gz" -s ,^,bibtex/, \
-		bibtex$CHANGES.$PDF
 	$PAX "$OUTDIR/other$CHANGES.tar.gz" -s ,^,other/, \
 		dvicopy$CHANGES.$PDF patgen$CHANGES.$PDF \
 		pktogf$CHANGES.$PDF pktype$CHANGES.$PDF
-	$PAX "$OUTDIR/pdftex$CHANGES.tar.gz" -s ,^,pdftex/, \
-		pdftex$CHANGES.$PDF
-	$PAX "$OUTDIR/xetex$CHANGES.tar.gz" -s ,^,xetex/, \
-		xetex$CHANGES.pdf
-	$PAX "$OUTDIR/ctie$CHANGES.tar.gz" -s ,^,ctie/, \
-		ctie$CHANGES.$PDF
-	$PAX "$OUTDIR/tie$CHANGES.tar.gz" -s ,^,tie/, \
-		tie$CHANGES.$PDF
+	for f in bibtex pdftex xetex ctie tie
+	do $PAX "$OUTDIR/$f$CHANGES.tar.gz" -s ,^,$f/, $f$CHANGES.$PDF
+	done
 
 	# Notes to self:
 	# (1) Create a user-friendly central entrypoint with
