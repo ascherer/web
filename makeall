@@ -389,9 +389,6 @@ then
 		# Prepare 'cwebman' with footnotes describing the extended CWEB.
 		f=$(kpsewhich -engine tex cwebman)
 		tie -m $(basename $f) $f $(basename $f .tex)-w2c.ch
-		if [ "$HITEX" = "$TEX" ]
-		then $SED_I cwebman.tex -e "s/\(\\\\input cwebmac\)/\1\n\\\\input hiplainpage/"
-		fi
 
 		for f in tripman trapman webman cwebman
 		do $TEX $f
@@ -435,7 +432,9 @@ then
 	$PAX "$OUTDIR/other$CHANGES.tar.gz" -s ,^,other/, \
 		dvicopy$CHANGES.$PDF patgen$CHANGES.$PDF \
 		pktogf$CHANGES.$PDF pktype$CHANGES.$PDF
-	for f in bibtex pdftex xetex ctie tie
+	$PAX "$OUTDIR/xetex$CHANGES.tar.gz" -s ,^,xetex/, \
+		xetex$CHANGES.pdf
+	for f in bibtex pdftex ctie tie
 	do $PAX "$OUTDIR/$f$CHANGES.tar.gz" -s ,^,$f/, $f$CHANGES.$PDF
 	done
 
