@@ -346,8 +346,6 @@ FI
 			fi
 			$TEX $f ;;
 
-		refsort ) $TEX -interaction nonstopmode $f ;;
-
 		* ) $TEX $f ;;
 	esac
 done
