@@ -225,9 +225,7 @@ FI
   \ifpdf{\toksF={}\makeoutlinetoks{[#2] #3}\outlinedone\outlinedone}\fi
 FI
 				cat >> texmf-pdf.sed << FI
-/\\\\outer\\\\def\\\\N/ {
-  r texmf-pdf.patch1
-}
+/\\\\outer\\\\def\\\\N/r texmf-pdf.patch1
 s/\({\\\\the\\\\pageno}\)/\1{\\\\the\\\\toksE}/
 FI
 				cat > texmf-pdf.patch2 << FI
@@ -236,9 +234,7 @@ FI
     [ @thispage /FitH @ypos ] >>}\fi\fi
 FI
 				cat >> texmf-pdf.sed << FI
-/  \\\\edef\\\\next/ {
-  r texmf-pdf.patch2
-}
+/  \\\\edef\\\\next/r texmf-pdf.patch2
 FI
 				$SED_I $f.tex -f texmf-pdf.sed
 				rm texmf-pdf.* ;;
