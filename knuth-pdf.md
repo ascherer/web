@@ -23,4 +23,4 @@ licenses of the presented software codes.
 
 In part `knuth-pdf` is an update and replacement for the `latex-tds` package.
 
-This is version “2.3” of the `knuth-pdf` package — 2024-05-20, Andreas Scherer.
+This is version “2.3” of the `knuth-pdf` package — 2024-07-09, Andreas Scherer.
