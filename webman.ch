@@ -68,9 +68,9 @@ This memo describes how to write programs in the
 well known work of Pierre-Arnoul de Marneffe [``Holon programming: A
 survey,'' Univ.\ de Liege, Service Informatique, Liege, Belgium, 1973; 135
 @y
-well known work of Pierre-Arnoul de Marneffe [``\pdfURL{Holon programming: A
-survey}{https://github.com/holon-scribe/holon-programming},'' Univ.\ de Liege,
-Service Informatique, Liege, Belgium, 1973; 135
+well known work of Pierre-Arnoul de Marneffe [``\pdfURL{Holon programming:
+A survey}{https://github.com/holon-scribe/holon-programming},'' Univ.\ de
+Li\`ege, Service d'Informatique, Li\`ege, Belgium, 1973; 135
 @z
 
 @x l.180
