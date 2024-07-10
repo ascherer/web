@@ -64,6 +64,15 @@
 This memo describes how to write programs in the
 @z
 
+@x l.126
+well known work of Pierre-Arnoul de Marneffe [``Holon programming: A
+survey,'' Univ.\ de Liege, Service Informatique, Liege, Belgium, 1973; 135
+@y
+well known work of Pierre-Arnoul de Marneffe [``\pdfURL{Holon programming: A
+survey}{https://github.com/holon-scribe/holon-programming},'' Univ.\ de Liege,
+Service Informatique, Liege, Belgium, 1973; 135
+@z
+
 @x l.180
 \yskip\item{1)} A \TeX\ part, containing explanatory material about what
 @y
