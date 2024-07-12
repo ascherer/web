@@ -324,12 +324,6 @@ FI
 	fi # $CHANGES
 
 	case $f in
-		xetex ) # only XeTeX can process XETEX.WEB
-			if $PDFTOCFRONT || [ -n "$CHANGES" ]
-			then $XETEX $f # run XeTeX twice
-			fi
-			$XETEX $f ;;
-
 		ctwill ) # gives two different outcomes
 			if [ "$HITEX" = "$TEX" ] # sort mini-indexes
 			then # directly in the TeX file
@@ -339,6 +333,12 @@ FI
 				ctwill-refsort < $f.ref > $f.sref
 			fi
 			$TEX $f ;;
+
+		xetex ) # only XeTeX can process XETEX.WEB
+			if $PDFTOCFRONT || [ -n "$CHANGES" ]
+			then $XETEX $f # run XeTeX twice
+			fi
+			$XETEX $f ;;
 
 		* )	if $PDFTOCFRONT || [ -n "$CHANGES" ]
 			then $TEX $f # run TeX twice
