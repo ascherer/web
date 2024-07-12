@@ -318,7 +318,7 @@ FI
 
 				* ) $SED_I $f.tex \
 					-e "s/\\\\def\\\\title{/\\\\input editorsnote.tex\n&/" \
-					-e "s/\\\vbox{\\\\ninerm/&\\\\editorsnote\\\\readchanges\\\\bigskip/" ;;
+					-e "s/\\\\vbox{\\\\ninerm/&\\\\editorsnote\\\\readchanges\\\\bigskip/" ;;
 			esac
 		fi # $CHANGES
 
