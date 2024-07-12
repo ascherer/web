@@ -289,45 +289,48 @@ FI
 		mpost | mpmath* | mpstrings | tfmin ) $SED_I $f.tex -e 's/\\def\\title/\\datecontentspage\n\n&/' ;;
 	esac
 
+	if [ -n "$CHANGES" ]
+	then
+		# We add an Editor's Note and the list of changed
+		# sections on the ToC page.
+		cp $LOCALSTUFF/editorsnote.tex .
+
+		case $f in
+			mf ) $SED_I $f.tex -e 's/\\datethis/\\input editorsnote.tex\n\\def&{\\def\\startsection{\\leftline{\\sc\\today\\ at \\hours}\n  \\smallskip\\readchanges\\bigskip\n  \\let\\startsection=\\stsec\\stsec}}\n&/' ;;
+
+			# TeX and XeTeX grow significantly for TeX Live
+			# so there's enough room on the last ToC page.
+			pdftex | tex | xetex ) $SED_I $f.tex \
+				-e 's/\\datethis/\\input editorsnote.tex/' \
+				-e 's/\(\\def\\botofcontents\).*/\1{\\hsize6.5in\\vskip 0pt plus 1filll\n  \\editorsnote\\readchanges\\bigskip\\noindent\\sc\\today\\ at \\hours}/' \
+				-e 's/\\input pdfwebtocfront/&\n\n\\def\\tocpages{2}/' ;;
+
+			bibtex | patgen | tangle | weave | refsort | twinx ) $SED_I $f.tex -e 's/\\date.*/\\input editorsnote\n\\def\\covernote{\\vbox{\\editorsnote\\readchanges\\par}}\n\\datecontentspage/' ;;
+
+			common | ctangle | cweave | ctie | tie ) $SED_I $f.tex \
+				-e 's/\\def\\covernote.*/\\input editorsnote.tex\n&/' \
+				-e 's/^}}/\\bigskip\\editorsnote\\readchanges\\par&/' ;;
+
+			* ) $SED_I $f.tex \
+				-e 's/\\def\\title{/\\input editorsnote.tex\n&/' \
+				-e 's/\\vbox{\\ninerm/&\\editorsnote\\readchanges\\bigskip/' ;;
+		esac
+	fi # $CHANGES
+
 	# shift table-of-contents pages to the front in PDF
 	if $PDFTOCFRONT && echo $f | grep -v -q -E 'ctwill|hitex'
+	then $SED_I $f.tex \
+		-e '0,/\\N[1{]/s/\\N[1{]/\\input pdfwebtocfront\n\n&/'
+	fi # $PDFTOCFRONT
+
+	if [ -n "$CHANGES" ] || $PDFTOCFRONT
 	then
-		$SED_I $f.tex -e '0,/\\N[1{]/s/\\N[1{]/\\input pdfwebtocfront\n\n&/'
-
-		if [ -n "$CHANGES" ]
-		then
-			# We add an Editor's Note and the list of changed
-			# sections on the ToC page.
-			cp $LOCALSTUFF/editorsnote.tex .
-
-			case $f in
-				mf ) $SED_I $f.tex -e 's/\\datethis/\\input editorsnote.tex\n\\def&{\\def\\startsection{\\leftline{\\sc\\today\\ at \\hours}\n  \\smallskip\\readchanges\\bigskip\n  \\let\\startsection=\\stsec\\stsec}}\n&/' ;;
-
-				# TeX and XeTeX grow significantly for TeX Live
-				# so there's enough room on the last ToC page.
-				pdftex | tex | xetex ) $SED_I $f.tex \
-					-e 's/\\datethis/\\input editorsnote.tex/' \
-					-e 's/\(\\def\\botofcontents\).*/\1{\\hsize6.5in\\vskip 0pt plus 1filll\n  \\editorsnote\\readchanges\\bigskip\\noindent\\sc\\today\\ at \\hours}/' \
-					-e 's/\\input pdfwebtocfront/&\n\n\\def\\tocpages{2}/' ;;
-
-				bibtex | patgen | tangle | weave | refsort | twinx ) $SED_I $f.tex -e 's/\\date.*/\\input editorsnote\n\\def\\covernote{\\vbox{\\editorsnote\\readchanges\\par}}\n\\datecontentspage/' ;;
-
-				common | ctangle | cweave | ctie | tie ) $SED_I $f.tex \
-					-e 's/\\def\\covernote.*/\\input editorsnote.tex\n&/' \
-					-e 's/^}}/\\bigskip\\editorsnote\\readchanges\\par&/' ;;
-
-				* ) $SED_I $f.tex \
-					-e 's/\\def\\title{/\\input editorsnote.tex\n&/' \
-					-e 's/\\vbox{\\ninerm/&\\editorsnote\\readchanges\\bigskip/' ;;
-			esac
-		fi # $CHANGES
-
 		# only XeTeX can process XETEX.WEB
 		if [ xetex = $f ]
 		then $XETEX $f # run XeTeX twice
 		else $TEX $f # run TeX twice
 		fi
-	fi # $PDFTOCFRONT
+	fi # $CHANGES or $PDFTOCFRONT
 
 	case $f in
 		xetex ) $XETEX $f ;; # only XeTeX can process XETEX.WEB
