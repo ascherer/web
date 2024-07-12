@@ -289,6 +289,12 @@ FI
 		mpost | mpmath* | mpstrings | tfmin ) $SED_I $f.tex -e 's/\\def\\title/\\datecontentspage\n\n&/' ;;
 	esac
 
+	# shift table-of-contents pages to the front in PDF
+	if $PDFTOCFRONT && echo $f | grep -v -q -E 'ctwill|hitex'
+	then $SED_I $f.tex \
+		-e '0,/\\N[1{]/s/\\N[1{]/\\input pdfwebtocfront\n\n&/'
+	fi # $PDFTOCFRONT
+
 	if [ -n "$CHANGES" ]
 	then
 		# We add an Editor's Note and the list of changed
@@ -317,23 +323,12 @@ FI
 		esac
 	fi # $CHANGES
 
-	# shift table-of-contents pages to the front in PDF
-	if $PDFTOCFRONT && echo $f | grep -v -q -E 'ctwill|hitex'
-	then $SED_I $f.tex \
-		-e '0,/\\N[1{]/s/\\N[1{]/\\input pdfwebtocfront\n\n&/'
-	fi # $PDFTOCFRONT
-
-	if [ -n "$CHANGES" ] || $PDFTOCFRONT
-	then
-		# only XeTeX can process XETEX.WEB
-		if [ xetex = $f ]
-		then $XETEX $f # run XeTeX twice
-		else $TEX $f # run TeX twice
-		fi
-	fi # $CHANGES or $PDFTOCFRONT
-
 	case $f in
-		xetex ) $XETEX $f ;; # only XeTeX can process XETEX.WEB
+		xetex ) # only XeTeX can process XETEX.WEB
+			if $PDFTOCFRONT || [ -n "$CHANGES" ]
+			then $XETEX $f # run XeTeX twice
+			fi
+			$XETEX $f ;;
 
 		ctwill ) # gives two different outcomes
 			if [ "$HITEX" = "$TEX" ] # sort mini-indexes
@@ -345,7 +340,10 @@ FI
 			fi
 			$TEX $f ;;
 
-		* ) $TEX $f ;;
+		* )	if $PDFTOCFRONT || [ -n "$CHANGES" ]
+			then $TEX $f # run TeX twice
+			fi
+			$TEX $f ;;
 	esac
 done
 
