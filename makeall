@@ -303,6 +303,7 @@ FI
 			# TeX and XeTeX grow significantly for TeX Live
 			# so there's enough room on the last ToC page.
 			pdftex | tex | xetex ) $SED_I $f.tex \
+				-e '/\\datethis/d' \
 				-e 's/\(\\def\\botofcontents\).*/\\input editorsnote.tex\n\1{\\hsize6.5in\\vskip 0pt plus 1filll\n  \\editorsnote\\readchanges\\bigskip\\noindent\\sc\\today\\ at \\hours}/' \
 				-e 's/\\input pdfwebtocfront/&\n\n\\def\\tocpages{2}/' ;;
 
@@ -323,6 +324,7 @@ FI
 			if [ "$HITEX" = "$TEX" ] # sort mini-indexes
 			then # directly in the TeX file
 				( ctwill-proofsort < $f.tex ) 1<> $f.tex
+				$SED_I $f.tex -e '/\\datethis/d'
 			else # in the TeX-created .ref file
 				$TEX $f
 				ctwill-refsort < $f.ref > $f.sref
