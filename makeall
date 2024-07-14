@@ -310,7 +310,7 @@ FI
 			bibtex | patgen | tangle | weave | refsort | twinx ) $SED_I $f.tex -e 's/\\date.*/\\input editorsnote\n\\def\\covernote{\\vbox{\\editorsnote\\readchanges\\par}}\n\\datecontentspage/' ;;
 
 			common | ctangle | cweave | ctie | tie ) $SED_I $f.tex \
-				-e 's/\\def\\covernote.*/\\input editorsnote.tex\n&/' \
+				-e 's/\\def\\covernote/\\input editorsnote.tex\n&/' \
 				-e 's/^}}/\\bigskip\\editorsnote\\readchanges\\par&/' ;;
 
 			* ) $SED_I $f.tex \
