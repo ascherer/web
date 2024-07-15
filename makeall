@@ -330,16 +330,12 @@ FI
 			fi
 			$TEX $f ;;
 
-		xetex ) # only XeTeX can process XETEX.WEB
+		* ) # run TeX twice
 			if $PDFTOCFRONT || [ -n "$CHANGES" ]
-			then $XETEX $f # run XeTeX twice
+			then # only XeTeX can process XETEX.WEB
+				[ xetex = $f ] && $XETEX $f || $TEX $f
 			fi
-			$XETEX $f ;;
-
-		* )	if $PDFTOCFRONT || [ -n "$CHANGES" ]
-			then $TEX $f # run TeX twice
-			fi
-			$TEX $f ;;
+			[ xetex = $f ] && $XETEX $f || $TEX $f ;;
 	esac
 done
 
