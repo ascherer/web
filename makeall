@@ -178,10 +178,9 @@ do
 	else # -z $CHANGES
 		case $f in
 			ctwill ) # apply tons of editorial changes to 'ctwill.w'
-				if [ "$HITEX" = "$TEX" ]
-				then ctie -m $f.w cweave.w $f-w2c.ch $f-hint.ch
-				else ctie -m $f.w cweave.w $f-w2c.ch $f-mini.ch
-				fi
+				[ "$HITEX" = "$TEX" ] &&
+					ctie -m $f.w cweave.w $f-w2c.ch $f-hint.ch ||
+					ctie -m $f.w cweave.w $f-w2c.ch $f-mini.ch
 				$CTWILL $f # prime the pump
 				$CTWILL $f ;; # get decent answers
 
