@@ -56,6 +56,12 @@
   \else Appendix~#1\fi}
 @z
 
+@x l.21
+\def\runninghead{{\tentt WEB} USER MANUAL}
+@y
+\def\runninghead{{\ninett WEB} USER MANUAL}
+@z
+
 @x l.34
 \vskip 15pt plus 3pt minus 3pt
 \noindent This memo describes how to write programs in the
@@ -161,10 +167,12 @@ The programs in Appendices \pdfURL{D}{weave.pdf} and \pdfURL{E}{tangle.pdf}
 will optionally keep statistics on
 @z
 
-@x l.990
+@x l.989
+\def\runninghead{APPENDIX A --- {\tentt WEB} FILE FORMAT}
 \section Appendix A.
 This excerpt from \.{WEAVE.WEB} produced modules 55--59 in Appendix~D.
 @y
+\def\runninghead{APPENDIX A --- {\ninett WEB} FILE FORMAT}
 \def\bkminfo{WEB file format}
 \section Appendix A.
 This excerpt from \.{WEAVE.WEB} produced modules 55--59 in
@@ -177,10 +185,12 @@ ASCII codes is $c_1c_2\ldots c_m$, its hash value will be
 ASCII codes is $c_1c_2\ldots c_n$, its hash value will be
 @z
 
-@x l.1062
+@x l.1061
+\def\runninghead{APPENDIX B --- TRANSLATION BY {\tentt WEAVE}}
 \section Appendix B.
 This excerpt from \.{WEAVE.TEX} corresponds to Appendix A.
 @y
+\def\runninghead{APPENDIX B --- TRANSLATION BY {\ninett WEAVE}}
 \def\bkminfo{Translations by WEAVE}
 \section Appendix B.
 This excerpt from \.{WEAVE.TEX} corresponds to \Appendix A.
@@ -198,9 +208,11 @@ ASCII codes is $c_1c_2\ldots c_n$, its hash value will be
 \U58.\fi
 @z
 
-@x l.1144
+@x l.1143
+\def\runninghead{APPENDIX C --- TRANSLATION BY {\tentt TANGLE}}
 \section Appendix C.
 @y
+\def\runninghead{APPENDIX C --- TRANSLATION BY {\ninett TANGLE}}
 \def\bkminfo{Translation by TANGLE}
 \section Appendix C.
 @z
