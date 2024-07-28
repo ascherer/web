@@ -82,19 +82,15 @@ Li\`ege, Service d'Informatique, Li\`ege, Belgium, 1973; 135
 @x l.180
 \yskip\item{1)} A \TeX\ part, containing explanatory material about what
 @y
-\yskip\itemitem{1)} A \TeX\ part, containing explanatory material about what
+\begingroup\parindent=2.5em
+\yskip\item{1)} A \TeX\ part, containing explanatory material about what
 @z
 
-@x l.183
-\item{2)} A definition part, containing macro definitions that serve as
+@x l.190
+that its structure is readily perceived.
 @y
-\itemitem{2)} A definition part, containing macro definitions that serve as
-@z
-
-@x l.187
-\item{3)} A \PASCAL\ part, containing a piece of the program that
-@y
-\itemitem{3)} A \PASCAL\ part, containing a piece of the program that
+that its structure is readily perceived.\par
+\endgroup
 @z
 
 @x l.304
@@ -122,6 +118,21 @@ outputs of \.{WEAVE} and \.{TANGLE} (see Appendix~C\null). Meta-comments
 @y
 outputs of \.{WEAVE} (see \Appendix B\null) and \.{TANGLE}
 (see \Appendix C\null). Meta-comments
+@z
+
+@x l.788
+\yskip\itemitem{a)}Comments in \PASCAL\ text should appear only after
+@y
+\yskip
+\begingroup\parindent=1.5em
+\itemitem{a)}Comments in \PASCAL\ text should appear only after
+@z
+
+@x l.796
+statements.
+@y
+statements.\par
+\endgroup
 @z
 
 @x l.895
