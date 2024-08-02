@@ -258,23 +258,35 @@ FI
 		glue ) $SED_I $f.tex -e "s/titlefalse/titletrue/" \
 			-e 's/\\def\\title{GLUE}/&\n\\pageno=\\contentspagenumber \\advance\\pageno by1\\relax/' ;;
 
+		# FIX: Metafont uses '\over' in several module names;
+		# this should appear correctly in the bookmarks, too.
+		mf ) if $NEW
+			then $SED_I $f.tex -e 's/\\def\\(/\\ifpdf\\sanitizecommand\\over{\/}\\fi\n\n&/' # )
+			fi ;;
+
 		# FIX: pdfTeX uses '\pdfTeX' in section names; these should
 		# appear correctly in the bookmarks, too.
-		pdftex ) if $NEW && [ tex != "$TEX" ] && [ "$HITEX" != "$TEX" ]
-			then $SED_I $f.tex -e 's/\\def\\pdfeTeX{pdf\\eTeX}/&\n\\sanitizecommand\\pdfTeX{pdfTeX}\n\\sanitizecommand\\eTeX{e-TeX}/'
+		pdftex ) if $NEW
+			then $SED_I $f.tex -e 's/\\def\\pdfeTeX{pdf\\eTeX}/&\n\\ifpdf\n\\sanitizecommand\\pdfTeX{pdfTeX}\n\\sanitizecommand\\eTeX{e-TeX}\n\\sanitizecommand\\over{\/}\n\\fi/'
 			fi ;;
 
 		# FIX: weave uses '\max' in name of module 173; this should
 		# appear correctly in the bookmarks, too.
-		weave ) if $NEW && [ tex != "$TEX" ] && [ "$HITEX" != "$TEX" ]
-			then $SED_I $f.tex -e 's/\\def\\({}/\\sanitizecommand\\max{max}\n&/' # )
+		weave ) if $NEW
+			then $SED_I $f.tex -e 's/\\def\\({}/\\ifpdf\\sanitizecommand\\max{max}\\fi\n&/' # )
 			fi ;;
 
 		# FIX: purge obsolete macros from XeTeX.
 		# FIX: XeTeX uses '\pdfTeX' from section 114, which is not
 		# changed and thus 'disappears'; repeat in preamble.
+		# FIX: apply '\sanitizecommand' for bookmarks.
 		xetex ) $SED_I $f.tex -e '/\\input xewebmac/d' \
-			-e 's/\\let\\maybe/\\def\\pdfTeX{pdf\\TeX}\n&/' ;;
+			-e 's/\\let\\maybe/\\def\\pdfTeX{pdf\\TeX}\n&/'
+			if $NEW
+			then
+				$SED_I $f.tex -e 's/\\def\\pdfTeX{pdf\\TeX}/&\n\\ifpdf\\sanitizecommand\\pdfTeX{pdfTeX}\\fi/' \
+				-e 's/\\def\\eTeX/\\ifpdf\n\\sanitizecommand\\eTeX{e-TeX}\n\\sanitizecommand\\over{\/}\n\\fi\n&/'
+			fi ;;
 
 		# timestamp on table-of-contents page or the first page
 		hitex | mp ) $SED_I $f.tex -e 's/\\def\\topofcontents/\\datethis\n\\emergencystretch=.1\\hsize\n&/' ;;
