@@ -261,7 +261,13 @@ FI
 		# FIX: Metafont uses '\over' in several module names;
 		# this should appear correctly in the bookmarks, too.
 		mf ) if $NEW
-			then $SED_I $f.tex -e 's/\\def\\(/\\ifpdf\\sanitizecommand\\over{\/}\\fi\n\n&/' # )
+			then $SED_I $f.tex -e 's/\\def\\(/\\ifpdf\n\\sanitizecommand\\MF{Metafont}\n\\sanitizecommand\\over{\/}\n\\sanitizecommand\\langle{<}\n\\sanitizecommand\\rangle{>}\n\\fi\n\n&/' # )
+			fi ;;
+
+		# FIX: MMFT uses '\pb' in several module names;
+		# this should appear correctly in the bookmarks, too.
+		mft ) if $NEW
+			then $SED_I $f.tex -e 's/\\def\\pb.*/&\n\\ifpdf\\sanitizecommand\\pb{\|...\|}\\fi/'
 			fi ;;
 
 		# FIX: pdfTeX uses '\pdfTeX' in section names; these should
