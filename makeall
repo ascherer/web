@@ -254,6 +254,12 @@ FI
 		bibtex ) $SED_I $f.tex -e 's/\\def\\titlepage{F}/\\titletrue/'
 			[ -z "$CHANGES" ] && $SED_I $f.tex -e "71,78d" ;;
 
+		# FIX: GFtoDVI uses 'Metafont' in a module name;
+		# this should appear correctly in the bookmarks, too.
+		gftodvi ) if $NEW
+			then $SED_I $f.tex -e 's/\\def\\(/\\ifpdf\\sanitizecommand\\MF{Metafont}\\fi\n\n&/' # )
+			fi ;;
+
 		# FIX: 'glue.web' obviously uses an old 'webmac.tex'.
 		glue ) $SED_I $f.tex -e "s/titlefalse/titletrue/" \
 			-e 's/\\def\\title{GLUE}/&\n\\pageno=\\contentspagenumber \\advance\\pageno by1\\relax/' ;;
