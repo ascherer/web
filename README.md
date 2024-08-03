@@ -38,4 +38,4 @@ file), and `hitex` creates HINT output that can be viewed with the
 
 The `pwebmac` package is free software and may be used without constraints.
 
-This is version **4.12** of the `pwebmac` package — 2024-05-24, Andreas Scherer.
+This is version **5.0** of the `pwebmac` package — 2024-08-03, Andreas Scherer.
