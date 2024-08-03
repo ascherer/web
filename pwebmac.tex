@@ -435,7 +435,7 @@
   \def\:{\par\hangindent 2em}\let\*=*\let\.=\ttentry
   \ifpdf \def\outsecname{Names of the sections} \let\Xpdf\X
   \ifpdflua \pdfdest name {NOS} fith
-    \ifnum \the\countNOS>0 \xdef\modno{\the\countNOS} \fi
+    \ifnum \countNOS>0 \xdef\modno{\the\countNOS} \fi
     \pdfoutline goto name {NOS} count -\modno {\outsecname}
   \else \special{pdf: outline -1 << /Title (\outsecname)
       /Dest [ @thispage /FitH @ypos ] >>}\fi
