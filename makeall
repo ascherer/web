@@ -186,7 +186,12 @@ do
 
 			c* | refsort | twinx | tie | hitex ) $CWEAVE $f ;;
 
-			mp | mpost | mpmath* | mpstrings | tfmin )
+			mp ) CWEBINPUTS=.: $CWEAVE $f
+				[ ! tex = $TEX ] && $SED_I $f.idx \
+					-e 's/\(, \(\\\[\)*\)\([0-9][0-9]*\)/\1\\pdflink{\3}/g' \
+					-e 's/^\(\\\[\)*\([0-9][0-9]*\)/\1\\pdflink{\2}/' ;;
+
+			mpost | mpmath* | mpstrings | tfmin )
 				CWEBINPUTS=.: $CWEAVE $f ;;
 
 			twill ) WEBINPUTS=.:$WEBINPUTS \
