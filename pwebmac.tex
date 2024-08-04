@@ -108,8 +108,7 @@
 \let\pdfoutput=\outputmode
 \fi % end of LuaTeX->pdfTeX redirection macros
 
-% Common macros for \ifpdf and \ifhint
-\ifacrohint
+\ifacrohint % Common macros for \ifpdf and \ifhint
 \def\pdfnote#1.{\setbox0=\hbox{\toksA={#1.}\toksB={}\maketoks}\the\toksA}
 \def\firstsecno#1.{\setbox0=\hbox{\toksA={#1.}\toksB={}%
     \def\makenote{\addtokens\toksB{\the\toksC}\def\makenote{\toksD={}
