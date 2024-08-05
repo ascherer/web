@@ -62,7 +62,7 @@ fi
 
 export WEBINPUTS CWEBINPUTS
 
-getopt -T &&
+getopt -T && # Check for Linux-getopt with extensions
 	OPTS=$(getopt $SHRTOPTS $*) ||
 	OPTS=$(getopt -n $PROG -o $SHRTOPTS -l $LONGOPTS -- "$@")
 
