@@ -271,7 +271,7 @@ FI
 		mf ) $NEW && $SED_I $f.tex \
 			-e 's/\\def\\(/\\ifpdf\n\\sanitizecommand\\MF{Metafont}\n\\sanitizecommand\\over{\/}\n\\sanitizecommand\\langle{<}\n\\sanitizecommand\\rangle{>}\n\\fi\n\n&/' ;; # )
 
-		# FIX: MMFT uses '\pb' in several module names;
+		# FIX: MFT uses '\pb' in several module names;
 		# this should appear correctly in the bookmarks, too.
 		mft ) $NEW && $SED_I $f.tex \
 			-e 's/\\def\\pb.*/&\n\\ifpdf\\sanitizecommand\\pb{\|...\|}\\fi/' ;;
