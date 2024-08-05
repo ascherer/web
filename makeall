@@ -181,7 +181,8 @@ do
 				$CTWILL $f # prime the pump
 				$CTWILL $f ;; # get decent answers
 
-			c* | refsort | twinx | tie | hitex ) $CWEAVE $f || true ;;
+			c* | refsort | twinx | tie ) $CWEAVE $f ;;
+			hitex ) $CWEAVE $f || true ;;
 
 			mp ) CWEBINPUTS=.: $CWEAVE $f
 				[ ! tex = "$TEX" ] && $SED_I $f.idx \
