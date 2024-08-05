@@ -111,7 +111,7 @@ case "$TEX" in
 		VALID=true ;;
 
 	* ) # plain TeX and XeTeX use different approaches
-		[ "tex" = "$TEX" ] && XETEX="$XETEX --no-pdf"
+		[ tex = "$TEX" ] && XETEX="$XETEX --no-pdf"
 			# XeTeX's extended DVI format
 		VALID=false ;;
 esac
@@ -224,7 +224,7 @@ s/\\def\\title{/\\datethis\n\\emergencystretch=.1\\hsize\n&/
 FI
 				# active links in PDF outlines/bookmarks
 				cat > texmf-pdf.patch1 << FI
-  \ifpdf{\toksF={}\makeoutlinetoks{[#2] #3}\outlinedone\outlinedone}\fi
+  \ifpdf{\makeoutlinetoks{[#2] #3}\outlinedone}\fi
 FI
 				cat >> texmf-pdf.sed << 'FI'
 /\\outer\\def\\N/r texmf-pdf.patch1
@@ -261,37 +261,32 @@ FI
 
 		# FIX: GFtoDVI uses 'Metafont' in a module name;
 		# this should appear correctly in the bookmarks, too.
-		gftodvi ) if $NEW
-			then $SED_I $f.tex -e 's/\\def\\(/\\ifpdf\\sanitizecommand\\MF{Metafont}\\fi\n\n&/' # )
-			fi ;;
+		gftodvi ) [ $NEW ] && $SED_I $f.tex \
+			-e 's/\\def\\(/\\ifpdf\\sanitizecommand\\MF{Metafont}\\fi\n\n&/' ;; # )
 
 		# FIX: 'glue.web' obviously uses an old 'webmac.tex'.
-		glue ) $SED_I $f.tex -e "s/titlefalse/titletrue/" \
+		glue ) $SED_I $f.tex -e 's/titlefalse/titletrue/' \
 			-e 's/\\def\\title{GLUE}/&\n\\pageno=\\contentspagenumber \\advance\\pageno by1\\relax/' ;;
 
 		# FIX: Metafont uses '\over' in several module names;
 		# this should appear correctly in the bookmarks, too.
-		mf ) if $NEW
-			then $SED_I $f.tex -e 's/\\def\\(/\\ifpdf\n\\sanitizecommand\\MF{Metafont}\n\\sanitizecommand\\over{\/}\n\\sanitizecommand\\langle{<}\n\\sanitizecommand\\rangle{>}\n\\fi\n\n&/' # )
-			fi ;;
+		mf ) [ $NEW ] && $SED_I $f.tex \
+			-e 's/\\def\\(/\\ifpdf\n\\sanitizecommand\\MF{Metafont}\n\\sanitizecommand\\over{\/}\n\\sanitizecommand\\langle{<}\n\\sanitizecommand\\rangle{>}\n\\fi\n\n&/' ;; # )
 
 		# FIX: MMFT uses '\pb' in several module names;
 		# this should appear correctly in the bookmarks, too.
-		mft ) if $NEW
-			then $SED_I $f.tex -e 's/\\def\\pb.*/&\n\\ifpdf\\sanitizecommand\\pb{\|...\|}\\fi/'
-			fi ;;
+		mft ) [ $NEW ] && $SED_I $f.tex \
+			-e 's/\\def\\pb.*/&\n\\ifpdf\\sanitizecommand\\pb{\|...\|}\\fi/' ;;
 
 		# FIX: pdfTeX uses '\pdfTeX' in section names; these should
 		# appear correctly in the bookmarks, too.
-		pdftex ) if $NEW
-			then $SED_I $f.tex -e 's/\\def\\pdfeTeX{pdf\\eTeX}/&\n\\ifpdf\n\\sanitizecommand\\pdfTeX{pdfTeX}\n\\sanitizecommand\\eTeX{e-TeX}\n\\sanitizecommand\\over{\/}\n\\fi/'
-			fi ;;
+		pdftex ) [ $NEW ] && $SED_I $f.tex \
+			-e 's/\\def\\pdfeTeX{pdf\\eTeX}/&\n\\ifpdf\n\\sanitizecommand\\pdfTeX{pdfTeX}\n\\sanitizecommand\\eTeX{e-TeX}\n\\sanitizecommand\\over{\/}\n\\fi/' ;;
 
 		# FIX: weave uses '\max' in name of module 173; this should
 		# appear correctly in the bookmarks, too.
-		weave ) if $NEW
-			then $SED_I $f.tex -e 's/\\def\\({}/\\ifpdf\\sanitizecommand\\max{max}\\fi\n&/' # )
-			fi ;;
+		weave ) [ $NEW ] && $SED_I $f.tex \
+			-e 's/\\def\\({}/\\ifpdf\\sanitizecommand\\max{max}\\fi\n&/' ;; # )
 
 		# FIX: purge obsolete macros from XeTeX.
 		# FIX: XeTeX uses '\pdfTeX' from section 114, which is not
@@ -299,11 +294,9 @@ FI
 		# FIX: apply '\sanitizecommand' for bookmarks.
 		xetex ) $SED_I $f.tex -e '/\\input xewebmac/d' \
 			-e 's/\\let\\maybe/\\def\\pdfTeX{pdf\\TeX}\n&/'
-			if $NEW
-			then
-				$SED_I $f.tex -e 's/\\def\\pdfTeX{pdf\\TeX}/&\n\\ifpdf\\sanitizecommand\\pdfTeX{pdfTeX}\\fi/' \
-				-e 's/\\def\\eTeX/\\ifpdf\n\\sanitizecommand\\eTeX{e-TeX}\n\\sanitizecommand\\over{\/}\n\\fi\n&/'
-			fi ;;
+			[ $NEW ] && $SED_I $f.tex \
+				-e 's/\\def\\pdfTeX{pdf\\TeX}/&\n\\ifpdf\\sanitizecommand\\pdfTeX{pdfTeX}\\fi/' \
+				-e 's/\\def\\eTeX/\\ifpdf\n\\sanitizecommand\\eTeX{e-TeX}\n\\sanitizecommand\\over{\/}\n\\fi\n&/' ;;
 
 		# timestamp on table-of-contents page or the first page
 		hitex | mp ) $SED_I $f.tex -e 's/\\def\\topofcontents/\\datethis\n\\emergencystretch=.1\\hsize\n&/' ;;
