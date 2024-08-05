@@ -261,7 +261,7 @@ FI
 
 		# FIX: GFtoDVI uses 'Metafont' in a module name;
 		# this should appear correctly in the bookmarks, too.
-		gftodvi ) [ $NEW ] && $SED_I $f.tex \
+		gftodvi ) $NEW && $SED_I $f.tex \
 			-e 's/\\def\\(/\\ifpdf\\sanitizecommand\\MF{Metafont}\\fi\n\n&/' ;; # )
 
 		# FIX: 'glue.web' obviously uses an old 'webmac.tex'.
@@ -270,22 +270,22 @@ FI
 
 		# FIX: Metafont uses '\over' in several module names;
 		# this should appear correctly in the bookmarks, too.
-		mf ) [ $NEW ] && $SED_I $f.tex \
+		mf ) $NEW && $SED_I $f.tex \
 			-e 's/\\def\\(/\\ifpdf\n\\sanitizecommand\\MF{Metafont}\n\\sanitizecommand\\over{\/}\n\\sanitizecommand\\langle{<}\n\\sanitizecommand\\rangle{>}\n\\fi\n\n&/' ;; # )
 
 		# FIX: MMFT uses '\pb' in several module names;
 		# this should appear correctly in the bookmarks, too.
-		mft ) [ $NEW ] && $SED_I $f.tex \
+		mft ) $NEW && $SED_I $f.tex \
 			-e 's/\\def\\pb.*/&\n\\ifpdf\\sanitizecommand\\pb{\|...\|}\\fi/' ;;
 
 		# FIX: pdfTeX uses '\pdfTeX' in section names; these should
 		# appear correctly in the bookmarks, too.
-		pdftex ) [ $NEW ] && $SED_I $f.tex \
+		pdftex ) $NEW && $SED_I $f.tex \
 			-e 's/\\def\\pdfeTeX{pdf\\eTeX}/&\n\\ifpdf\n\\sanitizecommand\\pdfTeX{pdfTeX}\n\\sanitizecommand\\eTeX{e-TeX}\n\\sanitizecommand\\over{\/}\n\\fi/' ;;
 
 		# FIX: weave uses '\max' in name of module 173; this should
 		# appear correctly in the bookmarks, too.
-		weave ) [ $NEW ] && $SED_I $f.tex \
+		weave ) $NEW && $SED_I $f.tex \
 			-e 's/\\def\\({}/\\ifpdf\\sanitizecommand\\max{max}\\fi\n&/' ;; # )
 
 		# FIX: purge obsolete macros from XeTeX.
@@ -294,7 +294,7 @@ FI
 		# FIX: apply '\sanitizecommand' for bookmarks.
 		xetex ) $SED_I $f.tex -e '/\\input xewebmac/d' \
 			-e 's/\\let\\maybe/\\def\\pdfTeX{pdf\\TeX}\n&/'
-			[ $NEW ] && $SED_I $f.tex \
+			$NEW && $SED_I $f.tex \
 				-e 's/\\def\\pdfTeX{pdf\\TeX}/&\n\\ifpdf\\sanitizecommand\\pdfTeX{pdfTeX}\\fi/' \
 				-e 's/\\def\\eTeX/\\ifpdf\n\\sanitizecommand\\eTeX{e-TeX}\n\\sanitizecommand\\over{\/}\n\\fi\n&/' ;;
 
