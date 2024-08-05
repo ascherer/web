@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 PROG=$(basename $0)
 
@@ -62,12 +62,9 @@ fi
 
 export WEBINPUTS CWEBINPUTS
 
-getopt -T >/dev/null
-
-if [ $? -eq 4 ] # Check for Linux-getopt with extensions
-then OPTS=$(getopt -n $PROG -o $SHRTOPTS -l $LONGOPTS -- "$@")
-else OPTS=$(getopt $SHRTOPTS $*)
-fi
+getopt -T &&
+	OPTS=$(getopt $SHRTOPTS $*) ||
+	OPTS=$(getopt -n $PROG -o $SHRTOPTS -l $LONGOPTS -- "$@")
 
 if [ $? -eq 0 ] # Check return code from getopt
 then eval set -- $OPTS
@@ -184,7 +181,7 @@ do
 				$CTWILL $f # prime the pump
 				$CTWILL $f ;; # get decent answers
 
-			c* | refsort | twinx | tie | hitex ) $CWEAVE $f ;;
+			c* | refsort | twinx | tie | hitex ) $CWEAVE $f || true ;;
 
 			mp ) CWEBINPUTS=.: $CWEAVE $f
 				[ ! tex = "$TEX" ] && $SED_I $f.idx \
