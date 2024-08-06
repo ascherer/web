@@ -11,7 +11,7 @@ Test driver for 'pwebmac.tex' in combination with various TeX engines.
 Produce TeX output in DVI, PDF or HINT format from a set of C/WEB programs
 included in the 'TeX Live' source tree.
 
-Options are (--long options only with GNU getopt):
+Options are (--long options only with Linux-getopt):
 	-c, --changes		Apply change file to C/WEB source
 	-f, --files STRING	Process only subset of C/WEB programs
 	-h, --help		Print this help message and exit
