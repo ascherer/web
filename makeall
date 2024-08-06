@@ -62,7 +62,7 @@ fi
 
 export WEBINPUTS CWEBINPUTS
 
-getopt -T >/dev/null && true
+getopt -T >/dev/null && true # keep going
 
 if [ $? -eq 4 ] # Check for Linux-getopt with extensions
 then OPTS=$(getopt -n $PROG -o $SHRTOPTS -l $LONGOPTS -- "$@")
@@ -185,7 +185,7 @@ do
 				$CTWILL $f ;; # get decent answers
 
 			c* | refsort | twinx | tie ) $CWEAVE $f ;;
-			hitex ) $CWEAVE $f || true ;;
+			hitex ) $CWEAVE $f || true ;; # lots of unused sections
 
 			mp ) CWEBINPUTS=.: $CWEAVE $f
 				[ ! tex = "$TEX" ] && $SED_I $f.idx \
@@ -211,7 +211,7 @@ do
 		# timestamp on table-of-contents page or the first page
 		case $f in
 			bibtex | patgen | tangle | weave | twill )
-				$SED_I $f.tex -e 's/\\def\\title{/\\datecontentspage\n&/' ;;
+				$SED_I $f.tex -e 's/\\def\\title{/\\datecontentspage\n&/' ;; # }
 
 			mf | tex | pdftex | xetex )
 				# amend '\N' redefinition for PDF outlines in
@@ -239,7 +239,7 @@ FI
 /\\edef\\next/r texmf-pdf.patch2
 FI
 				$SED_I $f.tex -f texmf-pdf.sed
-				rm texmf-pdf.* ;;
+				rm -f texmf-pdf.* ;;
 
 			* ) $SED_I $f.tex -e '/\\def\\botofcontents/d' \
 				-e 's/  \\centerline{\(\\hsize\)/\\def\\covernote{\1/' \
@@ -301,7 +301,7 @@ FI
 		# timestamp on table-of-contents page or the first page
 		hitex | mp ) $SED_I $f.tex -e 's/\\def\\topofcontents/\\datethis\n\\emergencystretch=.1\\hsize\n&/' ;;
 		common | ctangle | cweave | ctie | tie ) $SED_I $f.tex -e 's/\\def\\botofcontents/\\datethis\n&/' ;;
-		mpost | mpmath* | mpstrings | tfmin ) $SED_I $f.tex -e 's/\\def\\title/\\datecontentspage\n\n&/' ;;
+		mpost | mpmath* | mpstrings | tfmin ) $SED_I $f.tex -e 's/\\def\\title{/\\datecontentspage\n\n&/' ;; # }
 	esac
 
 	# shift table-of-contents pages to the front in PDF
