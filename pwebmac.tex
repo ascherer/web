@@ -89,8 +89,7 @@
 \newif\ifpdflua \ifluatex\pdfluatrue\fi \ifpdftex\pdfluatrue\fi
 \ifpdflua % pdfTeX and luaTeX produce PDF output if \pdfoutput>0 (default)
   \def\Black{\pdfliteral{0 g 0 G}}  % use rgb colors for direct PDF output too
-  \def\Blue{\pdfliteral{\pdflinkcolor\space rg \pdflinkcolor\space RG}}
-\fi
+  \def\Blue{\pdfliteral{\pdflinkcolor\space rg \pdflinkcolor\space RG}} \fi
 
 \ifluatex % LuaTeX is almost like pdfTeX
 \protected\def\pdfliteral   {\pdfextension literal}
@@ -108,7 +107,7 @@
 \let\pdfoutput=\outputmode
 \fi % end of LuaTeX->pdfTeX redirection macros
 
-\ifacrohint % Common macros for \ifpdf and \ifhint
+\ifacrohint % Common macros for \ifpdf and \ifhint for \pdflink's
 \def\pdfnote#1.{\setbox0=\hbox{\toksA={#1.}\toksB={}\maketoks}\the\toksA}
 \def\firstsecno#1.{\setbox0=\hbox{\toksA={#1.}\toksB={}%
     \def\makenote{\addtokens\toksB{\the\toksC}\def\makenote{\let\space\empty
@@ -410,10 +409,24 @@
   \message{Index:}
   \parskip 0pt plus .5pt
   \outer\def\:##1, ##2.{\par\hangindent2em\noindent##1:\kern1em
-    \ifacrohint\pdfnote##2.\else##2\fi.} % index entry
+    \scan##2!.} % index entry
   \let\ttentry=\. \def\.##1{\ttentry{##1\kern.2em}} % give \tt a little room
-  \def\[##1]{$\underline{##1}$} % underlined index item
-  \rm \rightskip0pt plus 2.5em \tolerance 10000 \let\*=\lapstar
+  \def\[##1]{$\underline{\scan##1!}$\scan} % underlined index item
+  \ifacrohint\def\digits{\pdflink{\the\countA}\scan}
+  \else\def\digits{{\the\countA}\scan}\fi
+  \def\scan##1{\begingroup
+    \ifx!##1% exit on exclamation point
+    \else\ifx,##1,\space\aftergroup\scan %insert,\space}\scan ...
+    \else\ifx\[##1\aftergroup##1%{% insert }\[...
+    \else\ifx\*##1\aftergroup\lapstar\aftergroup\scan %insert }\lapstar\scan ...
+    \else\ifnum`##1>`9##1\aftergroup\scan %{% insert #1}\scan ...
+    \else\ifnum`##1<`0##1\aftergroup\scan %{% insert #1}\scan ...
+    \else
+      \afterassignment\digits \aftergroup\countA
+      \aftergroup##1%{% insert }\countA=#1...\digits ...
+    \fi\fi\fi\fi\fi \fi
+    \endgroup}
+  \rm \rightskip0pt plus 2.5em \tolerance 10000
   \hyphenpenalty 10000 \parindent0pt}
 \def\fin{\par\vfill\eject % this is done when we are ending the index
   \ifpagesaved\null\vfill\eject\fi % output a null index column
