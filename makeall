@@ -313,7 +313,7 @@ FI
 		cp $LOCALSTUFF/editorsnote.tex .
 
 		case $f in
-			mf ) $SED_I $f.tex -e 's/\\datethis/\\input editorsnote.tex\n\\def&{\\def\\startsection{\\leftline{\\sc\\today\\ at \\hours}\n  \\smallskip\\readchanges\\bigskip\n  \\let\\startsection=\\stsec\\stsec}}\n&/' ;;
+			mf ) $SED_I $f.tex -e 's/\\datethis/\\input editorsnote.tex\n\\def&{\\def\\startsection{\\leftline{\\sc\\today\\ at \\hours}\n  \\medskip\n  \\editorsnote\\readchanges\\bigskip\n  \\let\\startsection=\\stsec\\stsec}}\n&/' ;;
 
 			# TeX and XeTeX grow significantly for TeX Live
 			# so there's enough room on the last ToC page.
