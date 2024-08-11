@@ -191,8 +191,8 @@ do
 				CWEBINPUTS=.: $CWEAVE $f ;;
 
 			twill ) WEBINPUTS=.:$WEBINPUTS \
-				tie -m $f.web weave.web weave.ch weav-$f.ch
-				WEBINPUTS=.: $WEAVE $f ;;
+				tie -c $f.ch weave.web weave.ch weav-$f.ch
+				WEBINPUTS=.:$WEBINPUTS $WEAVE weave $f $f ;;
 
 			pdftex | weave ) WEBINPUTS=.:$WEBINPUTS $WEAVE $f ;;
 
@@ -306,7 +306,7 @@ FI
 		-e '0,/\\N[1{]/s/\\N[1{]/\\input pdfwebtocfront\n\n&/'
 	fi # $PDFTOCFRONT
 
-	if [ -n "$CHANGES" ]
+	if [ -n "$CHANGES" ] || [ twill = "$f" ]
 	then
 		# We add an Editor's Note and the list of changed
 		# sections on the ToC page.
@@ -327,6 +327,9 @@ FI
 			common | ctangle | cweave | ctie | tie ) $SED_I $f.tex \
 				-e 's/\\def\\covernote/\\input editorsnote.tex\n&/' \
 				-e 's/^}}/\\bigskip\\editorsnote\\readchanges\\par&/' ;;
+
+			twill ) $SED_I $f.tex \
+				-e 's/\\datecontentspage/\\input editorsnote.tex\n\\def\\covernote{\\vbox{\\editorsnote\\readchanges\\par}}\n&/' ;;
 
 			* ) $SED_I $f.tex \
 				-e 's/\\def\\title{/\\input editorsnote.tex\n&/' \
