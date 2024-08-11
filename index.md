@@ -61,7 +61,9 @@ directly.
   [`WEBMAN`](web/webman.pdf) \|
   [`WEAVE`](web/weave.pdf)+[`chg`](web/weave-changes.pdf) \|
   [`TANGLE`](web/tangle.pdf)+[`chg`](web/tangle-changes.pdf) \|
-  [`TWILL`](web/twill.pdf) \]
+  [`TWILL`](web/twill.pdf)[^1] \]
+
+[^1]: `TWILL` is presented here as a changed variant of `WEAVE`.
 
 ## Complementary WEB programs by other authors
 
@@ -81,13 +83,20 @@ directly.
   [`COMMON`](cweb/common.pdf)+[`chg`](cweb/common-changes.pdf) \|
   [`CTANGLE`](cweb/ctangle.pdf)+[`chg`](cweb/ctangle-changes.pdf) \|
   [`CWEAVE`](cweb/cweave.pdf)+[`chg`](cweb/cweave-changes.pdf) \|\
-  [`CTWILL`](cweb/ctwill.pdf) \|
+  [`CTWILL`](cweb/ctwill.pdf)[^2] \|
   [`REFSORT`](cweb/refsort.pdf)+[`chg`](cweb/refsort-changes.pdf) \|
   [`TWINX`](cweb/twinx.pdf)+[`chg`](cweb/twinx-changes.pdf) \]
 * `ctie/` \[ [`CTIE`](ctie/ctie.pdf)+[`chg`](ctie/ctie-changes.pdf) \]
 * `tie/` \[ [`TIE`](tie/tie.pdf)+[`chg`](tie/tie-changes.pdf) \]
 * `hitex/` \[ [`HiTeX`](hitex/hitex.pdf) \]
-* `mp/` \[ [`MP`](mp/mp.pdf) \| [`MPOST`](mp/mpost.pdf) \]
+* `mp/` \[ [`MP`](mp/mp.pdf) \| [`MPOST`](mp/mpost.pdf) \][^3]
+
+[^2]: `CTWILL` is presented here in its own format with “mini-indexes” for
+  every two consecutive pages.
+
+[^3]: `MP` and `MPOST` have received quite a few changes “behind the scenes” in
+  order to present them in this collection; see project
+  [`mplibdir`](https://github.com/ascherer/mplibdir) for details.
 
 ## Errata for “Computers & Typesetting” by Donald E.\ Knuth
 
@@ -109,4 +118,4 @@ directly.
 
 ## Happy C/WEB Programming!
 
-2024-07-09 Andreas Scherer
+2024-08-11 Andreas Scherer
