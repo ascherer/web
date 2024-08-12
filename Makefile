@@ -154,3 +154,7 @@ clean:
 	  *.log *.dvi *.toc *.idx *.scn *.pdf *.hnt core weave tangle twill \
 	  $(TCHANGES) $(WCHANGES) $(TTCHANGES) \
 	  gftodvi gftodvi.pas gftodvi.tex
+
+# Package 'pwebmac' for CTAN: https://ctan.org/pkg/pwebmac
+ctan:
+	git archive -o ~/pwebmac-5.0.zip --prefix=pwebmac/ ctan-20240812
