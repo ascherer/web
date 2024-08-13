@@ -118,4 +118,4 @@ directly.
 
 ## Happy C/WEB Programming!
 
-2024-08-11 Andreas Scherer
+\today—Andreas Scherer
