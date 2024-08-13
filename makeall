@@ -137,8 +137,8 @@ do
 		pdftex ) # Fix several 'Overfull \hbox'es
 			tie -m $f.web $f.web $LOCALSTUFF/$f.ch ;;
 
-		mp | mpost | mpmath* | mpstrings | tfmin )
-			# Beautifications for MetaPost
+		hitex | mp | mpost | mpmath* | mpstrings | tfmin )
+			# Beautifications for HiTeX and MetaPost
 			tie -m $f.w $f.w $LOCALSTUFF/$f.ch ;;
 
 		weave | twill )
@@ -185,7 +185,9 @@ do
 				$CTWILL $f ;; # get decent answers
 
 			c* | refsort | twinx | tie ) $CWEAVE $f ;;
-			hitex ) $CWEAVE $f || true ;; # lots of unused sections
+
+			hitex ) # lots of unused sections
+				CWEBINPUTS=.: $CWEAVE $f || true ;;
 
 			mp | mpost | mpmath* | mpstrings | tfmin )
 				CWEBINPUTS=.: $CWEAVE $f ;;
