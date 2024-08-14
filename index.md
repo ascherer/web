@@ -88,13 +88,17 @@ directly.
   [`TWINX`](cweb/twinx.pdf)+[`chg`](cweb/twinx-changes.pdf) \]
 * `ctie/` \[ [`CTIE`](ctie/ctie.pdf)+[`chg`](ctie/ctie-changes.pdf) \]
 * `tie/` \[ [`TIE`](tie/tie.pdf)+[`chg`](tie/tie-changes.pdf) \]
-* `hitex/` \[ [`HiTeX`](hitex/hitex.pdf) \]
-* `mp/` \[ [`MP`](mp/mp.pdf) \| [`MPOST`](mp/mpost.pdf) \][^3]
+* `hitex/` \[ [`HiTeX`](hitex/hitex.pdf)[^3] \]
+* `mp/` \[ [`MP`](mp/mp.pdf) \| [`MPOST`](mp/mpost.pdf) \][^4]
 
 [^2]: `CTWILL` is presented here in its own format with “mini-indexes” for
   every two consecutive pages.
 
-[^3]: `MP` and `MPOST` have received quite a few changes “behind the scenes” in
+[^3]: `HiTeX` has received quite a few changes “behind the scenes” in
+  order to present it in this collection; see project
+  [`web`](https://github.com/ascherer/web) for details.
+
+[^4]: `MP` and `MPOST` have received quite a few changes “behind the scenes” in
   order to present them in this collection; see project
   [`mplibdir`](https://github.com/ascherer/mplibdir) for details.
 
