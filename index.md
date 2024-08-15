@@ -10,9 +10,7 @@ urlcolor: blue
 \raggedright
 \vspace{-2\baselineskip}
 
-## Introduction
-
-Welcome to “All Things `WEB`” in \TeX\ Live.
+## Welcome to “All Things `WEB`”
 
 Here you find the documented source code of all major `WEB` and `CWEB` programs
 in readable format.  With the exception of `XeTeX`, all documents are in the
