@@ -1,5 +1,8 @@
 ---
 title: C/WEB programs in \TeX\ Live
+date: \today
+author: Andreas Scherer
+
 colorlinks: true
 filecolor: blue
 urlcolor: blue
@@ -121,5 +124,3 @@ directly.
   * [Computers & Typesetting, 31\ January\ 2021](errata/errata.pdf)
 
 ## Happy C/WEB Programming!
-
-\today—Andreas Scherer
