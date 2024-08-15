@@ -446,9 +446,8 @@ then
 	# Notes to self:
 	# (1) Create a user-friendly central entrypoint with
 	#     (a) pandoc index.md -o index.pdf
-	#     (b) pandoc index.md -o index.tex;
-	#         pandoc index.tex -s -o index.html \
-	#           --metadata title="C/WEB programs in TeX Live";
+	#     (b) pandoc index.md -s -o index.tex
+	#         pandoc index.tex -s -o index.html
 	#         rm index.tex
 	# (2) Prepare a super-tarball from all the contents of these
 	#     individual tarballs (42/53 and 34/54) with either of
