@@ -118,7 +118,7 @@ esac
 
 # Valid PDF output from 'pdftex' and 'luatex': In 'pwebmac.tex' set '\countD'
 # to the actual number of @<named modules@>, not the number of all sections.
-if $VALID && { [ pdftex = "$TEX" ] || [ luatex = "$TEX" ]; }
+if $VALID
 then
 	NEW=true # PDF output requires 'pwebmac.tex'
 	TEX="$TEX --shell-escape"
@@ -186,10 +186,7 @@ do
 
 			c* | refsort | twinx | tie ) $CWEAVE $f ;;
 
-			hitex ) # lots of unused sections
-				CWEBINPUTS=.: $CWEAVE $f || true ;;
-
-			mp | mpost | mpmath* | mpstrings | tfmin )
+			hitex | mp | mpost | mpmath* | mpstrings | tfmin )
 				CWEBINPUTS=.: $CWEAVE $f ;;
 
 			twill ) WEBINPUTS=.:$WEBINPUTS \
@@ -306,7 +303,7 @@ FI
 	if $PDFTOCFRONT && echo $f | grep -v -q -E 'ctwill|hitex'
 	then $SED_I $f.tex \
 		-e '0,/\\N[1{]/s/\\N[1{]/\\input pdfwebtocfront\n\n&/'
-	fi # $PDFTOCFRONT
+	fi
 
 	if [ -n "$CHANGES" ] || [ twill = "$f" ]
 	then

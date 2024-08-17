@@ -1861,3 +1861,34 @@ the \TeX\ Live distribution and slightly modified.
 @y
 #define GET_FILE_STAT @[stat(fname,&file_stat)@]
 @z
+
+@x [132.1897] l.35504
+@* Index.
+@y
+@* Unused Material.
+
+@c
+#if 0
+@<Append the display...@>@;
+@<Append the glue or equation number following...@>@;
+@<Append the glue or equation number preceding...@>@;
+@<Calculate the natural width...@>@;
+@<Cases for |out_what|@>@;
+@<Declare the procedure called |fire_up|@>@;
+@<Determine the displacement...@>@;
+@<Determine the value of |height...@>@;
+@<Examine node |p| in the hlist...@>@;
+@<Examine node |p| in the vlist...@>@;
+@<Finish issuing a diagnostic message for an overfull or underfull hbox@>@;
+@<Finish issuing a diagnostic message for an overfull or underfull vbox@>@;
+@<Finish the \.{DVI}...@>@;
+@<Generate the MD5 hash for a file@>@;
+@<Generate the MD5 hash for a string@>@;
+@<Local variables for finish...@>@;
+@<Move node |p|...@>@;
+@<Ship box...@>@;
+@<Squeeze the equation...@>@;
+#endif
+
+@* Index.
+@z
