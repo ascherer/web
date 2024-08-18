@@ -392,6 +392,27 @@ first=buf_size;@/do@+{buffer[first]=0;decr(first);}@+ while (!(first==0));
 first=buf_size; do {buffer[first]=0;decr(first);} while (!(first==0));
 @z
 
+@x [24.332] l.7589
+to the appearance of \.{\\par}; we must set |cur_cs:=par_loc|
+@y
+to the appearance of \.{\\par}; we must set |cur_cs=par_loc|
+@z
+
+@x [24.343] l.7759
+any_state_plus(escape): @<Scan a control sequence and set |state:=skip_blanks|
+@y
+any_state_plus(escape): @<Scan a control sequence and set |state=skip_blanks|
+@z
+@x [24.343] l.7762
+and set |state:=mid_line|@>@;@+break;
+@y
+and set |state=mid_line|@>@;@+break;
+@z
+@x [24.343] l.7764
+like~\.{\^\^A} or~\.{\^\^df}, then |goto reswitch|, otherwise set |state:=mid_line|@>@;@+break;
+@y
+like~\.{\^\^A} or~\.{\^\^df}, then |goto reswitch|, otherwise set |state=mid_line|@>@;@+break;
+@z
 @x [24.343] l.7766
 @t\4@>@<Handle situations involving spaces, braces, changes of state@>@;
 @y
@@ -447,10 +468,21 @@ else start_input();
 @y
 do {link(temp_head)=null;
 @z
+@x [25.390] l.8518
+@<Scan a parameter until its delimiter string has been found; or, if |s=null|,
+@y
+@<Scan a parameter until its delimiter string has been found; or, if |s==null|,
+@z
 @x [25.390] l.8521
 }@+ while (!(info(r)==end_match_token));
 @y
 } while (!(info(r)==end_match_token));
+@z
+
+@x [25.391] l.8535
+resume| if a partial match is still in effect; but abort if |s=null|@>;
+@y
+resume| if a partial match is still in effect; but abort if |s==null|@>;
 @z
 
 @x [25.396] l.8621
@@ -486,6 +518,12 @@ do get_x_token(); while (!(cur_cmd!=spacer))
 @#@<Declare procedures that scan restricted classes of integers@>@;
 @<Declare \eTeX\ procedures for scanning@>@;
 @<Declare procedures that scan font-related stuff@>@;
+@z
+
+@x [26.412] l.8878
+identifier, provided that |level=tok_val|@>@;@+break;
+@y
+identifier, provided that |level==tok_val|@>@;@+break;
 @z
 
 @x [26.416] l.8994
@@ -620,6 +658,18 @@ done: end_file_reading();}
 @d param(A) @[font_info[A+param_end@]
 @z
 
+@x [30.577] l.11923
+@<Issue an error message if |cur_val=fmem_ptr|@>;
+@y
+@<Issue an error message if |cur_val==fmem_ptr|@>;
+@z
+
+@x [30.578] l.11926
+@ @<Issue an error message if |cur_val=fmem_ptr|@>=
+@y
+@ @<Issue an error message if |cur_val==fmem_ptr|@>=
+@z
+
 @x [30.579] l.11938
 {@+@/do@+{if (fmem_ptr==font_mem_size)
 @y
@@ -636,6 +686,11 @@ done: end_file_reading();}
 @y
 @p @<Declare procedures needed in |hlist_out|, |vlist_out|@>@t@>@;
 @z
+@x [32.618] l.13013
+maintaining the condition |cur_v=base_line|@>;
+@y
+maintaining the condition |cur_v==base_line|@>;
+@z
 
 @x [32.619] l.13028
   @/do@+{f=font(p);c=character(p);
@@ -646,6 +701,12 @@ done: end_file_reading();}
   }@+ while (!(!is_char_node(p)));
 @y
   } while (!(!is_char_node(p)));
+@z
+
+@x [32.628] l.13209
+maintaining the condition |cur_h=left_edge|@>;
+@y
+maintaining the condition |cur_h==left_edge|@>;
 @z
 
 @x [32.637] l.13339
@@ -858,6 +919,12 @@ feasible breaks in that class; then |return| if |r=last_active|, otherwise
 feasible breaks in that class; then |return| if |r==last_active|, otherwise
 @z
 
+@x [38.856] l.17538
+  @<Print the list between |printed_node| and |cur_p|, then set |printed_node:=cur_p|@>;
+@y
+  @<Print the list between |printed_node| and |cur_p|, then set |printed_node=cur_p|@>;
+@z
+
 @x [39.867] l.17799
 @/do@+{f=font(cur_p);
 @y
@@ -923,6 +990,12 @@ do {@<Justify the line ending at breakpoint |cur_p|, and append it to the
 @y
 do {r=q;q=prev_break(q);next_break(r)=cur_p;cur_p=r;
 } while (!(q==null));
+@z
+
+@x [39.881] l.18048
+      @<Change discretionary to compulsory and set |disc_break:=true|@>@;
+@y
+      @<Change discretionary to compulsory and set |disc_break=true|@>@;
 @z
 
 @x [40.894] l.18245
@@ -1107,6 +1180,18 @@ do {q=trie_l[p];c=so(trie_c[p]);
 } while (!(p==0));
 @z
 
+@x [43.963] l.19525
+{@+@<Compute the trie op code, |v|, and set |l:=0|@>;
+@y
+{@+@<Compute the trie op code, |v|, and set |l=0|@>;
+@z
+
+@x [44.968] l.19613
+and set~|p:=null|@>@;@+break;
+@y
+and set~|p=null|@>@;@+break;
+@z
+
 @x [45.986] l.20049
         @/do@+{q=link(q);
         if ((type(q)==ins_node)&&(subtype(q)==subtype(r))) incr(t);
@@ -1115,6 +1200,18 @@ do {q=trie_l[p];c=so(trie_c[p]);
         do {q=link(q);
         if ((type(q)==ins_node)&&(subtype(q)==subtype(r))) incr(t);
         } while (!(q==broken_ins(r)));
+@z
+
+@x [45.1008] l.20349
+  @<Create a page insertion node with |subtype(r)=qi(n)|, and include the
+@y
+  @<Create a page insertion node with |subtype(r)==qi(n)|, and include the
+@z
+
+@x [45.1020] l.20608
+for; set |wait:=true| if node |p| holds a remainder after splitting@>@;
+@y
+for; set |wait=true| if node |p| holds a remainder after splitting@>@;
 @z
 
 @x [45.1027] l.20711
@@ -1160,6 +1257,12 @@ if (cur_val < 256) define(box_base+cur_val, box_ref, cur_box);
 if (cur_val < 256) @[g_define(box_base+cur_val, box_ref, cur_box)@];
 @z
 
+@x [47.1079] l.21721
+from the list and make |cur_box| point to it; otherwise set |cur_box:=null|@>@;@+break;
+@y
+from the list and make |cur_box| point to it; otherwise set |cur_box=null|@>@;@+break;
+@z
+
 @x [47.1081] l.21750
 @/do@+{p=q;
 @y
@@ -1190,12 +1293,52 @@ case un_vbox: if (chr_code==copy_code) print_esc("unvcopy");
   else @<Cases of |un_vbox| for |print_cmd_chr|@>@;
 @z
 
+@x [47.1123] l.22307
+  @<Create a character node |q| for the next character, but set |q:=null|
+@y
+  @<Create a character node |q| for the next character, but set |q=null|
+@z
+@x [47.1123] l.22309
+  if (q!=null) @<Append the accent with appropriate kerns, then set |p:=q|@>;
+@y
+  if (q!=null) @<Append the accent with appropriate kerns, then set |p=q|@>;
+@z
+
+@x [48.1146] l.22581
+|goto found|; if the node is glue that stretches or shrinks, set |v:=max_dimen|@>;
+@y
+|goto found|; if the node is glue that stretches or shrinks, set |v=max_dimen|@>;
+@z
+
+@x [48.1147] l.22604
+or shrinking, set |v:=max_dimen|; |goto found| in the case of leaders@>@;@+break;
+@y
+or shrinking, set |v=max_dimen|; |goto found| in the case of leaders@>@;@+break;
+@z
+
+@x [48.1160] l.22845
+to null; set~|cur_val:=0|@>;
+@y
+to null; set~|cur_val=0|@>;
+@z
+
 @x [48.1189] l.23156
 case left_right: if (chr_code==left_noad) print_esc("left")
 @/@<Cases of |left_right| for |print_cmd_chr|@>;@/
 @y
 case left_right: if (chr_code==left_noad) print_esc("left");
 else @<Cases of |left_right| for |print_cmd_chr|@>@;
+@z
+
+@x [48.1194] l.23224
+the current math lists and set |danger:=true|@>;
+@y
+the current math lists and set |danger=true|@>;
+@z
+@x [48.1194] l.23234
+the current math lists and set |danger:=true|@>;
+@y
+the current math lists and set |danger=true|@>;
 @z
 
 @x [49.1209] l.23494
