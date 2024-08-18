@@ -193,7 +193,7 @@ decr(dyn_used);
   }@+ while (!(r==null)); /*now |q| is the last node on the list*/
 @y
   do {q=r;r=link(r);
-decr_dyn_used; /*maintain statistics*/
+    decr_dyn_used; /*maintain statistics*/
   } while (!(r==null)); /*now |q| is the last node on the list*/
 @z
 
@@ -1796,6 +1796,37 @@ par_fill_skip_no  /* |par_fill_skip_code| 14 */
     if (p==q) return true;
 @z
 
+@x [119.1844] l.34190
+@* \TeX\ Live Integration.
+@y
+First comes material that is not (yet) used elsewhere.
+
+@c
+#if 0
+@<Append the display...@>@;
+@<Append the glue or equation number following...@>@;
+@<Append the glue or equation number preceding...@>@;
+@<Calculate the natural width...@>@;
+@<Cases for |out_what|@>@;
+@<Declare the procedure called |fire_up|@>@;
+@<Determine the displacement...@>@;
+@<Determine the value of |height...@>@;
+@<Examine node |p| in the hlist...@>@;
+@<Examine node |p| in the vlist...@>@;
+@<Finish issuing a diagnostic message for an overfull or underfull hbox@>@;
+@<Finish issuing a diagnostic message for an overfull or underfull vbox@>@;
+@<Finish the \.{DVI}...@>@;
+@<Generate the MD5 hash for a file@>@;
+@<Generate the MD5 hash for a string@>@;
+@<Local variables for finish...@>@;
+@<Move node |p|...@>@;
+@<Ship box...@>@;
+@<Squeeze the equation...@>@;
+#endif
+
+@* \TeX\ Live Integration.
+@z
+
 @x [121.1852] l.34391
 static struct option long_options[] = {@/
 @y
@@ -1860,35 +1891,4 @@ the \TeX\ Live distribution and slightly modified.
 #define GET_FILE_STAT stat(fname,&file_stat)
 @y
 #define GET_FILE_STAT @[stat(fname,&file_stat)@]
-@z
-
-@x [132.1897] l.35504
-@* Index.
-@y
-@* Unused Material.
-
-@c
-#if 0
-@<Append the display...@>@;
-@<Append the glue or equation number following...@>@;
-@<Append the glue or equation number preceding...@>@;
-@<Calculate the natural width...@>@;
-@<Cases for |out_what|@>@;
-@<Declare the procedure called |fire_up|@>@;
-@<Determine the displacement...@>@;
-@<Determine the value of |height...@>@;
-@<Examine node |p| in the hlist...@>@;
-@<Examine node |p| in the vlist...@>@;
-@<Finish issuing a diagnostic message for an overfull or underfull hbox@>@;
-@<Finish issuing a diagnostic message for an overfull or underfull vbox@>@;
-@<Finish the \.{DVI}...@>@;
-@<Generate the MD5 hash for a file@>@;
-@<Generate the MD5 hash for a string@>@;
-@<Local variables for finish...@>@;
-@<Move node |p|...@>@;
-@<Ship box...@>@;
-@<Squeeze the equation...@>@;
-#endif
-
-@* Index.
 @z
