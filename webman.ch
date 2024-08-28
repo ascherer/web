@@ -113,6 +113,14 @@ program for \.{TANGLE}, in \pdfURL{Appendix~E}{tangle.pdf},
 gives precise details about this
 @z
 
+@x l.607
+the \.{TANGLE} processor will treat this an equivalent to `\.{64}';
+the constant will be formatted as ``\O{100}'' in the \TeX\ output
+@y
+the \.{TANGLE} processor will treat this as equivalent to `\.{64}';
+the constant will be formatted as `\O{100}' in the \TeX\ output
+@z
+
 @x l.628
 outputs of \.{WEAVE} and \.{TANGLE} (see Appendix~C\null). Meta-comments
 @y
