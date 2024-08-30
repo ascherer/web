@@ -134,6 +134,10 @@ do
 	f=$(basename $f .web)
 
 	case $f in
+		vftovp ) tie -m $f.web $f.web /dev/null # Elaborate 'cp'
+			$SED_I $f.web -e '/\\def\\(/d' \
+				-e 's/\\(\(.*\))/\\9{\1}/' ;;
+
 		pdftex ) # Fix several 'Overfull \hbox'es
 			tie -m $f.web $f.web $LOCALSTUFF/$f.ch ;;
 
@@ -169,6 +173,8 @@ do
 				WEBINPUTS=.:$KNUTHWARE/../../Work//:$WEBINPUTS: \
 				$WEAVE $f $f-final ;;
 
+			vftovp ) WEBINPUTS=.:$WEBINPUTS $WEAVE $f $f ;;
+
 			# all other WEB codes have singular changefiles
 			* ) $WEAVE $f $f ;;
 		esac
@@ -193,7 +199,8 @@ do
 				tie -c $f.ch weave.web weave.ch weav-$f.ch
 				WEBINPUTS=.:$WEBINPUTS $WEAVE weave $f $f ;;
 
-			pdftex | weave ) WEBINPUTS=.:$WEBINPUTS $WEAVE $f ;;
+			pdftex | weave | vftovp )
+				WEBINPUTS=.:$WEBINPUTS $WEAVE $f ;;
 
 			* ) $WEAVE $f ;;
 		esac
@@ -213,6 +220,8 @@ do
 				# Metafont and TeX (also pdfTeX and XeTeX)
 				# 'pwebmac' defines headers differently
 				cat > texmf-pdf.sed << 'FI'
+/\\def\\(/d
+s/\\(\([0-9a-z]\)[0-9a-z]*)/\\9{\1}/g
 s/\\outer\\def\\N.*{/&%/
 s/\\def\\rhead\({.*}\)/\\gtitle=\1\\MN#1.\\vfill\\eject/
 s/\\def\\title{/\\datethis\n\\emergencystretch=.1\\hsize\n&/

@@ -159,8 +159,7 @@
   \afterassignment\makeolproctok\let\nxt= }
 \def\makeolnexttok{\afterassignment\makeolproctok\let\nxt= }
 \def\makeolgobbletok{\afterassignment\makeolnexttok\let\nxt= }
-\def\makeolgobbletokk{\expandafter\nxt\relax
-  \afterassignment\makeolgobbletok\let\nxt= }
+\def\makeolgobbletokk{\afterassignment\makeolgobbletok\let\nxt= }
 \def\addF#1{\addtokens\toksF{#1}\tokprocessedtrue}
 % now comes a routine to "sanitize" section names, for pdf outlines
 \def\makeolproctok{\tokprocessedfalse
@@ -195,7 +194,7 @@
   \else\ifx\nxt\CPLUSPLUS\addF{C++}\let\next\makeolgobbletok % \CPLUSPLUS/
   \else\ifx\nxt\CEE\addF{C}\else\ifx\nxt\Cee\addF{C}%
   \else\ifx\nxt\PB \let\next\makeolgobbletok \tokprocessedtrue % \PB{...}
-  \else\ifx\nxt\9 \let\next\makeolgobbletokk \tokprocessedtrue % \9{#1}
+  \else\ifx\nxt\9 \expandafter\nxt\relax \let\next\makeolgobbletokk % \9{#1}
   \else\ifx\nxt\.\tokprocessedtrue\instrtrue % \.{...}
       % skip \|
   \else\ifx\nxt\\\ifinstr\addF{\bschar\bschar}\else\tokprocessedtrue\fi
@@ -214,11 +213,11 @@
   \ifx\nxt\alpha\addF{alpha}\else\ifx\nxt\beta\addF{beta}%
   \else\ifx\nxt\gamma\addF{gamma}\else\ifx\nxt\delta\addF{delta}%
   \else\ifx\nxt\theta\addF{theta}\else\ifx\nxt\psqrt\addF{root\space}%
-  \else\ifx\nxt\H\addF{"}\else\ifx\nxt\O\addF{'}%
-  \else\ifx\nxt\v\addF{|}\else\ifx\nxt\prime\addF{'}%
-  \else\ifx\nxt\K\addF{:=}\else\ifx\nxt\S\addF{==}%
+  \else\ifx\nxt\H\addF{"}\else\ifx\nxt\O\addF{'}\else\ifx\nxt\v\addF{|}%
+  \else\ifx\nxt\prime\addF{'}\else\ifx\nxt\K\addF{:=}\else\ifx\nxt\S\addF{==}%
+  \else\ifx\nxt\dots\addF{...\space}\else\ifx\nxt\<\addF{<}%
   \fi\fi\fi\fi\fi \fi\fi\fi\fi\fi
-  \fi\fi
+  \fi\fi\fi\fi
 }
 \def\makeolproctokchar#1 #2 #3{\addF{#3}}
 \def\outlinedone{\edef\outlinest{\global\noexpand\toksE={\the\toksF}}%
