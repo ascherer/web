@@ -159,6 +159,8 @@
   \afterassignment\makeolproctok\let\nxt= }
 \def\makeolnexttok{\afterassignment\makeolproctok\let\nxt= }
 \def\makeolgobbletok{\afterassignment\makeolnexttok\let\nxt= }
+\def\makeolgobbletokk{\expandafter\nxt\relax
+  \afterassignment\makeolgobbletok\let\nxt= }
 \def\addF#1{\addtokens\toksF{#1}\tokprocessedtrue}
 % now comes a routine to "sanitize" section names, for pdf outlines
 \def\makeolproctok{\tokprocessedfalse
@@ -193,6 +195,7 @@
   \else\ifx\nxt\CPLUSPLUS\addF{C++}\let\next\makeolgobbletok % \CPLUSPLUS/
   \else\ifx\nxt\CEE\addF{C}\else\ifx\nxt\Cee\addF{C}%
   \else\ifx\nxt\PB \let\next\makeolgobbletok \tokprocessedtrue % \PB{...}
+  \else\ifx\nxt\9 \let\next\makeolgobbletokk \tokprocessedtrue % \9{#1}
   \else\ifx\nxt\.\tokprocessedtrue\instrtrue % \.{...}
       % skip \|
   \else\ifx\nxt\\\ifinstr\addF{\bschar\bschar}\else\tokprocessedtrue\fi
@@ -205,6 +208,7 @@
   \else\ifx\nxt\ \addF\space\else\ifx\nxt\#\addF{\string\#}%
   \fi\fi\fi\fi\fi \fi\fi\fi\fi\fi
   \fi\fi\fi\fi\fi \fi\fi\fi\fi\fi
+  \fi
 }
 \def\makeolproctokmath{%
   \ifx\nxt\alpha\addF{alpha}\else\ifx\nxt\beta\addF{beta}%
