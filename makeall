@@ -134,9 +134,8 @@ do
 	f=$(basename $f .web)
 
 	case $f in
-		vftovp ) tie -m $f.web $f.web /dev/null # Elaborate 'cp'
-			$SED_I $f.web -e '/\\def\\(/d' \
-				-e 's/\\(\([0-9a-z]\)[0-9a-z]*)/\\9{\1}/g' ;;
+		vftovp ) sed $KNUTHWARE/$f.web -e '/\\def\\(/d' \
+			-e 's/\\(\([0-9a-z]\)[0-9a-z]*)/\\9{\1}/g' > $f.web ;;
 
 		pdftex ) # Fix several 'Overfull \hbox'es
 			tie -m $f.web $f.web $LOCALSTUFF/$f.ch ;;
@@ -147,11 +146,10 @@ do
 			$SED_I $f.w -e '/\\def\\(/d' \
 				-e 's/\\(\([0-9a-z]\)[0-9a-z]*)/\\9{\1}/g' ;;
 
-		weave | twill )
-			if [ "$HITEX" = "$TEX" ] # Fix non-constant factor
-			then
-				cp $KNUTHWARE/weave.web .
-				$SED_I weave.web -e 's/\\the\\hsize/460pt/'
+		weave | twill ) # Fix non-constant factor
+			if [ "$HITEX" = "$TEX" ] && [ ! -f weave.web ]
+			then sed -e 's/\\the\\hsize/460pt/' \
+				$KNUTHWARE/weave.web > weave.web
 			fi ;;
 	esac
 
@@ -320,7 +318,7 @@ FI
 	then
 		# We add an Editor's Note and the list of changed
 		# sections on the ToC page.
-		cp $LOCALSTUFF/editorsnote.tex .
+		[ -f editorsnote.tex ] || cp $LOCALSTUFF/editorsnote.tex .
 
 		case $f in
 			mf ) $SED_I $f.tex -e 's/\\datethis/\\input editorsnote.tex\n\\def&{\\def\\startsection{\\leftline{\\sc\\today\\ at \\hours}\n  \\medskip\\editorsnote\\readchanges\\bigskip\n  \\let\\startsection=\\stsec\\stsec}}\n&/' ;;
