@@ -136,14 +136,16 @@ do
 	case $f in
 		vftovp ) tie -m $f.web $f.web /dev/null # Elaborate 'cp'
 			$SED_I $f.web -e '/\\def\\(/d' \
-				-e 's/\\(\(.*\))/\\9{\1}/' ;;
+				-e 's/\\(\([0-9a-z]\)[0-9a-z]*)/\\9{\1}/g' ;;
 
 		pdftex ) # Fix several 'Overfull \hbox'es
 			tie -m $f.web $f.web $LOCALSTUFF/$f.ch ;;
 
 		hitex | mp | mpost | mpmath* | mpstrings | tfmin )
 			# Beautifications for HiTeX and MetaPost
-			tie -m $f.w $f.w $LOCALSTUFF/$f.ch ;;
+			tie -m $f.w $f.w $LOCALSTUFF/$f.ch
+			$SED_I $f.w -e '/\\def\\(/d' \
+				-e 's/\\(\([0-9a-z]\)[0-9a-z]*)/\\9{\1}/g' ;;
 
 		weave | twill )
 			if [ "$HITEX" = "$TEX" ] # Fix non-constant factor
