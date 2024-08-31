@@ -173,9 +173,8 @@ do
 				WEBINPUTS=.:$KNUTHWARE/../../Work//:$WEBINPUTS: \
 				$WEAVE $f $f-final ;;
 
-			vftovp ) WEBINPUTS=.:$WEBINPUTS $WEAVE $f $f ;;
-
 			# all other WEB codes have singular changefiles
+			vftovp ) WEBINPUTS=.:$WEBINPUTS $WEAVE $f $f ;;
 			* ) $WEAVE $f $f ;;
 		esac
 
@@ -358,9 +357,8 @@ FI
 
 		* ) # run TeX twice
 			if $PDFTOCFRONT || [ -n "$CHANGES" ]
-			then # only XeTeX can process XETEX.WEB
-				[ xetex = $f ] && $XETEX $f || $TEX $f
-			fi
+			then [ xetex = $f ] && $XETEX $f || $TEX $f
+			fi # only XeTeX can process XETEX.WEB
 			[ xetex = $f ] && $XETEX $f || $TEX $f ;;
 	esac
 done
