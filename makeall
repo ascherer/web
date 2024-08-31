@@ -134,8 +134,11 @@ do
 	f=$(basename $f .web)
 
 	case $f in
-		vftovp ) sed $KNUTHWARE/$f.web -e '/\\def\\(/d' \
-			-e 's/\\(\([0-9a-z]\)[0-9a-z]*)/\\9{\1}/g' > $f.web ;;
+		vftovp ) # FIX: Sorting order of named sections
+			sed $KNUTHWARE/$f.web -e '/\\def\\(/d' \
+			-e 's/\\(\([0-9a-z]\)[0-9a-z]*)/\\9{\1}/g' \
+			-e 's/\(Compute the \)\(|activity\)/\1\\9{a}\2/' \
+			> $f.web ;;
 
 		pdftex ) # Fix several 'Overfull \hbox'es
 			tie -m $f.web $f.web $LOCALSTUFF/$f.ch ;;
@@ -173,8 +176,11 @@ do
 				WEBINPUTS=.:$KNUTHWARE/../../Work//:$WEBINPUTS: \
 				$WEAVE $f $f-final ;;
 
+			# FIX: Sorting order of new @<Define...@> sections
+			vftovp ) WEBINPUTS=.:$WEBINPUTS $WEAVE $f $f
+				$SED_I $f.tex -e 's/\\(\([0-9a-z]\)[0-9a-z]*)/\\9{\1}/g' ;;
+
 			# all other WEB codes have singular changefiles
-			vftovp ) WEBINPUTS=.:$WEBINPUTS $WEAVE $f $f ;;
 			* ) $WEAVE $f $f ;;
 		esac
 
