@@ -172,9 +172,22 @@ do
 			tie ) $CWEAVE $f $f-w2c ;;
 
 			# main WEB programs have complex change files
-			tex | mf | pdftex | xetex )
+			mf | pdftex | xetex )
 				WEBINPUTS=.:$KNUTHWARE/../../Work//:$WEBINPUTS: \
 				$WEAVE $f $f-final ;;
+			tex ) # FIX: Sorting order of new material
+				# from TEX.CH and ENCTEX2.CH
+				cat > tex-nos.sed << 'FI'
+s/\(ump \)\(a couple\)/\1\\(a)\2/g
+s/\(ump \)\(constants\)/\1\\(c)\2/g
+s/\(ump \)\(enc\)/\1\\(e)\2/g
+s/\(ump \)\(ML\)/\1\\(m)\2/g
+FI
+				sed $KNUTHWARE/$f.web -f tex-nos.sed > $f.web
+				sed $KNUTHWARE/../../Work/texk/web2c/$f-final.ch \
+					-f tex-nos.sed > $f-final.ch
+				WEBINPUTS=.:$WEBINPUTS $WEAVE $f $f-final
+				rm -f tex-nos.sed ;;
 
 			# FIX: Sorting order of new @<Define...@> sections
 			vftovp ) WEBINPUTS=.:$WEBINPUTS $WEAVE $f $f
