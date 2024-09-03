@@ -94,7 +94,7 @@ CWEAVE="cweave -f +lX +bph"
 CTWILL="ctwill -f +lpdf +bph"
 HITEX="hitex --compress"
 PAX="pax -wvzf"
-PDF=pdf # default extension for 'knuth-pdf'
+EXT=pdf # default extension for 'knuth-pdf'
 SED_I="sed -i" # non-GNU-sed requires an extra '' argument for '-i' option.
 WEAVE=weave
 XETEX=xetex
@@ -103,7 +103,7 @@ case "$TEX" in
 	hitex ) # HINT format
 		CTWILL="$CTWILL +P"
 		TEX="$HITEX"
-		PDF=hnt # default extension for 'knuth-hint'
+		EXT=hnt # default extension for 'knuth-hint'
 		PDFTOCFRONT=false # use 'hintview -h' to start with TOC page
 		VALID=false ;; # HiTeX has no command-line option '--shell-escape'
 
@@ -178,10 +178,10 @@ do
 			tex ) # FIX: Sorting order of new material
 				# from TEX.CH and ENCTEX2.CH
 				cat > tex-nos.sed << 'FI'
-s/\(ump \)\(a couple\)/\1\\(a)\2/g
-s/\(ump \)\(constants\)/\1\\(c)\2/g
-s/\(ump \)\(enc\)/\1\\(e)\2/g
-s/\(ump \)\(ML\)/\1\\(m)\2/g
+s/\(ump \)\(a couple\)/\1\\(a)\2/
+s/\(ump \)\(constants\)/\1\\(c)\2/
+s/\(ump \)\(enc\)/\1\\(e)\2/
+s/\(ump \)\(ML\)/\1\\(m)\2/
 FI
 				sed $KNUTHWARE/$f.web -f tex-nos.sed > $f.web
 				sed $KNUTHWARE/../../Work/texk/web2c/$f-final.ch \
@@ -293,7 +293,7 @@ FI
 		# FIX: Metafont uses '\over' in several module names;
 		# this should appear correctly in the bookmarks, too.
 		mf ) $NEW && $SED_I $f.tex \
-			-e 's/\\def\\(/\\ifpdf\n\\sanitizecommand\\MF{Metafont}\n\\sanitizecommand\\over{\/}\n\\sanitizecommand\\langle{<}\n\\sanitizecommand\\rangle{>}\n\\fi\n\n&/' ;; # )
+			-e 's/\\def\\9/\\ifpdf\n\\sanitizecommand\\MF{Metafont}\n\\sanitizecommand\\over{\/}\n\\sanitizecommand\\langle{<}\n\\sanitizecommand\\rangle{>}\n\\fi\n\n&/' ;; # )
 
 		# FIX: MFT uses '\pb' in several module names;
 		# this should appear correctly in the bookmarks, too.
@@ -396,10 +396,10 @@ then
 		do $TEX -jobname errata.$f errata.$f
 		done
 		$TEX errata
-		$PAX "$OUTDIR/errata.tar.gz" -s ,^,errata/, err*.$PDF
+		$PAX "$OUTDIR/errata.tar.gz" -s ,^,errata/, err*.$EXT
 
-		$PAX "$OUTDIR/hitex.tar.gz" -s ,^,hitex/, hitex.$PDF
-		$PAX "$OUTDIR/mp.tar.gz" -s ,^,mp/, mp.$PDF mpost.$PDF
+		$PAX "$OUTDIR/hitex.tar.gz" -s ,^,hitex/, hitex.$EXT
+		$PAX "$OUTDIR/mp.tar.gz" -s ,^,mp/, mp.$EXT mpost.$EXT
 
 		# Finally, build the remaining documents
 		# * TeX and Metafont test routines
@@ -424,46 +424,46 @@ then
 		do $TEX $f
 		done
 
-		$PAX "$OUTDIR/mf.tar.gz" -s ,^,mf/, mf.$PDF trapman.$PDF
+		$PAX "$OUTDIR/mf.tar.gz" -s ,^,mf/, mf.$EXT trapman.$EXT
 		$PAX "$OUTDIR/tex.tar.gz" -s ,^,tex/, \
-			glue.$PDF tex.$PDF tripman.$PDF
+			glue.$EXT tex.$EXT tripman.$EXT
 		$PAX "$OUTDIR/web.tar.gz" -s ,^,web/, \
-			webman.$PDF tangle.$PDF weave.$PDF twill.$PDF
+			webman.$EXT tangle.$EXT weave.$EXT twill.$EXT
 		$PAX "$OUTDIR/cweb.tar.gz" -s ,^,cweb/, \
-			cwebman.$PDF common.$PDF ctangle.$PDF cweave.$PDF \
-			ctwill.$PDF refsort.$PDF twinx.$PDF
+			cwebman.$EXT common.$EXT ctangle.$EXT cweave.$EXT \
+			ctwill.$EXT refsort.$EXT twinx.$EXT
 	else # -n $CHANGES
-		for f in *.$PDF
+		for f in *.$EXT
 		do
-			case $f in *$CHANGES.$PDF ) rm -f $f; continue ;; esac
-			mv $f $(basename $f .$PDF)$CHANGES.$PDF
+			case $f in *$CHANGES.$EXT ) rm -f $f; continue ;; esac
+			mv $f $(basename $f .$EXT)$CHANGES.$EXT
 		done
 		[ "$HITEX" = "$TEX" ] && mv -f xetex.pdf xetex$CHANGES.pdf
-		$PAX "$OUTDIR/mf$CHANGES.tar.gz" -s ,^,mf/, mf$CHANGES.$PDF
-		$PAX "$OUTDIR/tex$CHANGES.tar.gz" -s ,^,tex/, tex$CHANGES.$PDF
+		$PAX "$OUTDIR/mf$CHANGES.tar.gz" -s ,^,mf/, mf$CHANGES.$EXT
+		$PAX "$OUTDIR/tex$CHANGES.tar.gz" -s ,^,tex/, tex$CHANGES.$EXT
 		$PAX "$OUTDIR/web$CHANGES.tar.gz" -s ,^,web/, \
-			tangle$CHANGES.$PDF weave$CHANGES.$PDF
+			tangle$CHANGES.$EXT weave$CHANGES.$EXT
 		$PAX "$OUTDIR/cweb$CHANGES.tar.gz" -s ,^,cweb/, \
-			common$CHANGES.$PDF ctangle$CHANGES.$PDF \
-			cweave$CHANGES.$PDF refsort$CHANGES.$PDF \
-			twinx$CHANGES.$PDF
+			common$CHANGES.$EXT ctangle$CHANGES.$EXT \
+			cweave$CHANGES.$EXT refsort$CHANGES.$EXT \
+			twinx$CHANGES.$EXT
 	fi # $CHANGES
 
 	$PAX "$OUTDIR/etc$CHANGES.tar.gz" -s ,^,etc/, \
-		vftovp$CHANGES.$PDF vptovf$CHANGES.$PDF
+		vftovp$CHANGES.$EXT vptovf$CHANGES.$EXT
 	$PAX "$OUTDIR/mfware$CHANGES.tar.gz" -s ,^,mfware/, \
-		gftodvi$CHANGES.$PDF gftopk$CHANGES.$PDF \
-		gftype$CHANGES.$PDF mft$CHANGES.$PDF
+		gftodvi$CHANGES.$EXT gftopk$CHANGES.$EXT \
+		gftype$CHANGES.$EXT mft$CHANGES.$EXT
 	$PAX "$OUTDIR/texware$CHANGES.tar.gz" -s ,^,texware/, \
-		dvitype$CHANGES.$PDF pltotf$CHANGES.$PDF \
-		pooltype$CHANGES.$PDF tftopl$CHANGES.$PDF
+		dvitype$CHANGES.$EXT pltotf$CHANGES.$EXT \
+		pooltype$CHANGES.$EXT tftopl$CHANGES.$EXT
 	$PAX "$OUTDIR/other$CHANGES.tar.gz" -s ,^,other/, \
-		dvicopy$CHANGES.$PDF patgen$CHANGES.$PDF \
-		pktogf$CHANGES.$PDF pktype$CHANGES.$PDF
+		dvicopy$CHANGES.$EXT patgen$CHANGES.$EXT \
+		pktogf$CHANGES.$EXT pktype$CHANGES.$EXT
 	$PAX "$OUTDIR/xetex$CHANGES.tar.gz" -s ,^,xetex/, \
 		xetex$CHANGES.pdf
 	for f in bibtex pdftex ctie tie
-	do $PAX "$OUTDIR/$f$CHANGES.tar.gz" -s ,^,$f/, $f$CHANGES.$PDF
+	do $PAX "$OUTDIR/$f$CHANGES.tar.gz" -s ,^,$f/, $f$CHANGES.$EXT
 	done
 
 	# Notes to self:
