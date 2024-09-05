@@ -241,24 +241,23 @@ FI
 /\\def\\(/d
 s/\\(\([0-9a-z]\)[0-9a-z]*)/\\9{\1}/g
 s/\\outer\\def\\N.*{/&%/
-s/\\def\\rhead\({.*}\)/\\gtitle=\1\\MN#1.\\vfill\\eject/
+/\\outer\\def\\N/r texmf-pdf.patch1
+s/\\def\\rhead/\\gtitle=/
+/\\gtitle=/r texmf-pdf.patch2
+s/{\\the\\pageno}/&{\\the\\toksE}/
+/\\edef\\next/r texmf-pdf.patch3
 s/\\def\\title{/\\datethis\n\\emergencystretch=.1\\hsize\n&/
 FI
-				# active links in PDF outlines/bookmarks
 				cat > texmf-pdf.patch1 << FI
   \ifpdf{\makeoutlinetoks{[#2] #3}\outlinedone}\fi
 FI
-				cat >> texmf-pdf.sed << 'FI'
-/\\outer\\def\\N/r texmf-pdf.patch1
-s/{\\the\\pageno}/&{\\the\\toksE}/
-FI
 				cat > texmf-pdf.patch2 << FI
+  \\MN#1.\\vfill\\eject % begin starred section
+FI
+				cat > texmf-pdf.patch3 << FI
   \ifpdflua\relax\else
   \ifpdf\special{pdf: outline 0 << /Title (\the\toksE) /Dest
     [ @thispage /FitH @ypos ] >>}\fi\fi
-FI
-				cat >> texmf-pdf.sed << 'FI'
-/\\edef\\next/r texmf-pdf.patch2
 FI
 				$SED_I $f.tex -f texmf-pdf.sed
 				rm -f texmf-pdf.* ;;
