@@ -185,8 +185,8 @@ s/\(ump \)\(ML\)/\1\\(m)\2/
 FI
 				sed -f tex-nos.sed $KNUTHWARE/$f.web > $f.web
 				sed -f tex-nos.sed $KNUTHWARE/../../Work/texk/web2c/$f-final.ch > $f-final.ch
-				WEBINPUTS=.:$WEBINPUTS $WEAVE $f $f-final
-				rm -f tex-nos.sed ;;
+				rm -f tex-nos.sed
+				WEBINPUTS=.:$WEBINPUTS $WEAVE $f $f-final ;;
 
 			# FIX: Sorting order of new @<Define...@> sections
 			vftovp ) WEBINPUTS=.:$WEBINPUTS $WEAVE $f $f
@@ -213,8 +213,8 @@ FI
 				CWEBINPUTS=.: $CWEAVE $f ;;
 
 			twill ) WEBINPUTS=.:$WEBINPUTS \
-				tie -c $f.ch weave.web weave.ch weav-$f.ch
-				WEBINPUTS=.:$WEBINPUTS $WEAVE weave $f $f ;;
+				tie -c $f.ch weave.web weave.ch weav-$f.ch &&
+				$WEAVE weave $f $f ;;
 
 			pdftex | weave | vftovp )
 				WEBINPUTS=.:$WEBINPUTS $WEAVE $f ;;
@@ -310,7 +310,7 @@ FI
 
 		# FIX: weave uses '\max' in name of module 173; this should
 		# appear correctly in the bookmarks, too.
-		weave ) $NEW && $SED_I -e '/\\def\\({}/a\
+		weave | twill ) $NEW && $SED_I -e '/\\def\\({}/a\
 \\ifpdf\\sanitizecommand\\max{max}\\fi' $f.tex ;; # )
 
 		# FIX: purge obsolete macros from XeTeX.
