@@ -223,21 +223,12 @@ FI
 		esac
 	fi # $CHANGES
 
-	# 'pwebmac' is for WEB only; do nothing for CWEB programs
-	if $NEW && echo $f | grep -v -q -E \
-		'^c|refsort|twinx|tie|hitex|^mp|tfmin'
-	then
-		# timestamp on table-of-contents page or the first page
-		case $f in
-			bibtex | patgen | tangle | weave | twill )
-				$SED_I -e '/\\def\\title{/i\
-\\datecontentspage' $f.tex ;; # }
-
-			mf | tex | pdftex | xetex )
-				# amend '\N' redefinition for PDF outlines in
-				# Metafont and TeX (also pdfTeX and XeTeX)
-				# 'pwebmac' defines headers differently
-				cat > texmf-pdf.sed << 'FI'
+	case $f in
+		mf | tex | pdftex | xetex )
+			# amend '\N' redefinition for PDF outlines in
+			# Metafont and TeX (also pdfTeX and XeTeX)
+			# 'pwebmac' defines headers differently
+			cat > texmf-pdf.sed << 'FI'
 s/\\outer\\def\\N.*{/&%/
 /\\outer\\def\\N/a\
   \\ifpdf{\\makeoutlinetoks{[#2] #3}\\outlinedone}\\fi
@@ -249,22 +240,12 @@ s/{\\the\\pageno}/&{\\the\\toksE}/
   \\ifpdflua\\relax\\else\
   \\ifpdf\\special{pdf: outline 0 << /Title (\\the\\toksE) /Dest\
     [ @thispage /FitH @ypos ] >>}\\fi\\fi
-/\\def\\title{/i\
-\\datethis\
-\\emergencystretch=.1\\hsize
 FI
 # }}
-				$SED_I -f texmf-pdf.sed -e $PURGE_OUTLINES \
-					-e '/\\def\\(/d' $f.tex # )
-				rm -f texmf-pdf.sed ;;
-
-			* ) $SED_I -e '/\\def\\botofcontents/d' \
-				-e 's/  \\centerline{\(\\hsize\)/\\def\\covernote{\1/' \
-				-e 's/\(Publishing Company.}}\)}/\1\n\\datecontentspage/' \
-				-e 's/\(Mathematical Society.}}\)}/\1\n\\datecontentspage/' \
-				$f.tex ;;
-		esac
-	fi # $NEW
+			$NEW && $SED_I -f texmf-pdf.sed -e $PURGE_OUTLINES \
+				-e '/\\def\\(/d' $f.tex # )
+			rm -f texmf-pdf.sed ;;
+	esac # mf | tex | pdftex | xetex
 
 	# special treatment for individual C/WEB programs
 	case $f in
@@ -327,18 +308,27 @@ FI
 \\sanitizecommand\\eTeX{e-TeX}\
 \\sanitizecommand\\over{\/}\
 \\fi' $f.tex ;;
+	esac
 
-		# timestamp on table-of-contents page or the first page
-		hitex | mp ) $SED_I -e '/\\def\\topofcontents/i\
+	# timestamp on table-of-contents page or the first page
+	case $f in
+		tex | pdftex | xetex | hitex | mf | mp )
+			$NEW && $SED_I -e '/\\def\\title{/i\
 \\datethis\
 \\emergencystretch=.1\\hsize' $f.tex ;;
 		common | ctangle | cweave | ctie | tie )
 			$SED_I -e '/\\def\\botofcontents/i\
 \\datethis' $f.tex ;;
+		bibtex | patgen | tangle | weave | twill | \
 		mpost | mpmath* | mpstrings | tfmin )
-			$SED_I -e '/\\def\\title{/i\
+			$NEW && $SED_I -e '/\\def\\title{/i\
 \\datecontentspage\
 ' $f.tex ;; # }
+		* ) $NEW && $SED_I -e '/\\def\\botofcontents/d' \
+			-e 's/  \\centerline{\(\\hsize\)/\\def\\covernote{\1/' \
+			-e 's/\(Publishing Company.}}\)}/\1\n\\datecontentspage/' \
+			-e 's/\(Mathematical Society.}}\)}/\1\n\\datecontentspage/' \
+			$f.tex ;;
 	esac
 
 	# shift table-of-contents pages to the front in PDF
