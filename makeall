@@ -307,7 +307,7 @@ s/{\\the\\pageno}/&{\\the\\toksE}/
 		tex | pdftex | xetex | hitex | mf | mp )
 			$NEW && $SED_I -e '/\\def\\title{/i\
 \\datethis\
-\\emergencystretch=.1\\hsize' $f.tex ;;
+\\emergencystretch=.1\\hsize' $f.tex ;; # }
 
 		common | ctangle | cweave | ctie | tie )
 			$SED_I -e '/\\def\\botofcontents/i\
@@ -317,7 +317,7 @@ s/{\\the\\pageno}/&{\\the\\toksE}/
 		mpost | mpmath* | mpstrings | tfmin )
 			$NEW && $SED_I -e '/\\def\\title{/i\
 \\datecontentspage\
-' $f.tex ;; # }
+' $f.tex ;; # } { {{ {
 
 		* ) $NEW && $SED_I -e '/\\def\\botofcontents/d
 s/  \\centerline{\(\\hsize\)/\\def\\covernote{\1/
@@ -362,7 +362,7 @@ s/\(\\def\\botofcontents\).*/\1{\\hsize6.5in\\vskip 0pt plus 1filll/
 \\input editorsnote\
 \\def\\covernote{\\vbox{\\editorsnote\\readchanges\\par}}' $f.tex ;;
 
-			common | ctangle | cweave | ctie | tie )
+			common | ctangle | cweave | ctie | tie ) # {{
 				$SED_I -e '/\\def\\covernote/i\
 \\input editorsnote.tex
 s/^}}/\\bigskip\\editorsnote\\readchanges\\par&/' $f.tex ;;
