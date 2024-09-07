@@ -98,6 +98,11 @@ EXT=pdf # default extension for 'knuth-pdf'
 SED_I='sed -i' # non-GNU-sed requires an extra '' argument for '-i' option.
 # Prevent '#1)' from showing up in the PDF bookmarks/outlines:
 PURGE_OUTLINES='s/\\(\([0-9a-z]\)[0-9a-z]*)/\\9{\1}/g'
+# Sorting order of new material from TEX.CH and ENCTEX2.CH
+SORT_NOS='s/\(ump \)\(a couple\)/\1\\(a)\2/
+s/\(ump \)\(constants\)/\1\\(c)\2/
+s/\(ump \)\(enc\)/\1\\(e)\2/
+s/\(ump \)\(ML\)/\1\\(m)\2/'
 WEAVE=weave
 XETEX=xetex
 
@@ -135,11 +140,11 @@ for f in $FILES
 do
 	f=$(basename $f .web)
 
+	# Prepare local C/WEB sources
 	case $f in
 		vftovp ) # FIX: Sorting order of named sections
-			sed -e 's/\(Compute the \)\(|activity\)/\1\\9{a}\2/' \
-				-e $PURGE_OUTLINES -e '/\\def\\(/d' \
-				$KNUTHWARE/$f.web > $f.web ;; # )
+			sed -e 's/\(Compute the \)\(|activity\)/\1\\9{a}\2/
+/\\def\\(/d' -e $PURGE_OUTLINES $KNUTHWARE/$f.web > $f.web ;; # )
 
 		pdftex ) # Fix several 'Overfull \hbox'es
 			tie -m $f.web $f.web $LOCALSTUFF/$f.ch ;;
@@ -156,6 +161,7 @@ do
 			fi ;;
 	esac
 
+	# Run C/WEAVE on the C/WEB sources w/o changes
 	if [ -n "$CHANGES" ]
 	then
 		case $f in
@@ -175,17 +181,9 @@ do
 			mf | pdftex | xetex )
 				WEBINPUTS=.:$KNUTHWARE/../../Work//:$WEBINPUTS: \
 				$WEAVE $f $f-final ;;
-			tex ) # FIX: Sorting order of new material
-				# from TEX.CH and ENCTEX2.CH
-				cat > tex-nos.sed << 'FI'
-s/\(ump \)\(a couple\)/\1\\(a)\2/
-s/\(ump \)\(constants\)/\1\\(c)\2/
-s/\(ump \)\(enc\)/\1\\(e)\2/
-s/\(ump \)\(ML\)/\1\\(m)\2/
-FI
-				sed -f tex-nos.sed $KNUTHWARE/$f.web > $f.web
-				sed -f tex-nos.sed $KNUTHWARE/../../Work/texk/web2c/$f-final.ch > $f-final.ch
-				rm -f tex-nos.sed
+			tex )
+				sed -e "$SORT_NOS" $KNUTHWARE/$f.web > $f.web
+				sed -e "$SORT_NOS" $KNUTHWARE/../../Work/texk/web2c/$f-final.ch > $f-final.ch
 				WEBINPUTS=.:$WEBINPUTS $WEAVE $f $f-final ;;
 
 			# FIX: Sorting order of new @<Define...@> sections
@@ -224,12 +222,10 @@ FI
 	fi # $CHANGES
 
 	case $f in
-		mf | tex | pdftex | xetex )
-			# amend '\N' redefinition for PDF outlines in
-			# Metafont and TeX (also pdfTeX and XeTeX)
-			# 'pwebmac' defines headers differently
-			cat > texmf-pdf.sed << 'FI'
-s/\\outer\\def\\N.*{/&%/
+		# amend '\N' redefinition for PDF outlines in Metafont and TeX
+		# (also pdfTeX and XeTeX); 'pwebmac' redefines the headers.
+		mf | tex | pdftex | xetex ) $NEW && $SED_I -e \
+'s/\\outer\\def\\N.*{/&%/
 /\\outer\\def\\N/a\
   \\ifpdf{\\makeoutlinetoks{[#2] #3}\\outlinedone}\\fi
 s/\\def\\rhead/\\gtitle=/
@@ -240,11 +236,7 @@ s/{\\the\\pageno}/&{\\the\\toksE}/
   \\ifpdflua\\relax\\else\
   \\ifpdf\\special{pdf: outline 0 << /Title (\\the\\toksE) /Dest\
     [ @thispage /FitH @ypos ] >>}\\fi\\fi
-FI
-# }}
-			$NEW && $SED_I -f texmf-pdf.sed -e $PURGE_OUTLINES \
-				-e '/\\def\\(/d' $f.tex # )
-			rm -f texmf-pdf.sed ;;
+/\\def\\(/d' -e $PURGE_OUTLINES $f.tex ;; # )}
 	esac # mf | tex | pdftex | xetex
 
 	# special treatment for individual C/WEB programs
@@ -259,8 +251,8 @@ FI
 			[ -z "$CHANGES" ] && $SED_I -e '71,78d' $f.tex ;;
 
 		# FIX: 'glue.web' obviously uses an old 'webmac.tex'.
-		glue ) $SED_I -e 's/titlefalse/titletrue/' \
-			-e '/\\def\\title{GLUE}/a\
+		glue ) $SED_I -e 's/titlefalse/titletrue/
+/\\def\\title{GLUE}/a\
 \\pageno=\\contentspagenumber \\advance\\pageno by1\\relax' $f.tex ;;
 
 		# FIX: GFtoDVI uses 'Metafont' in a module name;
@@ -298,12 +290,12 @@ FI
 		# FIX: XeTeX uses '\pdfTeX' from section 114, which is not
 		# changed and thus 'disappears'; repeat in preamble.
 		# FIX: apply '\sanitizecommand' for bookmarks.
-		xetex ) $SED_I -e '/\\input xewebmac/d' \
-			-e '/\\let\\maybe/i\
+		xetex ) $SED_I -e '/\\input xewebmac/d
+/\\let\\maybe/i\
 \\def\\pdfTeX{pdf\\TeX}' $f.tex
 			$NEW && $SED_I -e '/\\def\\pdfTeX/a\
-\\ifpdf\\sanitizecommand\\pdfTeX{pdfTeX}\\fi' \
-				-e '/\\def\\eTeX/a\
+\\ifpdf\\sanitizecommand\\pdfTeX{pdfTeX}\\fi
+/\\def\\eTeX/a\
 \\ifpdf\
 \\sanitizecommand\\eTeX{e-TeX}\
 \\sanitizecommand\\over{\/}\
@@ -316,19 +308,21 @@ FI
 			$NEW && $SED_I -e '/\\def\\title{/i\
 \\datethis\
 \\emergencystretch=.1\\hsize' $f.tex ;;
+
 		common | ctangle | cweave | ctie | tie )
 			$SED_I -e '/\\def\\botofcontents/i\
 \\datethis' $f.tex ;;
+
 		bibtex | patgen | tangle | weave | twill | \
 		mpost | mpmath* | mpstrings | tfmin )
 			$NEW && $SED_I -e '/\\def\\title{/i\
 \\datecontentspage\
 ' $f.tex ;; # }
-		* ) $NEW && $SED_I -e '/\\def\\botofcontents/d' \
-			-e 's/  \\centerline{\(\\hsize\)/\\def\\covernote{\1/' \
-			-e 's/\(Publishing Company.}}\)}/\1\n\\datecontentspage/' \
-			-e 's/\(Mathematical Society.}}\)}/\1\n\\datecontentspage/' \
-			$f.tex ;;
+
+		* ) $NEW && $SED_I -e '/\\def\\botofcontents/d
+s/  \\centerline{\(\\hsize\)/\\def\\covernote{\1/
+s/\(Publishing Company.}}\)}/\1\n\\datecontentspage/
+s/\(Mathematical Society.}}\)}/\1\n\\datecontentspage/' $f.tex ;;
 	esac
 
 	# shift table-of-contents pages to the front in PDF
@@ -351,34 +345,35 @@ FI
 
 			# TeX and XeTeX grow significantly for TeX Live
 			# so there's enough room on the last ToC page.
-			pdftex | tex | xetex ) $SED_I -e '/\\datethis/d' \
-				-e 's/\(\\def\\botofcontents\).*/\1{\\hsize6.5in\\vskip 0pt plus 1filll/' \
-				-e '/\\def\\botofcontents/i\
-\\input editorsnote.tex' \
-				-e '/\\def\\botofcontents/a\
-  \\editorsnote\\readchanges\\medskip\\noindent\\sc\\today\\ at \\hours}' \
-				-e '/\\input pdfwebtocfront/a\
+			pdftex | tex | xetex ) $SED_I -e '/\\datethis/d
+s/\(\\def\\botofcontents\).*/\1{\\hsize6.5in\\vskip 0pt plus 1filll/
+/\\def\\botofcontents/i\
+\\input editorsnote.tex
+/\\def\\botofcontents/a\
+  \\editorsnote\\readchanges\\medskip\\noindent\\sc\\today\\ at \\hours}
+/\\input pdfwebtocfront/a\
 \
 \\def\\tocpages{2}' $f.tex ;;
 
 			bibtex | patgen | tangle | weave | twill | \
 				refsort | twinx )
-				$SED_I -e 's/\\date.*/\\datecontentspage/' \
-					-e '/\\datecontentspage/i\
+				$SED_I -e 's/\\date.*/\\datecontentspage/
+/\\datecontentspage/i\
 \\input editorsnote\
 \\def\\covernote{\\vbox{\\editorsnote\\readchanges\\par}}' $f.tex ;;
 
 			common | ctangle | cweave | ctie | tie )
 				$SED_I -e '/\\def\\covernote/i\
-\\input editorsnote.tex' \
-				-e 's/^}}/\\bigskip\\editorsnote\\readchanges\\par&/' $f.tex ;;
+\\input editorsnote.tex
+s/^}}/\\bigskip\\editorsnote\\readchanges\\par&/' $f.tex ;;
 
 			* ) $SED_I -e '/\\def\\title{/i\
-\\input editorsnote.tex' \
-				-e 's/\\vbox{\\ninerm/&\\editorsnote\\readchanges\\medskip/' $f.tex ;; # }}
+\\input editorsnote.tex
+s/\\vbox{\\ninerm/&\\editorsnote\\readchanges\\medskip/' $f.tex ;; # }}
 		esac
 	fi # $CHANGES
 
+	# Run TeX on the woven C/WEB programs
 	case $f in
 		ctwill ) # gives two different outcomes
 			if [ "$HITEX" = "$TEX" ] # sort mini-indexes
