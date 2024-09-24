@@ -259,13 +259,14 @@ s/{\\the\\pageno}/&{\\the\\toksE}/
 		# this should appear correctly in the bookmarks, too.
 		# FIX: Metafont uses '\over' in several module names;
 		# this should appear correctly in the bookmarks, too.
+		# FIX: typo in MF.WEB.
 		gftodvi | mf ) $NEW && $SED_I -e '/\\def\\MF/a\
 \\ifpdf\
 \\sanitizecommand\\MF{Metafont}\
 \\sanitizecommand\\over{\/}\
 \\sanitizecommand\\langle{<}\
 \\sanitizecommand\\rangle{>}\
-\\fi' $f.tex ;;
+\\fi' -e 's/a ano/ano/' $f.tex ;;
 
 		# FIX: MFT uses '\pb' in several module names;
 		# this should appear correctly in the bookmarks, too.
