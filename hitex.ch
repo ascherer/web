@@ -1560,6 +1560,20 @@ do {undump(p+1, hash_used, p);undump_hh(hash[p]);
 } while (!(p==hash_used));
 @z
 
+@x [53.1341] l.25664
+@d label_node hitex_ext+17 /* represents a link to a another location */
+@y
+@d label_node hitex_ext+17 /* represents a link to another location */
+@z
+
+@x [53.1341] l.25671
+@d start_link_node hitex_ext+18 /* represents a link to a another location */
+@d end_link_node hitex_ext+19 /* represents a link to a another location */
+@y
+@d start_link_node hitex_ext+18 /* represents a link to another location */
+@d end_link_node hitex_ext+19 /* represents a link to another location */
+@z
+
 @x [53.1346] l.25791
   @/@<Cases of |extension| for |print_cmd_chr|@>@/
 @y
