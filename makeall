@@ -408,10 +408,10 @@ then
 		do $TEX -jobname errata.$f errata.$f
 		done
 		$TEX errata
-		$PAX "$OUTDIR/errata.tar.gz" -s ,^,errata/, err*.$EXT
+		$PAX "$OUTDIR/errata.tar.gz" -s ,^,errata/, err*.$EXT && true
 
-		$PAX "$OUTDIR/hitex.tar.gz" -s ,^,hitex/, hitex.$EXT
-		$PAX "$OUTDIR/mp.tar.gz" -s ,^,mp/, mp.$EXT mpost.$EXT
+		$PAX "$OUTDIR/hitex.tar.gz" -s ,^,hitex/, hitex.$EXT && true
+		$PAX "$OUTDIR/mp.tar.gz" -s ,^,mp/, mp.$EXT mpost.$EXT && true
 
 		# Finally, build the remaining documents
 		# * TeX and Metafont test routines
@@ -436,46 +436,46 @@ then
 		do $TEX $f
 		done
 
-		$PAX "$OUTDIR/mf.tar.gz" -s ,^,mf/, mf.$EXT trapman.$EXT
+		$PAX "$OUTDIR/mf.tar.gz" -s ,^,mf/, mf.$EXT trapman.$EXT && true
 		$PAX "$OUTDIR/tex.tar.gz" -s ,^,tex/, \
-			glue.$EXT tex.$EXT tripman.$EXT
+			glue.$EXT tex.$EXT tripman.$EXT && true
 		$PAX "$OUTDIR/web.tar.gz" -s ,^,web/, \
-			webman.$EXT tangle.$EXT weave.$EXT twill.$EXT
+			webman.$EXT tangle.$EXT weave.$EXT twill.$EXT && true
 		$PAX "$OUTDIR/cweb.tar.gz" -s ,^,cweb/, \
 			cwebman.$EXT common.$EXT ctangle.$EXT cweave.$EXT \
-			ctwill.$EXT refsort.$EXT twinx.$EXT
+			ctwill.$EXT refsort.$EXT twinx.$EXT && true
 	else # -n $CHANGES
 		for f in *.$EXT
 		do
 			case $f in *$CHANGES.$EXT ) rm -f $f; continue ;; esac
-			mv $f $(basename $f .$EXT)$CHANGES.$EXT
+			mv $f $(basename $f .$EXT)$CHANGES.$EXT && true
 		done
 		[ "$HITEX" = "$TEX" ] && mv -f xetex.pdf xetex$CHANGES.pdf
-		$PAX "$OUTDIR/mf$CHANGES.tar.gz" -s ,^,mf/, mf$CHANGES.$EXT
-		$PAX "$OUTDIR/tex$CHANGES.tar.gz" -s ,^,tex/, tex$CHANGES.$EXT
+		$PAX "$OUTDIR/mf$CHANGES.tar.gz" -s ,^,mf/, mf$CHANGES.$EXT && true
+		$PAX "$OUTDIR/tex$CHANGES.tar.gz" -s ,^,tex/, tex$CHANGES.$EXT && true
 		$PAX "$OUTDIR/web$CHANGES.tar.gz" -s ,^,web/, \
-			tangle$CHANGES.$EXT weave$CHANGES.$EXT
+			tangle$CHANGES.$EXT weave$CHANGES.$EXT && true
 		$PAX "$OUTDIR/cweb$CHANGES.tar.gz" -s ,^,cweb/, \
 			common$CHANGES.$EXT ctangle$CHANGES.$EXT \
 			cweave$CHANGES.$EXT refsort$CHANGES.$EXT \
-			twinx$CHANGES.$EXT
+			twinx$CHANGES.$EXT && true
 	fi # $CHANGES
 
 	$PAX "$OUTDIR/etc$CHANGES.tar.gz" -s ,^,etc/, \
-		vftovp$CHANGES.$EXT vptovf$CHANGES.$EXT
+		vftovp$CHANGES.$EXT vptovf$CHANGES.$EXT && true
 	$PAX "$OUTDIR/mfware$CHANGES.tar.gz" -s ,^,mfware/, \
 		gftodvi$CHANGES.$EXT gftopk$CHANGES.$EXT \
-		gftype$CHANGES.$EXT mft$CHANGES.$EXT
+		gftype$CHANGES.$EXT mft$CHANGES.$EXT && true
 	$PAX "$OUTDIR/texware$CHANGES.tar.gz" -s ,^,texware/, \
 		dvitype$CHANGES.$EXT pltotf$CHANGES.$EXT \
-		pooltype$CHANGES.$EXT tftopl$CHANGES.$EXT
+		pooltype$CHANGES.$EXT tftopl$CHANGES.$EXT && true
 	$PAX "$OUTDIR/other$CHANGES.tar.gz" -s ,^,other/, \
 		dvicopy$CHANGES.$EXT patgen$CHANGES.$EXT \
-		pktogf$CHANGES.$EXT pktype$CHANGES.$EXT
+		pktogf$CHANGES.$EXT pktype$CHANGES.$EXT && true
 	$PAX "$OUTDIR/xetex$CHANGES.tar.gz" -s ,^,xetex/, \
-		xetex$CHANGES.pdf
+		xetex$CHANGES.pdf && true
 	for f in bibtex pdftex ctie tie
-	do $PAX "$OUTDIR/$f$CHANGES.tar.gz" -s ,^,$f/, $f$CHANGES.$EXT
+	do $PAX "$OUTDIR/$f$CHANGES.tar.gz" -s ,^,$f/, $f$CHANGES.$EXT && true
 	done
 
 	# Notes to self:
