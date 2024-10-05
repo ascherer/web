@@ -18,13 +18,13 @@ Here you find the documented source code of all major `WEB` and `CWEB` programs
 in readable format.  The `NAMED` entries represent the unmodified base sources
 as written by their respective authors, the attached `chg` links point to
 only the changed sections (or modules) as applied for release in the
-\TeX\ Live distribution, so you may want to study these pairs in parallel.
+\TeX\ Live distribution, so you may want to study these pairs together.
 Care has been taken to keep the section numbering intact.
 
-Although not all the programs presented here are written or maintained by
-Donald Knuth, it is more convenient for everything to be collected in one place
-for reading and searching.  And they all stem from the system that Knuth
-created.
+Although not all programs presented here are written or maintained by
+Donald Knuth, it is more convenient for everything to be collected in
+one place for reading and searching.  And they all stem from the system
+that Knuth created.
 
 Note that all `WEB` programs are mogrified from Pascal code to C code before
 compilation, so further modifications and amendments will occur for the real
