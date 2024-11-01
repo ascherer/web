@@ -121,10 +121,10 @@
   \ifnum\countB<`0
     \ifhavenum\makenote\fi
     \ifx\first.\let\next=\maketoksdone % fullstop
-    \else \addtokens\toksB{\the\toksD}
+    \else\addtokens\toksB{\the\toksD}%
       \ifx\first,\addtokens\toksB{\space}\fi
     \fi
-  \else \addtokens\toksC{\the\toksD}\global\havenumtrue
+  \else\addtokens\toksC{\the\toksD}\global\havenumtrue
   \fi
   \next
 }
