@@ -653,14 +653,6 @@ Appendix~D that incorporates your changes.
 \pdfURL{Appendix~D}{weave.pdf} that incorporates your changes.
 @z
 
-@x l.1631
-\def\substep(10.#1){\par\hangindent 4em\noindent
-  \hbox to 4em{\hfil(10.#1) }\ignorespaces}
-@y
-\def\substep(10.#1){\par\hangindent 3em\noindent
-  \hbox to 3em{\hfil(10.#1) }\ignorespaces}
-@z
-
 @x l.1667
 computer by following Appendices D and E. Then you have to simulate the
 @y
