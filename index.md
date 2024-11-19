@@ -61,12 +61,14 @@ directly.
   [`PLtoTF`](texware/pltotf.pdf)+[`chg`](texware/pltotf-changes.pdf) \|
   [`DVItype`](texware/dvitype.pdf)+[`chg`](texware/dvitype-changes.pdf) \]
 * `web/` \[
-  [`WEBMAN`](web/webman.pdf) \|
+  [`WEBMAN`](web/webman.pdf)+[`chg`](web/webman-changes.pdf)[^1] \|
   [`WEAVE`](web/weave.pdf)+[`chg`](web/weave-changes.pdf) \|
   [`TANGLE`](web/tangle.pdf)+[`chg`](web/tangle-changes.pdf) \|
-  [`TWILL`](web/twill.pdf)[^1] \]
+  [`TWILL`](web/twill.pdf)[^2] \]
 
-[^1]: `TWILL` is presented here as a changed variant of `WEAVE`.
+[^1]: The changed variant of the `WEB` manual contains additional material
+  specific to the \TeX\ Live distribution.
+[^2]: `TWILL` is presented here as a changed variant of `WEAVE`.
 
 ## Complementary WEB programs by other authors
 
@@ -86,22 +88,22 @@ directly.
   [`COMMON`](cweb/common.pdf)+[`chg`](cweb/common-changes.pdf) \|
   [`CTANGLE`](cweb/ctangle.pdf)+[`chg`](cweb/ctangle-changes.pdf) \|
   [`CWEAVE`](cweb/cweave.pdf)+[`chg`](cweb/cweave-changes.pdf) \|\
-  [`CTWILL`](cweb/ctwill.pdf)[^2] \|
+  [`CTWILL`](cweb/ctwill.pdf)[^3] \|
   [`REFSORT`](cweb/refsort.pdf)+[`chg`](cweb/refsort-changes.pdf) \|
   [`TWINX`](cweb/twinx.pdf)+[`chg`](cweb/twinx-changes.pdf) \]
 * `ctie/` \[ [`CTIE`](ctie/ctie.pdf)+[`chg`](ctie/ctie-changes.pdf) \]
 * `tie/` \[ [`TIE`](tie/tie.pdf)+[`chg`](tie/tie-changes.pdf) \]
-* `hitex/` \[ [`HiTeX`](hitex/hitex.pdf)[^3] \]
-* `mp/` \[ [`MP`](mp/mp.pdf) \| [`MPOST`](mp/mpost.pdf) \][^4]
+* `hitex/` \[ [`HiTeX`](hitex/hitex.pdf)[^4] \]
+* `mp/` \[ [`MP`](mp/mp.pdf) \| [`MPOST`](mp/mpost.pdf) \][^5]
 
-[^2]: `CTWILL` is presented here in its own format with “mini-indexes” for
+[^3]: `CTWILL` is presented here in its own format with “mini-indexes” for
   every two consecutive pages.
 
-[^3]: `HiTeX` has received quite a few changes “behind the scenes” in
+[^4]: `HiTeX` has received quite a few changes “behind the scenes” in
   order to present it in this collection; see project
   [`web`](https://github.com/ascherer/web) for details.
 
-[^4]: `MP` and `MPOST` have received quite a few changes “behind the scenes” in
+[^5]: `MP` and `MPOST` have received quite a few changes “behind the scenes” in
   order to present them in this collection; see project
   [`mplibdir`](https://github.com/ascherer/mplibdir) for details.
 

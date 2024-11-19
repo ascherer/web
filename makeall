@@ -397,9 +397,9 @@ done
 # create tarballs w/o changes for publication
 if ( $PDFTOCFRONT || [ "$HITEX" = "$TEX" ] ) && ! $FILESELECT
 then
+	export TEXINPUTS=.:$(kpsewhich --var-value=TEXMFDIST)//:$KNUTHWARE//
 	if [ -z "$CHANGES" ]
 	then
-		export TEXINPUTS=.:$(kpsewhich --var-value=TEXMFDIST)//:$KNUTHWARE//
 		touch pages.tex # let 'manmac' produce output at all
 
 		$TEX -jobname=errorlog $LOCALSTUFF/Xerrorlog.tex
@@ -416,17 +416,13 @@ then
 		# Finally, build the remaining documents
 		# * TeX and Metafont test routines
 		# * WEB and CWEB manuals
-		rm -f trapman.tex webman.tex cwebman.tex
+		rm -f trapman.tex cwebman.tex
 
 		# FIX: Prepare 'trapman' for automatic processing; several
 		# input files are renamed in TeX Live (in fact, there are
 		# additional files for MetaPost).
-		# Prepare 'webman' with section links and bookmarks.
-		for f in trapman webman
-		do
-			f=$(kpsewhich -engine tex $f)
-			tie -m $(basename $f) $f $LOCALSTUFF/$(basename $f .tex).ch
-		done
+		f=$(kpsewhich -engine tex trapman)
+		tie -m $(basename $f) $f $LOCALSTUFF/$(basename $f .tex).ch
 
 		# Prepare 'cwebman' with footnotes describing the extended CWEB.
 		f=$(kpsewhich -engine tex cwebman)
@@ -445,6 +441,11 @@ then
 			cwebman.$EXT common.$EXT ctangle.$EXT cweave.$EXT \
 			ctwill.$EXT refsort.$EXT twinx.$EXT && true
 	else # -n $CHANGES
+		# Prepare 'webman' with section links and bookmarks.
+		rm -f webman.tex
+		f=$(kpsewhich -engine tex webman)
+		tie -m $(basename $f) $f $LOCALSTUFF/$(basename $f .tex).ch
+		$TEX webman
 		for f in *.$EXT
 		do
 			case $f in *$CHANGES.$EXT ) rm -f $f; continue ;; esac
@@ -454,6 +455,7 @@ then
 		$PAX "$OUTDIR/mf$CHANGES.tar.gz" -s ,^,mf/, mf$CHANGES.$EXT && true
 		$PAX "$OUTDIR/tex$CHANGES.tar.gz" -s ,^,tex/, tex$CHANGES.$EXT && true
 		$PAX "$OUTDIR/web$CHANGES.tar.gz" -s ,^,web/, \
+			webman$CHANGES.$EXT \
 			tangle$CHANGES.$EXT weave$CHANGES.$EXT && true
 		$PAX "$OUTDIR/cweb$CHANGES.tar.gz" -s ,^,cweb/, \
 			common$CHANGES.$EXT ctangle$CHANGES.$EXT \
