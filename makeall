@@ -398,6 +398,16 @@ done
 if ( $PDFTOCFRONT || [ "$HITEX" = "$TEX" ] ) && ! $FILESELECT
 then
 	export TEXINPUTS=.:$(kpsewhich --var-value=TEXMFDIST)//:$KNUTHWARE//
+
+	# Prepare 'webman' with section links and bookmarks.
+	rm -f webman.tex
+	f=$(kpsewhich -engine tex webman)
+	[ -z "$CHANGES" ] &&
+		tie -m $(basename $f) $f $LOCALSTUFF/$(basename $f .tex)-outlines.ch ||
+		tie -m $(basename $f) $f $LOCALSTUFF/$(basename $f .tex)-outlines.ch \
+			$LOCALSTUFF/$(basename $f .tex)-changes.ch
+	$TEX webman
+
 	if [ -z "$CHANGES" ]
 	then
 		touch pages.tex # let 'manmac' produce output at all
@@ -428,7 +438,7 @@ then
 		f=$(kpsewhich -engine tex cwebman)
 		tie -m $(basename $f) $f $(basename $f .tex)-w2c.ch
 
-		for f in tripman trapman webman cwebman
+		for f in tripman trapman cwebman
 		do $TEX $f
 		done
 
@@ -441,11 +451,6 @@ then
 			cwebman.$EXT common.$EXT ctangle.$EXT cweave.$EXT \
 			ctwill.$EXT refsort.$EXT twinx.$EXT && true
 	else # -n $CHANGES
-		# Prepare 'webman' with section links and bookmarks.
-		rm -f webman.tex
-		f=$(kpsewhich -engine tex webman)
-		tie -m $(basename $f) $f $LOCALSTUFF/$(basename $f .tex).ch
-		$TEX webman
 		for f in *.$EXT
 		do
 			case $f in *$CHANGES.$EXT ) rm -f $f; continue ;; esac
