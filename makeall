@@ -36,7 +36,10 @@ PDFTOCFRONT=false # push table-of-contents to front of PDF output
 TEX=tex # or 'pdftex' or 'xetex' or 'hitex' or 'luatex'
 VALID=false # give 'pdftex' a chance to produce valid output
 
-# Extra material -- unpublished
+# Extra material for editorial improvements
+# published in https://ctan.org/pkg/pwebmac (editorsnote.tex etc.),
+# https://github.com/ascherer/web (cosmetics for HiTeX and PDFTeX),
+# and https://github.com/ascherer/mplibdir (cosmetics for MetaPost)
 LOCALSTUFF=/opt/github/web
 
 # Initial list of C/WEB sources to process, overridable with option '-f':
