@@ -1,3 +1,10 @@
+@x l.8
+\font\eighttt=cmtt8
+@y
+\font\eighttt=cmtt8
+\font\authorfont=cmr12
+@z
+
 @x l.16
 \def\appA{7}
 \def\appB{8}
@@ -29,6 +36,42 @@
 \def\runninghead{{\tentt WEB} USER MANUAL}
 @y
 \def\runninghead{{\ninett WEB} USER MANUAL}
+@z
+
+@x l.31
+\centerline{\titlefont The {\ttitlefont WEB} System
+@y
+
+\null\vfill
+\centerline{\titlefont The {\ttitlefont WEB} System of
+    Structured Documentation}
+\vskip 18pt\centerline{(Version 4.5 --- January 2021)}
+\vskip 24pt
+\centerline{\authorfont Donald E. Knuth}
+\vfill
+
+\noindent
+Editor's Note: This document describes the extended \.{WEB} system
+(Version 4.5 [\TeX~Live]).
+
+\noindent
+It fixes a set of bugs in \pdfURL{the original variant}{webman.pdf}, replaces
+the \.{webmac.tex} file in \Appendix F\null\ with the most recent version, and
+adds new material describing extended features of the \.{WEB} system as
+distributed in current \TeX\ Live. For the most part, this is the \.{-p}
+command-line option of the \.{WEAVE} processor and the associated
+\.{pwebmac.tex} macro file with support for {\mc PDF} and {\mc HINT} output
+formats; see section ``Hypertext and hyperdocumentation'' below.
+
+\smallskip\noindent
+See also the online project
+\pdfURL{\.{https://github.com/ascherer/web}}{https://github.com/ascherer/web}
+for more information.
+
+\pageno=0 \titletrue\eject
+
+\titlefalse
+\centerline{\titlefont The {\ttitlefont WEB} System
 @z
 
 @x l.34
@@ -473,18 +516,18 @@ otherwise, the internal counter for the ``Names of the sections'' part
 in the {\mc PDF} ``bookmarks'' will be incorrect.)
 
 Similar output for ``smart'' devices can be created with Martin Ruckert's
-Hi\TeX\ and its dynamic \.{HINT} format; just say `\.{hitex}~\.{cob}'.
-\.{HINT} files can be viewed with the \.{hintview} program, which is
+Hi\TeX\ and its dynamic {\mc HINT} format; just say `\.{hitex}~\.{cob}'.
+{\mc HINT} files can be viewed with the \.{hintview} program, which is
 available from
 \pdfURL{\.{https://hint.userweb.mwn.de/hint/hintview.html}}%
           {https://hint.userweb.mwn.de/hint/hintview.html}.%
 
-A more elaborate system called \.{TWILL}, which extends the usual cross
-references of \.{WEAVE} by preparing links from the uses of identifiers
-to their definitions, is also available---provided that you are willing
-to work a bit harder in cases where an identifier is multiply defined.
-\.{TWILL} is intended primarily for hardcopy output, but its principles
-could be used for hypertext as well. It uses its own set of macros
+A more elaborate system called \pdfURL{\.{TWILL}}{twill.pdf}, which extends
+the usual cross references of \.{WEAVE} by preparing links from the uses of
+identifiers to their definitions, is also available---provided that you are
+willing to work a bit harder in cases where an identifier is multiply defined.
+\.{TWILL} is intended primarily for hardcopy output, but its principles could
+be used for hypertext as well. It uses its own set of macros
 `\.{twimac-web.tex}'.
 
 \vskip6pt \baselineskip9pt
