@@ -406,9 +406,9 @@ then
 	rm -f webman.tex
 	f=$(kpsewhich -engine tex webman)
 	[ -z "$CHANGES" ] &&
-		tie -m $(basename $f) $f $LOCALSTUFF/$(basename $f .tex)-outlines.ch ||
-		tie -m $(basename $f) $f $LOCALSTUFF/$(basename $f .tex)-outlines.ch \
-			$LOCALSTUFF/$(basename $f .tex)-changes.ch
+		tie -m webman.tex $f $LOCALSTUFF/webman-outlines.ch ||
+		tie -m webman.tex $f $LOCALSTUFF/webman-outlines.ch \
+			$LOCALSTUFF/webman-changes.ch
 	$TEX webman
 
 	if [ -z "$CHANGES" ]
@@ -435,11 +435,11 @@ then
 		# input files are renamed in TeX Live (in fact, there are
 		# additional files for MetaPost).
 		f=$(kpsewhich -engine tex trapman)
-		tie -m $(basename $f) $f $LOCALSTUFF/$(basename $f .tex).ch
+		tie -m trapman.tex $f $LOCALSTUFF/trapman.ch
 
 		# Prepare 'cwebman' with footnotes describing the extended CWEB.
 		f=$(kpsewhich -engine tex cwebman)
-		tie -m $(basename $f) $f $(basename $f .tex)-w2c.ch
+		tie -m cwebman.tex $f cwebman-w2c.ch
 
 		for f in tripman trapman cwebman
 		do $TEX $f
