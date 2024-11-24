@@ -70,7 +70,6 @@ for more information.
 
 \pageno=0 \titletrue\eject
 
-\titlefalse
 \centerline{\titlefont The {\ttitlefont WEB} System
 @z
 
