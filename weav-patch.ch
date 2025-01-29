@@ -11,7 +11,7 @@ Public domain.  Originally written by Andreas Scherer, 2021.
 
 Limbo.
 
-@x l. 41
+@x l.41
 \def\({} % kludge for alphabetizing certain module names
 @y
 \def\({} % kludge for alphabetizing certain module names
