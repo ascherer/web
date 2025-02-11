@@ -482,8 +482,9 @@ then
 	$PAX "$OUTDIR/other$CHANGES.tar.gz" -s ,^,other/, \
 		dvicopy$CHANGES.$EXT patgen$CHANGES.$EXT \
 		pktogf$CHANGES.$EXT pktype$CHANGES.$EXT && true
-	$PAX "$OUTDIR/xetex$CHANGES.tar.gz" -s ,^,xetex/, \
-		xetex$CHANGES.pdf && true
+	[ "$HITEX" = "$TEX" ] || {
+		$PAX "$OUTDIR/xetex$CHANGES.tar.gz" -s ,^,xetex/, \
+		xetex$CHANGES.pdf && true ; }
 	for f in bibtex pdftex ctie tie
 	do $PAX "$OUTDIR/$f$CHANGES.tar.gz" -s ,^,$f/, $f$CHANGES.$EXT && true
 	done
