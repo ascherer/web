@@ -13,15 +13,16 @@ urlcolor: blue
 ## Welcome to “All Things `WEB`”
 
 Here you find the documented source code of all major `WEB` and `CWEB` programs
-in readable format.  With the exception of `XeTeX`, all documents are in the
-`HINT` format and can be viewed with the `hintview` program, available from
-[the HINT homepage](https://github.com/ruckertm/HINT).
-
+in the `HINT` format[^1] that can be viewed with the `hintview` program,
+available from [the HINT homepage](https://github.com/ruckertm/HINT).
 The `NAMED` entries represent the unmodified base sources
 as written by their respective authors, the attached `chg` links point to
 only the changed sections (or modules) as applied for release in the
 \TeX\ Live distribution, so you may want to study these pairs together.
 Care has been taken to keep the section numbering intact.
+
+[^1]: With the exception of `XeTeX`, which is only available in PDF format
+for technical reasons.
 
 Although not all programs presented here are written or maintained by
 Donald Knuth, it is more convenient for everything to be collected in
@@ -63,14 +64,14 @@ directly.
   [`PLtoTF`](texware/pltotf.hnt)+[`chg`](texware/pltotf-changes.hnt) \|
   [`DVItype`](texware/dvitype.hnt)+[`chg`](texware/dvitype-changes.hnt) \]
 * `web/` \[
-  [`WEBMAN`](web/webman.hnt)+[`chg`](web/webman-changes.hnt)[^1] \|
+  [`WEBMAN`](web/webman.hnt)+[`chg`](web/webman-changes.hnt)[^2] \|
   [`WEAVE`](web/weave.hnt)+[`chg`](web/weave-changes.hnt) \|
   [`TANGLE`](web/tangle.hnt)+[`chg`](web/tangle-changes.hnt) \|
-  [`TWILL`](web/twill.hnt)[^2] \]
+  [`TWILL`](web/twill.hnt)[^3] \]
 
-[^1]: The changed variant of the `WEB` manual contains additional material
+[^2]: The changed variant of the `WEB` manual contains additional material
   specific to the \TeX\ Live distribution.
-[^2]: `TWILL` is presented here as a changed variant of `WEAVE`.
+[^3]: `TWILL` is presented here as a changed variant of `WEAVE`.
 
 ## Complementary WEB programs by other authors
 
@@ -81,7 +82,7 @@ directly.
   [`PKtype`](other/pktype.hnt)+[`chg`](other/pktype-changes.hnt) \]
 * `bibtex/` \[ [`BibTeX`](bibtex/bibtex.hnt)+[`chg`](bibtex/bibtex-changes.hnt) \]
 * `pdftex/` \[ [`pdfTeX`](pdftex/pdftex.hnt)+[`chg`](pdftex/pdftex-changes.hnt) \]
-* `xetex/` \[ [`XeTeX`](xetex/xetex.pdf)+[`chg`](xetex/xetex-changes.pdf) \]
+* `xetex/` \[ [`XeTeX`](../knuth-pdf/xetex/xetex.pdf)+[`chg`](../knuth-pdf/xetex/xetex-changes.pdf) \]
 
 ## CWEB programs by Knuth _et\ al._
 
@@ -90,22 +91,22 @@ directly.
   [`COMMON`](cweb/common.hnt)+[`chg`](cweb/common-changes.hnt) \|
   [`CTANGLE`](cweb/ctangle.hnt)+[`chg`](cweb/ctangle-changes.hnt) \|
   [`CWEAVE`](cweb/cweave.hnt)+[`chg`](cweb/cweave-changes.hnt) \|\
-  [`CTWILL`](cweb/ctwill.hnt)[^3] \|
+  [`CTWILL`](cweb/ctwill.hnt)[^4] \|
   [`REFSORT`](cweb/refsort.hnt)+[`chg`](cweb/refsort-changes.hnt) \|
   [`TWINX`](cweb/twinx.hnt)+[`chg`](cweb/twinx-changes.hnt) \]
 * `ctie/` \[ [`CTIE`](ctie/ctie.hnt)+[`chg`](ctie/ctie-changes.hnt) \]
 * `tie/` \[ [`TIE`](tie/tie.hnt)+[`chg`](tie/tie-changes.hnt) \]
-* `hitex/` \[ [`HiTeX`](hitex/hitex.hnt)[^4] \]
-* `mp/` \[ [`MP`](mp/mp.hnt) \| [`MPOST`](mp/mpost.hnt) \][^5]
+* `hitex/` \[ [`HiTeX`](hitex/hitex.hnt)[^5] \]
+* `mp/` \[ [`MP`](mp/mp.hnt) \| [`MPOST`](mp/mpost.hnt) \][^6]
 
-[^3]: `CTWILL` is presented here in its own format with “mini-indexes” for
+[^4]: `CTWILL` is presented here in its own format with “mini-indexes” for
   every two consecutive pages.
 
-[^4]: `HiTeX` has received quite a few changes “behind the scenes” in
+[^5]: `HiTeX` has received quite a few changes “behind the scenes” in
   order to present it in this collection; see project
   [`web`](https://github.com/ascherer/web) for details.
 
-[^5]: `MP` and `MPOST` have received quite a few changes “behind the scenes” in
+[^6]: `MP` and `MPOST` have received quite a few changes “behind the scenes” in
   order to present them in this collection; see project
   [`mplibdir`](https://github.com/ascherer/mplibdir) for details.
 
