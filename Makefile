@@ -157,4 +157,4 @@ clean:
 
 # Package 'pwebmac' for CTAN: https://ctan.org/pkg/pwebmac
 ctan:
-	git archive -o ~/pwebmac-5.0.zip --prefix=pwebmac/ ctan-20240812
+	git archive -o ~/pwebmac-5.1.zip --prefix=pwebmac/ ctan-20250316
