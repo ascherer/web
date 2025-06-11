@@ -21,3 +21,11 @@ procedure error; {prints '\..' and location of error message}
 @y
 procedure error; {prints `\..' and location of error message}
 @z
+
+Section 172.
+
+@x l.3095 - Reject strings as macro names.
+  if next_control<>identifier then
+@y
+  if (next_control<>identifier) or (buffer[id_first]="""") then
+@z
