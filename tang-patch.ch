@@ -22,6 +22,41 @@ procedure error; {prints '\..' and location of error message}
 procedure error; {prints `\..' and location of error message}
 @z
 
+Section 119.
+
+@x l.2185 - Calculate with decimal limit value INT_MAX/10.
+  if n>=@'1463146314 then err_print('! Constant too big')
+@y
+  if n>=214748364 then err_print('! Constant too big')
+@z
+
+Sections 160--162.
+
+@x l.2915 - Avoid numeric overflow; see also section 119.
+repeat val:=10*val+next_control-"0"; next_control:=get_next;
+@y
+repeat if val>=214748364 then err_print('! Constant too big')
+@.Constant too big@>
+  else val:=10*val+next_control-"0";
+  next_control:=get_next;
+@z
+@x l.2920 - Avoid numeric overflow; see also section 119.
+repeat val:=8*val+next_control-"0"; next_control:=get_next;
+@y
+repeat if val>=@'2000000000 then err_print('! Constant too big')
+@.Constant too big@>
+  else val:=8*val+next_control-"0";
+  next_control:=get_next;
+@z
+@x l.2926 - Avoid numeric overflow; see also section 119.
+val:=16*val+next_control-"0"; next_control:=get_next;
+@y
+  if val>=@"8000000 then err_print('! Constant too big')
+@.Constant too big@>
+  else val:=16*val+next_control-"0";
+  next_control:=get_next;
+@z
+
 Section 172.
 
 @x l.3095 - Reject strings as macro names.
