@@ -332,6 +332,9 @@ s/\(Mathematical Society.}}\)}/\1\n\\datecontentspage/' $f.tex ;;
 	# shift table-of-contents pages to the front in PDF
 	if $PDFTOCFRONT && echo $f | grep -v -q -E 'ctwill|hitex'
 	then $SED_I -e '0,/\\N[1{]/s/\\N[1{]/\\input pdfwebtocfront\n\n&/' $f.tex # }}
+            $SED_I -e '/pdfwebtocfront/i\
+\\def\\page{\\box255 }\\normalbottom % faster, but loses plain TeX footnotes\
+' $f.tex
 	fi
 
 	if [ -n "$CHANGES" ] || [ twill = "$f" ]
