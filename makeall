@@ -93,8 +93,8 @@ do
 	esac
 done
 
-CWEAVE='cweave -f +lX +bph'
-CTWILL='ctwill -f +lpdf +bph'
+CWEAVE='cweave -f +lX'
+CTWILL='ctwill -f +lpdf'
 HITEX='hitex --compress'
 PAX='pax -wvzf'
 EXT=pdf # default extension for 'knuth-pdf'
