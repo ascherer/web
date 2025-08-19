@@ -244,13 +244,11 @@ s/{\\the\\pageno}/&{\\the\\toksE}/
 
 	# special treatment for individual C/WEB programs
 	case $f in
-		# replace former convention to indicate "not a title
-		# page" to include page headers for table-of-contents;
+		# fix table-of-contents page for bibtex;
 		# purge conflict between bibtex.web and webmac.tex
 		# 'E' no longer free to be active character
-		# fix table-of-contents page for bibtex
 		# FIX: don't wait for Oren Patashnik.
-		bibtex ) $SED_I -e 's/\\def\\titlepage{F}/\\titletrue/' $f.tex
+		bibtex ) $SED_I -e '/\\def\\titlepage{F}/d' $f.tex
 			[ -z "$CHANGES" ] && $SED_I -e '71,78d' $f.tex ;;
 
 		# FIX: 'glue.web' obviously uses an old 'webmac.tex'.
