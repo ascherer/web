@@ -56,7 +56,7 @@ FILES="$FILES common ctangle cweave ctwill refsort twinx ctie tie hitex \
 	mp mpost mpmath mpmathbinary mpmathdecimal mpmathdouble mpstrings tfmin"
 CWEBINPUTS=$KNUTHWARE//:
 
-KNUTHWHERE=$(locate /glue.web)
+KNUTHWHERE=$(find $KNUTHWARE -name glue.web)
 if [ -n "$KNUTHWHERE" ]
 then
 	FILES="$FILES $KNUTHWHERE"
@@ -252,7 +252,7 @@ s/{\\the\\pageno}/&{\\the\\toksE}/
 			[ -z "$CHANGES" ] && $SED_I -e '71,78d' $f.tex ;;
 
 		# FIX: 'glue.web' obviously uses an old 'webmac.tex'.
-		glue ) $SED_I -e 's/titlefalse/titletrue/
+		glue ) $SED_I -e '/titlefalse/d
 /\\def\\title{GLUE}/a\
 \\pageno=\\contentspagenumber \\advance\\pageno by1\\relax' $f.tex ;;
 
