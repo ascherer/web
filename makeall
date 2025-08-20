@@ -246,15 +246,13 @@ s/{\\the\\pageno}/&{\\the\\toksE}/
 	case $f in
 		# fix table-of-contents page for bibtex;
 		# purge conflict between bibtex.web and webmac.tex
-		# 'E' no longer free to be active character
+		# 'E' no longer free to be active character.
 		# FIX: don't wait for Oren Patashnik.
 		bibtex ) $SED_I -e '/\\def\\titlepage{F}/d' $f.tex
 			[ -z "$CHANGES" ] && $SED_I -e '71,78d' $f.tex ;;
 
-		# FIX: 'glue.web' obviously uses an old 'webmac.tex'.
-		glue ) $SED_I -e '/titlefalse/d
-/\\def\\title{GLUE}/a\
-\\pageno=\\contentspagenumber \\advance\\pageno by1\\relax' $f.tex ;;
+		# fix table-of-contents page for glue.web.
+		glue ) $SED_I -e '/titlefalse/d' $f.tex ;;
 
 		# FIX: GFtoDVI uses 'Metafont' in a module name;
 		# this should appear correctly in the bookmarks, too.
