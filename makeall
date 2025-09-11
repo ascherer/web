@@ -18,7 +18,7 @@ Options are (--long options only with Linux-getopt):
 	-n, --new		Use 'pwebmac' instead of 'webmac'
 	-o, --outdir ARG	Create tarballs in path ARG
 	-p, --pdftocfront	Place TOC page at the front (PDF only)
-	-t, --tex ARG		Use TeX variant ARG=[(hi|pdf|xe)]tex
+	-t, --tex ARG		Use TeX variant ARG=[(hi|lua|pdf|xe)]tex
 	-v, --validpdf		Use correct number of entries in NOS node
 
 Public domain.  Originally written by Andreas Scherer, 2020.
@@ -34,7 +34,7 @@ NEW=false # '\input pwebmac' instead of '\input webmac' for PDF et al.
 OUTDIR=. # path where the resulting tarballs are placed
 PDFTOCFRONT=false # push table-of-contents to front of PDF output
 TEX=tex # or 'pdftex' or 'xetex' or 'hitex' or 'luatex'
-VALID=false # give 'pdftex' a chance to produce valid output
+VALID=false # give 'pdftex'/'luatex' a chance to produce valid output
 
 # Extra material for editorial improvements
 # published in https://ctan.org/pkg/pwebmac (editorsnote.tex etc.),
