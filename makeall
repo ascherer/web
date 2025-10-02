@@ -145,10 +145,6 @@ do
 
 	# Prepare local C/WEB sources
 	case $f in
-		vftovp ) # FIX: Sorting order of named sections
-			sed -e 's/\(Compute the \)\(|activity\)/\1\\9{a}\2/
-/\\def\\(/d' -e $PURGE_OUTLINES $KNUTHWARE/$f.web > $f.web ;; # )
-
 		pdftex ) # Fix several 'Overfull \hbox'es
 			tie -m $f.web $f.web $LOCALSTUFF/$f.ch ;;
 
@@ -189,10 +185,6 @@ do
 				sed -e "$SORT_NOS" $KNUTHWARE/../../Work/texk/web2c/$f-final.ch > $f-final.ch
 				WEBINPUTS=.:$WEBINPUTS $WEAVE $f $f-final ;;
 
-			# FIX: Sorting order of new @<Define...@> sections
-			vftovp ) WEBINPUTS=.:$WEBINPUTS $WEAVE $f $f
-				$SED_I -e $PURGE_OUTLINES $f.tex ;;
-
 			# all other WEB codes have singular changefiles
 			* ) $WEAVE $f $f ;;
 		esac
@@ -217,7 +209,7 @@ do
 				tie -c $f.ch weave.web weave.ch weav-$f.ch &&
 				$WEAVE weave $f $f ;;
 
-			pdftex | weave | vftovp )
+			pdftex | weave )
 				WEBINPUTS=.:$WEBINPUTS $WEAVE $f ;;
 
 			* ) $WEAVE $f ;;
@@ -240,17 +232,14 @@ s/{\\the\\pageno}/&{\\the\\toksE}/
   \\ifpdf\\special{pdf: outline 0 << /Title (\\the\\toksE) /Dest\
     [ @thispage /FitH @ypos ] >>}\\fi\\fi
 /\\def\\(/d' -e $PURGE_OUTLINES $f.tex ;; # )}
-	esac # mf | tex | pdftex | xetex
+		# FIX: Sorting order of named sections
+		bibtex | vftovp ) $NEW && $SED_I -e \
+'s/\(Compute the \)\(|activity\)/\1\\9{a}\2/
+/\\def\\(/d' -e $PURGE_OUTLINES $f.tex ;; # )
+	esac # bibtex | mf | tex | pdftex | xetex | vftovp
 
 	# special treatment for individual C/WEB programs
 	case $f in
-		# fix table-of-contents page for bibtex;
-		# purge conflict between bibtex.web and webmac.tex
-		# 'E' no longer free to be active character.
-		# FIX: don't wait for Oren Patashnik.
-		bibtex ) $SED_I -e '/\\def\\titlepage{F}/d' $f.tex
-			[ -z "$CHANGES" ] && $SED_I -e '71,78d' $f.tex ;;
-
 		# fix table-of-contents page for glue.web.
 		glue ) $SED_I -e '/titlefalse/d' $f.tex ;;
 
