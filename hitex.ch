@@ -1422,7 +1422,7 @@ case shorthand_def: {@+n=cur_chr;get_r_token();p=cur_cs;g_define(p, relax, 256);
   else if (p < math_code_base) define(p+cp, data, cur_val);
   else if (p < del_code_base) define(p+cp, data, hi(cur_val));
 @y
-  else if (p < math_code_base) define(p+cp, data, cur_val);
+  else if (p < math_code_base) g_define(p+cp, data, cur_val);
   else if (p < del_code_base) g_define(p+cp, data, hi(cur_val));
 @z
 
