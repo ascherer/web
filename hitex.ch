@@ -2027,9 +2027,3 @@ the \TeX\ Live distribution and slightly modified.
 @y
 #define GET_FILE_STAT @[stat(fname,&file_stat)@]
 @z
-
-@x [135.1965] l.37296
-  face=NULL; /* hb_ft_face_create_referenced(ft_face); */
-@y
-  face=NULL; /* |hb_ft_face_create_referenced(ft_face);| */
-@z
