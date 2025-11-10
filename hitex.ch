@@ -695,12 +695,6 @@ maintaining the condition |cur_h=left_edge|@>;
 maintaining the condition |cur_h==left_edge|@>;
 @z
 
-@x [32.637] l.13403
-flush_node_list(p);
-@y
-@<Flush the box from memory...@>@;
-@z
-
 @x [33.678] l.13983
 @p static void append_to_vlist(pointer @!b)@t\2\2@>@/
 { bool height_known;@t\1@>@/
@@ -1188,18 +1182,6 @@ and set~|p=null|@>@;@+break;
         } while (!(q==broken_ins(r)));
 @z
 
-@x [45.1008] l.20476
-  @<Create a page insertion node with |subtype(r)=qi(n)|, and include the
-@y
-  @<Create a page insertion node with |subtype(r)==qi(n)|, and include the
-@z
-
-@x [45.1020] l.20735
-for; set |wait:=true| if node |p| holds a remainder after splitting@>@;
-@y
-for; set |wait=true| if node |p| holds a remainder after splitting@>@;
-@z
-
 @x [45.1027] l.20838
 @/do@+{get_token();
 }@+ while (!(loc==null));
@@ -1288,18 +1270,6 @@ case un_vbox: if (chr_code==copy_code) print_esc("unvcopy");
   if (q!=null) @<Append the accent with appropriate kerns, then set |p:=q|@>;
 @y
   if (q!=null) @<Append the accent with appropriate kerns, then set |p=q|@>;
-@z
-
-@x [48.1146] l.22719
-|goto found|; if the node is glue that stretches or shrinks, set |v:=max_dimen|@>;
-@y
-|goto found|; if the node is glue that stretches or shrinks, set |v=max_dimen|@>;
-@z
-
-@x [48.1147] l.22742
-or shrinking, set |v:=max_dimen|; |goto found| in the case of leaders@>@;@+break;
-@y
-or shrinking, set |v=max_dimen|; |goto found| in the case of leaders@>@;@+break;
 @z
 
 @x [48.1160] l.22983
@@ -1759,12 +1729,6 @@ if (chr_code==last_box_code) print_esc("pagediscards");
 else if (chr_code==vsplit_code) print_esc("splitdiscards");
 @z
 
-@x [55.1543] l.29227
-be enabled, the engine is still compatible with \TeX with no added
-@y
-be enabled, the engine is still compatible with \TeX\ with no added
-@z
-
 @x [61.1578] l.29522
 case if_primitive_code: {@+@/do@+{get_token();}@+ while (!(cur_tok!=space_token));
 @y
@@ -1786,12 +1750,6 @@ simply setting |xchg_buffer_length| to~$0$.
        }@+ while (!(feof(f)||(l==0)));
 @y
        } while (!(feof(f)||(l==0)));
-@z
-
-@x [65.1630] l.30064
-standard \PASCAL does not provide. So we do not bother to try. The
-@y
-standard \PASCAL\ does not provide. So we do not bother to try. The
 @z
 
 @x [66.1642] l.30249
@@ -1929,37 +1887,6 @@ par_fill_skip_no  /* |par_fill_skip_code| 14 */
 @y
 {@+loop@+{
     if (p==q) return true;
-@z
-
-@x [120.1874] l.35026
-@* \TeX\ Live Integration.
-@y
-First comes material that is not (yet) used elsewhere.
-
-@c
-#if 0
-@<Append the display...@>@;
-@<Append the glue or equation number following...@>@;
-@<Append the glue or equation number preceding...@>@;
-@<Calculate the natural width...@>@;
-@<Cases for |out_what|@>@;
-@<Declare the procedure called |fire_up|@>@;
-@<Determine the displacement...@>@;
-@<Determine the value of |height...@>@;
-@<Examine node |p| in the hlist...@>@;
-@<Examine node |p| in the vlist...@>@;
-@<Finish issuing a diagnostic message for an overfull or underfull hbox@>@;
-@<Finish issuing a diagnostic message for an overfull or underfull vbox@>@;
-@<Finish the \.{DVI}...@>@;
-@<Generate the MD5 hash for a file@>@;
-@<Generate the MD5 hash for a string@>@;
-@<Local variables for finish...@>@;
-@<Move node |p|...@>@;
-@<Ship box...@>@;
-@<Squeeze the equation...@>@;
-#endif
-
-@* \TeX\ Live Integration.
 @z
 
 @x [122.1882] l.35227
