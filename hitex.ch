@@ -1376,7 +1376,7 @@ shrink(main_p)=xn_over_d(shrink(main_p), 1000, space_factor);
 @x [47.1027] l.20996
 if (cur_val < 256) define(box_base+cur_val, box_ref, cur_box);
 @y
-if (cur_val < 256) @[g_define(box_base+cur_val, box_ref, cur_box)@];
+if (cur_val < 256) g_define(box_base+cur_val, box_ref, cur_box);
 @z
 
 @x [47.1029] l.21035
