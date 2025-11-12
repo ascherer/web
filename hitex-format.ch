@@ -37,14 +37,6 @@ uses identifiers that \TeX\ will declare as macros.
 @#@<Declare \Prote\ procedures for strings@>@;
 @z
 
-@x [4.52] l.1421
-static int s_no(const char *str);
-@y
-static int s_no(const char *str);
-
-@ (Empty section to keep numbering intact.)
-@z
-
 @x [5.55] l.1494
 @<Basic printing procedures@>=
 #define @[put(F)@]    @[fwrite(&((F).d)@],@[sizeof((F).d),1,(F).f)@]@;
@@ -405,14 +397,6 @@ like~\.{\^\^A} or~\.{\^\^df}, then |goto reswitch|, otherwise set |state=mid_lin
 @/@t\4@>@<Handle situations involving spaces, braces, changes of state@>@;
 @z
 
-x [24.355] l.7926
-{@+@/do@+{cur_chr=buffer[k];cat=cat_code(cur_chr);incr(k);
-}@+ while (!((cat!=letter)||(k > limit)));
-y
-{@+do {cur_chr=buffer[k];cat=cat_code(cur_chr);incr(k);
-} while (!((cat!=letter)||(k > limit)));
-z
-
 @x [25.366] l.8224
 @/@<Cases for |expandafter|@>@/
 @y
@@ -667,22 +651,6 @@ done: end_file_reading();}
 } while (!(n==font_params[f]));
 @z
 
-@x [32.598] l.12665
-@ The |dvi_four| procedure outputs four bytes in two's complement notation,
-@y
-@ (Empty section to keep numbering intact.)
-
-@ The |dvi_four| procedure outputs four bytes in two's complement notation,
-@z
-
-@x [32.615] l.13006
-@ When |hlist_out| is called, its duty is to output the box represented
-@y
-@ (Empty section to keep numbering intact.)
-
-@ When |hlist_out| is called, its duty is to output the box represented
-@z
-
 @x [32.616] l.13024
 @p @t\4@>@<Declare procedures needed in |hlist_out|, |vlist_out|@>@t@>@/
 @y
@@ -709,64 +677,6 @@ maintaining the condition |cur_v==base_line|@>;
 maintaining the condition |cur_h=left_edge|@>;
 @y
 maintaining the condition |cur_h==left_edge|@>;
-@z
-
-@x [33.636] l.13381
-@* Packaging.
-@y
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@* Packaging.
-@z
-
-@x [33.643] l.13497
-@ @<Make node |p| look like a |char_node| and |goto reswitch|@>=
-@y
-@ (Empty section to keep numbering intact.)
-
-@ @<Make node |p| look like a |char_node| and |goto reswitch|@>=
-@z
-
-@x [33.654] l.13628
-@ @<Determine horizontal glue shrink setting...@>=
-@y
-@ (Empty section to keep numbering intact.)
-
-@ @<Determine horizontal glue shrink setting...@>=
-@z
-
-@x [33.659] l.13688
-@ When a box is being appended to the current vertical list, the
-@y
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ When a box is being appended to the current vertical list, the
 @z
 
 @x [33.659] l.13691
@@ -1052,14 +962,6 @@ do {r=q;q=prev_break(q);next_break(r)=cur_p;cur_p=r;
       @<Change discretionary to compulsory and set |disc_break=true|@>@;
 @z
 
-@x [40.874] l.18056
-@ When the following code is activated, the |line_break| procedure is in its
-@y
-@ (Empty section to keep numbering intact.)
-
-@ When the following code is activated, the |line_break| procedure is in its
-@z
-
 @x [40.874] l.18060
 static void hyphenate_word(void)@t\2\2@>@/
 { pointer @!q, @!s, @!prev_s;@t\1@> /*miscellaneous nodes of temporary interest*/
@@ -1264,78 +1166,6 @@ and set~|p=null|@>@;@+break;
         } while (!(q==broken_ins(r)));
 @z
 
-@x [45.973] l.19966
-@ \TeX\ is not always in vertical mode at the time |build_page|
-@y
-@ (Empty section to keep numbering intact.)
-
-@ \TeX\ is not always in vertical mode at the time |build_page|
-@z
-
-@x [45.976] l.19996
-@ When the user's output routine finishes, it has constructed a vlist
-@y
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ When the user's output routine finishes, it has constructed a vlist
-@z
-
 @x [45.977] l.20025
 @/do@+{get_token();
 }@+ while (!(loc==null));
@@ -1426,18 +1256,6 @@ case un_vbox: if (chr_code==copy_code) print_esc("unvcopy");
   if (q!=null) @<Append the accent with appropriate kerns, then set |p=q|@>;
 @z
 
-@x [48.1096] l.21895
-@ A displayed equation is considered to be three lines long, so we
-@y
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ A displayed equation is considered to be three lines long, so we
-@z
-
 @x [48.1107] l.22110
 to null; set~|cur_val:=0|@>;
 @y
@@ -1461,30 +1279,6 @@ the current math lists and set |danger=true|@>;
 the current math lists and set |danger:=true|@>;
 @y
 the current math lists and set |danger=true|@>;
-@z
-
-@x [48.1145] l.22560
-@ At this time |p| points to the mlist for the formula; |a| is either
-@y
-@ (Empty section to keep numbering intact.)
-
-@ At this time |p| points to the mlist for the formula; |a| is either
-@z
-
-@x [48.1147] l.22611
-@ When \.{\\halign} appears in a display, the alignment routines operate
-@y
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ When \.{\\halign} appears in a display, the alignment routines operate
 @z
 
 @x [49.1150] l.22680
@@ -1724,36 +1518,6 @@ do {undump(p+1, hash_used, p);undump_hh(hash[p]);
 @/@t\4@>@<Cases for |do_extension|@>@;
 @z
 
-@x [53.1290] l.25238
-@ @<Declare procedures needed in |do_extension|@>=
-static void scan_spaces(void)
-{ @<Get the next non-blank non-call token@>;
-  back_input();
-}
-static void scan_destination(pointer p)
-{@+if (scan_keyword("name"))
-  { label_has_name(p)=1;
-    scan_toks(false,true); label_ptr(p)=def_ref;
-  }
-  else if (scan_keyword("num"))
-  { label_has_name(p)=0; scan_int(); label_ptr(p)=cur_val;
-  }
-  else
-  { print_err("`name {...}' or `num 000' expected. Inserted `num 0'.");
-    label_has_name(p)=0; label_ptr(p)=0;
-    error();
-    return;
-  }
-  scan_spaces();
-}
-static void scan_label(pointer p)
-{ if (!scan_keyword("goto"))
-    print_err("keyword `goto' inserted");
-  scan_destination(p);
-}
-@y
-@z
-
 @x [53.1298] l.25363
 @/@<Cases for displaying the |whatsit| node@>@/
 @y
@@ -1770,51 +1534,6 @@ static void scan_label(pointer p)
 @/@<Cases for wiping out the whatsit node@>@/
 @y
 @/@t\4@>@<Cases for wiping out the whatsit node@>@;
-@z
-
-@x [53.1301] l.25716
-@ @d adv_past(A) @+if (subtype(A)==language_node)
-@y
-@ @<Declare procedures needed in |do_extension|@>=
-static void scan_spaces(void)
-{ @<Get the next non-blank non-call token@>;
-  back_input();
-}
-static void scan_destination(pointer p)
-{@+if (scan_keyword("name"))
-  { label_has_name(p)=1;
-    scan_toks(false,true); label_ptr(p)=def_ref;
-  }
-  else if (scan_keyword("num"))
-  { label_has_name(p)=0; scan_int(); label_ptr(p)=cur_val;
-  }
-  else
-  { print_err("`name {...}' or `num 000' expected. Inserted `num 0'.");
-    label_has_name(p)=0; label_ptr(p)=0;
-    error();
-    return;
-  }
-  scan_spaces();
-}
-static void scan_label(pointer p)
-{ if (!scan_keyword("goto"))
-    print_err("keyword `goto' inserted");
-  scan_destination(p);
-}
-
-@ (Empty section to keep numbering intact.)
-
-@ (Empty section to keep numbering intact.)
-
-@ @d adv_past(A) if (subtype(A)==language_node)
-@z
-
-@x [53.1303] l.25728
-@ @<Process whatsit |p| in |vert_break| loop, |goto not_found|@>=
-@y
-@ (Empty section to keep numbering intact.)
-
-@ @<Process whatsit |p| in |vert_break| loop, |goto not_found|@>=
 @z
 
 @x [53.1310] l.25813
