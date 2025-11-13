@@ -14,11 +14,6 @@
 \pageno=\contentspagenumber \advance \pageno by \tocpages
 @z
 
-@x [1.4] l.434
-uses identifiers that \TeX will declare as macros.
-@y
-uses identifiers that \TeX\ will declare as macros.
-@z
 @x [1.4] l.447
   @<Initialize whatever \TeX\ might access@>;
 @y
@@ -1417,12 +1412,6 @@ define(u, set_font, f);eqtb[font_id_base+f]=eqtb[u];font_id_text(f)=t;
 g_define(u, set_font, f);eqtb[font_id_base+f]=eqtb[u];font_id_text(f)=t;
 @z
 
-@x [50.1240] l.23869
-for example, `\.{ (preloaded format=plain 1982.11.19)}', showing the year,
-@y
-for example, `\.{(preloaded format=plain 1982.11.19)}', showing the year,
-@z
-
 @x [50.1252] l.24059
 @/do@+{for (k=p; k<=q+1; k++) dump_wd(mem[k]);
 @y
@@ -1500,12 +1489,6 @@ do {undump(p+1, hash_used, p);undump_hh(hash[p]);
 } while (!(p==hash_used));
 @z
 
-@x [53.1282] l.24893
-@d label_node hitex_ext+23 /* represents a link to a another location */
-@y
-@d label_node hitex_ext+23 /* represents a link to another location */
-@z
-
 @x [53.1287] l.24988
   @/@<Cases of |extension| for |print_cmd_chr|@>@/
 @y
@@ -1551,12 +1534,6 @@ do get_token(); while (!(cur_tok==end_write_token));
   do {m=nest[p].mode_field;
   if (p > 0) decr(p);else m=vmode;
   } while (!(m!=hmode));
-@z
-
-@x [54.1352] l.26401
-@d show_tokens 5 /* \.{\\showtokens} , must be odd! */
-@y
-@d show_tokens 5 /* \.{\\showtokens}, must be odd! */
 @z
 
 @x [54.1355] l.26424
@@ -1788,10 +1765,8 @@ do {
 
 @x [74.1667] l.30837
   while (true)
-  { r =link(prev_r);
 @y
-  loop@+{
-    r =link(prev_r);
+  loop@+
 @z
 
 @x [75.1681] l.31426
@@ -1861,10 +1836,8 @@ par_fill_skip_no  /* |par_fill_skip_code| 14 */
 
 @x [87.1736] l.32513
 {@+while (true)
-  { if (p==q) return true;
 @y
-{@+loop@+{
-    if (p==q) return true;
+{@+loop@+
 @z
 
 @x [122.1807] l.34109

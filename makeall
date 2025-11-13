@@ -150,7 +150,8 @@ do
 
 		hitex | mp | mpost | mpmath* | mpstrings | tfmin )
 			# Beautifications for HiTeX and MetaPost
-			tie -m $f.w $f.w $LOCALSTUFF/$f-format.ch \
+			tie -m $f.w $f.w $LOCALSTUFF/$f-bugs.ch \
+					$LOCALSTUFF/$f-format.ch \
 					$LOCALSTUFF/$f-match-tex.ch
 			$SED_I -e $PURGE_OUTLINES -e '/\\def\\(/d' $f.w ;; # )
 
