@@ -148,11 +148,14 @@ do
 		pdftex ) # Fix several 'Overfull \hbox'es
 			tie -m $f.web $f.web $LOCALSTUFF/$f.ch ;;
 
-		hitex | mp | mpost | mpmath* | mpstrings | tfmin )
-			# Beautifications for HiTeX and MetaPost
+		hitex ) # Beautifications for HiTeX
 			tie -m $f.w $f.w $LOCALSTUFF/$f-bugs.ch \
 					$LOCALSTUFF/$f-format.ch \
 					$LOCALSTUFF/$f-match-tex.ch
+			$SED_I -e $PURGE_OUTLINES -e '/\\def\\(/d' $f.w ;; # )
+
+		mp | mpost | mpmath* | mpstrings | tfmin ) # and for MetaPost
+			tie -m $f.w $f.w $LOCALSTUFF/$f.ch
 			$SED_I -e $PURGE_OUTLINES -e '/\\def\\(/d' $f.w ;; # )
 
 		weave | twill ) # Fix non-constant factor
