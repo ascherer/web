@@ -145,9 +145,6 @@ do
 
 	# Prepare local C/WEB sources
 	case $f in
-		pdftex ) # Fix several 'Overfull \hbox'es
-			tie -m $f.web $f.web $LOCALSTUFF/$f.ch ;;
-
 		hitex ) # Beautifications for HiTeX
 			tie -m $f.w $f.w $LOCALSTUFF/$f-bugs.ch \
 					$LOCALSTUFF/$f-format.ch \
@@ -158,7 +155,10 @@ do
 			tie -m $f.w $f.w $LOCALSTUFF/$f.ch
 			$SED_I -e $PURGE_OUTLINES -e '/\\def\\(/d' $f.w ;; # )
 
-		weave | twill ) # Fix non-constant factor
+		pdftex ) # FIX: several 'Overfull \hbox'es
+			tie -m $f.web $f.web $LOCALSTUFF/$f.ch ;;
+
+		weave | twill ) # FIX: non-constant factor
 			if [ "$HITEX" = "$TEX" ] && [ ! -f weave.web ]
 			then sed -e 's/\\the\\hsize/460pt/' \
 				$KNUTHWARE/weave.web > weave.web
@@ -237,6 +237,7 @@ s/{\\the\\pageno}/&{\\the\\toksE}/
   \\ifpdf\\special{pdf: outline 0 << /Title (\\the\\toksE) /Dest\
     [ @thispage /FitH @ypos ] >>}\\fi\\fi
 /\\def\\(/d' -e $PURGE_OUTLINES $f.tex ;; # )}
+
 		# FIX: Sorting order of named sections
 		bibtex | vftovp ) $NEW && $SED_I -e \
 's/\(Compute the \)\(|activity\)/\1\\9{a}\2/
