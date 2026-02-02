@@ -147,8 +147,7 @@ do
 	case $f in
 		hitex ) # Beautifications for HiTeX
 			tie -m $f.w $f.w $LOCALSTUFF/$f-bugs.ch \
-					$LOCALSTUFF/$f-format.ch \
-					$LOCALSTUFF/$f-match-tex.ch
+					$LOCALSTUFF/$f-format.ch
 			$SED_I -e $PURGE_OUTLINES -e '/\\def\\(/d' $f.w ;; # )
 
 		mp | mpost | mpmath* | mpstrings | tfmin ) # and for MetaPost
