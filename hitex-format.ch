@@ -181,6 +181,20 @@ do {@<Try to allocate within node |p| and its physical successors, and
 } while (!(p==rover)); /*repeat until the whole list has been traversed*/
 @z
 
+@x [10.129] l.2825
+In order to make sure that the |character| code fits in a quarterword,
+@y
+In order to ensure that the |character| code fits in a quarterword,
+@z
+
+@x [10.140] l.3000
+If |pre_break(p)==null|, the |ex_hyphen_penalty| will be charged for this
+break.  Otherwise the |hyphen_penalty| will be charged.  The texts will
+@y
+If |pre_break(p)==null|, |ex_hyphen_penalty| will be charged for this
+break.  Otherwise |hyphen_penalty| will be charged.  The texts will
+@z
+
 @x [10.147] l.3149
 q=@<Current |mem| equivalent of glue parameter number |n|@>@t@>;
 @y
@@ -341,6 +355,12 @@ printn_esc(font_id_text(font(p)))
 printn_esc(font_id_text(font(p)));
 @z
 
+@x [19.263] l.5963
+of the current group, when it should be
+@y
+of the current group and
+@z
+
 @x [19.270] l.6122
 @/@<Cases for |eq_destroy|@>@/
 @y
@@ -407,6 +427,12 @@ like~\.{\^\^A} or~\.{\^\^df}, then |goto reswitch|, otherwise set |state=mid_lin
 @/@<Cases for |expandafter|@>@/
 @y
 @/@t\4@>@<Cases for |expandafter|@>@;
+@z
+
+@x [25.364] l.8073
+necessary to insert a special `|dont_expand|' marker into \TeX's reading
+@y
+necessary to insert a special marker `|dont_expand|' into \TeX's reading
 @z
 
 @x [25.367] l.8115
@@ -494,6 +520,12 @@ do get_x_token(); while (!(cur_cmd!=spacer))
 @#@<Declare procedures that scan restricted classes of integers@>@;
 @<Declare \eTeX\ procedures for scanning@>@;
 @<Declare procedures that scan font-related stuff@>@;
+@z
+
+@x [26.406] l.8719
+and `\.{\\muskip}' all having |internal_register| as their command code; they are
+@y
+and `\.{\\muskip}' all having command code |internal_register|; they are
 @z
 
 @x [26.408] l.8757
@@ -619,11 +651,29 @@ done: end_file_reading();}
 @/@t\4@>@<Cases for |conditional|@>@;
 @z
 
+@x [28.501] l.10346
+\.{\\if\\noexpand} or following \.{\\ifcat\\noexpand}. We use the fact that
+@y
+\.{\\if\\noexpand} or \.{\\ifcat\\noexpand}. We use the fact that
+@z
+
+@x [29.513] l.10588
+into the |name_of_file| value that is used to open files. The present code
+@y
+into the value |name_of_file| that is used to open files. The present code
+@z
+
 @x [29.519] l.10663
 #ifdef @!INIT
 @y
 #ifdef @!INIT
 @+@t}\6\4\4{@>
+@z
+
+@x [30.560] l.11595
+@ The preliminary settings of the index-offset variables |char_base|,
+@y
+@ The preliminary values of the index-offset variables |char_base|,
 @z
 
 @x [30.572] l.11840
@@ -698,11 +748,25 @@ done: end_file_reading();}
 @/@t\4@>@<Cases for nodes that can appear in an mlist, after which we |goto
 @z
 
+@x [36.665] l.13627
+by procedures with names
+like |make_fraction|, |make_radical|, etc. To illustrate
+@y
+by procedures
+like |make_fraction|, |make_radical|, etc. To illustrate
+@z
+
 @x [36.698] l.14299
   @/do@+{p=link(p);
   }@+ while (!(link(p)==null));
 @y
   do p=link(p); while (!(link(p)==null));
+@z
+
+@x [37.700] l.14441
+Their |glue_sign| and |glue_order| are pre-empted as well, since it
+@y
+And their fields |glue_sign| and |glue_order| are pre-empted as well, since it
 @z
 
 @x [37.705] l.14525
@@ -859,6 +923,22 @@ feasible breaks in that class; then |return| if |r=last_active|, otherwise
 feasible breaks in that class; then |return| if |r==last_active|, otherwise
 @z
 
+@x [38.768] l.15730
+@ It is not necessary to create new active nodes having |minimal_demerits|
+greater than
+|minimum_demerits+abs(adj_demerits)|, since such active nodes will never
+@y
+@ It is not necessary to create new active nodes with |minimal_demerits|
+greater than
+|minimum_demerits| ${}+|abs(adj_demerits)|$, since such active nodes will never
+@z
+
+@x [38.784] l.16044
+subarray |cur_active_width[2 dotdot 5]|, in units of points, fil, fill, and filll.
+@y
+array |cur_active_width| at positions |[2 dotdot 5]|, in units of points, fil, fill, and filll.
+@z
+
 @x [38.788] l.16120
   @<Print the list between |printed_node| and |cur_p|, then set |printed_node:=cur_p|@>;
 @y
@@ -908,6 +988,12 @@ do {if (type(r)!=delta_node)
 } while (!(r==last_active));
 @z
 
+@x [39.808] l.16520
+@ Once the best sequence of breakpoints has been found (hurray), we call on the
+@y
+@ Once the best sequence of breakpoints has been found, we call on the
+@z
+
 @x [39.809] l.16551
 first breakpoint@>;
 @y
@@ -936,6 +1022,12 @@ do {r=q;q=prev_break(q);next_break(r)=cur_p;cur_p=r;
       @<Change discretionary to compulsory and set |disc_break:=true|@>@;
 @y
       @<Change discretionary to compulsory and set |disc_break=true|@>@;
+@z
+
+@x [39.822] l.16738
+from the |inter_line_penalty| parameter, and from lines that end at
+@y
+from the parameter |inter_line_penalty|, and from lines that end at
 @z
 
 @x [40.826] l.16860
@@ -1012,6 +1104,12 @@ do {if (str_pool[u] < str_pool[v]) goto found;
 }@+ while (!(u==str_start[k+1]));
 @y
 } while (!(u==str_start[k+1]));
+@z
+
+@x [43.875] l.17718
+problem of creating the |hyf_distance|, |hyf_num|, and |hyf_next| arrays.
+@y
+problem of creating the arrays |hyf_distance|, |hyf_num|, and |hyf_next|.
 @z
 
 @x [43.879] l.17839
@@ -1151,6 +1249,12 @@ do get_token(); while (!(loc==null));
 @/@t\4@>@<Cases of |main_control| that are not part of the inner loop@>@;
 @z
 
+@x [46.936] l.18983
+set it equal to |sf_code(cur_chr)|, except that it should never change
+@y
+set it equal to |sf_code|( |cur_chr|), except that it should never change
+@z
+
 @x [46.945] l.19236
   @<Modify the glue specification in |main_p| according to the space factor@>;
 @y
@@ -1173,6 +1277,12 @@ shrink(main_p)=xn_over_d(shrink(main_p), 1000, space_factor);
 @t\4@>@<Cases of |handle_right_brace| where a |right_brace| triggers a delayed
 @y
 @/@t\4@>@<Cases of |handle_right_brace| where a |right_brace| triggers a delayed
+@z
+
+@x [47.973] l.19654
+`\.{\\lower3.8pt\\hbox...}'
+@y
+`\.{\\lower3.8pt} \.{\\hbox...}'
 @z
 
 @x [47.979] l.19809
@@ -1658,6 +1768,12 @@ do {p=sa_loc(sa_chain);
 } while (!((p==0)||(c <= trie_c[p])));
 @z
 
+@x [54.1419] l.27024
+command code |un_vbox| with \.{\\unvbox} and \.{\\unvcopy}, they are
+@y
+command code |un_vbox| with commands \.{\\unvbox} and \.{\\unvcopy}, they are
+@z
+
 @x [54.1420] l.27035
 @ @<Cases of |un_vbox| for |print_cmd_chr|@>=;
 else if (chr_code==last_box_code) print_esc("pagediscards");
@@ -1672,6 +1788,20 @@ else if (chr_code==vsplit_code) print_esc("splitdiscards");
 case if_primitive_code: {@+@/do@+{get_token();}@+ while (!(cur_tok!=space_token));
 @y
 case if_primitive_code: {@+do get_token(); while (!(cur_tok!=space_token));
+@z
+
+@x [62.1468] l.27467
+an |ROM_undefined_primitive| that will allow an easy test.
+@y
+|ROM_undefined_primitive| that will allow an easy test.
+@z
+
+@x [65.1501] l.27733
+@ The \.{\\filemoddate} expands to a date with the same format as the
+creation date (see \.{\\creationdate}).
+@y
+@ The \.{\\filemoddate} expands to a date with the same format as
+\.{\\creationdate}.
 @z
 
 @x [65.1503] l.27750
@@ -1747,6 +1877,12 @@ do {
 } while (!(ab_vs_cd(1024, l, x, x) >= 0));
 @z
 
+@x [72.1590] l.29124
+@ Writing a color node to the output is simple.
+@y
+@ Outputting a color node is simple.
+@z
+
 @x [74.1617] l.29686
   while (true)
 @y
@@ -1817,6 +1953,12 @@ par_fill_skip_no  /* |par_fill_skip_code| 14 */
 {@+loop@+
 @z
 
+@x [98.1717] l.31998
+\TeX's math nodes have an optional width---a copy of the mathsurround parameter---while
+@y
+\TeX's math nodes have an optional width---a copy of the \.{\\mathsurround} parame\-ter---while
+@z
+
 @x [122.1757] l.32960
 static struct option long_options[] = {@/
 @y
@@ -1881,4 +2023,10 @@ the \TeX\ Live distribution and slightly modified.
 #define GET_FILE_STAT stat(fname,&file_stat)
 @y
 #define GET_FILE_STAT @[stat(fname,&file_stat)@]
+@z
+
+@x [134.1833] l.34787
+@ Since specifying, finding, and loading a font can be quite complex process,
+@y
+@ Since specifying, finding, and loading a font can be quite complex,
 @z
