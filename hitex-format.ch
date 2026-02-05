@@ -1274,6 +1274,18 @@ restart: @/do@+{get_token();
 restart: do get_token(); while (!(cur_tok!=space_token));
 @z
 
+@x [49.1111] l.21670
+defined in a format file, but are not yet loaded intp memory---the |define|
+@y
+defined in a format file, but are not yet loaded intp memory---the |g_define|
+@z
+
+@x [49.1111] l.21678
+  define(cur_font_loc, data, cur_chr);@+break;
+@y
+  g_define(cur_font_loc, data, cur_chr);@+break;
+@z
+
 @x [49.1112] l.21692
   define(p, call+(a%4), def_ref);
 @y
@@ -1370,6 +1382,12 @@ else @<Cases for |alter_integer|@>@;
     @/do@+{get_token();}@+ while (!(cur_cmd==right_brace)); /*flush the patterns*/
 @y
     do get_token(); while (!(cur_cmd==right_brace)); /*flush the patterns*/
+@z
+
+@x [49.1151] l.22322
+define(u, set_font, null_font);scan_optional_equals();scan_font_name();
+@y
+g_define(u, set_font, null_font);scan_optional_equals();scan_font_name();
 @z
 
 @x [49.1151] l.22348
