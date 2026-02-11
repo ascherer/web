@@ -22,12 +22,6 @@
   @<Initialize whatever \TeX\ might access@>@;
 @z
 
-@x [1.16] l.646
-   /*\.{WEB}'s |else| acts like `\ignorespaces|while true do|\unskip'*/
-@y
-   /*\.{WEB}'s |loop| acts like `\ignorespaces|while true do|\unskip'*/
-@z
-
 @x [3.22] l.745
 static unsigned char @!name_of_file0[file_name_size+1]={0},
 @y
