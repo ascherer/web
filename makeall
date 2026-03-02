@@ -211,7 +211,7 @@ do
 
 			twill ) WEBINPUTS=.:$WEBINPUTS \
 				tie -c $f.ch weave.web weave.ch weav-$f.ch &&
-				$WEAVE weave $f $f ;;
+				WEBINPUTS=.:$WEBINPUTS $WEAVE weave $f $f ;;
 
 			pdftex | weave )
 				WEBINPUTS=.:$WEBINPUTS $WEAVE $f ;;
