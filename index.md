@@ -100,7 +100,7 @@ directly.
 * `mp/` \[ [`MP`](mp/mp.hnt) \| [`MPOST`](mp/mpost.hnt) \][^6]
 
 [^4]: `CTWILL` is presented here in its own format with “mini-indexes” for
-  every two consecutive pages.
+  every section.
 
 [^5]: `HiTeX` has received quite a few changes “behind the scenes” in
   order to present it in this collection; see project
