@@ -100,7 +100,6 @@ directly.
 * `mp/` \[ [`MP`](mp/mp.hnt) \| [`MPOST`](mp/mpost.hnt) \]
 
 [^4]: `CTWILL` is presented here in its own “proofmode” format with 
-  “mini-indexes” for each section.
 
 [^5]: `HiTeX` has received quite a few changes “behind the scenes” in
   order to present it in this collection; see project
