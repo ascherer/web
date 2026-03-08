@@ -303,9 +303,14 @@ s/{\\the\\pageno}/&{\\the\\toksE}/
 \\datethis\
 \\emergencystretch=.1\\hsize' $f.tex ;; # }
 
-		common | ctangle | cweave | ctie | tie )
+		common | ctangle | ctie | tie )
 			$SED_I -e '/\\def\\botofcontents/i\
 \\datethis' $f.tex ;;
+		cweave )
+			$SED_I -e '/\\def\\botofcontents/i\
+\\datethis
+/id\\_lookup}(\\.{"long"}/i\
+\\vadjust{\\break}' $f.tex ;;
 
 		bibtex | patgen | tangle | weave | twill | \
 		mpost | mpmath* | mpstrings | tfmin )
