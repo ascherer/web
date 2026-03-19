@@ -75,6 +75,8 @@ foreach my $line (<STDIN>)
   }
 }
 
+die $usage unless $donewithpage; # no input?
+
 print "\\donewithpage$donewithpage\n"; # done with current spread
 
 exit 0;
