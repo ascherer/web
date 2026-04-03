@@ -19,11 +19,11 @@
 \fontdimen7\tentex=0pt % no double space after sentences
 
 \def\\#1{\leavevmode\hbox{\it % searchable underline in PDF/HINT
-  \ifacrohint\def\_{\hbox{\kern.04em\tt\char`\_\kern.02em}}\fi
+  \ifacrohint\def\_{\kern-.785pt\hbox{\tt\char`\_}\kern-.785pt}\fi
   #1\/\kern.05em}} % italic type for identifiers
 \def\|#1{\leavevmode\hbox{$#1$}} % one-letter identifiers look better this way
 \def\&#1{\leavevmode\hbox{\bf % searchable underline in PDF/HINT
-  \ifacrohint\def\_{\hbox{\kern.04em\tt\char`\_\kern.02em}}\else
+  \ifacrohint\def\_{\kern-.575pt\hbox{\tt\char`\_}\kern-.575pt}\else
   \def\_{\kern.04em\vbox{\hrule width.3em height .6pt}\kern.08em}\fi
   #1\/\kern.05em}} % boldface type for reserved words
 \def\.#1{\leavevmode\hbox{\tentex % typewriter type for strings
