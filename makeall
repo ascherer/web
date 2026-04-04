@@ -375,6 +375,16 @@ s/\\vbox{\\ninerm/&\\editorsnote\\readchanges\\medskip/' $f.tex ;; # }}
 		esac
 	fi # $CHANGES
 
+	# Make identifiers with underscore searchable in PDF and HINT.
+	$SED_I -e '1a\
+\\def\\\\#1{\\leavevmode\\hbox{\\it % searchable underline in PDF/HINT\
+  \\ifacrohint\\def\\_{\\kern-.785pt\\hbox{\\tt\\char`\\_}\\kern-.785pt}\\fi\
+  #1\\/\\kern.05em}} % italic type for identifiers\
+\\def\\&#1{\\leavevmode\\hbox{\\bf % searchable underline in PDF/HINT\
+  \\ifacrohint\\def\\_{\\kern-.575pt\\hbox{\\tt\\char`\\_}\\kern-.575pt}\\else\
+  \\def\\_{\\kern.04em\\vbox{\\hrule width.3em height .6pt}\\kern.08em}\\fi\
+  #1\\/\\kern.05em}} % boldface type for reserved words' $f.tex
+
 	# Run TeX on the woven C/WEB programs
 	case $f in
 		ctwill ) # gives two different outcomes
