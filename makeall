@@ -377,11 +377,13 @@ s/\\vbox{\\ninerm/&\\editorsnote\\readchanges\\medskip/' $f.tex ;; # }}
 
 	# Make identifiers with underscore searchable in PDF and HINT.
 	$SED_I -e '1a\
+\\font\\itul=cmtt10 at 6pt\
+\\font\\bful=cmtt10 at 8pt\
 \\def\\\\#1{\\leavevmode\\hbox{\\it % searchable underline in PDF/HINT\
-  \\ifacrohint\\def\\_{\\kern-.08em\\hbox{\\tt\\char`\\_}\\kern-.08em}\\fi\
+  \\ifacrohint\\def\\_{\\kern.05em\\hbox{\\itul\\char`\\_}}\\fi\
   #1\\/\\kern.05em}} % italic type for identifiers\
 \\def\\&#1{\\leavevmode\\hbox{\\bf % searchable underline in PDF/HINT\
-  \\ifacrohint\\def\\_{\\kern-.05em\\hbox{\\tt\\char`\\_}\\kern-.05em}\\else\
+  \\ifacrohint\\def\\_{\\hbox{\\bful\\char`\\_}\\kern.05em}\\else\
   \\def\\_{\\kern.04em\\vbox{\\hrule width.3em height .6pt}\\kern.08em}\\fi\
   #1\\/\\kern.05em}} % boldface type for reserved words' $f.tex
 
