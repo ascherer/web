@@ -465,7 +465,7 @@ then
 		for f in *.$EXT
 		do
 			case $f in *$CHANGES.$EXT ) rm -f $f; continue ;; esac
-			mv $f $(basename $f .$EXT)$CHANGES.$EXT && true
+			mv $f "$(basename $f .$EXT)"$CHANGES.$EXT && true
 		done
 		[ "$HITEX" = "$TEX" ] && mv -f xetex.pdf xetex$CHANGES.pdf
 		$PAX "$OUTDIR/mf$CHANGES.tar.gz" -s ,^,mf/, mf$CHANGES.$EXT && true
