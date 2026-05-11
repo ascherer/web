@@ -69,7 +69,7 @@ getopt -T >/dev/null && true # keep going
 
 if [ $? -eq 4 ] # Check for Linux-getopt with extensions
 then OPTS=$(getopt -n $PROG -o $SHRTOPTS -l $LONGOPTS -- "$@")
-else OPTS=$(getopt $SHRTOPTS $*)
+else OPTS=$(getopt $SHRTOPTS "$@")
 fi
 
 if [ $? -eq 0 ] # Check return code from getopt
@@ -376,7 +376,7 @@ s/\\vbox{\\ninerm/&\\editorsnote\\readchanges\\medskip/' $f.tex ;; # }}
 	fi # $CHANGES
 
 	# Make identifiers with underscore searchable in PDF and HINT.
-	$SED_I -e '1a\
+	$NEW && $SED_I -e '1a\
 \\def\\\\#1{\\leavevmode\\hbox{\\it % searchable underline in PDF/HINT\
   \\ifacrohint\\def\\_{\\kern-.08em\\hbox{\\tt\\char`\\_}\\kern-.08em}\\fi\
   #1\\/\\kern.05em}} % italic type for identifiers\
@@ -408,7 +408,7 @@ done
 # create tarballs w/o changes for publication
 if ( $PDFTOCFRONT || [ "$HITEX" = "$TEX" ] ) && ! $FILESELECT
 then
-	export TEXINPUTS=.:$(kpsewhich --var-value=TEXMFDIST)//:$KNUTHWARE//
+	TEXINPUTS=.:$(kpsewhich --var-value=TEXMFDIST)//:$KNUTHWARE// && export TEXINPUTS
 
 	# Prepare 'webman' with section links and bookmarks.
 	rm -f webman.tex
