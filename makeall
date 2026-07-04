@@ -100,7 +100,8 @@ PAX='pax -wvzf'
 EXT=pdf # default extension for 'knuth-pdf'
 SED_I='sed -i' # non-GNU-sed requires an extra '' argument for '-i' option.
 # Prevent '#1)' from showing up in the PDF bookmarks/outlines:
-PURGE_OUTLINES='s/\\(\([0-9a-z]\)[0-9a-z]*)/\\9{\1}/g;/\\def\\(/d'
+PURGE_OUTLINES='/\\def\\(/d
+s/\\(\([0-9a-z]\)[0-9a-z]*)/\\9{\1}/g'
 # Sorting order of new material from TEX.CH and ENCTEX2.CH
 SORT_NOS='s/\(ump \)\(a couple\)/\1\\(a)\2/
 s/\(ump \)\(constants\)/\1\\(c)\2/
@@ -148,11 +149,11 @@ do
 		hitex ) # Beautifications for HiTeX
 			tie -m $f.w $f.w $LOCALSTUFF/$f-bugs.ch \
 					$LOCALSTUFF/$f-format.ch
-			$SED_I -e $PURGE_OUTLINES $f.w ;; # )
+			$SED_I -e "$PURGE_OUTLINES" $f.w ;; # )
 
 		mp | mpost | mpmath* | mpstrings | tfmin ) # and for MetaPost
 			tie -m $f.w $f.w $LOCALSTUFF/$f.ch
-			$SED_I -e $PURGE_OUTLINES $f.w ;; # )
+			$SED_I -e "$PURGE_OUTLINES" $f.w ;; # )
 
 		pdftex ) # FIX: several 'Overfull \hbox'es
 			tie -m $f.web $f.web $LOCALSTUFF/$f.ch ;;
@@ -234,11 +235,11 @@ s/{\\the\\pageno}/&{\\the\\toksE}/
 /\\edef\\next/a\
   \\ifpdflua\\relax\\else\
   \\ifpdf\\special{pdf: outline 0 << /Title (\\the\\toksE) /Dest\
-    [ @thispage /FitH @ypos ] >>}\\fi\\fi' -e $PURGE_OUTLINES $f.tex ;; # )}
+    [ @thispage /FitH @ypos ] >>}\\fi\\fi' -e "$PURGE_OUTLINES" $f.tex ;; # )}
 
 		# FIX: Sorting order of named sections
 		bibtex | vftovp ) $NEW && $SED_I -e \
-'s/\(Compute the \)\(|activity\)/\1\\9{a}\2/' -e $PURGE_OUTLINES $f.tex ;; # )
+'s/\(Compute the \)\(|activity\)/\1\\9{a}\2/' -e "$PURGE_OUTLINES" $f.tex ;; # )
 	esac # bibtex | mf | tex | pdftex | xetex | vftovp
 
 	# special treatment for individual C/WEB programs
@@ -489,7 +490,8 @@ then
 		pktogf$CHANGES.$EXT pktype$CHANGES.$EXT && true
 	[ "$HITEX" = "$TEX" ] || {
 		$PAX "$OUTDIR/xetex$CHANGES.tar.gz" -s ,^,xetex/, \
-		xetex$CHANGES.pdf && true ; }
+		xetex$CHANGES.pdf && true
+    }
 	for f in bibtex pdftex ctie tie
 	do $PAX "$OUTDIR/$f$CHANGES.tar.gz" -s ,^,$f/, $f$CHANGES.$EXT && true
 	done
