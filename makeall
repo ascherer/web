@@ -188,7 +188,7 @@ do
 			tex )
 				sed -e "$SORT_NOS" $KNUTHWARE/$f.web > $f.web
 				sed -e "$SORT_NOS" $KNUTHWARE/../../Work/texk/web2c/$f-final.ch > $f-final.ch
-				WEBINPUTS=.:$WEBINPUTS $WEAVE $f $f-final ;;
+				WEBINPUTS=.: $WEAVE $f $f-final ;;
 
 			# all other WEB codes have singular changefiles
 			* ) $WEAVE $f $f ;;
