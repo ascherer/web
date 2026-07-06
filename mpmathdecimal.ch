@@ -1,1 +1,0 @@
-../mplibdir/mpmathdecimal.ch

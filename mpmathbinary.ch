@@ -1,1 +1,0 @@
-../mplibdir/mpmathbinary.ch

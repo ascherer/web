@@ -1,1 +1,0 @@
-../mplibdir/mpmathdouble.ch

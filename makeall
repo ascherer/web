@@ -39,8 +39,9 @@ VALID=false # give 'pdftex'/'luatex' a chance to produce valid output
 # Extra material for editorial improvements
 # published in https://ctan.org/pkg/pwebmac (editorsnote.tex etc.),
 # https://github.com/ascherer/web (cosmetics for HiTeX and PDFTeX),
-# and https://github.com/ascherer/mplibdir (cosmetics for MetaPost)
 LOCALSTUFF=/opt/github/web
+# and https://github.com/ascherer/mplibdir (cosmetics for MetaPost)
+LOCALMPSTUFF=/opt/github/mplibdir
 
 # Initial list of C/WEB sources to process, overridable with option '-f':
 KNUTHWHERE=$(locate /bibtex.web)
@@ -152,7 +153,7 @@ do
 			$SED_I -e "$PURGE_OUTLINES" $f.w ;; # )
 
 		mp | mpost | mpmath* | mpstrings | tfmin ) # and for MetaPost
-			tie -m $f.w $f.w $LOCALSTUFF/$f.ch
+			tie -m $f.w $f.w $LOCALMPSTUFF/$f.ch
 			$SED_I -e "$PURGE_OUTLINES" $f.w ;; # )
 
 		pdftex ) # FIX: several 'Overfull \hbox'es

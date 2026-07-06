@@ -1,1 +1,0 @@
-../mplibdir/tfmin.ch
