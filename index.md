@@ -94,6 +94,7 @@ directly.
 * `ctie/` \[ [`CTIE`](ctie/ctie.pdf)+[`chg`](ctie/ctie-changes.pdf) \]
 * `tie/` \[ [`TIE`](tie/tie.pdf)+[`chg`](tie/tie-changes.pdf) \]
 * `hitex/` \[ [`HiTeX`](hitex/hitex.pdf)[^4] \]
+* `mp/` \[ [`MP`](mp/mp.pdf) \| [`MPOST`](mp/mpost.pdf) \][^5]
 
 [^3]: `CTWILL` is presented here in its own format with “mini-indexes” for
   every two consecutive pages.
@@ -101,6 +102,10 @@ directly.
 [^4]: `HiTeX` has received quite a few changes “behind the scenes” in
   order to present it in this collection; see project
   [`web`](https://github.com/ascherer/web) for details.
+
+[^5]: `MP` and `MPOST` have received quite a few changes “behind the scenes” in
+  order to present them in this collection; see project
+  [`mplibdir`](https://github.com/ascherer/mplibdir) for details.
 
 ## Errata for “Computers & Typesetting” by Donald E.\ Knuth
 
