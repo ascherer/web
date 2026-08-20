@@ -494,7 +494,7 @@ The \.{webmac.tex} file extends ``plain \TeX'' format in order to support the
   \catcode`\ =13 \catcode`\^^M=13
   \tt \verbatimdefs \input #1 \endgroup}
 \printmacs{webmac}
-\vskip6pt \baselineskip12pt
+\baselineskip12pt
 \section Hypertext and hyperdocumentation.
 Many people have of course noticed analogies between \.{WEB} and the
 World Wide Web. The following \.{WEB} macros \.{pwebmac.tex} are in fact
@@ -526,9 +526,11 @@ A more elaborate system called \pdfURL{\.{TWILL}}{twill.pdf}, which extends
 the usual cross references of \.{WEAVE} by preparing links from the uses of
 identifiers to their definitions, is also available---provided that you are
 willing to work a bit harder in cases where an identifier is multiply defined.
+It uses its own set of macros `\.{twimac-web.tex}'.
 \.{TWILL} is intended primarily for hardcopy output, but its principles could
-be used for hypertext as well. It uses its own set of macros
-`\.{twimac-web.tex}'.
+be used for hypertext as well.
+Suitable {\mc PDF} macros for Pascal/\.{TWILL}, e.g., `\.{twimac-pdf.tex}',
+are left as an exercise for the reader.
 
 \vskip6pt \baselineskip9pt
 \printmacs{pwebmac}
