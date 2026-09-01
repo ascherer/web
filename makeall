@@ -13,6 +13,7 @@ included in the 'TeX Live' source tree.
 
 Options are (--long options only with Linux-getopt):
 	-c, --changes		Apply change file to C/WEB source
+	-d, --dvipdfm		Use TeX/dvipdfm route for formatting
 	-f, --files STRING	Process only subset of C/WEB programs
 	-h, --help		Print this help message and exit
 	-n, --new		Use 'pwebmac' instead of 'webmac'
@@ -25,10 +26,11 @@ Public domain.  Originally written by Andreas Scherer, 2020.
 HELP
 }
 
-LONGOPTS=changes,files:,help,new,outdir:,pdftocfront,tex:,validpdf
-SHRTOPTS=cf:hno:pt:v
+LONGOPTS=changes,dvipdfm,files:,help,new,outdir:,pdftocfront,tex:,validpdf
+SHRTOPTS=cdf:hno:pt:v
 
 CHANGES= # apply changefile to C/WEB source
+DVIPDFM=false # Use TeX/dvipdfm route for formatting
 FILESELECT=false # user-defined '--files' selection
 NEW=false # '\input pwebmac' instead of '\input webmac' for PDF et al.
 OUTDIR=. # path where the resulting tarballs are placed
@@ -80,6 +82,7 @@ while true
 do
 	case "$1" in
 		-c | --changes ) CHANGES='-changes'; shift ;;
+		-d | --dvipdfm ) DVIPDFM=true; shift ;;
 		-f | --files ) FILES="$2"; FILESELECT=true; shift 2 ;;
 		-h | --help ) usage; exit 0 ;;
 		-n | --new ) NEW=true; shift ;;
@@ -132,6 +135,13 @@ if $VALID
 then
 	NEW=true # PDF output requires 'pwebmac.tex'
 	TEX="$TEX --shell-escape"
+fi
+
+# Use TeX/dvipdfm route for formatting.
+if $DVIPDFM
+then
+	NEW=true
+	TEX='tex'
 fi
 
 # Use alternative TeX macros more suited for PDF output.
@@ -386,16 +396,20 @@ s/\\vbox{\\ninerm/&\\editorsnote\\readchanges\\medskip/' $f.tex ;; # }}
 			then # directly in the TeX file
 				( ctwill-proofsort < $f.tex ) 1<> $f.tex
 			else # in the TeX-created .ref file
-				$TEX $f
+				$DVIPDFM && $TEX "\\let\\pdf=+\\input $f" || $TEX $f
 				ctwill-refsort < $f.ref > $f.sref
 			fi
-			$TEX $f ;;
+			$DVIPDFM && $TEX "\\let\\pdf=+\\input $f" || $TEX $f
+			$DVIPDFM && dvipdfm $f ;;
 
 		* ) # run TeX twice
 			if $PDFTOCFRONT || [ -n "$CHANGES" ]
-			then [ xetex = $f ] && $XETEX $f || $TEX $f
+			then [ xetex = $f ] && $XETEX $f ||
+				( $DVIPDFM && $TEX "\\let\\pdf=+\\input $f" || $TEX $f )
 			fi # only XeTeX can process XETEX.WEB
-			[ xetex = $f ] && $XETEX $f || $TEX $f ;;
+			[ xetex = $f ] && $XETEX $f ||
+				( $DVIPDFM && $TEX "\\let\\pdf=+\\input $f" || $TEX $f )
+			$DVIPDFM && dvipdfm $f ;;
 	esac
 done
 
@@ -411,7 +425,7 @@ then
 		tie -m webman.tex $f $LOCALSTUFF/webman-outlines.ch ||
 		tie -m webman.tex $f $LOCALSTUFF/webman-outlines.ch \
 			$LOCALSTUFF/webman-changes.ch
-	$TEX webman
+	$DVIPDFM && $TEX '\\let\\pdf=+\\input webman' || $TEX webman
 
 	if [ -z "$CHANGES" ]
 	then
